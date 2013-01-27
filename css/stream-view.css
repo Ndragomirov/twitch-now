@@ -1,0 +1,63 @@
+.switcher .switch-tab {
+    width: 50%;
+    display: inline-block;
+}
+
+.stream {
+    background: url("img/row_arrow.png") no-repeat;
+    background-position: 375px center;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    border-top: 1px solid rgb(38, 38, 38);
+    padding: 10px;
+    cursor: pointer;
+    min-height: 40px;
+}
+
+.stream:hover {
+    background-color: rgb(35, 35, 35);
+}
+
+.stream:active {
+    background-color: rgb(25, 25, 25);
+    border-top: 1px solid rgb(25, 25, 25);
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.stream:hover .stream-title {
+    color: rgb(238, 238, 238);
+}
+
+.stream .stream-preview {
+    width: 70px;
+    height: 39px;
+    overflow: hidden;
+    border: 1px solid rgb(0, 0, 0);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+    float: left;
+    margin-right: 10px;
+}
+
+.stream-preview.game-preview {
+    height: 42px;
+}
+.stream .stream-preview img {
+    width: 70px;
+}
+
+.stream .stream-info {
+    font-size: 11px;
+    color: rgb(119, 119, 119);
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+    line-height: 1.3;
+}
+
+.stream .stream-title {
+    color: rgb(170, 170, 170);
+    font-weight: bold;
+    font-size: 12px;
+}

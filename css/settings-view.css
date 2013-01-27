@@ -1,0 +1,79 @@
+    .pagePad {
+    padding: 10px 20px;
+}
+
+.radio-tip {
+    cursor: pointer;
+}
+
+.control {
+    margin-bottom: 10px;
+}
+
+.control-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+.control-desc {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.settings .settings-group-header {
+    margin-top: 30px;
+}
+
+.settings .settings-group-header:first-child {
+    margin-top: 0;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    background-color: rgb(185, 163, 277);
+    width: 200px;
+    height: 3px;
+    border-radius: 3px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: rgb(185, 163, 277);
+    width: 18px;
+    border-radius: 9px;
+    height: 18px;
+    border: 3px solid rgb(100, 65, 165);
+}
+
+input[type="range"] {
+    position: relative;
+    top: -2px;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="radio"] {
+    cursor: pointer;
+}
+
+input[type="checkbox"] + label span {
+    display: inline-block;
+    width: 19px;
+    height: 16px;
+    margin: -1px 4px 0 0;
+    vertical-align: middle;
+    background: url("img/checkbox.png") left top no-repeat;
+    cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label span {
+    background: url("img/checkbox.png") -25px top no-repeat;
+}
+
+.range-helper {
+    display: inline-block;
+    position: relative;
+    top: 0px;
+}

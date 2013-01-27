@@ -1,0 +1,170 @@
+
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    width: 440px;
+    height: 590px;
+    background: rgba(30, 30, 30, 1);
+    color: rgb(119, 119, 119);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    overflow: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    opacity: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: rgba(255, 255, 255, 1);
+}
+
+.clearfix {
+    clear: both;
+}
+
+.twitter-share-button {
+    width: 100px !important;
+}
+
+.social {
+    width: 30px;
+    height: 30px;
+    background-image: url(img/social.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+    margin: 0px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.social:hover {
+    opacity: 1;
+}
+
+.social.fb {
+    background-position: 0px 0px;
+}
+
+.social.gp {
+    background-position: -30px 0px;
+}
+
+.social.tw {
+    background-position: -60px 0px;
+}
+
+.social.vk {
+    background-position: -90px 0px;
+}
+
+a.js-tab {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.spad {
+    padding: 10px 20px;
+}
+
+.header {
+    font-weight: bold;
+    color: white;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+#menu {
+    height: 100%;
+    width: 39px;
+    float: left;
+    box-sizing: border-box;
+    background: rgb(18, 18, 18);
+    box-shadow: inset -1px 0px 1px black;
+    z-index: 999999;
+}
+
+#preloader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+}
+
+#preloader-stream {
+    position: absolute;
+    right: 5px;
+    margin-top: -26px;
+}
+
+.error-msg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+}
+
+#content {
+    height: 100%;
+    width: 400px;
+    display: inline-block;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.screen {
+    min-height: 100%;
+    box-sizing: border-box;
+    padding-top: 28px;
+    position: relative;
+}
+
+.close-screen-btn {
+    cursor: pointer;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgb(255, 255, 255);
+    right: 10px;
+    top: 10px;
+}
+
+.twitch-logo {
+    width: 80px;
+    height: 34px;
+    background: url("img/twitch_logo.png") no-repeat;
+    background-size: cover;
+    display: inline-block;
+}
+
+.btn {
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: inline-block;
+    cursor: pointer;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(130, 102, 182)), to(rgb(83, 55, 135)));
+    background: linear-gradient(top, rgb(130, 102, 182), rgb(83, 55, 135));
+    background-color: rgb(106, 78, 158);
+    border-top: 1px solid rgb(91, 63, 143);
+    border-left: 1px solid rgb(65, 39, 113);
+    border-right: 1px solid rgb(65, 39, 113);
+    border-bottom: 1px solid rgb(42, 20, 83);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.15);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
+    -webkit-text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
+    color: white;
+}
+
+.btn:active {
+    border: 1px solid rgb(42, 20, 83);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(85, 60, 135)), to(rgb(55, 35, 100)));
+    background: linear-gradient(top, rgb(85, 60, 135), rgb(55, 35, 100));
+    background-color: rgb(70, 47, 117);
+}

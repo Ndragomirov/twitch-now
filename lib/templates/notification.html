@@ -1,0 +1,10 @@
+{{#streams}}
+<div class="stream" data-href="{{links.oldlayout}}">
+    {{channel.display_name}}
+</div>
+{{/streams}}
+{{#if more}}
+And {{more}} more are live now
+{{else}}
+{{live}}
+{{/if}}

@@ -1,0 +1,158 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/basic.css">
+    <link rel="stylesheet" href="../css/stream-view.css">
+    <link rel="stylesheet" href="../css/settings-view.css">
+    <link rel="stylesheet" href="../css/menu-view.css">
+    <link rel="stylesheet" href="../css/login-view.css">
+    <link rel="stylesheet" href="../css/info-view.css">
+</head>
+<body>
+
+<div id="context-menu">
+    <div class="context-row">share</div>
+    <div class="context-row">follow</div>
+    <div class="context-row">open in newtab</div>
+    <div class="context-row">open in popout</div>
+</div>
+
+<div id="top-menu" class="top-menu">
+    <!--refresh-->
+    <div id="refresh-btn" title="Refresh" data-placement="left" class="top-menu-btn tip">
+        <div class="icon small-icon refresh-icon"></div>
+    </div>
+
+    <!--filter-->
+    <div id="filter-bar">
+        <input id="filterInput" placeholder="Filter" type="text" autofocus maxlength="20">
+    </div>
+
+    <!--share-->
+    <div class="share">
+        <div data-placement="left" title="twitter share" class="js-tab social tw tip"
+             data-href="http://twitter.com/intent/tweet?text=Twitch%20Now%20is%20an%20awesome%20Chrome%20extension%20that%20alerts%20you%20when%20followed%20channels%20are%20online%20https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk"
+                ></div>
+        <div data-placement="left" title="facebook share" class="js-tab social fb tip"
+             data-href="https://www.facebook.com/sharer/sharer.php?u=https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk"
+                ></div>
+        <div data-placement="left" title="google+ share" class="js-tab social gp tip"
+             data-href="https://plus.google.com/share?url=https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk"
+                ></div>
+        <div data-placement="left" title="vk share" class="js-tab social vk tip"
+             data-href="http://vk.com/share.php?url=https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk"
+                ></div>
+    </div>
+</div>
+
+<div id="menu">
+    <div class="menu-btn tip" data-placement="right" title="Following streams" data-route="following">
+        <div class="icon big-icon heart-icon"></div>
+    </div>
+
+    <div class="menu-btn tip" data-placement="right" title="Browse games" data-route="browse">
+        <div class="icon big-icon joystick-icon"></div>
+    </div>
+
+    <div class="menu-btn tip" data-placement="right" title="Search" data-route="search">
+        <div class="icon big-icon search-icon"></div>
+    </div>
+
+    <div class="menu-btn tip" data-placement="right" title="Settings" data-route="settings">
+        <div class="icon big-icon settings-icon"></div>
+    </div>
+
+    <div class="menu-btn tip" data-placement="right" title="Help & Info" data-route="info">
+        <div class="icon big-icon help-icon"></div>
+    </div>
+</div>
+
+<div id="content">
+
+    <div id="login-screen" class="screen">
+        <div class="login-inner">
+            <img class="tip" data-placement="top"
+                 title="Connect to track your following streams and get notifications when they go live" id="login-btn"
+                 src="../css/img/connect.png">
+        </div>
+    </div>
+
+    <div id="info-screen" class="screen spad">
+        <div class="screen-content">
+
+            <div class="info-section">
+                <h2 class="header"> Have any questions or found a bug?</h2>
+                <a class="js-tab"
+                   data-href="https://chrome.google.com/webstore/support/nlmbdmpjmlijibeockamioakdpmhjnpk#bug">Official
+                    support</a>
+            </div>
+
+            <div class="info-section">
+                <h2 class="header">Support "Twitch now"</h2>
+
+                <div>
+                    If you want to see other browsers versions of "twitch now" or just want to thank me click this:
+                    <br/>
+                    <br/>
+                    <a class="js-tab btn"
+                       data-href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=J679R4YTTQQEC">Donate</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="browse-game-screen" class="screen">
+        <div class="screen-content"></div>
+    </div>
+
+    <div id="browse-game-streams-screen" class="screen">
+        <div class="screen-content"></div>
+    </div>
+
+    <div id="stream-screen" class="screen">
+        <div class="screen-content"></div>
+    </div>
+
+    <div id="video-screen" class="screen">
+        <div class="screen-content"></div>
+    </div>
+
+    <div id="search-screen" class="screen">
+        <div id="search-menu" class="top-menu">
+            <div id="search-bar">
+                <input id="searchInput" type="text" maxlength="30" placeholder="Search">
+            </div>
+            <div id="search">
+                <div class="icon small-icon search-icon"></div>
+            </div>
+        </div>
+        <div class="screen-content"></div>
+    </div>
+
+    <div id="settings-screen" class="screen spad">
+        <div id="settings-container">
+        </div>
+
+
+        <div id="save-settings-btn" class="btn">Save settings</div>
+    </div>
+
+</div>
+
+
+<script type="text/javascript" src="../lib/3rd/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="../lib/3rd/bootstrap.min.js"></script>
+<script type="text/javascript" src="../lib/3rd/underscore.js"></script>
+<script type="text/javascript" src="../lib/3rd/backbone.js"></script>
+<script type="text/javascript" src="../lib/3rd/handlebars.js"></script>
+<script type="text/javascript" src="../lib/3rd/prettydate.js"></script>
+<script type="text/javascript" src="../dist/precompiled/hb_templates.js"></script>
+<script type="text/javascript" src="../lib/routes.js"></script>
+<script type="text/javascript" src="../lib/popup.js"></script>
+<script type="text/javascript" src="../lib/3rd/ga.js"></script>
+</body>
+</html>
