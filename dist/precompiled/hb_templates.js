@@ -3,51 +3,33 @@ this["Handlebars"]["templates"] = this["Handlebars"]["templates"] || {};
 
 this["Handlebars"]["templates"]["notification.html"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
-  var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this, blockHelperMissing=helpers.blockHelperMissing;
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n<div class=\"stream\" data-href=\"";
-  stack1 = depth0.links;
-  stack1 = stack1 == null || stack1 === false ? stack1 : stack1.oldlayout;
-  stack1 = typeof stack1 === functionType ? stack1() : stack1;
-  buffer += escapeExpression(stack1) + "\">\n    ";
-  stack1 = depth0.channel;
-  stack1 = stack1 == null || stack1 === false ? stack1 : stack1.display_name;
-  stack1 = typeof stack1 === functionType ? stack1() : stack1;
-  buffer += escapeExpression(stack1) + "\n</div>\n";
+  var buffer = "", stack1, foundHelper;
+  buffer += "\n    And ";
+  foundHelper = helpers.more;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.more; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + " more are live now\n    ";
   return buffer;}
 
 function program3(depth0,data) {
   
   var buffer = "", stack1, foundHelper;
-  buffer += "\nAnd ";
-  foundHelper = helpers.more;
-  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-  else { stack1 = depth0.more; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + " more are live now\n";
-  return buffer;}
-
-function program5(depth0,data) {
-  
-  var buffer = "", stack1, foundHelper;
-  buffer += "\n";
+  buffer += "\n    ";
   foundHelper = helpers.live;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.live; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "\n";
+  buffer += escapeExpression(stack1) + "\n    ";
   return buffer;}
 
-  foundHelper = helpers.streams;
-  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)}); }
-  else { stack1 = depth0.streams; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  if (!helpers.streams) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)}); }
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n";
+  buffer += "<div>\n    ";
   stack1 = depth0.more;
-  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(5, program5, data),fn:self.program(3, program3, data)});
+  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n</div>\n";
   return buffer;});
 
 this["Handlebars"]["templates"]["contextmenu.html"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -112,6 +94,18 @@ this["Handlebars"]["templates"]["stream.html"] = Handlebars.template(function (H
   stack1 = stack1 == null || stack1 === false ? stack1 : stack1.status;
   stack1 = typeof stack1 === functionType ? stack1() : stack1;
   buffer += escapeExpression(stack1) + "\n        </span>\n</div>\n";
+  return buffer;});
+
+this["Handlebars"]["templates"]["notificationstream.html"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"stream\">\n    ";
+  stack1 = depth0.channel;
+  stack1 = stack1 == null || stack1 === false ? stack1 : stack1.display_name;
+  stack1 = typeof stack1 === functionType ? stack1() : stack1;
+  buffer += escapeExpression(stack1) + "\n</div>";
   return buffer;});
 
 this["Handlebars"]["templates"]["video.html"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

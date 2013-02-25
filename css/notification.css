@@ -10,16 +10,16 @@ html {
     margin-left: 5px;
 }
 
-.output {
+#output {
     float: left;
     line-height: 1.3;
     padding: 10px;
 }
 
-.output .stream {
+#output .stream {
     cursor: pointer;
 }
 
-.output .stream:hover {
+#output .stream:hover {
     color: rgb(180, 180, 180);
 }
