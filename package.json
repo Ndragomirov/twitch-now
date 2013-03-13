@@ -1,0 +1,21 @@
+{
+  "name": "twitch-now",
+  "version": "0.0.0",
+  "description": "twitch now chrome ext",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-handlebars": "~0.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ndragomirov/twitch-now.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "readme.md"
+}
