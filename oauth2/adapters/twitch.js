@@ -10,7 +10,7 @@ OAuth2.adapter( 'twitch', {
     },
 
     redirectURL: function ( config ) {
-        return 'http://ndragomirov.github.com/twitch.html';
+        return 'http://ndragomirov.github.io/twitch.html';
     },
 
     parseAuthorizationCode: function ( url ) {
