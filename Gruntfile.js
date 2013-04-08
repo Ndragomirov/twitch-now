@@ -39,7 +39,7 @@ module.exports = function ( grunt ) {
 
     grunt.registerTask( 'zip', '', function () {
         var done = this.async();
-        var zip = exec( ' zip -r twitch_now.zip ./audio/* ./lib/* ./oauth2/* ./icons/* ./css/* ./dist/* ./manifest.json  ./html/* ', function ( error, stdout, stderr ) {
+        var zip = exec( ' zip -r twitch_now.zip ./_locales/* ./audio/* ./lib/* ./oauth2/* ./icons/* ./css/* ./dist/* ./manifest.json  ./html/* ', function ( error, stdout, stderr ) {
             console.log( 'stdout: ' + stdout );
             console.log( 'stderr: ' + stderr );
             if ( error !== null ) {
