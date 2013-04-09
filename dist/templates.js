@@ -18,19 +18,19 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 function program1(depth0,data) {
   
   
-  return "\n<div class=\"context-row js-follow\">follow</div>\n";
+  return "\n<div class=\"context-row js-follow\">__MSG_m22__</div>\n";
   }
 
   buffer += "<div class=\"context-row js-tab\" data-href=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.links),stack1 == null || stack1 === false ? stack1 : stack1.newlayout)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">new layout</div>\n<div class=\"context-row js-tab\" data-href=\""
+    + "\">__MSG_m16__</div>\n<div class=\"context-row js-tab\" data-href=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.links),stack1 == null || stack1 === false ? stack1 : stack1.oldlayout)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">old layout</div>\n<div class=\"context-row js-tab\" data-href=\""
+    + "\">__MSG_m15__</div>\n<div class=\"context-row js-tab\" data-href=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.links),stack1 == null || stack1 === false ? stack1 : stack1.popout)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">popout</div>\n<div class=\"context-row js-open-chat\">chat</div>\n<div class=\"context-row\" data-route=\"videos/";
+    + "\">__MSG_m17__</div>\n<div class=\"context-row js-open-chat\">__MSG_m20__</div>\n<div class=\"context-row\" data-route=\"videos/";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers['h-enc']),stack1 ? stack1.call(depth0, ((stack1 = depth0.channel),stack1 == null || stack1 === false ? stack1 : stack1.name), options) : helperMissing.call(depth0, "h-enc", ((stack1 = depth0.channel),stack1 == null || stack1 === false ? stack1 : stack1.name), options)))
-    + "\">videos</div>\n";
+    + "\">__MSG_m21__</div>\n";
   stack2 = helpers['if'].call(depth0, depth0.authorized, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   return buffer;
@@ -275,11 +275,11 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   if (stack2 = helpers.viewers) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.viewers; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + " viewers\n        </span>\n    <span class=\"stream-info\">\n            ";
+    + " __MSG_m45__\n        </span>\n    <span class=\"stream-info\">\n            ";
   if (stack2 = helpers.channels) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.channels; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + " channels\n    </span>\n</div>";
+    + " __MSG_m46__\n    </span>\n</div>";
   return buffer;
   });
 
@@ -361,7 +361,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   if (stack2 = helpers.viewers) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.viewers; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + " viewers\n        </span>\n    <span class=\"stream-info\" title=\""
+    + " __MSG_m45__\n        </span>\n    <span class=\"stream-info\" title=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.channel),stack1 == null || stack1 === false ? stack1 : stack1.status)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + " \">\n            "
     + escapeExpression(((stack1 = ((stack1 = depth0.channel),stack1 == null || stack1 === false ? stack1 : stack1.status)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -394,6 +394,6 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   if (stack2 = helpers.length) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.length; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + " minutes\n    </span>\n</div>";
+    + " _MSG_m47__\n    </span>\n</div>";
   return buffer;
   });
