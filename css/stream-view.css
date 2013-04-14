@@ -24,6 +24,12 @@
     -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25);
 }
 
+.stream .notify {
+    background: url("img/bubble.png") no-repeat;
+    width: 17px;
+    height: 17px;
+}
+
 .stream:hover .stream-title {
     color: rgb(238, 238, 238);
 }
