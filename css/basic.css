@@ -88,6 +88,8 @@ a.js-tab {
     background: rgb(18, 18, 18);
     box-shadow: inset -1px 0px 1px black;
     z-index: 999999;
+    position: fixed;
+    top: 31px;
 }
 
 #preloader {
@@ -111,17 +113,19 @@ a.js-tab {
 }
 
 #content {
-    height: 100%;
     width: 400px;
-    display: inline-block;
+    display: block;
     overflow-x: hidden;
     overflow-y: auto;
+    left: 40px;
+    top: 31px;
+    position: absolute;
+    height: 560px;
 }
 
 .screen {
     min-height: 100%;
     box-sizing: border-box;
-    padding-top: 28px;
     position: relative;
 }
 

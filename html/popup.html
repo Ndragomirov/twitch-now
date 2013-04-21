@@ -21,31 +21,19 @@
 </div>
 
 <div id="top-menu" class="top-menu">
-    <!--refresh-->
-    <div id="refresh-btn" title="__MSG_m27__" data-placement="left" class="top-menu-btn tip">
-        <div class="icon small-icon refresh-icon"></div>
-    </div>
-
     <!--filter-->
     <div id="filter-bar">
         <input id="filterInput" placeholder="__MSG_m28__" type="text" autofocus maxlength="20">
     </div>
 
-    <!--share-->
-    <div class="share">
-        <div data-placement="left" title="__MSG_m29__" class="js-tab social tw tip"
-             data-href="http://twitter.com/intent/tweet?text=Twitch%20Now%20is%20an%20awesome%20Chrome%20extension%20that%20alerts%20you%20when%20followed%20channels%20are%20online%20https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk"
-                ></div>
-        <div data-placement="left" title="__MSG_m30__" class="js-tab social fb tip"
-             data-href="https://www.facebook.com/sharer/sharer.php?u=https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk"
-                ></div>
-        <div data-placement="left" title="__MSG_m31__" class="js-tab social gp tip"
-             data-href="https://plus.google.com/share?url=https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk"
-                ></div>
-        <div data-placement="left" title="__MSG_m32__" class="js-tab social vk tip"
-             data-href="http://vk.com/share.php?url=https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk"
-                ></div>
+    <!--refresh-->
+    <div id="refresh-btn" title="__MSG_m27__" data-placement="left" class="top-menu-btn tip">
+        <div class="icon small-icon refresh-icon"></div>
     </div>
+
+    <div id="user-info">
+    </div>
+
 </div>
 
 <div id="menu">
@@ -55,6 +43,10 @@
 
     <div class="menu-btn tip" data-placement="right" title="__MSG_m34__" data-route="browse">
         <div class="icon big-icon joystick-icon"></div>
+    </div>
+
+    <div class="menu-btn tip" data-placement="right" title="__MSG_m51__" data-route="topstreams">
+        <div class="icon big-icon star-icon"></div>
     </div>
 
     <div class="menu-btn tip" data-placement="right" title="__MSG_m35__" data-route="search">
@@ -71,14 +63,6 @@
 </div>
 
 <div id="content">
-
-    <div id="login-screen" class="screen">
-        <div class="login-inner">
-            <img class="tip" data-placement="top"
-                 title="__MSG_m38__" id="login-btn"
-                 src="../css/img/connect.png">
-        </div>
-    </div>
 
     <div id="info-screen" class="screen spad">
         <div class="screen-content">
@@ -116,6 +100,10 @@
     </div>
 
     <div id="browse-game-screen" class="screen">
+        <div class="screen-content"></div>
+    </div>
+
+    <div id="topstreams-screen" class="screen">
         <div class="screen-content"></div>
     </div>
 

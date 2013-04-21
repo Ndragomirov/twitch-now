@@ -25,6 +25,10 @@
     background-image: url(./img/joystick.png);
 }
 
+.icon.star-icon {
+    background-image: url(./img/star.png);
+}
+
 .icon.refresh-icon {
     background-image: url(./img/refresh.png);
 }
@@ -61,13 +65,13 @@
 .top-menu {
     position: fixed;
     top: 0;
-    display: none;
     z-index: 1;
     background: rgb(18, 18, 18);
-    left: 39px;
+    left: 0;
     opacity: 0.9;
     height: 30px;
     right: 0;
+    border-bottom: 1px solid black;
 }
 
 #search-menu {
@@ -86,7 +90,7 @@
 #top-menu .top-menu-btn {
     display: inline-block;
     cursor: pointer;
-    float: right;
+    float: left;
     margin-top: 5px;
     margin-left: 5px;
     margin-right: 5px;
@@ -96,8 +100,8 @@
     display: inline-block;
     float: left;
     position: relative;
-    top: 3px;
-    left: 8px;
+    margin-top: 3px;
+    margin-left: 8px;
 }
 
 input[type="text"] {
@@ -116,6 +120,12 @@ input[type="text"] {
 
 #filter {
     width: 150px;
+}
+
+#logout-btn, #login-btn {
+    float: right;
+    margin-right: 10px;
+    margin-top: 3px;
 }
 
 #context-menu {

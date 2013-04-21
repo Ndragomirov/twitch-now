@@ -25,7 +25,7 @@
     "m24": { "message" : "share"},
     "m25": { "message" : "open in newtab"},
     "m26": { "message" : "open in popout"},
-    "m27": { "message" : "Refresh"},
+    "m27": { "message" : "Refresh tab"},
     "m28": { "message" : "Filter"},
     "m29": { "message" : "twitter share"},
     "m30": { "message" : "facebook share"},
@@ -48,5 +48,6 @@
     "m47": { "message" : "minutes"},
     "m48": { "message" : "Unable to load streams. Check your internet connection and try to update it manually."},
     "m49": { "message" : "No videos are available for this channel"},
-    "m50": { "message" : "No search results"}
+    "m50": { "message" : "No search results"},
+    "m51": { "message" : "Top streams"}
 }
