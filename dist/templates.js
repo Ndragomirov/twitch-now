@@ -425,6 +425,6 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   if (stack2 = helpers.length) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.length; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + " _MSG_m47__\n    </span>\n</div>";
+    + " __MSG_m47__\n    </span>\n</div>";
   return buffer;
   });

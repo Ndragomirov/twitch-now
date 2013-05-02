@@ -45,7 +45,7 @@
     cursor: pointer;
     padding: 10px 0px;
     opacity: 0.9;
-    -webkit-transition: 100ms linear;
+    -webkit-transition: background 100ms linear;
 }
 
 .menu-btn:hover {
