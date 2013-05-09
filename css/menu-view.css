@@ -115,7 +115,7 @@ input[type="text"] {
 }
 
 .share {
-    float: right;
+    margin-top: 30px;
 }
 
 #filter {
