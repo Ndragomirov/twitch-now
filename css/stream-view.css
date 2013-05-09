@@ -53,7 +53,7 @@
 
 .stream .stream-info {
     font-size: 11px;
-    color: rgb(119, 119, 119);
+    color: rgb(141, 141, 141);
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -63,7 +63,7 @@
 }
 
 .stream .stream-title {
-    color: rgb(170, 170, 170);
+    color: rgb(180, 180, 180);
     font-weight: bold;
     font-size: 12px;
 }
