@@ -49,5 +49,7 @@
     "m48": { "message" : "Unable to load streams. Check your internet connection and try to update it manually."},
     "m49": { "message" : "No videos are available for this channel"},
     "m50": { "message" : "No search results"},
-    "m51": { "message" : "Top streams"}
+    "m51": { "message" : "Top streams"},
+    "m52": { "message" : "Login"},
+    "m53": { "message" : "Logout"}
 }

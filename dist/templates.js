@@ -386,13 +386,13 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 function program1(depth0,data) {
   
   
-  return "\n<a class=\"btn\" id=\"logout-btn\">Logout</a>\n";
+  return "\n<a class=\"btn\" id=\"logout-btn\">__MSG_m53__</a>\n";
   }
 
 function program3(depth0,data) {
   
   
-  return "\n<a class=\"btn\" id=\"login-btn\">Login</a>\n";
+  return "\n<a class=\"btn\" id=\"login-btn\">__MSG_m52__</a>\n";
   }
 
   stack1 = helpers['if'].call(depth0, depth0.authenticated, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
