@@ -27,7 +27,7 @@ function program1(depth0,data) {
     + escapeExpression(((stack1 = ((stack1 = depth0.links),stack1 == null || stack1 === false ? stack1 : stack1.oldlayout)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\">__MSG_m15__</div>\n<div class=\"context-row js-tab\" data-href=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.links),stack1 == null || stack1 === false ? stack1 : stack1.popout)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\">__MSG_m17__</div>\n<div class=\"context-row js-notify\">notify</div>\n<div class=\"context-row js-open-chat\">__MSG_m20__</div>\n<div class=\"context-row\" data-route=\"videos/";
+    + "\">__MSG_m17__</div>\n<!--<div class=\"context-row js-notify\">notify</div>-->\n<div class=\"context-row js-open-chat\">__MSG_m20__</div>\n<div class=\"context-row\" data-route=\"videos/";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers['h-enc']),stack1 ? stack1.call(depth0, ((stack1 = depth0.channel),stack1 == null || stack1 === false ? stack1 : stack1.name), options) : helperMissing.call(depth0, "h-enc", ((stack1 = depth0.channel),stack1 == null || stack1 === false ? stack1 : stack1.name), options)))
     + "\">__MSG_m21__</div>\n";
