@@ -4,18 +4,17 @@ Twitch now chrome extension:
   https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk
   
   
-##Development build
+##How to build
 
-Install nodejs, gruntjs, grunt-contrib-handlebars, then type:
+Install nodejs, grunt, grunt-cli, npm 
 
 ```
+$ npm install
 $ grunt default
-```
-
-##Production build
-
-Zips all files to one archive and increments current version number
+$ grunt prod // Zips all files to one archive and increments current version number
 
 ```
-$ grunt prod
-```
+
+##Contributors
+
+* defroll(ru translation) 
