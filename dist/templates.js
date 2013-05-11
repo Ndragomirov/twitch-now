@@ -343,15 +343,6 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   return buffer;
   });
 
-this["Handlebars"]["templates"]["share.html"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; data = data || {};
-  
-
-
-  return "<!--share-->\n<!--<div class=\"share\">-->\n    <!--<div data-placement=\"left\" title=\"__MSG_m29__\" class=\"js-tab social tw tip\"-->\n         <!--data-href=\"http://twitter.com/intent/tweet?text=Twitch%20Now%20is%20an%20awesome%20Chrome%20extension%20that%20alerts%20you%20when%20followed%20channels%20are%20online%20https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk\"-->\n            <!--></div>-->\n    <!--<div data-placement=\"left\" title=\"__MSG_m30__\" class=\"js-tab social fb tip\"-->\n         <!--data-href=\"https://www.facebook.com/sharer/sharer.php?u=https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk\"-->\n            <!--></div>-->\n    <!--<div data-placement=\"left\" title=\"__MSG_m31__\" class=\"js-tab social gp tip\"-->\n         <!--data-href=\"https://plus.google.com/share?url=https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk\"-->\n            <!--></div>-->\n    <!--<div data-placement=\"left\" title=\"__MSG_m32__\" class=\"js-tab social vk tip\"-->\n         <!--data-href=\"http://vk.com/share.php?url=https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk\"-->\n            <!--></div>-->\n<!--</div>-->";
-  });
-
 this["Handlebars"]["templates"]["stream.html"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Handlebars.helpers; data = data || {};
