@@ -1,4 +1,4 @@
-    .pagePad {
+.pagePad {
     padding: 10px 20px;
 }
 
@@ -7,16 +7,17 @@
 }
 
 .control {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .control-wrapper {
-    display: inline-block;
+    display: block;
     position: relative;
+    margin-top: 5px;
 }
 
 .control-desc {
-    display: inline-block;
+    display: inline;
     cursor: pointer;
 }
 
@@ -59,13 +60,14 @@ input[type="radio"] {
 }
 
 input[type="checkbox"] + label span {
-    display: inline-block;
+    display: block;
     width: 19px;
     height: 16px;
     margin: -1px 4px 0 0;
     vertical-align: middle;
     background: url("img/checkbox.png") left top no-repeat;
     cursor: pointer;
+    float: left;
 }
 
 input[type="checkbox"]:checked + label span {
