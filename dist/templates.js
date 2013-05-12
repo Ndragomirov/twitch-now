@@ -353,7 +353,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
     + escapeExpression(((stack1 = ((stack1 = depth0.preview),stack1 == null || stack1 === false ? stack1 : stack1.small)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\"/>\n    </div>\n    <span class=\"stream-info stream-title\">\n            "
     + escapeExpression(((stack1 = ((stack1 = depth0.channel),stack1 == null || stack1 === false ? stack1 : stack1.display_name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\n    </span>\n    <span class=\"stream-info\">\n            ";
+    + "\n    </span>\n    <span class=\"stream-info stream-info-viewers\">\n            ";
   if (stack2 = helpers.game) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.game; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
@@ -361,7 +361,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   if (stack2 = helpers.viewers) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.viewers; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + " __MSG_m45__\n        </span>\n    <span class=\"stream-info\" title=\""
+    + " __MSG_m45__\n        </span>\n    <span class=\"stream-info stream-info-status\" title=\""
     + escapeExpression(((stack1 = ((stack1 = depth0.channel),stack1 == null || stack1 === false ? stack1 : stack1.status)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + " \">\n            "
     + escapeExpression(((stack1 = ((stack1 = depth0.channel),stack1 == null || stack1 === false ? stack1 : stack1.status)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
