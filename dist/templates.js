@@ -18,7 +18,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 function program1(depth0,data) {
   
   
-  return "\n<div class=\"context-row js-follow\">__MSG_m22__</div>\n";
+  return "\n<div class=\"context-row js-follow\">__MSG_m22__</div>\n<div class=\"context-row js-unfollow\">__MSG_m23__</div>\n";
   }
 
   buffer += "<div class=\"context-row js-tab\" data-href=\""
