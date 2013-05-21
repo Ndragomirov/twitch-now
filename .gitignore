@@ -1,2 +1,9 @@
-.idea
+.idea/*
 *.zip
+.hgignore
+.gitignore
+.git/*
+.hg/*
+node_modules/*
+fontello/*
+twitch_now.zip
