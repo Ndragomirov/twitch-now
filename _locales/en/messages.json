@@ -51,5 +51,6 @@
     "m50": { "message" : "No search results"},
     "m51": { "message" : "Top streams"},
     "m52": { "message" : "Login"},
-    "m53": { "message" : "Logout"}
+    "m53": { "message" : "Logout"},
+    "m54": { "message" : "View All Streams"}
 }
