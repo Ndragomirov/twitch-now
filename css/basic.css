@@ -4,13 +4,24 @@ html, body {
     height: 590px;
     background: rgba(30, 30, 30, 1);
     color: rgb(119, 119, 119);
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     font-size: 12px;
     overflow: hidden;
 }
 
 a {
     text-decoration: underline;
+}
+
+#content {
+    width: 400px;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto;
+    left: 40px;
+    top: 31px;
+    position: absolute;
+    height: 560px;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
 }
 
 ::-webkit-scrollbar {
@@ -131,16 +142,7 @@ a.js-tab {
     -webkit-transform: translate(-50%, -50%);
 }
 
-#content {
-    width: 400px;
-    display: block;
-    overflow-x: hidden;
-    overflow-y: auto;
-    left: 40px;
-    top: 31px;
-    position: absolute;
-    height: 560px;
-}
+
 
 .screen {
     min-height: 100%;

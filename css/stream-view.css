@@ -4,8 +4,7 @@
 }
 
 .stream {
-    background: url("img/row_arrow.png") no-repeat;
-    background-position: 375px center;
+    background: url("img/row_arrow.png") 375px center no-repeat;
     border-bottom: 1px solid rgb(0, 0, 0);
     border-top: 1px solid rgb(38, 38, 38);
     padding: 10px;
@@ -58,7 +57,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
     line-height: 1.3;
 }
 
