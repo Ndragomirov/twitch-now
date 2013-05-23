@@ -52,5 +52,8 @@
     "m51": { "message" : "Top streams"},
     "m52": { "message" : "Login"},
     "m53": { "message" : "Logout"},
-    "m54": { "message" : "View All Streams"}
+    "m54": { "message" : "View All Streams"},
+    "m55": { "message" : "Theme type"},
+    "m56": { "message" : "dark version"},
+    "m57": { "message" : "white version"}
 }
