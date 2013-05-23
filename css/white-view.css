@@ -28,6 +28,7 @@
 
 .white-version i[class^="icon-"] {
     color: rgb(75, 40, 140);
+    text-shadow: none;
 }
 
 .white-version .stream {
