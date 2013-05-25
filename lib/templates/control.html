@@ -16,10 +16,12 @@
         <div class="control-desc">{{desc}}</div>
         <div class="control-wrapper">
             {{#each opts}}
-            <label>
-                <input data-type="{{../this.type}}" data-id={{../this.id}} name="{{../this.id}}" type="radio"
-                       value="{{id}}" {{h-checked this ../this}}>
-                <span class="radio-tip">{{name}}</span>
+            <input data-type="{{../this.type}}" id="{{id}}" data-id={{../this.id}} name="{{../this.id}}" type="radio"
+                   value="{{id}}" {{h-checked this ../this}}>
+
+            <label for="{{id}}">
+                <span></span>
+                <div class="radio-tip">{{name}}</div>
             </label>
             <br/>
             {{/each}}

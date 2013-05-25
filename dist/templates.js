@@ -120,24 +120,32 @@ function program4(depth0,data) {
 function program5(depth0,data,depth1) {
   
   var buffer = "", stack1, stack2, options;
-  buffer += "\n            <label>\n                <input data-type=\""
+  buffer += "\n            <input data-type=\""
     + escapeExpression(((stack1 = depth1.type),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" id=\"";
+  if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + "\" data-id="
     + escapeExpression(((stack1 = depth1.id),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + " name=\""
     + escapeExpression(((stack1 = depth1.id),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "\" type=\"radio\"\n                       value=\"";
+    + "\" type=\"radio\"\n                   value=\"";
   if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
     + "\" ";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers['h-checked']),stack1 ? stack1.call(depth0, depth0, depth1, options) : helperMissing.call(depth0, "h-checked", depth0, depth1, options)))
-    + ">\n                <span class=\"radio-tip\">";
+    + ">\n\n            <label for=\"";
+  if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "\">\n                <span></span>\n                <div class=\"radio-tip\">";
   if (stack2 = helpers.name) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.name; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
-    + "</span>\n            </label>\n            <br/>\n            ";
+    + "</div>\n            </label>\n            <br/>\n            ";
   return buffer;
   }
 
