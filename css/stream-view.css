@@ -1,8 +1,3 @@
-.switcher .switch-tab {
-    width: 50%;
-    display: inline-block;
-}
-
 .stream {
     background: url("img/row_arrow.png") 375px center no-repeat;
     border-bottom: 1px solid rgb(0, 0, 0);
@@ -29,6 +24,12 @@
     height: 17px;
 }
 
+.stream .stream-title {
+    color: rgb(180, 180, 180);
+    font-weight: bold;
+    font-size: 12px;
+}
+
 .stream:hover .stream-title {
     color: rgb(238, 238, 238);
 }
@@ -46,6 +47,7 @@
 .stream-preview.game-preview {
     height: 42px;
 }
+
 .stream .stream-preview img {
     width: 70px;
 }
@@ -58,10 +60,4 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     line-height: 1.3;
-}
-
-.stream .stream-title {
-    color: rgb(180, 180, 180);
-    font-weight: bold;
-    font-size: 12px;
 }
