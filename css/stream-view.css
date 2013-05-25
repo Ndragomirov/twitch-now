@@ -5,6 +5,7 @@
     padding: 10px;
     cursor: pointer;
     min-height: 40px;
+    font-size: 11px;
 }
 
 .stream:hover {
@@ -53,7 +54,6 @@
 }
 
 .stream .stream-info {
-    font-size: 11px;
     color: rgb(141, 141, 141);
     display: block;
     overflow: hidden;
