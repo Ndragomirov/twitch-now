@@ -1,6 +1,7 @@
 OAuth2.adapter( 'googleDrive', {
     authorizationCodeURL: function ( config ) {
         return ('https://accounts.google.com/o/oauth2/auth?response_type=code&' +
+            'access_type=offline&' +
             'client_id={{CLIENT_ID}}&' +
             'redirect_uri={{REDIRECT_URI}}&' +
             'scope={{API_SCOPE}}')
@@ -31,20 +32,21 @@ OAuth2.adapter( 'googleDrive', {
 
     accessTokenParams: function ( authorizationCode, config ) {
         return {
-            code: authorizationCode,
-            client_id: config.clientId,
+            code         : authorizationCode,
+            client_id    : config.clientId,
             client_secret: config.clientSecret,
-            redirect_uri: this.redirectURL(config),
-            grant_type: 'authorization_code'
-          };
+            redirect_uri : this.redirectURL( config ),
+            grant_type   : 'authorization_code'
+        };
     },
 
     parseAccessToken: function ( response ) {
         console.log( "parse response", response );
         var parsedResponse = JSON.parse( response );
         return {
-            accessToken: parsedResponse.access_token,
-            expiresIn  : parsedResponse.expires_in
+            accessToken : parsedResponse.access_token,
+            refreshToken: parsedResponse.refresh_token,
+            expiresIn   : parsedResponse.expires_in
         };
     }
 } );
