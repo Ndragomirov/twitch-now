@@ -55,5 +55,8 @@
     "m54": { "message" : "View All Streams"},
     "m55": { "message" : "Theme type"},
     "m56": { "message" : "dark version"},
-    "m57": { "message" : "white version"}
+    "m57": { "message" : "white version"},
+    "m58": { "message": "github repo"},
+    "m59": { "message": "Help to translate \"Twitch Now\" "},
+    "m60": { "message": "If you want to help to translate, checkout \"Twitch Now\" github repo"}
 }
