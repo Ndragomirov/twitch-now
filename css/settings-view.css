@@ -52,6 +52,7 @@ input[type="checkbox"] + label span, input[type="radio"] + label span {
     margin: -1px 4px 0 0;
     vertical-align: middle;
     cursor: pointer;
+    float: left;
 }
 
 input[type="radio"] + label span {
