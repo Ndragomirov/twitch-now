@@ -17,5 +17,6 @@ $ grunt prod // Zips all files to one archive and increments current version num
 
 ##Contributors
 
-* [Jack0r](https://github.com/Jack0r) (german translation)
+* [agua2o](https://github.com/agua2o) (pt-br translation)
+* [Jack0r](https://github.com/Jack0r) (de translation)
 * [defroll](https://github.com/defroll) (ru translation) 
