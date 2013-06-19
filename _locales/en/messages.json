@@ -59,5 +59,6 @@
     "m58": { "message" : "github repo"},
     "m59": { "message" : "Help to translate \"Twitch Now\" "},
     "m60": { "message" : "If you want to help to translate, checkout \"Twitch Now\" github repo"},
-    "m61": { "message" : "Twitch.tv channel locale"}
+    "m61": { "message" : "Twitch.tv channel locale"},
+    "m62": { "message" : "Window height" }
 }
