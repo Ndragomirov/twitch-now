@@ -22,7 +22,7 @@
     "m21": { "message" : "videos"},
     "m22": { "message" : "follow"},
     "m23": { "message" : "unfollow"},
-    "m24": { "message" : "share"},
+    "m24": { "message" : "Share"},
     "m25": { "message" : "open in newtab"},
     "m26": { "message" : "open in popout"},
     "m27": { "message" : "Refresh tab"},
