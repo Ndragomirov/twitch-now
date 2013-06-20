@@ -19,6 +19,34 @@
     cursor: pointer;
 }
 
+
+select {
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(130, 102, 182)), to(rgb(83, 55, 135)));
+    background: linear-gradient(top, rgb(130, 102, 182), rgb(83, 55, 135));
+    background-color: rgb(106, 78, 158);
+    background-image: url(img/down.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+    border-top: 1px solid rgb(91, 63, 143);
+    border-left: 1px solid rgb(65, 39, 113);
+    border-right: 1px solid rgb(65, 39, 113);
+    border-bottom: 1px solid rgb(42, 20, 83);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.15);
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
+    color: white;
+
+    -webkit-appearance: none;
+    -webkit-text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.15);
+    -webkit-padding-end: 20px;
+    -webkit-padding-start: 5px;
+}
+
 input[type="range"] {
     -webkit-appearance: none;
     background-color: rgb(185, 163, 277);

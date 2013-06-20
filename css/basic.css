@@ -163,14 +163,6 @@ a.js-tab {
     top: 10px;
 }
 
-.twitch-logo {
-    width: 80px;
-    height: 34px;
-    background: url("img/twitch_logo.png") no-repeat;
-    background-size: cover;
-    display: inline-block;
-}
-
 .btn {
     padding: 5px 10px;
     border-radius: 3px;
@@ -187,10 +179,11 @@ a.js-tab {
     border-right: 1px solid rgb(65, 39, 113);
     border-bottom: 1px solid rgb(42, 20, 83);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.15);
-    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.15);
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
-    -webkit-text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
     color: white;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.15);
+    -webkit-text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
+
 }
 
 .btn:active {
