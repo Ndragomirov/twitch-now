@@ -61,5 +61,6 @@
     "m60": { "message" : "If you want to help to translate, checkout \"Twitch Now\" github repo"},
     "m61": { "message" : "Twitch.tv channel locale"},
     "m62": { "message" : "Window height" },
-    "m63": { "message" : "no locale" }
+    "m63": { "message" : "no locale" },
+    "m64": { "message" : "simple view(no images, titles, etc)"}
 }
