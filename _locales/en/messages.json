@@ -63,5 +63,9 @@
     "m62": { "message" : "Window height" },
     "m63": { "message" : "no locale" },
     "m64": { "message" : "Contributors" },
-    "m65": { "message" : "simple view(no images, titles, etc)"}
+    "m65": { "message" : "simple view(no images, titles, etc)"},
+    "m66": { "message" : "Default tab"},
+    "m67": { "message" : "favorites"},
+    "m68": { "message" : "games"},
+    "m69": { "message" : "topstreams"}
 }
