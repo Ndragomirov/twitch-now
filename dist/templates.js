@@ -7,7 +7,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   
 
 
-  return "<div class=\"context-row\" >pin this game</div>\n";
+  return "<div class=\"context-row\">__MSG_m70__</div>\n";
   });
 
 this["Handlebars"]["templates"]["contextstreammenu.html"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
