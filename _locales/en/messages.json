@@ -67,5 +67,6 @@
     "m66": { "message" : "Default tab"},
     "m67": { "message" : "favorites"},
     "m68": { "message" : "games"},
-    "m69": { "message" : "topstreams"}
+    "m69": { "message" : "topstreams"},
+    "m70": { "message" : "pin this game"}
 }
