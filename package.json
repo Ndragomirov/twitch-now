@@ -1,11 +1,11 @@
 {
   "name": "twitch-now",
   "version": "0.0.0",
-  "description": "twitch now chrome ext",
+  "description": "Twitch now chrome extension:   https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk",
   "main": "Gruntfile.js",
   "dependencies": {
     "grunt": "~0.4.1",
-    "grunt-contrib-handlebars": "~0.3.3"
+    "grunt-contrib-handlebars": "~0.5.10"
   },
   "devDependencies": {},
   "scripts": {
@@ -13,9 +13,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ndragomirov/twitch-now.git"
+    "url": "git://github.com/Ndragomirov/twitch-now.git"
   },
   "author": "",
   "license": "BSD",
-  "readmeFilename": "readme.md"
+  "readmeFilename": "readme.md",
+  "gitHead": "255dc9e13b0116d2923b6de0d0965db35a79a449",
+  "bugs": {
+    "url": "https://github.com/Ndragomirov/twitch-now/issues"
+  }
 }
