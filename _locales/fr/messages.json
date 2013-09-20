@@ -67,5 +67,6 @@
     "m66": { "message" : "Onglet par défaut"},
     "m67": { "message" : "favoris"},
     "m68": { "message" : "jeux"},
-    "m69": { "message" : "streams populaires"}
+    "m69": { "message" : "streams populaires"},
+    "m70": { "message" : "épingler ce jeu"}
 }
