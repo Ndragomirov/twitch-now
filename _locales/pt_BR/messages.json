@@ -62,5 +62,11 @@
     "m61": { "message" : "Selecione o idioma para abrir as páginas do Twitch.tv:"},
     "m62": { "message" : "Largura da janela" },
     "m63": { "message" : "não especificar idioma (Inglês)" },
-    "m64": { "message" : "Contribuintes:" }
+    "m64": { "message" : "Contribuintes:" },
+    "m65": { "message" : "Exibição simples (sem imagens, títulos, etc)" },
+    "m66": { "message" : "Aba padrão:" },
+    "m67": { "message" : "favoritos" },
+    "m68": { "message" : "jogos" },
+    "m69": { "message" : "melhores transmissões" },
+    "m70": { "message" : "destacar este jogo" }
 }
