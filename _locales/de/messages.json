@@ -58,5 +58,15 @@
     "m57": { "message" : "weiße Version"},
     "m58": { "message" : "Besuche github"},
     "m59": { "message" : "Helfen Sie \"Twitch Now\" "},
-    "m60": { "message" : "Wenn Sie helfen möchten, \"Twitch Now\" zu übersetzen, besuchen sie unser Github Repo"}
+    "m60": { "message" : "Wenn Sie helfen möchten, \"Twitch Now\" zu übersetzen, besuchen sie unser Github Repo"},
+    "m61": { "message" : "Twitch.tv Channel Sprache"},
+    "m62": { "message" : "Fenster höhe"},
+    "m63": { "message" : "keine Sprache"},
+    "m64": { "message" : "Mitwirkende"},
+    "m65": { "message" : "einfache Ansicht(keine Bilder,Titel,etc.)"},
+    "m66": { "message" : "Standard tab"},
+    "m67": { "message" : "Favoriten"},
+    "m68": { "message" : "Spiele"},
+    "m69": { "message" : "Top Streams"},
+    "m70": { "message" : "dieses Spiel anheften"}
 }
