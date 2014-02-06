@@ -2,7 +2,7 @@
     "m1" : { "message" : "Sortuj stream według"},
     "m2" : { "message" : "Otworz stream w"},
     "m3" : { "message" : "Otworz chat w"},
-    "m4" : { "message" : "Show badge with live following streams count"},
+    "m4" : { "message" : "Pokaż liczbę ilość aktualnie stramujących osób na ikonie rozszerzenia"},
     "m5" : { "message" : "Pokaż powiadomienie kiedy osoba którą śledze zacznie streamować"},
     "m6" : { "message" : "Automatycznie zamknij powiadomienie kiedy"},
     "m7" : { "message" : "Zagraj powiadomienie dzwiękowe"},
