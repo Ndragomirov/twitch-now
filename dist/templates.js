@@ -377,8 +377,10 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"stream\">\n    <div class=\"stream-preview\">\n        <img class=\"lazy\" data-original=\""
-    + escapeExpression(((stack1 = ((stack1 = depth0.preview),stack1 == null || stack1 === false ? stack1 : stack1.small)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+  buffer += "<div class=\"stream\">\n    <div class=\"stream-preview\">\n        <img class=\"lazy\" data-original=\"";
+  if (stack1 = helpers.preview) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.preview; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
     + "\"/>\n    </div>\n    <span class=\"stream-info stream-title\">\n            "
     + escapeExpression(((stack1 = ((stack1 = depth0.channel),stack1 == null || stack1 === false ? stack1 : stack1.display_name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\n    </span>\n    <span class=\"stream-info stream-info-viewers\">\n            ";
