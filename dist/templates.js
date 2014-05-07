@@ -21,7 +21,7 @@ function program1(depth0,data) {
   return "\n<div class=\"context-row js-follow\">__MSG_m22__</div>\n<div class=\"context-row js-unfollow\">__MSG_m23__</div>\n";
   }
 
-  buffer += "<div class=\"context-row js-open-stream\" data-type=\"newlayout\">__MSG_m16__</div>\n<div class=\"context-row js-open-stream\" data-type=\"oldlayout\">__MSG_m15__</div>\n<div class=\"context-row js-open-stream\" data-type=\"popout\">__MSG_m17__</div>\n<!--<div class=\"context-row js-notify\">notify</div>-->\n<div class=\"context-row js-open-chat\">__MSG_m20__</div>\n<div class=\"context-row\" data-route=\"videos/";
+  buffer += "<div class=\"context-row js-open-stream\" data-type=\"newlayout\">__MSG_m71__</div>\n<div class=\"context-row js-open-stream\" data-type=\"popout\">__MSG_m17__</div>\n<div class=\"context-row js-open-chat\">__MSG_m20__</div>\n<div class=\"context-row\" data-route=\"videos/";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers['h-enc'] || depth0['h-enc']),stack1 ? stack1.call(depth0, ((stack1 = depth0.channel),stack1 == null || stack1 === false ? stack1 : stack1.name), options) : helperMissing.call(depth0, "h-enc", ((stack1 = depth0.channel),stack1 == null || stack1 === false ? stack1 : stack1.name), options)))
     + "\">__MSG_m21__</div>\n";

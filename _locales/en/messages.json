@@ -68,5 +68,6 @@
     "m67": { "message" : "favorites"},
     "m68": { "message" : "games"},
     "m69": { "message" : "topstreams"},
-    "m70": { "message" : "pin this game"}
+    "m70": { "message" : "pin this game"},
+    "m71": { "message" : "open stream"}
 }
