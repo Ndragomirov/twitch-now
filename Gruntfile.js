@@ -80,7 +80,7 @@ module.exports = function (grunt){
       var l = version.length;
       version[l - 1] = parseInt(version[l - 1], 10) + 1;
       manifest.version = version.join(".");
-      fs.writeFileSync("./manifest.json", JSON.stringify(manifest));
+      fs.writeFileSync("./manifest.json", JSON.stringify(manifest, null, 2));
     } catch (e) {
       grunt.log.error(e);
       return false;
