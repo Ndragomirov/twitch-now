@@ -37,7 +37,9 @@
     }
   ],
   "browser_action"          : {
-    "default_icon" : "icons/48_1.png",
+    "default_icon" : {
+      "38": "icons/38_2.png"
+    },
     "default_popup": "html/popup.html"
   },
   "permissions"             : ["storage", "https://*/*", "http://*/*", "tabs"]

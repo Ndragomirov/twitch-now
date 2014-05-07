@@ -24,7 +24,8 @@
     "128": "icons/128_1.png"
   },
   "web_accessible_resources": ["css/*", "dist/*", "oauth2/*"],
-  "content_scripts"         : [
+
+  "content_scripts": [
     {
       "matches": ["http://ndragomirov.github.io/twitch*"],
       "js"     : ["oauth2/oauth2_inject.js"],
@@ -36,9 +37,11 @@
       "run_at" : "document_start"
     }
   ],
-  "browser_action"          : {
-    "default_icon" : "icons/48_1.png",
+  "browser_action" : {
+    "default_icon" : {
+      "38": "icons/38_2.png"
+    },
     "default_popup": "html/popup.html"
   },
-  "permissions"             : ["storage", "background", "https://*/*", "http://*/*", "notifications", "tabs"]
+  "permissions"    : ["storage", "background", "https://*/*", "http://*/*", "notifications", "tabs"]
 }
