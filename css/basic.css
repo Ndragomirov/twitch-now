@@ -192,3 +192,23 @@ a.js-tab {
     background: linear-gradient(top, rgb(85, 60, 135), rgb(55, 35, 100));
     background-color: rgb(70, 47, 117);
 }
+
+.user-panel {
+    color: whitesmoke;
+    vertical-align: middle;
+    float: right;
+    margin-right: 10px;
+    line-height: 30px;
+}
+
+.user-panel span {
+    font-weight: bold;
+    color: rgb(238, 238, 238);
+}
+
+.user-panel img.lazy {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 3px;
+}

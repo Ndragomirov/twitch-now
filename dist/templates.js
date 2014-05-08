@@ -402,18 +402,27 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 this["Handlebars"]["templates"]["user.html"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  var stack1, self=this;
+  var stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
   
-  
-  return "\n<a class=\"btn\" id=\"logout-btn\">__MSG_m53__</a>\n";
+  var buffer = "", stack1;
+  buffer += "\n<a class=\"btn\" title=\"__MSG_m53__\" id=\"logout-btn\">__MSG_m53__</a>\n<div class=\"user-panel\">\n    <img class=\"lazy\" src=\"";
+  if (stack1 = helpers.logo) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.logo; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\"/>\n    <span title=\"__MSG_m72__\">";
+  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</span>\n</div>\n";
+  return buffer;
   }
 
 function program3(depth0,data) {
   
   
-  return "\n<a class=\"btn\" id=\"login-btn\">__MSG_m52__</a>\n";
+  return "\n<a class=\"btn\" title=\"__MSG_m52__\" id=\"login-btn\">__MSG_m52__</a>\n";
   }
 
   stack1 = helpers['if'].call(depth0, depth0.authenticated, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
