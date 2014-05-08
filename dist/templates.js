@@ -407,7 +407,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n<a class=\"btn\" title=\"__MSG_m53__\" id=\"logout-btn\">__MSG_m53__</a>\n<div class=\"user-panel\">\n    <img class=\"lazy\" src=\"";
+  buffer += "\n<a class=\"btn logout-btn\" title=\"__MSG_m53__\" id=\"logout-btn\"><i class=\"icon-off\"></i></a>\n<div class=\"user-panel\">\n    <img class=\"lazy\" src=\"";
   if (stack1 = helpers.logo) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.logo; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)

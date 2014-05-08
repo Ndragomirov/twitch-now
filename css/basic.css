@@ -92,8 +92,7 @@ a {
     cursor: pointer;
     opacity: 0.9;
     color: white;
-    font-size: 3em;
-    margin-right: 16px;
+    font-size: 2.5em;
 }
 
 .social:hover {
@@ -191,6 +190,10 @@ a.js-tab {
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(85, 60, 135)), to(rgb(55, 35, 100)));
     background: linear-gradient(top, rgb(85, 60, 135), rgb(55, 35, 100));
     background-color: rgb(70, 47, 117);
+}
+
+.btn i {
+    color: rgb(255, 255, 255) !important;
 }
 
 .user-panel {
