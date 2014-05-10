@@ -286,6 +286,27 @@ function program14(depth0,data) {
   else { return ''; }
   });
 
+this["Handlebars"]["templates"]["donation.html"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
+
+
+  buffer += "<li>";
+  if (stack1 = helpers.L_NAME) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.L_NAME; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + " ";
+  if (stack1 = helpers.L_AMT) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.L_AMT; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1);
+  if (stack1 = helpers.L_CURRENCYCODE) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.L_CURRENCYCODE; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</li>";
+  return buffer;
+  });
+
 this["Handlebars"]["templates"]["game.html"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
