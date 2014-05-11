@@ -1,0 +1,3 @@
+[submodule "chrome-platform-analytics"]
+	path = chrome-platform-analytics
+	url = git@github.com:GoogleChrome/chrome-platform-analytics.git
