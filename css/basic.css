@@ -13,6 +13,10 @@ body {
     overflow: hidden;
 }
 
+body.direction-rtl {
+    direction: rtl;
+}
+
 a {
     text-decoration: underline;
 }

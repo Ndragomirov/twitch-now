@@ -1,0 +1,47 @@
+.direction-rtl #content {
+    left: 0px;
+    right: 40px;
+}
+
+.direction-rtl .stream .stream-preview {
+    float: right;
+    margin-left: 10px;
+    margin-right: 0px;
+}
+
+.direction-rtl .menu-btn .icon {
+    margin-left: 0px;
+    margin-right: 4px;
+}
+
+.direction-rtl input[type="checkbox"] + label span, .direction-rtl input[type="radio"] + label span {
+    margin: -1px 0 0 4px;
+    float: right;
+}
+
+.direction-rtl select {
+    background-position: left center;
+}
+
+.direction-rtl #filter-bar, .direction-rtl #search-bar {
+    float: right;
+    margin-left: 0px;
+    margin-right: 8px;
+}
+
+.direction-rtl #top-menu .top-menu-btn {
+    float: right;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.direction-rtl #logout-btn, .direction-rtl #login-btn {
+    float: left;
+    margin-left: 10px;
+    margin-right: 0px;
+}
+
+.direction-rtl .user-panel {
+    float: left;
+    margin-left: 10px;
+}
