@@ -45,3 +45,8 @@
     float: left;
     margin-left: 10px;
 }
+
+.direction-rtl .stream {
+    background-position: 10px center;
+    background-repeat: no-repeat;
+}
