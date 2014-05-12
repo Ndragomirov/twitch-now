@@ -12,7 +12,7 @@
       "oauth2/oauth2.js",
       "oauth2/adapters/twitch.js",
       "lib/twitch-api.js",
-      "lib/model.js",
+      "lib/app.js",
       "chrome-platform-analytics/google-analytics-bundle.js",
       "lib/cpa.js"
     ]
