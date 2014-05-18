@@ -23,7 +23,8 @@ module.exports = function (grunt){
     },
     version   : {
       options  : {
-        pkg: "version.json"
+        pkg   : "version.json",
+        prefix: '[\'"]version[\'"]?\\s*[:=]\\s*[\'"]'
       },
       manifests: {
         src: ['manifests/opera.json', 'manifests/chrome.json']
@@ -70,7 +71,7 @@ module.exports = function (grunt){
 
   grunt.registerTask('zip', '', function (){
     var done = this.async();
-    var zip = exec(' zip -r twitch_now.zip ./_locales/* ./audio/* ./lib/* ./oauth2/* ./icons/* ./css/* ./dist/* ./manifest.json  ./html/* ', function (error, stdout, stderr){
+    var zip = exec(' zip -r twitch_now.zip ./chrome-platform-analytics/google-analytics-bundle.js ./_locales/* ./audio/* ./lib/* ./oauth2/* ./icons/* ./css/* ./dist/* ./manifest.json  ./html/* ', function (error, stdout, stderr){
       console.log('stdout: ' + stdout);
       console.log('stderr: ' + stderr);
       if ( error !== null ) {
