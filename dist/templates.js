@@ -40,7 +40,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (stack1 = helpers.html_url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.html_url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">\n    <img class=\"contributor-avatar lazy tip\"\n         title=\"";
+    + "\">\n    <img class=\"user-avatar lazy tip\"\n         title=\"";
   if (stack1 = helpers.login) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.login; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -292,18 +292,23 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<li>";
+  buffer += "<div class=\"donation\">\n    <img class=\"user-avatar lazy\"\n         src=\"http://www.gravatar.com/avatar/";
+  if (stack1 = helpers.avatar) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.avatar; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\"\n         style=\"\">\n    <span> ";
   if (stack1 = helpers.L_NAME) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.L_NAME; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + " ";
   if (stack1 = helpers.L_AMT) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.L_AMT; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1);
+  buffer += escapeExpression(stack1)
+    + " ";
   if (stack1 = helpers.L_CURRENCYCODE) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.L_CURRENCYCODE; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</li>";
+    + " </span>\n</div>";
   return buffer;
   });
 
