@@ -26,6 +26,10 @@
     margin-bottom: 10px;
 }
 
+.white-version .donation span {
+    color: rgba(0, 0, 0, 1);
+}
+
 .white-version i[class^="icon-"] {
     color: rgb(75, 40, 140);
     text-shadow: none;
