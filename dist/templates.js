@@ -63,63 +63,69 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
 function program1(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n<div class=\"control\">\n    <label>\n        ";
-  stack1 = helpers['if'].call(depth0, depth0.range, {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
+  var buffer = "", stack1, stack2, options;
+  buffer += "\n<div class=\"control control-disabled-";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
+    + "\">\n    <label>\n        ";
+  stack2 = helpers['if'].call(depth0, depth0.range, {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n\n        ";
-  stack1 = helpers['if'].call(depth0, depth0.radio, {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
+  stack2 = helpers['if'].call(depth0, depth0.radio, {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n\n        ";
-  stack1 = helpers['if'].call(depth0, depth0.button, {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
+  stack2 = helpers['if'].call(depth0, depth0.button, {hash:{},inverse:self.noop,fn:self.program(7, program7, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n\n        ";
-  stack1 = helpers['if'].call(depth0, depth0.checkbox, {hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
+  stack2 = helpers['if'].call(depth0, depth0.checkbox, {hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n\n        ";
-  stack1 = helpers['if'].call(depth0, depth0.select, {hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
+  stack2 = helpers['if'].call(depth0, depth0.select, {hash:{},inverse:self.noop,fn:self.program(11, program11, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n\n        ";
-  stack1 = helpers['if'].call(depth0, depth0.text, {hash:{},inverse:self.noop,fn:self.program(14, program14, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
+  stack2 = helpers['if'].call(depth0, depth0.text, {hash:{},inverse:self.noop,fn:self.program(14, program14, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n    </label>\n</div>\n";
   return buffer;
   }
 function program2(depth0,data) {
   
-  var buffer = "", stack1;
+  var buffer = "", stack1, stack2, options;
   buffer += "\n        <div class=\"control-desc\">";
   if (stack1 = helpers.desc) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.desc; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</div>\n        <div class=\"control-wrapper\">\n            <input data-type=";
-  if (stack1 = helpers.type) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.type; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+    + "</div>\n        <div class=\"control-wrapper\">\n            <input disabled=\"";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
+    + "\" data-type=";
+  if (stack2 = helpers.type) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.type; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + " data-id=";
-  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + " type=\"range\" value=\"";
-  if (stack1 = helpers.value) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.value; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.value) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.value; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + "\" min=\"";
-  if (stack1 = helpers.min) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.min; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.min) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.min; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + "\" max=\"";
-  if (stack1 = helpers.max) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.max; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.max) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.max; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + "\">\n\n            <div class=\"range-helper\">\n                <span class=\"range-helper-value\"> ";
-  if (stack1 = helpers.value) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.value; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.value) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.value; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + " </span> <span>";
-  if (stack1 = helpers.tip) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.tip; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.tip) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.tip; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + "</span>\n            </div>\n        </div>\n        ";
   return buffer;
   }
@@ -140,7 +146,10 @@ function program4(depth0,data) {
 function program5(depth0,data,depth1) {
   
   var buffer = "", stack1, stack2, options;
-  buffer += "\n            <input data-type=\""
+  buffer += "\n            <input disabled=\"";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
+    + "\" data-type=\""
     + escapeExpression(((stack1 = depth1.type),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" id=\"";
   if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
@@ -171,72 +180,81 @@ function program5(depth0,data,depth1) {
 
 function program7(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n        <div class=\"control-wrapper\">\n            <input data-type=";
-  if (stack1 = helpers.type) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.type; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  var buffer = "", stack1, stack2, options;
+  buffer += "\n        <div class=\"control-wrapper\">\n            <input disabled=\"";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
+    + "\" data-type=";
+  if (stack2 = helpers.type) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.type; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + " data-id=";
-  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + " class=\"tviggr-dark-btn\" type=\"button\" value=\"";
-  if (stack1 = helpers.desc) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.desc; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.desc) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.desc; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + "\">\n        </div>\n        ";
   return buffer;
   }
 
 function program9(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n        <div class=\"control-wrapper\">\n            <!--id нужен для связывания label и checkbox при нажатии -->\n            <input type=\"checkbox\" id=\"";
-  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  var buffer = "", stack1, stack2, options;
+  buffer += "\n        <div class=\"control-wrapper\">\n            <input disabled=\"";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
+    + "\" type=\"checkbox\" id=\"";
+  if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + "\" data-type=";
-  if (stack1 = helpers.type) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.type; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.type) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.type; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + " data-id=";
-  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + " ";
-  if (stack1 = helpers['h-checked']) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0['h-checked']; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers['h-checked']) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0['h-checked']; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + " />\n            <label for=\"";
-  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + "\">\n                <span></span>\n\n                <div class=\"control-desc\">";
-  if (stack1 = helpers.desc) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.desc; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.desc) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.desc; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + "</div>\n            </label>\n        </div>\n        ";
   return buffer;
   }
 
 function program11(depth0,data) {
   
-  var buffer = "", stack1;
+  var buffer = "", stack1, stack2, options;
   buffer += "\n        <div class=\"control-desc\">";
   if (stack1 = helpers.desc) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.desc; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</div>\n        <div class=\"control-wrapper\">\n            <select data-type=";
-  if (stack1 = helpers.type) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.type; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+    + "</div>\n        <div class=\"control-wrapper\">\n            <select disabled=\"";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
+    + "\" data-type=";
+  if (stack2 = helpers.type) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.type; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + " data-id=";
-  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + ">\n                ";
-  stack1 = helpers.each.call(depth0, depth0.opts, {hash:{},inverse:self.noop,fn:self.programWithDepth(12, program12, data, depth0),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
+  stack2 = helpers.each.call(depth0, depth0.opts, {hash:{},inverse:self.noop,fn:self.programWithDepth(12, program12, data, depth0),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n            </select>\n\n        </div>\n        ";
   return buffer;
   }
@@ -260,23 +278,26 @@ function program12(depth0,data,depth1) {
 
 function program14(depth0,data) {
   
-  var buffer = "", stack1;
+  var buffer = "", stack1, stack2, options;
   buffer += "\n        <div class=\"control-desc\">";
   if (stack1 = helpers.desc) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.desc; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</div>\n        <div class=\"control-wrapper\">\n            <input data-type=";
-  if (stack1 = helpers.type) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.type; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+    + "</div>\n        <div class=\"control-wrapper\">\n            <input disabled=\"";
+  options = {hash:{},data:data};
+  buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
+    + "\" data-type=";
+  if (stack2 = helpers.type) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.type; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + " data-id=";
-  if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + " type=\"text\" value=\"";
-  if (stack1 = helpers.value) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.value; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
+  if (stack2 = helpers.value) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.value; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
     + "\">\n        </div>\n        ";
   return buffer;
   }

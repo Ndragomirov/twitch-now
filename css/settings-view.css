@@ -8,6 +8,10 @@
     margin-bottom: 15px;
 }
 
+.control.control-disabled-true {
+    opacity: 0.5;
+}
+
 .control-wrapper {
     display: block;
     position: relative;
@@ -18,7 +22,6 @@
     display: inline;
     cursor: pointer;
 }
-
 
 select {
     padding: 5px 10px;
