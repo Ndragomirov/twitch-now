@@ -95,10 +95,10 @@ function program2(depth0,data) {
   if (stack1 = helpers.desc) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.desc; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</div>\n        <div class=\"control-wrapper\">\n            <input disabled=\"";
+    + "</div>\n        <div class=\"control-wrapper\">\n            <input ";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
-    + "\" data-type=";
+    + " data-type=";
   if (stack2 = helpers.type) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.type; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
@@ -146,10 +146,10 @@ function program4(depth0,data) {
 function program5(depth0,data,depth1) {
   
   var buffer = "", stack1, stack2, options;
-  buffer += "\n            <input disabled=\"";
+  buffer += "\n            <input ";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
-    + "\" data-type=\""
+  buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, depth1, options) : helperMissing.call(depth0, "h-disabled", depth0, depth1, options)))
+    + " data-type=\""
     + escapeExpression(((stack1 = depth1.type),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\" id=\"";
   if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
@@ -181,10 +181,10 @@ function program5(depth0,data,depth1) {
 function program7(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
-  buffer += "\n        <div class=\"control-wrapper\">\n            <input disabled=\"";
+  buffer += "\n        <div class=\"control-wrapper\">\n            <input ";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
-    + "\" data-type=";
+    + " data-type=";
   if (stack2 = helpers.type) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.type; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
@@ -203,10 +203,10 @@ function program7(depth0,data) {
 function program9(depth0,data) {
   
   var buffer = "", stack1, stack2, options;
-  buffer += "\n        <div class=\"control-wrapper\">\n            <input disabled=\"";
+  buffer += "\n        <div class=\"control-wrapper\">\n            <input ";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
-    + "\" type=\"checkbox\" id=\"";
+    + " type=\"checkbox\" id=\"";
   if (stack2 = helpers.id) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.id; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
@@ -241,10 +241,10 @@ function program11(depth0,data) {
   if (stack1 = helpers.desc) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.desc; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</div>\n        <div class=\"control-wrapper\">\n            <select disabled=\"";
+    + "</div>\n        <div class=\"control-wrapper\">\n            <select ";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
-    + "\" data-type=";
+    + " data-type=";
   if (stack2 = helpers.type) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.type; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
@@ -283,10 +283,10 @@ function program14(depth0,data) {
   if (stack1 = helpers.desc) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.desc; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</div>\n        <div class=\"control-wrapper\">\n            <input disabled=\"";
+    + "</div>\n        <div class=\"control-wrapper\">\n            <input ";
   options = {hash:{},data:data};
   buffer += escapeExpression(((stack1 = helpers['h-disabled'] || depth0['h-disabled']),stack1 ? stack1.call(depth0, depth0, options) : helperMissing.call(depth0, "h-disabled", depth0, options)))
-    + "\" data-type=";
+    + " data-type=";
   if (stack2 = helpers.type) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = depth0.type; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
   buffer += escapeExpression(stack2)
