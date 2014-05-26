@@ -1,6 +1,6 @@
 {
   "name"                    : "Twitch Now",
-  "version"                 : "1.1.71",
+  "version"                 : "1.1.100",
   "default_locale"          : "en",
   "manifest_version"        : 2,
   "description"             : "Explore games & track your favorite streams on Twitch",
@@ -9,8 +9,8 @@
       "lib/3rd/jquery-1.8.2.min.js",
       "lib/3rd/underscore.js",
       "lib/3rd/backbone.js",
-      "oauth2/oauth2.js",
-      "oauth2/adapters/twitch.js",
+      "lib/utils.js",
+      "lib/oauth2.js",
       "lib/twitch-api.js",
       "lib/app.js",
       "chrome-platform-analytics/google-analytics-bundle.js",
@@ -24,17 +24,12 @@
     "48" : "icons/48_1.png",
     "128": "icons/128_1.png"
   },
-  "web_accessible_resources": ["css/*", "dist/*", "oauth2/*"],
+  "web_accessible_resources": ["css/*", "dist/*", "oauth2/*", "lib/*"],
 
   "content_scripts": [
     {
       "matches": ["http://ndragomirov.github.io/twitch*"],
-      "js"     : ["oauth2/oauth2_inject.js"],
-      "run_at" : "document_start"
-    },
-    {
-      "matches": ["http://ndragomirov.github.io/google-drive*"],
-      "js"     : ["oauth2/oauth2_inject.js"],
+      "js"     : ["lib/oauth2-inject.js"],
       "run_at" : "document_start"
     }
   ],

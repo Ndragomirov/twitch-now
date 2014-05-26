@@ -1,0 +1,9 @@
+{{#if authenticated}}
+<a class="btn logout-btn" title="__MSG_m53__" id="logout-btn"><i class="icon-off"></i></a>
+<div class="user-panel">
+    <img class="lazy" src="{{logo}}"/>
+    <span title="__MSG_m72__">{{name}}</span>
+</div>
+{{else}}
+<a class="btn" title="__MSG_m52__" id="login-btn">__MSG_m52__</a>
+{{/if}}

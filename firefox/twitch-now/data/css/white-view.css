@@ -1,0 +1,65 @@
+.white-version {
+    background: rgba(240, 240, 240, 1);
+}
+
+.white-version ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: rgba(55, 55, 55, 0.8);
+}
+
+.white-version ::-webkit-scrollbar-thumb:active {
+    background: rgba(55, 55, 55, 1);
+}
+
+.white-version #context-menu {
+    background: rgb(255, 255, 255);
+}
+
+.white-version #content {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.white-version .header {
+    font-weight: bold;
+    color: rgba(0, 0, 0, 1);
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.white-version .donation span {
+    color: rgba(0, 0, 0, 1);
+}
+
+.white-version i[class^="icon-"] {
+    color: rgb(75, 40, 140);
+    text-shadow: none;
+}
+
+.white-version .stream {
+    border-top: 1px solid rgb(252, 252, 252);
+    border-bottom: 1px solid rgb(220, 220, 220);
+    background-image: url("img/row_arrow_grey.png");
+}
+
+.white-version .stream .stream-title {
+    color: rgb(40, 40, 40);
+}
+
+.white-version .stream:hover .stream-title {
+    color: rgb(0, 0, 0);
+}
+
+.white-version .stream:active {
+    background-color: rgb(220, 220, 220);
+    border-top: 1px solid rgb(252, 252, 252);
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.white-version  .stream:hover {
+    background-color: rgb(248, 248, 248);
+}
+
+.white-version  .stream .stream-preview {
+    border: 1px solid rgb(255, 255, 255);
+}

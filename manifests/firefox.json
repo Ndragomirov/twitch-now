@@ -1,0 +1,16 @@
+{
+  "name"            : "Twitch Now",
+  "version"         : "1.1.71",
+  "default_locale"  : "en",
+  "manifest_version": 2,
+  "description"     : "Explore games & track your favorite streams on Twitch",
+  "background"      : {
+    "scripts": [
+      "lib/intro.js",
+      "lib/3rd/underscore.js",
+      "lib/3rd/backbone.js",
+      "lib/main.js",
+      "lib/twitch-api.js"
+    ]
+  }
+}

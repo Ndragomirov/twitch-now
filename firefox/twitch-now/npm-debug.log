@@ -1,0 +1,28 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'grunt-contrib-concat',
+1 verbose cli   '--save-dev' ]
+2 info using npm@1.4.9
+3 info using node@v0.10.28
+4 error Error: Invalid version: "0.1"
+4 error     at Object.module.exports.fixVersionField (/usr/local/lib/node_modules/npm/node_modules/read-package-json/node_modules/normalize-package-data/lib/fixer.js:183:13)
+4 error     at /usr/local/lib/node_modules/npm/node_modules/read-package-json/node_modules/normalize-package-data/lib/normalize.js:30:38
+4 error     at Array.forEach (native)
+4 error     at normalize (/usr/local/lib/node_modules/npm/node_modules/read-package-json/node_modules/normalize-package-data/lib/normalize.js:29:15)
+4 error     at final (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:342:33)
+4 error     at then (/usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:126:33)
+4 error     at /usr/local/lib/node_modules/npm/node_modules/read-package-json/read-json.js:266:40
+4 error     at fs.js:266:14
+4 error     at /usr/local/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:105:5
+4 error     at Object.oncomplete (fs.js:107:15)
+5 error If you need help, you may report this *entire* log,
+5 error including the npm and node versions, at:
+5 error     <http://github.com/npm/npm/issues>
+6 error System Linux 3.5.0-23-generic
+7 error command "/usr/local/bin/node" "/usr/local/bin/npm" "install" "grunt-contrib-concat" "--save-dev"
+8 error cwd /home/bbq/workspace/twitch-now/firefox/twitch-now
+9 error node -v v0.10.28
+10 error npm -v 1.4.9
+11 verbose exit [ 1, true ]

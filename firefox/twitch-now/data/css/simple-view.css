@@ -1,0 +1,13 @@
+.simple-version .stream-preview {
+    display: none !important;
+}
+
+
+.simple-version .stream-info-status {
+    display: none !important;
+}
+
+.simple-version .stream {
+    padding: 5px 10px !important;
+    min-height: 0 !important;
+}
