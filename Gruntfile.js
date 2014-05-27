@@ -52,7 +52,7 @@ module.exports = function (grunt){
           },
           {
             expand : true,
-            src    : ['lib/main.js', 'lib/i18n-ff.js'],
+            src    : ['lib/main.js', 'lib/i18n-ff.js', 'lib/oauth2.js' ],
             dest   : './firefox/twitch-now/lib',
             flatten: true
           },

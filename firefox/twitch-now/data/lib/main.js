@@ -6,10 +6,34 @@ var tabs = require("sdk/tabs");
 var self = require("sdk/self");
 var panels = require("sdk/panel");
 var i18n = require("./i18n-ff.js");
+var OAuth2 = require("./oauth2.js");
 var Request = require("sdk/request").Request;
+var pageMod = require("sdk/page-mod");
+var ss = require("sdk/simple-storage");
+
+console.log("\n\n\n\nTOKEN", ss.storage["accessToken"]);
+
+//console.log("\n\nI18N = ", i18n.locale);
 
 
-console.log("\n\nI18N = ", i18n.locale);
+var providerOpts = {
+  api          : "https://api.twitch.tv/kraken/oauth2/authorize",
+  response_type: 'code',
+  client_id    : 'b4sj5euottb8mm7pc1lfvi84kvzxqxk',
+  client_secret: '2m42qpmxfy5l2ik4c93s0qco4vzfgr0',
+  api_scope    : 'user_follows_edit user_read',
+  redirect_uri : 'http://ndragomirov.github.io/twitch.html'
+};
+
+var twitchOauth = OAuth2.addAdapter({
+  id      : 'twitch',
+  codeflow: {
+    method: "POST",
+    url   : "https://api.twitch.tv/kraken/oauth2/token"
+  },
+  opts    : providerOpts
+});
+
 
 var scripts = [
   "lib/3rd/sinon-xhr.js",
@@ -36,8 +60,6 @@ scripts = scripts.map(function (v){
   return self.data.url(v);
 })
 
-var localStorage = require("sdk/simple-storage");
-
 var panel = panels.Panel({
   contentURL          : self.data.url("html/popup.html"),
   width               : 440,
@@ -49,6 +71,21 @@ var panel = panels.Panel({
     messages: i18n.messages
   },
   contentScriptWhen   : "ready"
+});
+
+panel.port.on("OAUTH2_AUTH", function (){
+  twitchOauth.authorize(function (){
+    panel.port.emit("OAUTH2_TOKEN", twitchOauth.getAccessToken());
+  })
+});
+
+panel.port.on("OAUTH2_REVOKE", function (){
+  twitchOauth.clearAccessToken();
+  panel.port.emit("OAUTH2_TOKEN", twitchOauth.getAccessToken());
+})
+
+panel.port.on("OAUTH2_TOKEN", function (){
+  panel.port.emit("OAUTH2_TOKEN", twitchOauth.getAccessToken());
 });
 
 panel.port.on("XHR_PROXY", function (xhr){
@@ -78,7 +115,7 @@ panel.port.on("XHR_PROXY", function (xhr){
         headers   : response.headers
       }
 
-      console.log(res.text);
+//      console.log(res.text);
 
       panel.port.emit("XHR_PROXY_RESPONSE", res);
     }
@@ -96,7 +133,6 @@ var button = buttons.ToggleButton({
   },
 
   onClick: function (){
-//    console.log("Panel show");
     panel.show({
       position: button
     });
@@ -104,5 +140,5 @@ var button = buttons.ToggleButton({
 });
 
 function handleHide(){
-//  console.log("Panel hide");
+
 }

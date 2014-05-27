@@ -1,12 +1,12 @@
 (function (){
 
   var sendMessage = function (msg){
-    var data = JSON.stringify({value: msg, type: "OAUTH2"});
+    var data = {value: msg, type: "OAUTH2"};
 
     if ( chrome && chrome.runtime ) {
       chrome.runtime.sendMessage(data);
     } else {
-      document.defaultView.postMessage(data, "http://my-domain.org/");
+      self.post.emit("OAUTH2", data);
     }
   }
 

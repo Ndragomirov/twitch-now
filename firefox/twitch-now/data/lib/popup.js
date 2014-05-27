@@ -71,14 +71,6 @@
       }
     });
 
-    console.log(b.browsing);
-    console.log(b.browsing);
-    console.log(b.browsing);
-    console.log(b.topstreams);
-    console.log(b.videos);
-    console.log(b.search);
-
-
     views.browseStreams = new BrowseStreamListView({
       el        : "#browse-game-streams-screen",
       collection: b.browsing

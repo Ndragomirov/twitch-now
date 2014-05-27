@@ -1,14 +1,14 @@
 (function (w){
   "use strict";
 
-  if ( utils.browser == "chrome" && !utils.background ) {
-    return;
-  }
+  var isFirefox = self && self.port && self.port.emit;
 
   var that = w.twitchApi = _.extend({}, Backbone.Events);
 
   that.basePath = "https://api.twitch.tv/kraken";
   that.userName = "";
+
+  var token;
 
   var providerOpts = {
     api          : "https://api.twitch.tv/kraken/oauth2/authorize",
@@ -18,6 +18,20 @@
     api_scope    : 'user_follows_edit user_read',
     redirect_uri : 'http://ndragomirov.github.io/twitch.html'
   };
+
+  that.listen = function (){
+    if ( isFirefox ) {
+      self.port.on("OAUTH2_TOKEN", function (accessToken){
+        token = accessToken;
+        if ( token ) {
+          that.trigger("authorize");
+        }
+      })
+      self.port.emit("OAUTH2_TOKEN");
+    }
+  }
+
+  that.listen();
 
 //  var provider = that.provider = OAuth2.addAdapter({
 //    id      : 'twitch',
@@ -59,32 +73,24 @@
       timeout : 10 * 1000,
       dataType: "json",
       headers : {
-        "Accept"   : "application/vnd.twitchtv.v2+json",
-        "Client-ID": providerOpts.client_id
-//        "Authorization": " OAuth " + provider.getAccessToken()
+        "Accept"       : "application/vnd.twitchtv.v2+json",
+        "Client-ID"    : providerOpts.client_id,
+        "Authorization": " OAuth " + token
       }
     };
   }
 
-  that.setLocalToken = function (tkn){
-    if ( !tkn ) return;
-    console.log("set local token to", tkn);
-//    var p = bgApp.get("oauth2_twitch");
-//    p.accessToken = tkn;
-//    bgApp.set("oauth2_twitch", p);
-    that.trigger("authorize");
-  };
-
   that.revoke = function (){
+    if ( isFirefox ) {
+      self.port.emit("OAUTH2_REVOKE");
+    }
     console.log("revoking");
-//    provider.clearAccessToken();
     that.userName = "";
     that.trigger("revoke");
   };
 
   that.isAuthorized = function (){
-    return false;
-//    return provider.hasAccessToken();
+    return !!token;
   };
 
   that.getUserName = function (cb){
@@ -110,6 +116,11 @@
   };
 
   that.authorize = function (){
+
+    if ( isFirefox ) {
+      self.port.emit("OAUTH2_AUTH");
+    }
+
 //    if ( provider.hasAccessToken() ) return that.trigger("authorize");
 //    provider.authorize(function (){
 //      that.setSyncToken(provider.getAccessToken());
@@ -202,9 +213,10 @@
             return that.getFollowed(cb);
           }
           if ( xhr.status == 401 ) {
-            that.revoke();
+            if ( token ) {
+              that.revoke();
+            }
           }
-//          console.dir(xhr);
           that.trigger("fail:" + methodName);
           cb("err" + methodName);
         })

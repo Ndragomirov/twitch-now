@@ -1,22 +1,26 @@
 (function (){
   var root = this;
   var that = root.OAuth2 = {};
+  var isFirefox = !!root.require;
+  var localStorage = root.localStorage;
+
+  if ( isFirefox ) {
+    localStorage = require("sdk/simple-storage").storage;
+  }
 
   that._adapters = {};
 
-  var openTab = function (url){
-    chrome.tabs.create({url: url});
-  }
-
   var request = function (opts, callback){
     if ( root.require ) {
+      opts.method = opts.method.toLowerCase();
       var Request = require("sdk/request").Request;
       Request({
         url       : opts.url,
         content   : opts.data,
         onComplete: function (response){
+          console.log("\n\n", response.text, response.status);
           if ( response.status == 200 ) {
-            callback(null, response.text);
+            callback(null, JSON.parse(response.text));
           } else {
             callback(response.status);
           }
@@ -52,6 +56,7 @@
    * @constructor
    */
   var Adapter = function (id, opts, flow){
+    this.broadcastPrefix = "OAUTH2.";
     this.lsPath = "oauth2_" + id;
     this.opts = opts;
     this.flowType = this.opts.response_type;
@@ -59,21 +64,95 @@
     delete this.opts.client_secret;
     this.flow = flow;
     this.codeUrl = opts.api + "?" + this.query(opts);
+    this._watchInject();
+  }
+
+  Adapter.prototype.broadcast = function (type, message){
+
+  }
+
+  Adapter.prototype._watchInject = function (){
+    var pageMode = require("sdk/page-mod");
+    var injectScript = '(' + this.injectScript.toString() + ')()';
+    var injectTo = this.opts.redirect_uri + "*";
+
+    console.log(injectScript, injectTo);
+    if ( isFirefox ) {
+      console.log("\n\n\nInjecting\n\n\n");
+      pageMode.PageMod({
+        include          : injectTo,
+        contentScript    : injectScript,
+        contentScriptWhen: "ready",
+        attachTo         : "top",
+        onAttach         : function (worker){
+          console.log("\n\n\nattached to: " + worker.tab.url);
+          worker.port.on("OAUTH2", function (msg){
+            console.log("\n\n\nnoAuth2 data :", msg)
+
+            var adapter = OAuth2.lookupAdapter(msg.value.url);
+            if ( adapter ) {
+              adapter.finalize(msg.value.params);
+            }
+
+            worker.tab.close();
+          });
+        }
+      });
+    }
+  }
+
+  Adapter.prototype.injectScript = function (){
+
+    console.log("\n\nInjecting\n\n");
+    var self = window.self;
+    var isFirefox = self && self.port && self.port.emit;
+
+    var sendMessage = function (msg){
+
+      var data = {
+        value: msg,
+        type : "OAUTH2"
+      };
+
+      if ( isFirefox ) {
+        self.port.emit("OAUTH2", data);
+      } else {
+        chrome.runtime.sendMessage(data);
+      }
+    }
+
+    var send = function (){
+      var url = window.location.href;
+      var params = '?';
+      var index = url.indexOf(params);
+      if ( index > -1 ) {
+        params = url.substring(index);
+      }
+
+      url = url.split("?")[0];
+
+      params = params + "&from=" + encodeURIComponent(window.location.href);
+
+      sendMessage({url: url, params: params});
+    }
+
+    send();
+
   }
 
   Adapter.prototype.del = function (/*keys*/){
     delete localStorage[this.lsPath];
-  };
+  }
 
   Adapter.prototype.get = function (){
-    return  localStorage.hasOwnProperty(this.lsPath) ?
+    return  typeof localStorage[ this.lsPath ] != "undefined" ?
       JSON.parse(localStorage[ this.lsPath ]) :
       undefined;
-  };
+  }
 
   Adapter.prototype.set = function (val){
     localStorage[ this.lsPath ] = JSON.stringify(val);
-  };
+  }
 
   Adapter.prototype.updateLocalStorage = function (){
     var stored = this.get();
@@ -101,7 +180,7 @@
   Adapter.prototype.authorize = function (callback){
     console.log("\nStarting auth process", callback);
     this._callback = callback;
-    this.openTab();
+    this.openTab(this.codeUrl);
   }
 
   Adapter.prototype.finalize = function (params){
@@ -110,14 +189,19 @@
     try {
       code = this.parseAuthorizationCode(params);
     } catch (e) {
+      console.log("\n\nerror parsing auth code\n\n");
       return this._callback(e);
     }
 
     this.getAccessAndRefreshTokens(code, function (err, data){
       if ( !err ) {
+        console.log("\n\nRecieve access token = ", data.access_token);
         var access_token = data.access_token;
         self.set({accessToken: access_token});
         self._callback();
+      } else {
+        self._callback(err);
+        console.log("\n\nerror getting access token\n\n", err);
       }
     })
   }
@@ -140,8 +224,17 @@
     request({url: url, method: method, data: this.opts}, callback)
   }
 
-  Adapter.prototype.openTab = function (){
-    openTab(this.codeUrl);
+  Adapter.prototype.openTab = function (url){
+    if ( isFirefox ) {
+      var tabs = require('sdk/tabs');
+
+      tabs.open({
+        url: url
+      });
+
+    } else {
+      chrome.tabs.create({url: url});
+    }
   }
 
   Adapter.prototype.hasAccessToken = function (){
@@ -161,25 +254,26 @@
   var listen = function (){
     if ( root.require ) {
 
-    }
-    chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse){
-      console.log("\nConent Message ", msg);
+    } else {
+      chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse){
+        console.log("\nConent Message ", msg);
 
-      try {
-        msg = JSON.parse(msg);
-      } catch (e) {
-        return;
-      }
-
-      if ( msg.type == "OAUTH2" ) {
-
-        var adapter = OAuth2.lookupAdapter(msg.value.url);
-        if ( adapter ) {
-          adapter.finalize(msg.value.params);
+        try {
+          msg = JSON.parse(msg);
+        } catch (e) {
+          return;
         }
-        chrome.tabs.remove(sender.tab.id);
-      }
-    });
+
+        if ( msg.type == "OAUTH2" ) {
+
+          var adapter = OAuth2.lookupAdapter(msg.value.url);
+          if ( adapter ) {
+            adapter.finalize(msg.value.params);
+          }
+          chrome.tabs.remove(sender.tab.id);
+        }
+      });
+    }
   }
 
   that.lookupAdapter = function (url){
@@ -206,5 +300,14 @@
   }
 
   that.listen();
+
+  if ( typeof exports !== 'undefined' ) {
+    if ( typeof module !== 'undefined' && module.exports ) {
+      exports = module.exports = that;
+    }
+    exports.OAuth2 = that;
+  } else {
+    root.OAuth2 = that;
+  }
 
 }).call(this);
