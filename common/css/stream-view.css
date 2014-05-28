@@ -1,0 +1,64 @@
+.stream {
+    background: url("img/row_arrow.png") 375px center no-repeat;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    border-top: 1px solid rgb(38, 38, 38);
+    padding: 10px;
+    color: rgb(141, 141, 141);
+    cursor: pointer;
+    min-height: 40px;
+    font-size: 11px;
+}
+
+.stream:hover {
+    background-color: rgb(35, 35, 35);
+}
+
+.stream:active {
+    background-color: rgb(25, 25, 25);
+    border-top: 1px solid rgb(25, 25, 25);
+    box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.stream .notify {
+    background: url("img/bubble.png") no-repeat;
+    width: 17px;
+    height: 17px;
+}
+
+.stream .stream-title {
+    color: rgb(200, 200, 200);
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.stream:hover .stream-title {
+    color: rgb(238, 238, 238);
+}
+
+.stream .stream-preview {
+    width: 70px;
+    height: 39px;
+    overflow: hidden;
+    border: 1px solid rgb(0, 0, 0);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+    float: left;
+    margin-right: 10px;
+}
+
+.stream-preview.game-preview {
+    height: 42px;
+}
+
+.stream .stream-preview img {
+    width: 70px;
+}
+
+.stream .stream-info {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.3;
+}

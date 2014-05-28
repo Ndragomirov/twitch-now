@@ -1,3 +1,0 @@
-$( function () {
-    app.init();
-} );

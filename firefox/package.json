@@ -1,0 +1,14 @@
+{
+  "name"       : "twitch-now",
+  "title"      : "Twitch Now",
+  "id"         : "jid1-jwVSihNsgAw5jA",
+  "description": "Explore games & track your favorite streams on Twitch",
+  "author"     : "Ndragomirov<jdavid214@gmail.com>",
+  "license"    : "MPL 2.0",
+  "version"    : "1.0.1",
+  "permissions": {
+    "cross-domain-content" : ["https://api.twitch.tv/", "https://api.github.com/"],
+    "private-browsing"     : true,
+    "unsafe-content-script": true
+  }
+}

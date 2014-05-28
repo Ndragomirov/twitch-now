@@ -4,6 +4,7 @@
 .gitignore
 .git/*
 .hg/*
+build/*
 node_modules/*
 fontello/*
 twitch_now.zip

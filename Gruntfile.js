@@ -4,20 +4,29 @@ var fs = require('fs'),
 
 module.exports = function (grunt){
 
-  grunt.loadNpmTasks('grunt-contrib-handlebars');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-version');
-
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    clean: {
+      chrome : {
+        src: ["./build/chrome/*"]
+      },
+      firefox: {
+        src: ["./build/firefox/*"]
+      }
+    },
     watch     : {
-      scripts: {
-        files  : ['lib/**'],
+      firefox: {
+        files  : ['templates', 'common/**', "firefox/**"],
         tasks  : ['firefox'],
+        options: {
+          nospawn: true
+        }
+      },
+      chrome : {
+        files  : ['templates', 'common/**', "chrome/**"],
+        tasks  : ['chrome'],
         options: {
           nospawn: true
         }
@@ -32,46 +41,53 @@ module.exports = function (grunt){
         src: ['manifests/opera.json', 'manifests/chrome.json']
       }
     },
-    concat    : {
-      options: {
-        separator: ';\n\n'
-      },
-      firefox: {
-        src : grunt.file.readJSON("manifests/firefox.json").background.scripts,
-        dest: './firefox/twitch-now/lib/main.js'
-      }
-    },
+//    concat    : {
+//      options: {
+//        separator: ';\n\n'
+//      },
+//        src : chromePopup,
+//        dest: "build/chrome/common/lib/concat.js"
+//      }
+//    },
     copy      : {
       firefox: {
         files: [
           {
-            expand : true,
-            src    : 'lib/3rd/*.js',
-            dest   : './firefox/twitch-now/lib/3rd',
-            flatten: true
-          },
-          {
-            expand : true,
-            src    : ['lib/main.js', 'lib/i18n-ff.js', 'lib/oauth2.js' ],
-            dest   : './firefox/twitch-now/lib',
-            flatten: true
+            expand: true,
+            src   : ["./common/**"],
+            dest  : './build/firefox/data'
           },
           {
             expand: true,
-            src   : ["./_locales/**", "./dist/**", "./html/**", "./icons/**", "./css/**", "./lib/**"],
-            dest  : './firefox/twitch-now/data'
+            src   : ["./firefox/**"],
+            cwd   : "./",
+            dest  : './build/'
           }
         ]
       },
       chrome : {
-        expand : true,
-        src    : 'manifests/chrome.json',
-        dest   : './',
-        flatten: true,
-        rename : function (dest, src){
-          return dest + "manifest.json";
-        }
-      },
+        files: [
+          {
+            expand: true,
+            src   : ["./common/**", "./_locales/**"],
+            dest  : './build/chrome'
+          },
+          {
+            expand: true,
+            src   : ["./chrome/**"],
+            cwd   : "./",
+            dest  : './build/'
+          },
+          {
+            expand : true,
+            src    : 'manifests/chrome.json',
+            dest   : './',
+            flatten: true,
+            rename : function (dest, src){
+              return dest + "manifest.json";
+            }
+          }
+        ]},
       opera  : {
         expand : true,
         src    : 'manifests/opera.json',
@@ -93,7 +109,7 @@ module.exports = function (grunt){
         },
 
         files: {
-          "dist/templates.js": "lib/templates/*.html"
+          "common/dist/templates.js": "templates/*"
         }
       }
     }
@@ -107,7 +123,7 @@ module.exports = function (grunt){
       var file = fs.readFileSync(__dirname + "/_locales/" + locales[i] + "/messages.json");
       localesObj[locales[i]] = JSON.parse(file);
     }
-    fs.writeFileSync("dist/locales.json", JSON.stringify(localesObj, null, 2), "utf8");
+    fs.writeFileSync("common/dist/locales.json", JSON.stringify(localesObj, null, 2), "utf8");
   });
 
   grunt.registerTask('zip', function (){
@@ -139,10 +155,18 @@ module.exports = function (grunt){
     done();
   });
 
+  grunt.loadNpmTasks('grunt-contrib-handlebars');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-version');
 
-  grunt.registerTask('default', 'copy:chrome handlebars'.split(' '));
+
+  grunt.registerTask('default', 'handlebars copy:chrome'.split(' '));
   grunt.registerTask('opera', 'bump version copy:opera handlebars'.split(' '));
-  grunt.registerTask('firefox', 'i18n handlebars copy:firefox'.split(' '));
-  grunt.registerTask('chrome', 'bump version copy:chrome handlebars'.split(' '));
+  grunt.registerTask('firefox', 'clean:firefox i18n handlebars copy:firefox'.split(' '));
+//  grunt.registerTask('chrome', 'bump version copy:chrome handlebars'.split(' '));
+  grunt.registerTask('chrome', 'clean:chrome handlebars copy:chrome'.split(' '));
   grunt.registerTask('prod', 'zip'.split(' '));
 };

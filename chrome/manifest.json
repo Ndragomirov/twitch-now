@@ -1,0 +1,37 @@
+{
+  "name"                    : "Twitch Now",
+  "version"                 : "1.1.77",
+  "default_locale"          : "en",
+  "manifest_version"        : 2,
+  "description"             : "Explore games & track your favorite streams on Twitch",
+  "background"              : {
+    "scripts": [
+      "common/lib/3rd/jquery-1.8.2.min.js",
+      "common/lib/3rd/underscore.js",
+      "common/lib/3rd/backbone.js",
+      "common/lib/utils.js",
+      "common/lib/oauth2.js",
+      "background.js",
+      "common/lib/twitch-api.js",
+      "common/lib/app.js",
+      "common/chrome-platform-analytics/google-analytics-bundle.js",
+      "common/lib/cpa.js"
+    ]
+  },
+  "minimum_chrome_version"  : "29",
+  "content_security_policy" : "script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://platform.twitter.com; object-src 'self'",
+  "icons"                   : {
+    "16" : "common/icons/32_1.png",
+    "48" : "common/icons/48_1.png",
+    "128": "common/icons/128_1.png"
+  },
+  "web_accessible_resources": ["common/*", "css/*", "dist/*", "oauth2/*", "lib/*"],
+  "browser_action" : {
+    "default_icon" : {
+      "19": "common/icons/19_2.png",
+      "38": "common/icons/38_2.png"
+    },
+    "default_popup": "common/html/popup.html"
+  },
+  "permissions"    : ["storage", "background", "https://*/*", "http://*/*", "notifications", "tabs"]
+}
