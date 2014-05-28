@@ -13,9 +13,7 @@
       "common/lib/oauth2.js",
       "background.js",
       "common/lib/twitch-api.js",
-      "common/lib/app.js",
-      "common/chrome-platform-analytics/google-analytics-bundle.js",
-      "common/lib/cpa.js"
+      "common/lib/app.js"
     ]
   },
   "minimum_chrome_version"  : "29",

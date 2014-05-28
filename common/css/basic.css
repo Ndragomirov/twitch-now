@@ -3,12 +3,12 @@ html {
     width: 440px;
     height: 590px;
     background: rgba(30, 30, 30, 1);
-    color: rgb(119, 119, 119);
     font-size: 12px;
     overflow: hidden;
 }
 
 body {
+    color: rgb(120, 120, 120);
     height: 100%;
     overflow: hidden;
 }
