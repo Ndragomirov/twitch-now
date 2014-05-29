@@ -4,6 +4,7 @@
 .gitignore
 .git/*
 .hg/*
+tmp/*
 build/*
 node_modules/*
 fontello/*

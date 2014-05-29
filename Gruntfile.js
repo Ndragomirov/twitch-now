@@ -8,7 +8,7 @@ module.exports = function (grunt){
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    clean: {
+    clean              : {
       chrome : {
         src: ["./build/chrome/*"]
       },
@@ -16,7 +16,7 @@ module.exports = function (grunt){
         src: ["./build/firefox/*"]
       }
     },
-    watch     : {
+    watch              : {
       firefox: {
         files  : ['templates', 'common/**', "firefox/**", "chrome/**"],
         tasks  : ['firefox', 'chrome'],
@@ -25,13 +25,13 @@ module.exports = function (grunt){
         }
       }
     },
-    version   : {
+    version            : {
       options  : {
         pkg   : "version.json",
         prefix: '[\'"]version[\'"]?\\s*[:=]\\s*[\'"]'
       },
       manifests: {
-        src: ['manifests/opera.json', 'manifests/chrome.json']
+        src: ['chrome/manifest.json', 'firefox/package.json']
       }
     },
 //    concat    : {
@@ -42,7 +42,7 @@ module.exports = function (grunt){
 //        dest: "build/chrome/common/lib/concat.js"
 //      }
 //    },
-    copy      : {
+    copy               : {
       firefox: {
         files: [
           {
@@ -71,15 +71,6 @@ module.exports = function (grunt){
             cwd   : "./",
             dest  : './build/'
           },
-          {
-            expand : true,
-            src    : 'manifests/chrome.json',
-            dest   : './',
-            flatten: true,
-            rename : function (dest, src){
-              return dest + "manifest.json";
-            }
-          }
         ]},
       opera  : {
         expand : true,
@@ -91,7 +82,7 @@ module.exports = function (grunt){
         }
       }
     },
-    handlebars: {
+    handlebars         : {
       compile: {
         options: {
           namespace  : "Handlebars.templates",
@@ -105,8 +96,43 @@ module.exports = function (grunt){
           "common/dist/templates.js": "templates/*"
         }
       }
+    },
+    compress           : {
+      chrome: {
+        options: {
+          archive: 'dist/twitch-now-chrome.zip'
+        },
+        files  : [
+          {src: ['**'], cwd: "build/chrome/", expand: true }
+        ]
+      }
+    },
+    'mozilla-addon-sdk': {
+      '1_16': {
+        options: {
+          revision: '1.16'
+        }
+      }
+    },
+    'mozilla-cfx'      : {
+      'run_stable': {
+        options: {
+          "mozilla-addon-sdk": "1_16",
+          extension_dir      : "build/firefox",
+          command            : "run"
+        }
+      }
+    },
+    'mozilla-cfx-xpi'  : {
+      stable: {
+        options: {
+          'mozilla-addon-sdk': '1_16',
+          extension_dir      : 'build/firefox',
+          dist_dir           : 'dist/',
+          arguments          : '--output-file=twitch-now-firefox.xpi'
+        }
+      }
     }
-
   });
 
   grunt.registerTask('i18n', function (){
@@ -117,19 +143,6 @@ module.exports = function (grunt){
       localesObj[locales[i]] = JSON.parse(file);
     }
     fs.writeFileSync("common/dist/locales.json", JSON.stringify(localesObj, null, 2), "utf8");
-  });
-
-  grunt.registerTask('zip', function (){
-    var done = this.async();
-    var zip = exec(' zip -r twitch_now.zip ./chrome-platform-analytics/google-analytics-bundle.js ./_locales/* ./audio/* ./lib/* ./oauth2/* ./icons/* ./css/* ./dist/* ./manifest.json  ./html/* ', function (error, stdout, stderr){
-      console.log('stdout: ' + stdout);
-      console.log('stderr: ' + stderr);
-      if ( error !== null ) {
-        grunt.log.error('This is an error message.\n' + error);
-        return false;
-      }
-      done();
-    });
   });
 
   grunt.registerTask('bump', function (){
@@ -148,8 +161,10 @@ module.exports = function (grunt){
     done();
   });
 
+  grunt.loadNpmTasks('grunt-mozilla-addon-sdk');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-compress');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -159,7 +174,6 @@ module.exports = function (grunt){
   grunt.registerTask('default', 'handlebars copy:chrome'.split(' '));
   grunt.registerTask('opera', 'bump version copy:opera handlebars'.split(' '));
   grunt.registerTask('firefox', 'clean:firefox i18n handlebars copy:firefox'.split(' '));
-//  grunt.registerTask('chrome', 'bump version copy:chrome handlebars'.split(' '));
   grunt.registerTask('chrome', 'clean:chrome handlebars copy:chrome'.split(' '));
-  grunt.registerTask('prod', 'zip'.split(' '));
+  grunt.registerTask('dist', 'bump version chrome compress:chrome mozilla-addon-sdk mozilla-cfx-xpi'.split(' '));
 };
