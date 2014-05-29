@@ -36,6 +36,7 @@ var scripts = [
   "lib/3rd/xhr-proxy-ff.js",
   "lib/utils.js",
   "lib/3rd/jquery-1.8.2.min.js",
+  "lib/3rd/baron.js",
   "lib/3rd/bootstrap.min.js",
   "lib/3rd/underscore.js",
   "lib/3rd/backbone.js",
