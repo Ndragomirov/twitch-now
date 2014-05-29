@@ -18,9 +18,7 @@ var twitchOauth = OAuth2.addAdapter({
 
 chrome.runtime.onMessage.addListener(function (msg){
   if ( msg.id == "OAUTH2_AUTH" ) {
-    twitchOauth.authorize(function (){
-      chrome.runtime.sendMessage({id: "OAUTH2_TOKEN", value: twitchOauth.getAccessToken()});
-    })
+    twitchOauth.authorize(function (){})
   }
 })
 
@@ -33,6 +31,5 @@ chrome.runtime.onMessage.addListener(function (msg){
 chrome.runtime.onMessage.addListener(function (msg){
   if ( msg.id == "OAUTH2_REVOKE" ) {
     twitchOauth.clearAccessToken();
-    chrome.runtime.sendMessage({id: "OAUTH2_TOKEN", value: twitchOauth.getAccessToken()});
   }
 })

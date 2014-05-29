@@ -171,7 +171,7 @@ module.exports = function (grunt){
   grunt.loadNpmTasks('grunt-version');
 
 
-  grunt.registerTask('default', 'handlebars copy:chrome'.split(' '));
+  grunt.registerTask('default', 'chrome'.split(' '));
   grunt.registerTask('opera', 'bump version copy:opera handlebars'.split(' '));
   grunt.registerTask('firefox', 'clean:firefox i18n handlebars copy:firefox'.split(' '));
   grunt.registerTask('chrome', 'clean:chrome handlebars copy:chrome'.split(' '));

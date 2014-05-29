@@ -1,10 +1,11 @@
 (function (){
   var root = this;
-  var that =  {};
+  var that = {};
   var isFirefox = !!root.require;
   var localStorage = isFirefox ? require("sdk/simple-storage").storage : root.localStorage;
 
-  function noop() {}
+  function noop(){
+  }
 
   that._adapters = {};
 
@@ -16,7 +17,6 @@
         url       : opts.url,
         content   : opts.data,
         onComplete: function (response){
-          console.log("\n\n", response.text, response.status);
           if ( response.status == 200 ) {
             callback(null, JSON.parse(response.text));
           } else {
@@ -53,13 +53,17 @@
     this.flow = flow;
     this.codeUrl = opts.api + "?" + this.query(opts);
     this._watchInject();
+    if ( !isFirefox ) {
+      this.syncGet();
+      this.sync();
+    }
   }
 
   Adapter.prototype._watchInject = function (){
     var self = this;
     var injectScript = '(' + this.injectScript.toString() + ')()';
     var injectTo = this.opts.redirect_uri + "*";
-    console.log(injectScript, injectTo);
+//    console.log(injectScript, injectTo);
     if ( isFirefox ) {
       var pageMode = require("sdk/page-mod");
 
@@ -88,7 +92,6 @@
       })
 
       chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse){
-        console.log("\nConent Message ", msg);
         if ( msg.type == "OAUTH2" ) {
           self.finalize(msg.value.params);
           chrome.tabs.remove(sender.tab.id);
@@ -136,6 +139,28 @@
 
   }
 
+  Adapter.prototype.syncGet = function (){
+    var self = this;
+    chrome.storage.sync.get(this.lsPath, function (item){
+      console.log("SYNC_GET", item);
+      if ( item[self.lsPath]) {
+        self.set(JSON.parse(item[self.lsPath]), true);
+      }
+    });
+  }
+
+  Adapter.prototype.sync = function (){
+    var self = this;
+    chrome.storage.onChanged.addListener(function (changes, namespace){
+      if ( namespace === "sync" ) {
+        console.log("SYNC_CHANGED", changes);
+        if ( self.lsPath in changes ) {
+          self.set(JSON.parse(changes[self.lsPath].newValue), true);
+        }
+      }
+    });
+  }
+
   Adapter.prototype.del = function (/*keys*/){
     delete localStorage[this.lsPath];
   }
@@ -146,8 +171,22 @@
       undefined;
   }
 
-  Adapter.prototype.set = function (val){
+  Adapter.prototype.set = function (val, isSync){
     localStorage[ this.lsPath ] = JSON.stringify(val);
+
+
+    if ( !isFirefox && !isSync ) {
+      var syncData = {};
+      syncData[this.lsPath] = localStorage[this.lsPath];
+
+      chrome.storage.sync.set(syncData, function (){
+        console.log("SYNC_SET", syncData);
+      });
+    }
+
+    if ( !isFirefox ) {
+      chrome.runtime.sendMessage({id: "OAUTH2_TOKEN", value: twitchOauth.getAccessToken()});
+    }
   }
 
   Adapter.prototype.updateLocalStorage = function (){
@@ -174,7 +213,6 @@
   }
 
   Adapter.prototype.authorize = function (callback){
-    console.log("\nStarting auth process", callback);
     this._callback = callback;
     this.openTab(this.codeUrl);
   }
@@ -203,11 +241,6 @@
     })
   }
 
-  /**
-   *
-   * @param authorizationCode
-   * @param callback
-   */
   Adapter.prototype.getAccessAndRefreshTokens = function (authorizationCode, callback){
 
     var method = this.flow.method;
@@ -232,6 +265,10 @@
     } else {
       chrome.tabs.create({url: url});
     }
+  }
+
+  Adapter.prototype.setAccessToken = function (token){
+    this.set({accessToken: token});
   }
 
   Adapter.prototype.hasAccessToken = function (){
