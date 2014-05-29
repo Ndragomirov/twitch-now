@@ -3,8 +3,6 @@
 
   var app = window.app = _.extend({}, Backbone.Events);
   var b = app.b = utils._getBackgroundPage();
-//  var gm = chrome.i18n.getMessage;
-
 
   app.twitchApi = b.twitchApi;
   app.currentView = null;
@@ -16,10 +14,9 @@
   }
 
   app.lazyload = function (){
-    var container = app.container;
-    var height = container.height();
-    var scrollTop = container.scrollTop();
-    container.find('.lazy:visible').each(function (){
+    var height = app.scroller.height();
+    var scrollTop = app.scroller.scrollTop();
+    app.scroller.find('.lazy').filter(':visible').each(function (){
       var t = $(this);
       var pos = t.position();
       if ( pos.top >= scrollTop && pos.top <= scrollTop + height ) {
@@ -46,6 +43,7 @@
   app.init = function (){
 
     app.container = $('#content');
+    app.scroller = app.container.find(".scroller");
     app.preloader = $("<div id='preloader'><img src='../css/img/spinner.gif'/></div>");
     app.streamPreloader = $("<div id='preloader-stream'><img src='../css/img/spinner.gif'/></div>");
 
@@ -60,6 +58,14 @@
 
     views.topMenu = new TopMenu;
 
+    var _baron = baron({
+      root    : '#content',
+      scroller: '.scroller',
+      bar     : '.scroller__bar',
+      barOnCls: 'baron'
+    }).autoUpdate().controls({
+        delta: 120
+      })
 
     Backbone.history.start();
 
@@ -68,6 +74,8 @@
       console.log("ROUTE", route);
       if ( route ) {
         app.setCurrentView(route);
+//        _baron.update();
+
       }
     });
 
@@ -105,9 +113,9 @@
       collection: b.games
     });
 
-    var userView = new UserView({
+    views.userView = new UserView({
       model: b.user
-    })
+    });
 
     views.settings = new SettingsView({
       collection: b.settings
@@ -123,9 +131,6 @@
     })
 
     $("body")
-      .on("click", function (){
-        $('#context-menu').hide();
-      })
       .on('click', '*[data-route]', function (){
         var route = $(this).attr('data-route');
         window.location.hash = '#' + route;
@@ -142,7 +147,6 @@
       .on('click', '.js-window', function (e){
         var windowOpts = JSON.parse($(this).attr('data-window-opts') || "{}");
         utils.windows.create($.extend({url: $(this).attr('data-href')}, windowOpts));
-//        chrome.windows.create($.extend({url: $(this).attr('data-href')}, windowOpts));
         e.preventDefault();
       })
 
@@ -199,7 +203,7 @@
     },
     initialize    : function (){
       DefaultView.prototype.initialize.apply(this, arguments);
-      this.listenTo(this.app.router, "route:following route:browseGames route:browseStreams", this.resetFilterVal.bind(this));
+      this.listenTo(this.app.router, "route", this.resetFilterVal.bind(this));
     },
     resetFilterVal: function (){
       this.$("#filterInput").val("").keyup();
@@ -217,9 +221,6 @@
     refresh       : function (){
       this.resetFilterVal();
       this.app.curView && this.app.curView.update && this.app.curView.update();
-    },
-    expand        : function (){
-      this.$("#filter-bar").toggle();
     }
   });
 
@@ -366,9 +367,16 @@
   });
 
   var MenuView = DefaultView.extend({
-    template: "",
-    el      : "#context-menu",
-    showMenu: function (tmpl, coords){
+    template  : "",
+    el        : "#context-menu",
+    initialize: function (){
+      DefaultView.prototype.initialize.apply(this, arguments);
+      $("body").on("click", this.hide.bind(this));
+    },
+    hide      : function (){
+      this.$el.hide();
+    },
+    showMenu  : function (tmpl, coords){
       var menuEl = $(this.el);
       var y = coords.y;
       var x = coords.x;

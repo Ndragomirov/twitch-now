@@ -48,7 +48,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (stack1 = helpers.avatar_url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.avatar_url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\"\n         alt=\"\">\n</div>";
+    + "s=140\"\n         alt=\"\">\n</div>";
   return buffer;
   });
 
