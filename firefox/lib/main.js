@@ -121,8 +121,8 @@ var button = buttons.ToggleButton({
   id      : "twitch-now",
   label   : "Twitch Now",
   icon    : {
-    "32": self.data.url("common/icons/32_1.png"),
-    "64": self.data.url("common/icons/64_1.png")
+    "16": self.data.url("common/icons/16_1.png"),
+    "32": self.data.url("common/icons/32_1.png")
   },
   onChange: onButtonStateChange
 });
