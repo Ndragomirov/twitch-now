@@ -45,41 +45,6 @@
 
   that.listen();
 
-//  var provider = that.provider = OAuth2.addAdapter({
-//    id      : 'twitch',
-//    codeflow: {
-//      method: "POST",
-//      url   : "https://api.twitch.tv/kraken/oauth2/token"
-//    },
-//    opts    : providerOpts
-//  });
-
-  //forces to save provider data to localstorage
-//  provider.updateLocalStorage();
-
-  that.setSyncToken = function (tkn){
-//    chrome.storage.sync.set({'accessToken': tkn}, function (){
-//      console.log("setting sync token", tkn);
-//    });
-  };
-
-  that.getSyncToken = function (cb){
-//    chrome.storage.sync.get('accessToken', function (item){
-//      console.log("getting sync token", item.accessToken);
-//      return cb(item.accessToken);
-//    });
-  };
-
-  that.onTokenChange = function (){
-//    chrome.storage.onChanged.addListener(function (changes, namespace){
-//      var key = "accessToken";
-//      if ( namespace === "sync" && key in changes ) {
-//        console.log("sync access token change, new val", changes[key].newValue);
-//        that.setLocalToken(changes[key].newValue);
-//      }
-//    });
-  };
-
   that.getRequestParams = function (){
     return {
       timeout : 10 * 1000,
@@ -136,12 +101,6 @@
     } else {
       chrome.runtime.sendMessage({id: "OAUTH2_AUTH"});
     }
-
-//    if ( provider.hasAccessToken() ) return that.trigger("authorize");
-//    provider.authorize(function (){
-//      that.setSyncToken(provider.getAccessToken());
-//      that.trigger("authorize");
-//    });
   };
 
   that.getFollowed = function (cb){
@@ -229,7 +188,7 @@
             return that.getFollowed(cb);
           }
           if ( xhr.status == 401 ) {
-            if ( token ) {
+            if ( token && token.length > 0) {
               that.revoke();
             }
           }
@@ -326,11 +285,5 @@
       limit: 50
     }
   };
-
-//  that.onTokenChange();
-
-//  that.getSyncToken(function (token){
-//    that.setLocalToken(token);
-//  });
 
 })(this);
