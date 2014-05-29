@@ -30,7 +30,7 @@ select {
     cursor: pointer;
     text-decoration: none;
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(130, 102, 182)), to(rgb(83, 55, 135)));
-    background: -moz-gradient(linear, left top, left bottom, from(rgb(130, 102, 182)), to(rgb(83, 55, 135)));
+    background: -moz-linear-gradient(top, rgb(130, 102, 182), rgb(83, 55, 135));
     background: linear-gradient(top, rgb(130, 102, 182), rgb(83, 55, 135));
     background-color: rgb(106, 78, 158);
     background-image: url(img/down.png);

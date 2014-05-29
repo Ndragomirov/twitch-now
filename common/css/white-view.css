@@ -3,12 +3,11 @@
     color: rgb(120, 120, 120);
 }
 
-.white-version ::-webkit-scrollbar-thumb {
-    border-radius: 4px;
+.white-version .scroller__bar {
     background: rgba(55, 55, 55, 0.8);
 }
 
-.white-version ::-webkit-scrollbar-thumb:active {
+.white-version .scroller__bar:active  {
     background: rgba(55, 55, 55, 1);
 }
 

@@ -24,27 +24,11 @@ a {
 #content {
     width: 400px;
     display: block;
-    overflow-x: hidden;
-    overflow-y: auto;
     left: 40px;
     top: 31px;
     position: absolute;
     height: 560px;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
-}
-
-::-webkit-scrollbar {
-    width: 8px;
-    opacity: 0;
-}
-
-::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.6);
-}
-
-::-webkit-scrollbar-thumb:active {
-    background: rgba(255, 255, 255, 1);
 }
 
 .clearfix {
@@ -176,7 +160,7 @@ a.js-tab {
     text-decoration: none;
 
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(130, 102, 182)), to(rgb(83, 55, 135)));
-    background: -moz-gradient(linear, left top, left bottom, from(rgb(130, 102, 182)), to(rgb(83, 55, 135)));
+    background: -moz-linear-gradient(top, rgb(130, 102, 182), rgb(83, 55, 135));
     background: linear-gradient(top, rgb(130, 102, 182), rgb(83, 55, 135));
     background-color: rgb(106, 78, 158);
     border-top: 1px solid rgb(91, 63, 143);
@@ -196,7 +180,7 @@ a.js-tab {
 .btn:active {
     border: 1px solid rgb(42, 20, 83);
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(85, 60, 135)), to(rgb(55, 35, 100)));
-    background: -moz-gradient(linear, left top, left bottom, from(rgb(85, 60, 135)), to(rgb(55, 35, 100)));
+    background: -moz-linear-gradient(top, rgb(85, 60, 135), rgb(55, 35, 100));
     background: linear-gradient(top, rgb(85, 60, 135), rgb(55, 35, 100));
     background-color: rgb(70, 47, 117);
 }
