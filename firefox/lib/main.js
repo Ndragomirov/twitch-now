@@ -35,9 +35,9 @@ var scripts = [
   "lib/3rd/sinon-xhr.js",
   "lib/3rd/xhr-proxy-ff.js",
   "lib/utils.js",
-  "lib/3rd/jquery-1.8.2.min.js",
+  "lib/3rd/jquery.js",
   "lib/3rd/baron.js",
-  "lib/3rd/bootstrap.min.js",
+  "lib/3rd/bootstrap.js",
   "lib/3rd/underscore.js",
   "lib/3rd/backbone.js",
   "lib/3rd/handlebars.js",
@@ -63,6 +63,10 @@ var panel = panels.Panel({
   height              : 590,
   onHide              : onPanelHide,
   contentScriptFile   : scripts,
+  badge               : {
+    text : "+1",
+    color: "#5fc24f" // any CSS color syntax is valid
+  },
   contentScriptOptions: {
     dataURL        : self.data.url(""),
     locale         : i18n.locale,

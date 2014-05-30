@@ -1,9 +1,9 @@
 (function (){
   var scripts = [
     "common/lib/utils.js",
-    "common/lib/3rd/jquery-1.8.2.min.js",
+    "common/lib/3rd/jquery.js",
     "common/lib/3rd/baron.js",
-    "common/lib/3rd/bootstrap.min.js",
+    "common/lib/3rd/bootstrap.js",
     "common/lib/3rd/underscore.js",
     "common/lib/3rd/backbone.js",
     "common/lib/3rd/handlebars.js",
