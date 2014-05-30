@@ -6,9 +6,14 @@ module.exports = function (grunt){
 
   // Project configuration.
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-
+    v: grunt.file.readJSON('version.json'),
     clean              : {
+      dist: {
+        src: ["./dist/*"]
+      },
+      opera  : {
+        src: ["./build/opera/*"]
+      },
       chrome : {
         src: ["./build/chrome/*"]
       },
@@ -18,8 +23,8 @@ module.exports = function (grunt){
     },
     watch              : {
       firefox: {
-        files  : ['templates/**', 'common/**', "firefox/**", "chrome/**"],
-        tasks  : ['firefox', 'chrome'],
+        files  : ['templates/**', 'common/**', "firefox/**", "chrome/**", "opera/**"],
+        tasks  : ['firefox', 'chrome', 'opera'],
         options: {
           nospawn: true
         }
@@ -58,6 +63,22 @@ module.exports = function (grunt){
           }
         ]
       },
+      opera  : {
+        files: [
+          {
+            expand: true,
+            src   : ["**"],
+            cwd   : "./build/chrome",
+            dest  : './build/opera'
+          },
+          {
+            expand: true,
+            src   : ["./opera/**"],
+            cwd   : "./",
+            dest  : './build/'
+          }
+        ]
+      },
       chrome : {
         files: [
           {
@@ -70,17 +91,8 @@ module.exports = function (grunt){
             src   : ["./chrome/**"],
             cwd   : "./",
             dest  : './build/'
-          },
-        ]},
-      opera  : {
-        expand : true,
-        src    : 'manifests/opera.json',
-        dest   : './',
-        flatten: true,
-        rename : function (dest, src){
-          return dest + "manifest.json";
-        }
-      }
+          }
+        ]}
     },
     handlebars         : {
       compile: {
@@ -98,9 +110,17 @@ module.exports = function (grunt){
       }
     },
     compress           : {
+      opera : {
+        options: {
+          archive: 'dist/twitch-now-opera-<%= v.version %>.zip'
+        },
+        files  : [
+          {src: ['**'], cwd: "build/opera/", expand: true }
+        ]
+      },
       chrome: {
         options: {
-          archive: 'dist/twitch-now-chrome.zip'
+          archive: 'dist/twitch-now-chrome-<%= v.version %>.zip'
         },
         files  : [
           {src: ['**'], cwd: "build/chrome/", expand: true }
@@ -129,7 +149,7 @@ module.exports = function (grunt){
           'mozilla-addon-sdk': '1_16',
           extension_dir      : 'build/firefox',
           dist_dir           : 'dist/',
-          arguments          : '--output-file=twitch-now-firefox.xpi'
+          arguments          : '--output-file=twitch-now-firefox-<%= v.version %>.xpi'
         }
       }
     }
@@ -172,8 +192,8 @@ module.exports = function (grunt){
 
 
   grunt.registerTask('default', 'chrome'.split(' '));
-  grunt.registerTask('opera', 'bump version copy:opera handlebars'.split(' '));
+  grunt.registerTask('opera', 'clean:opera handlebars copy:opera'.split(' '));
   grunt.registerTask('firefox', 'clean:firefox i18n handlebars copy:firefox'.split(' '));
   grunt.registerTask('chrome', 'clean:chrome handlebars copy:chrome'.split(' '));
-  grunt.registerTask('dist', 'bump version chrome compress:chrome mozilla-addon-sdk mozilla-cfx-xpi'.split(' '));
+  grunt.registerTask('dist', 'clean:dist bump version chrome compress:chrome compress:opera mozilla-addon-sdk mozilla-cfx-xpi'.split(' '));
 };
