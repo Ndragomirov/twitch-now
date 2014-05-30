@@ -77,7 +77,11 @@
     });
 
     if ( bgApp.growlNotificationsSupported() ) {
-      utils.notifications.create({title: "Twitch Now", text: streamTitles.join("\n"), iconURL: defaultIcon});
+      var opts = {title: "Twitch Now", text: streamTitles.join("\n"), iconURL: defaultIcon};
+      if ( streamTitles.length == 1 ) {
+        opts.data = streamsToShow[0].getStreamURL();
+      }
+      utils.notifications.create(opts);
     }
 
     if ( bgApp.htmlNotificationsSupported() ) {
@@ -608,7 +612,7 @@
       }.bind(this));
     },
 
-    openStream: function (type){
+    getStreamURL: function (type){
       type = type || settings.get("openStreamIn").get("value");
 
       var links = {
@@ -616,8 +620,12 @@
         popout   : "/ID/popout"
       };
 
-      var href = this.baseUrl() + links[type].replace(/ID/, this.get("channel").name);
-      utils.tabs.create({ url: href });
+      return this.baseUrl() + links[type].replace(/ID/, this.get("channel").name);
+    },
+
+    openStream: function (type){
+      var url = this.getStreamURL(type);
+      utils.tabs.create({ url: url });
     },
 
     openChat: function (){

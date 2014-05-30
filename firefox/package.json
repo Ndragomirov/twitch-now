@@ -5,7 +5,7 @@
   "description": "Explore games & track your favorite streams on Twitch",
   "author"     : "Ndragomirov<jdavid214@gmail.com>",
   "license"    : "MPL 2.0",
-  "version"    : "1.1.79",
+  "version"    : "1.1.80",
   "permissions": {
     "private-browsing"     : true,
     "unsafe-content-script": true

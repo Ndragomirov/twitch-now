@@ -14,20 +14,15 @@ that.tabs = {
 
 that.notifications = {
   create: function (opts){
-    notifications.notify({
-      title  : opts.title,
-      text   : opts.text,
-      iconURL: opts.iconURL
-//      data   : "did gyre and gimble in the wabe",
-//      onClick: function (data){
-//        console.log(data);
-//        // console.log(this.data) would produce the same result.
-//      }
-    });
+    if ( opts.data ) {
+      opts.onClick = function (data){
+        var tabs = require("sdk/tabs");
+        tabs.open({url: data});
+      }
+    }
+    notifications.notify(opts);
   }
 }
-
-//that.notifications.create();
 
 that.windows = {
   create: function (opts, panel){
