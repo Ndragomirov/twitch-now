@@ -18,7 +18,7 @@ module.exports = function (grunt){
     },
     watch              : {
       firefox: {
-        files  : ['templates', 'common/**', "firefox/**", "chrome/**"],
+        files  : ['templates/**', 'common/**', "firefox/**", "chrome/**"],
         tasks  : ['firefox', 'chrome'],
         options: {
           nospawn: true

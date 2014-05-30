@@ -63,10 +63,6 @@ var panel = panels.Panel({
   height              : 590,
   onHide              : onPanelHide,
   contentScriptFile   : scripts,
-  badge               : {
-    text : "+1",
-    color: "#5fc24f" // any CSS color syntax is valid
-  },
   contentScriptOptions: {
     dataURL        : self.data.url(""),
     locale         : i18n.locale,
