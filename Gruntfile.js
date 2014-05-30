@@ -4,43 +4,75 @@ var fs = require('fs'),
 
 module.exports = function (grunt){
 
-  grunt.loadNpmTasks('grunt-contrib-handlebars');
-  grunt.loadNpmTasks('grunt-contrib-copy');
-  grunt.loadNpmTasks('grunt-version');
-
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    watch     : {
-      scripts: {
-        files  : ['lib/*'],
-        tasks  : ['default'],
+    clean              : {
+      chrome : {
+        src: ["./build/chrome/*"]
+      },
+      firefox: {
+        src: ["./build/firefox/*"]
+      }
+    },
+    watch              : {
+      firefox: {
+        files  : ['templates/**', 'common/**', "firefox/**", "chrome/**"],
+        tasks  : ['firefox', 'chrome'],
         options: {
           nospawn: true
         }
       }
     },
-    version   : {
+    version            : {
       options  : {
         pkg   : "version.json",
         prefix: '[\'"]version[\'"]?\\s*[:=]\\s*[\'"]'
       },
       manifests: {
-        src: ['manifests/opera.json', 'manifests/chrome.json']
+        src: ['chrome/manifest.json', 'firefox/package.json']
       }
     },
-    copy      : {
-      chrome: {
-        expand : true,
-        src    : 'manifests/chrome.json',
-        dest   : './',
-        flatten: true,
-        rename : function (dest, src){
-          return dest + "manifest.json";
-        }
+//    concat    : {
+//      options: {
+//        separator: ';\n\n'
+//      },
+//        src : chromePopup,
+//        dest: "build/chrome/common/lib/concat.js"
+//      }
+//    },
+    copy               : {
+      firefox: {
+        files: [
+          {
+            expand: true,
+            src   : ["./common/**"],
+            dest  : './build/firefox/data'
+          },
+          {
+            expand: true,
+            src   : ["./firefox/**"],
+            cwd   : "./",
+            dest  : './build/'
+          }
+        ]
       },
-      opera : {
+      chrome : {
+        files: [
+          {
+            expand: true,
+            src   : ["./common/**", "./_locales/**"],
+            dest  : './build/chrome'
+          },
+          {
+            expand: true,
+            src   : ["./chrome/**"],
+            cwd   : "./",
+            dest  : './build/'
+          },
+        ]},
+      opera  : {
         expand : true,
         src    : 'manifests/opera.json',
         dest   : './',
@@ -50,7 +82,7 @@ module.exports = function (grunt){
         }
       }
     },
-    handlebars: {
+    handlebars         : {
       compile: {
         options: {
           namespace  : "Handlebars.templates",
@@ -61,25 +93,56 @@ module.exports = function (grunt){
         },
 
         files: {
-          "dist/templates.js": "lib/templates/*.html"
+          "common/dist/templates.js": "templates/*"
+        }
+      }
+    },
+    compress           : {
+      chrome: {
+        options: {
+          archive: 'dist/twitch-now-chrome.zip'
+        },
+        files  : [
+          {src: ['**'], cwd: "build/chrome/", expand: true }
+        ]
+      }
+    },
+    'mozilla-addon-sdk': {
+      '1_16': {
+        options: {
+          revision: '1.16'
+        }
+      }
+    },
+    'mozilla-cfx'      : {
+      'run_stable': {
+        options: {
+          "mozilla-addon-sdk": "1_16",
+          extension_dir      : "build/firefox",
+          command            : "run"
+        }
+      }
+    },
+    'mozilla-cfx-xpi'  : {
+      stable: {
+        options: {
+          'mozilla-addon-sdk': '1_16',
+          extension_dir      : 'build/firefox',
+          dist_dir           : 'dist/',
+          arguments          : '--output-file=twitch-now-firefox.xpi'
         }
       }
     }
-
   });
 
-
-  grunt.registerTask('zip', '', function (){
-    var done = this.async();
-    var zip = exec(' zip -r twitch_now.zip ./chrome-platform-analytics/google-analytics-bundle.js ./_locales/* ./audio/* ./lib/* ./oauth2/* ./icons/* ./css/* ./dist/* ./manifest.json  ./html/* ', function (error, stdout, stderr){
-      console.log('stdout: ' + stdout);
-      console.log('stderr: ' + stderr);
-      if ( error !== null ) {
-        grunt.log.error('This is an error message.\n' + error);
-        return false;
-      }
-      done();
-    });
+  grunt.registerTask('i18n', function (){
+    var localesObj = {};
+    var locales = fs.readdirSync("_locales");
+    for ( var i = 0; i < locales.length; i++ ) {
+      var file = fs.readFileSync(__dirname + "/_locales/" + locales[i] + "/messages.json");
+      localesObj[locales[i]] = JSON.parse(file);
+    }
+    fs.writeFileSync("common/dist/locales.json", JSON.stringify(localesObj, null, 2), "utf8");
   });
 
   grunt.registerTask('bump', function (){
@@ -98,9 +161,19 @@ module.exports = function (grunt){
     done();
   });
 
+  grunt.loadNpmTasks('grunt-mozilla-addon-sdk');
+  grunt.loadNpmTasks('grunt-contrib-handlebars');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-compress');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-version');
 
-  grunt.registerTask('default', 'copy:chrome handlebars'.split(' '));
+
+  grunt.registerTask('default', 'chrome'.split(' '));
   grunt.registerTask('opera', 'bump version copy:opera handlebars'.split(' '));
-  grunt.registerTask('chrome', 'bump version copy:chrome handlebars'.split(' '));
-  grunt.registerTask('prod', 'zip'.split(' '));
+  grunt.registerTask('firefox', 'clean:firefox i18n handlebars copy:firefox'.split(' '));
+  grunt.registerTask('chrome', 'clean:chrome handlebars copy:chrome'.split(' '));
+  grunt.registerTask('dist', 'bump version chrome compress:chrome mozilla-addon-sdk mozilla-cfx-xpi'.split(' '));
 };

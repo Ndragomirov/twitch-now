@@ -1,10 +1,10 @@
 .idea/*
-*.zip
 .hgignore
 .gitignore
 .git/*
 .hg/*
+tmp/*
+build/*
 node_modules/*
 fontello/*
-twitch_now.zip
 /fontello-39648cf2/
