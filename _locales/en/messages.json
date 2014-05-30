@@ -70,5 +70,6 @@
     "m69": { "message" : "topstreams"},
     "m70": { "message" : "pin this game"},
     "m71": { "message" : "open stream"},
-    "m72": { "message" : "logged in as"}
+    "m72": { "message" : "logged in as"},
+    "m73": { "message" : "Log in to see your favorite channels"}
 }

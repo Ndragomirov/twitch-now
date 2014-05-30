@@ -193,7 +193,7 @@
             }
           }
           that.trigger("fail:" + methodName);
-          cb("err" + methodName);
+          cb({err: "err" + methodName, status: xhr.status});
         })
     });
 

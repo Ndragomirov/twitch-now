@@ -736,7 +736,10 @@
 
         if ( err ) {
           console.log("Following API error", err);
-          return this.trigger("apierror");
+          if ( err.status == 401 ) {
+            return this.trigger("autherror", err);
+          }
+          return this.trigger("apierror", err);
         }
         this.set(res.streams, {silent: true});
 

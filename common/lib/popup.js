@@ -463,6 +463,7 @@
   var ListView = DefaultView.extend({
     template   : "screenmessage.html",
     messages   : {
+      "autherror"      : "__MSG_m73__",
       "apierror"       : "__MSG_m48__",
       "novideo"        : "__MSG_m49__",
       "nosearchresults": "__MSG_m50__"
@@ -471,18 +472,15 @@
     initialize : function (){
       DefaultView.prototype.initialize.apply(this, arguments);
       this.container = this.$el.find(".screen-content");
-      this.listenTo(this.collection, "add update sort remove", this.render);
-      this.listenTo(this.collection, "reset", this.render);
-      this.listenTo(this.collection, "apierror", this.showError);
+      this.listenTo(this.collection, "add update sort remove reset", this.render);
+      this.listenTo(this.collection, "apierror", this.showMessage.bind(this, this.messages.apierror));
+      this.listenTo(this.collection, "autherror", this.showMessage.bind(this, this.messages.autherror));
       this.render();
     },
     showMessage: function (text){
       this.container.html(Handlebars.templates[this.template]({
         text: text
       }));
-    },
-    showError  : function (){
-      this.showMessage(this.messages.apierror);
     },
     update     : function (){
       this.collection.updateData();
