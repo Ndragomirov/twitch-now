@@ -120,12 +120,6 @@
     }
   }
 
-  that._postMessage = function _postMessage(msg){
-    if ( browser == FIREFOX ) {
-      self.postMessage(msg);
-    }
-  }
-
   root.utils = that;
 
 }).call(this);

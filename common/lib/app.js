@@ -95,7 +95,7 @@
       }, 8000);
       n.show();
     }
-    else if ( bgApp.richNotificationsSupported() ) {
+    if ( bgApp.richNotificationsSupported() ) {
       console.log("rich notifications supported");
 
       var buttons = [
