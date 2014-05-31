@@ -292,9 +292,7 @@
     },
 
     playSound  : function (e){
-      var sound = new Audio();
-      sound.src = $(e.target).val();
-      sound.play();
+      b.bgApp.playSound($(e.target).val());
     },
     rangeHelper: function (e){
       var t = $(e.target);

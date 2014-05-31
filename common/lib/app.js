@@ -170,7 +170,8 @@
   };
 
   bgApp.playSound = function (path){
-    new Audio(path).play();
+    var p = utils.runtime.getURL(path);
+    new Audio(p).play();
   };
 
   bgApp.init = function (){
@@ -347,11 +348,11 @@
       radio: true,
       show : true,
       opts : [
-        {id: "../audio/ding.ogg", name: "ding"},
-        {id: "../audio/chime.mp3", name: "chime"},
-        {id: "../audio/click.wav", name: "click"}
+        {id: "common/audio/ding.ogg", name: "ding"},
+        {id: "common/audio/chime.mp3", name: "chime"},
+        {id: "common/audio/click.wav", name: "click"}
       ],
-      value: "../audio/ding.ogg"
+      value: "common/audio/ding.ogg"
     },
     {
       id   : "refreshInterval",
