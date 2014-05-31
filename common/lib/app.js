@@ -316,7 +316,6 @@
     },
     {
       id      : "showDesktopNotification",
-      require : ["notifications"],
       desc    : "__MSG_m5__",
       checkbox: true,
       type    : "checkbox",
@@ -324,19 +323,17 @@
       value   : true
     },
     {
-      id     : "closeNotificationDelay",
-      require: ["notifications"],
-      desc   : "__MSG_m6__",
-      range  : true,
-      type   : "range",
-      tip    : "sec",
-      min    : 5,
-      value  : 8,
-      max    : 60
+      id   : "closeNotificationDelay",
+      desc : "__MSG_m6__",
+      range: true,
+      type : "range",
+      tip  : "sec",
+      min  : 5,
+      value: 8,
+      max  : 60
     },
     {
       id      : "playNotificationSound",
-      require : ["sound"],
       desc    : "__MSG_m7__",
       checkbox: true,
       show    : true,
@@ -344,18 +341,17 @@
       value   : false
     },
     {
-      id     : "notificationSound",
-      require: ["sound"],
-      desc   : "__MSG_m8__",
-      type   : "radio",
-      radio  : true,
-      show   : true,
-      opts   : [
+      id   : "notificationSound",
+      desc : "__MSG_m8__",
+      type : "radio",
+      radio: true,
+      show : true,
+      opts : [
         {id: "../audio/ding.ogg", name: "ding"},
         {id: "../audio/chime.mp3", name: "chime"},
         {id: "../audio/click.wav", name: "click"}
       ],
-      value  : "../audio/ding.ogg"
+      value: "../audio/ding.ogg"
     },
     {
       id   : "refreshInterval",
@@ -417,29 +413,22 @@
   var Control = Backbone.Model.extend({
 
     initialize: function (){
-      this.set("enabled", this.isEnabled());
+      this.setShow();
     },
 
-    settingsRequirements: {
-      sound        : function (){
-        return bgApp.audioSupported();
-      },
-      notifications: function (){
-        return bgApp.richNotificationsSupported() || bgApp.htmlNotificationsSupported();
+    setShow: function (){
+      var hideControls = {
+        chrome : [],
+        firefox: ["showBadge"],
+        opera  : ["showDesktopNotification", "closeNotificationDelay"]
       }
-    },
 
-    isEnabled: function (){
-      var require = this.get("require") || [];
-      var enabled = true;
-      for ( var i = 0; i < require.length; i++ ) {
-        var req = require[i];
-        if ( this.settingsRequirements[req] ) {
-          enabled = this.settingsRequirements[req]();
-        }
-        if ( !enabled ) return false;
+      var rbrowser = utils.rbrowser;
+      var hideIds = hideControls[rbrowser];
+      var selfId = this.get("id");
+      if ( hideIds && ~hideIds.indexOf(selfId) ) {
+        this.set("show", false);
       }
-      return enabled;
     },
 
     isValidValue: function (v){

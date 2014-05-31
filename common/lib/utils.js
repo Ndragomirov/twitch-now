@@ -1,30 +1,36 @@
 (function (){
   var root = this
+    , OPERA = "opera"
     , CHROME = "chrome"
     , FIREFOX = "firefox"
     ;
 
   var that = {};
 
+  var detectRealBrowser = function (){
+    var ua = root.navigator && root.navigator.userAgent;
+
+    if ( /opera|opr/i.test(ua) ) {
+      return OPERA;
+    }
+    else if ( /chrome|crios|crmo/i.test(ua) ) {
+      return CHROME;
+    }
+    else if ( /firefox|iceweasel/i.test(ua) ) {
+      return FIREFOX;
+    }
+  }
+
+  var rbrowser = that.rbrowser = detectRealBrowser();
+
   var detectBrowser = function (){
-    if ( typeof window.chrome == "undefined" ) {
+    if ( typeof root.chrome == "undefined" ) {
       return FIREFOX;
     }
     return CHROME;
   }
 
   var browser = that.browser = detectBrowser();
-
-  var detectBackground = function (){
-    if ( browser == CHROME ) {
-      return chrome.extension.getBackgroundPage() === this;
-    }
-    if ( browser == FIREFOX ) {
-      return typeof window == "undefined";
-    }
-  }
-
-  var background = that.background = detectBackground();
 
   var _tabs = that.tabs = {};
 

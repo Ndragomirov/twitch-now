@@ -1,10 +1,10 @@
 {{#if show}}
-<div class="control control-disabled-{{h-disabled this}}">
+<div class="control">
     <label>
         {{#if range}}
         <div class="control-desc">{{desc}}</div>
         <div class="control-wrapper">
-            <input {{h-disabled this}} data-type={{type}} data-id={{id}} type="range" value="{{value}}" min="{{min}}" max="{{max}}">
+            <input data-type={{type}} data-id={{id}} type="range" value="{{value}}" min="{{min}}" max="{{max}}">
 
             <div class="range-helper">
                 <span class="range-helper-value"> {{value}} </span> <span>{{tip}}</span>
@@ -16,7 +16,7 @@
         <div class="control-desc">{{desc}}</div>
         <div class="control-wrapper">
             {{#each opts}}
-            <input {{h-disabled this ../this}} data-type="{{../this.type}}" id="{{id}}" data-id={{../this.id}} name="{{../this.id}}" type="radio"
+            <input data-type="{{../this.type}}" id="{{id}}" data-id={{../this.id}} name="{{../this.id}}" type="radio"
                    value="{{id}}" {{h-checked this ../this}}>
 
             <label for="{{id}}">
@@ -30,13 +30,14 @@
 
         {{#if button}}
         <div class="control-wrapper">
-            <input {{h-disabled this}} data-type={{type}} data-id={{id}} class="tviggr-dark-btn" type="button" value="{{desc}}">
+            <input data-type={{type}} data-id={{id}} class="tviggr-dark-btn" type="button" value="{{desc}}">
         </div>
         {{/if}}
 
         {{#if checkbox}}
         <div class="control-wrapper">
-            <input {{h-disabled this}} type="checkbox" id="{{id}}" data-type={{type}} data-id={{id}} {{h-checked}} />
+            <!--id нужен для связывания label и checkbox при нажатии -->
+            <input type="checkbox" id="{{id}}" data-type={{type}} data-id={{id}} {{h-checked}} />
             <label for="{{id}}">
                 <span></span>
 
@@ -48,7 +49,7 @@
         {{#if select}}
         <div class="control-desc">{{desc}}</div>
         <div class="control-wrapper">
-            <select {{h-disabled this}} data-type={{type}} data-id={{id}}>
+            <select data-type={{type}} data-id={{id}}>
                 {{#each opts}}
                 <option value="{{id}}"
                 {{h-selected this ../this}} >{{name}}</option>
@@ -61,7 +62,7 @@
         {{#if text}}
         <div class="control-desc">{{desc}}</div>
         <div class="control-wrapper">
-            <input {{h-disabled this}} data-type={{type}} data-id={{id}} type="text" value="{{value}}">
+            <input data-type={{type}} data-id={{id}} type="text" value="{{value}}">
         </div>
         {{/if}}
     </label>
