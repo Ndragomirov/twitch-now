@@ -23,8 +23,9 @@ Install nodejs, grunt, grunt-cli, npm
 
 ```
 $ npm install
-$ grunt default
-$ grunt prod // Zips all files to one archive and increments current version number
+$ grunt chrome // builds chrome version
+$ grunt firefox // builds firefox version
+$ grunt opera // builds opera version
 
 ```
 
