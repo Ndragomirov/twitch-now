@@ -1,8 +1,10 @@
 ## Twitch now
 
-Twitch now chrome extension:
-
+Chrome version
   https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk
+
+Firefox version
+  https://addons.mozilla.org/ru/firefox/addon/twitch-now/
 
 ##Translation guide
 
