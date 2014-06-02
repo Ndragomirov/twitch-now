@@ -1,8 +1,10 @@
 ## Twitch now
 
-Twitch now chrome extension:
-
+Chrome version
   https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk
+
+Firefox version
+  https://addons.mozilla.org/ru/firefox/addon/twitch-now/
 
 ##Translation guide
 
@@ -21,8 +23,9 @@ Install nodejs, grunt, grunt-cli, npm
 
 ```
 $ npm install
-$ grunt default
-$ grunt prod // Zips all files to one archive and increments current version number
+$ grunt chrome // builds chrome version
+$ grunt firefox // builds firefox version
+$ grunt opera // builds opera version
 
 ```
 
