@@ -32,7 +32,6 @@
   app.setCurrentView = function (viewName){
     if ( app.views[viewName] ) {
       app.curView = app.views[viewName];
-//      chrome.runtime.sendMessage({action: "stat", method: "sendAppView", args: [viewName]})
       $('.screen').hide();
       $('#filterInput:visible, #searchInput:visible').focus();
       app.curView.$el.show();

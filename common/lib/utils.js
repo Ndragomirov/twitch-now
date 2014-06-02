@@ -94,6 +94,23 @@
     }
   }
 
+  _runtime.getVersion = function (){
+    if ( browser == CHROME ) {
+      chrome.runtime.getManifest().version;
+    } else {
+      return self.options.version;
+    }
+  }
+
+  _runtime.sendMessage = function (type, args){
+    if ( browser == CHROME ) {
+      chrome.runtime.sendMessage({type: type, args: args});
+    }
+    if ( browser == FIREFOX ) {
+      self.port.emit(type, args);
+    }
+  }
+
   var notifications = that.notifications = {};
 
   notifications.create = function (opts){

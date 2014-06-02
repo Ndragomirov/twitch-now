@@ -32,6 +32,8 @@ var twitchOauth = OAuth2.addAdapter({
 
 
 var scripts = [
+  "lib/analytics.js",
+  "lib/a.js",
   "lib/3rd/sinon-xhr.js",
   "lib/3rd/xhr-proxy-ff.js",
   "lib/utils.js",
@@ -64,6 +66,7 @@ var panel = panels.Panel({
   onHide              : onPanelHide,
   contentScriptFile   : scripts,
   contentScriptOptions: {
+    version        : self.version,
     dataURL        : self.data.url(""),
     locale         : i18n.locale,
     defaultMessages: i18n.defaultMessages,

@@ -1,5 +1,7 @@
 (function (){
   var scripts = [
+    "common/lib/analytics.js",
+    "common/lib/a.js",
     "common/lib/utils.js",
     "common/lib/3rd/jquery.js",
     "common/lib/3rd/baron.js",
@@ -13,7 +15,7 @@
     "common/lib/handlebars-helpers.js",
     "common/lib/popup.js",
     "common/lib/routes.js",
-    "common/lib/init.js",
+    "common/lib/init.js"
   ];
 
   scripts = scripts.map(function (v){
