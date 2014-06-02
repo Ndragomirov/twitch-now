@@ -170,7 +170,7 @@
   };
 
   bgApp.playSound = function (path){
-    var p = utils.runtime.getURL(path);
+    var p = /^http/i.test(path) ? path : utils.runtime.getURL(path);
     new Audio(p).play();
   };
 
