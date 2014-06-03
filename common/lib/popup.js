@@ -40,7 +40,6 @@
   }
 
   app.init = function (){
-
     app.container = $('#content');
     app.scroller = app.container.find(".scroller");
     app.preloader = $("<div id='preloader'><img src='../css/img/spinner.gif'/></div>");

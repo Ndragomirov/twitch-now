@@ -6,12 +6,15 @@
   "description"             : "Explore games & track your favorite streams on Twitch",
   "background"              : {
     "scripts": [
+      "common/lib/3rd/analytics.js",
+      "common/lib/lytics.js",
       "common/lib/3rd/jquery.js",
       "common/lib/3rd/underscore.js",
       "common/lib/3rd/backbone.js",
       "common/lib/utils.js",
       "common/lib/oauth2.js",
       "background.js",
+      "common/lib/onerror.js",
       "common/lib/twitch-api.js",
       "common/lib/app.js"
     ]
@@ -24,12 +27,12 @@
     "128": "common/icons/128_1.png"
   },
   "web_accessible_resources": ["common/*", "css/*", "dist/*", "oauth2/*", "lib/*"],
-  "browser_action" : {
+  "browser_action"          : {
     "default_icon" : {
       "19": "common/icons/19_2.png",
       "38": "common/icons/38_2.png"
     },
     "default_popup": "common/html/popup.html"
   },
-  "permissions"    : ["storage", "background", "https://*/*", "http://*/*", "notifications", "tabs"]
+  "permissions"             : ["storage", "background", "https://*/*", "http://*/*", "notifications", "tabs"]
 }

@@ -1,3 +1,5 @@
+var l = lytics.init('UA-21976825-4');
+
 var providerOpts = {
   api          : "https://api.twitch.tv/kraken/oauth2/authorize",
   response_type: 'code',
@@ -18,7 +20,8 @@ var twitchOauth = OAuth2.addAdapter({
 
 chrome.runtime.onMessage.addListener(function (msg){
   if ( msg.id == "OAUTH2_AUTH" ) {
-    twitchOauth.authorize(function (){})
+    twitchOauth.authorize(function (){
+    })
   }
 })
 

@@ -1,7 +1,6 @@
 (function (){
   var scripts = [
-    "common/lib/analytics.js",
-    "common/lib/a.js",
+    "common/lib/onerror.js",
     "common/lib/utils.js",
     "common/lib/3rd/jquery.js",
     "common/lib/3rd/baron.js",
