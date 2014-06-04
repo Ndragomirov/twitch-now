@@ -5,6 +5,9 @@ Chrome version
 
 Firefox version
   https://addons.mozilla.org/ru/firefox/addon/twitch-now/
+  
+Opera version
+  https://addons.opera.com/ru/extensions/details/twitch-now/
 
 ##Translation guide
 
