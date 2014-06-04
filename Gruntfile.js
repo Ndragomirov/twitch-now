@@ -6,9 +6,9 @@ module.exports = function (grunt){
 
   // Project configuration.
   grunt.initConfig({
-    v: grunt.file.readJSON('version.json'),
+    v                  : grunt.file.readJSON('version.json'),
     clean              : {
-      dist: {
+      dist   : {
         src: ["./dist/*"]
       },
       opera  : {
@@ -112,7 +112,8 @@ module.exports = function (grunt){
     compress           : {
       opera : {
         options: {
-          archive: 'dist/twitch-now-opera-<%= v.version %>.zip'
+          mode   : "zip",
+          archive: 'dist/twitch-now-opera-<%= v.version %>.crx'
         },
         files  : [
           {src: ['**'], cwd: "build/opera/", expand: true }
@@ -120,6 +121,7 @@ module.exports = function (grunt){
       },
       chrome: {
         options: {
+          mode   : "zip",
           archive: 'dist/twitch-now-chrome-<%= v.version %>.zip'
         },
         files  : [
