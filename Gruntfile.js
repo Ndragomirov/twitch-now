@@ -52,6 +52,12 @@ module.exports = function (grunt){
         files: [
           {
             expand: true,
+            src   : ["oauth2.js"],
+            cwd   : "./common/lib",
+            dest  : './build/firefox/lib'
+          },
+          {
+            expand: true,
             src   : ["./common/**"],
             dest  : './build/firefox/data'
           },
