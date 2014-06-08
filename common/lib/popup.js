@@ -209,6 +209,7 @@
     },
     filter        : function (){
       var fValue = this.$("#filterInput").val().toLowerCase();
+      fValue = fValue.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
       var rFilter = new RegExp(fValue);
       if ( this.app.curView ) {
         this.app.curView.$el.find(".stream").each(function (i, e){
@@ -516,7 +517,7 @@
     },
     render  : function (){
       if ( this.collection.length ) {
-        this.render();
+        ListView.prototype.render.apply(this, arguments);
       } else {
         this.showMessage(this.messages.nosearchresults);
       }
