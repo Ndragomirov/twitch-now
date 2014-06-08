@@ -36,7 +36,7 @@ module.exports = function (grunt){
         prefix: '[\'"]version[\'"]?\\s*[:=]\\s*[\'"]'
       },
       manifests: {
-        src: ['chrome/manifest.json', 'firefox/package.json']
+        src: ['chrome/manifest.json', 'firefox/package.json', 'opera/manifest.json']
       }
     },
 //    concat    : {
@@ -197,5 +197,5 @@ module.exports = function (grunt){
   grunt.registerTask('opera', 'clean:opera handlebars copy:opera'.split(' '));
   grunt.registerTask('firefox', 'clean:firefox i18n handlebars copy:firefox'.split(' '));
   grunt.registerTask('chrome', 'clean:chrome handlebars copy:chrome'.split(' '));
-  grunt.registerTask('dist', 'clean:dist bump version chrome compress:chrome compress:opera mozilla-addon-sdk mozilla-cfx-xpi'.split(' '));
+  grunt.registerTask('dist', 'clean:dist bump version chrome opera firefox compress:chrome compress:opera mozilla-addon-sdk mozilla-cfx-xpi'.split(' '));
 };
