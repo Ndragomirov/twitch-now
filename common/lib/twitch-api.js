@@ -22,26 +22,29 @@
   that.listen = function (){
     if ( isFirefox ) {
       self.port.on("OAUTH2_TOKEN", function (accessToken){
-        token = accessToken;
-        if ( token ) {
-          that.trigger("authorize");
-        }
+        that.trigger("tokenchange", accessToken);
       })
       self.port.emit("OAUTH2_TOKEN");
     } else {
 
       chrome.runtime.onMessage.addListener(function (msg){
         if ( msg.id == "OAUTH2_TOKEN" ) {
-          token = msg.value;
-          if ( token ) {
-            that.trigger("authorize");
-          }
+          that.trigger("tokenchange", msg.value);
         }
       })
-
       chrome.runtime.sendMessage({id: "OAUTH2_TOKEN_GET"});
     }
   }
+
+  that.on("tokenchange", function (accessToken){
+    token = accessToken;
+    if ( accessToken ) {
+      that.trigger("authorize");
+    } else {
+      that.userName = "";
+      that.trigger("revoke");
+    }
+  })
 
   that.listen();
 
@@ -57,15 +60,22 @@
     };
   }
 
-  that.revoke = function (){
+  that.authorize = function (){
     if ( isFirefox ) {
-      self.port.emit("OAUTH2_REVOKE");
+      self.port.emit("OAUTH2_AUTH");
     } else {
-      chrome.runtime.sendMessage({id: "OAUTH2_REVOKE"});
+      chrome.runtime.sendMessage({id: "OAUTH2_AUTH"});
     }
-    console.log("revoking");
-    that.userName = "";
-    that.trigger("revoke");
+  };
+
+  that.revoke = function (){
+    if ( token && token.length > 0 ) {
+      if ( isFirefox ) {
+        self.port.emit("OAUTH2_REVOKE");
+      } else {
+        chrome.runtime.sendMessage({id: "OAUTH2_REVOKE"});
+      }
+    }
   };
 
   that.isAuthorized = function (){
@@ -92,15 +102,6 @@
         that.userName = userName = res.token.user_name;
         return cb(null, userName);
       });
-  };
-
-  that.authorize = function (){
-
-    if ( isFirefox ) {
-      self.port.emit("OAUTH2_AUTH");
-    } else {
-      chrome.runtime.sendMessage({id: "OAUTH2_AUTH"});
-    }
   };
 
   that.getFollowed = function (cb){
@@ -188,9 +189,7 @@
             return that.getFollowed(cb);
           }
           if ( xhr.status == 401 ) {
-            if ( token && token.length > 0) {
-              that.revoke();
-            }
+            that.revoke();
           }
           that.trigger("fail:" + methodName);
           cb({err: "err" + methodName, status: xhr.status});

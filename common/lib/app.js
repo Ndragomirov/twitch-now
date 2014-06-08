@@ -385,7 +385,6 @@
       });
 
       twitchApi.on("revoke", function (){
-        console.log("revoke");
         self.set("authenticated", false);
       });
     },

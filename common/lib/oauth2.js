@@ -49,6 +49,7 @@
     this.opts = opts;
     this.flowType = this.opts.response_type;
     this.secret = this.opts.client_secret;
+    this.redirect = this.opts.redirect_uri.replace(/https*:\/\//i, "");
     delete this.opts.client_secret;
     this.flow = flow;
     this.codeUrl = opts.api + "?" + this.query(opts);
@@ -62,14 +63,16 @@
   Adapter.prototype._watchInject = function (){
     var self = this;
     var injectScript = '(' + this.injectScript.toString() + ')()';
-    var injectTo = this.opts.redirect_uri + "*";
-//    console.log(injectScript, injectTo);
+    var injectTo;
+
     if ( isFirefox ) {
       var pageMode = require("sdk/page-mod");
 
+      injectTo = this.redirect + "*";
+
       console.log("\n\n\nInjecting\n\n\n");
       pageMode.PageMod({
-        include          : injectTo,
+        include          : ["https://" + injectTo , "http://" + injectTo ],
         contentScript    : injectScript,
         contentScriptWhen: "ready",
         attachTo         : "top",
@@ -83,9 +86,9 @@
         }
       });
     } else {
-      injectTo = this.opts.redirect_uri;
+      injectTo = this.redirect;
       chrome.tabs.onUpdated.addListener(function (tabId, changeInfo){
-        if ( /*changeInfo.status && changeInfo.status == "complete"*/ changeInfo.url && changeInfo.url.indexOf(injectTo) != -1 ) {
+        if ( changeInfo.url && changeInfo.url.indexOf(injectTo) != -1 ) {
           console.log("\nExecuting scripts");
           chrome.tabs.executeScript(tabId, {code: injectScript});
         }
@@ -143,7 +146,7 @@
     var self = this;
     chrome.storage.sync.get(this.lsPath, function (item){
       console.log("SYNC_GET", item);
-      if ( item[self.lsPath]) {
+      if ( item[self.lsPath] ) {
         self.set(JSON.parse(item[self.lsPath]), true);
       }
     });
@@ -171,16 +174,18 @@
       undefined;
   }
 
-  Adapter.prototype.set = function (val, isSync){
+  Adapter.prototype.set = function (val, passSync){
     localStorage[ this.lsPath ] = JSON.stringify(val);
 
 
-    if ( !isFirefox && !isSync ) {
+    if ( !isFirefox && passSync == undefined ) {
       var syncData = {};
-      syncData[this.lsPath] = localStorage[this.lsPath];
+      syncData[ this.lsPath ] = JSON.stringify(val);
+
+      console.log("set sync data", syncData);
 
       chrome.storage.sync.set(syncData, function (){
-        console.log("SYNC_SET", syncData);
+        console.log("SYNC_SET_DONE", arguments);
       });
     }
 
@@ -219,20 +224,19 @@
 
   Adapter.prototype.finalize = function (params){
     var self = this;
+    var callback = self._callback || noop;
+
     var code;
     try {
       code = this.parseAuthorizationCode(params);
-    } catch (e) {
+    } catch (err) {
       console.log("\n\nerror parsing auth code\n\n");
-      return this._callback(e);
+      return callback(err);
     }
-
     this.getAccessAndRefreshTokens(code, function (err, data){
-      var callback = self._callback || noop;
       if ( !err ) {
         console.log("\n\nRecieve access token = ", data.access_token);
-        var access_token = data.access_token;
-        self.set({accessToken: access_token});
+        self.setAccessToken(data.access_token);
         callback();
       } else {
         callback(err);
@@ -281,9 +285,10 @@
   }
 
   Adapter.prototype.clearAccessToken = function (){
+    console.log("clear access token");
     var data = this.get();
     delete data.accessToken;
-    this.set(data);
+    this.set(data, true);
   }
 
   that.lookupAdapter = function (url){
