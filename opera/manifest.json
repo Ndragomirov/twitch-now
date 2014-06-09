@@ -1,6 +1,6 @@
 {
   "name"                    : "Twitch Now OPERA",
-  "version"                 : "1.1.106",
+  "version"                 : "1.1.108",
   "default_locale"          : "en",
   "manifest_version"        : 2,
   "description"             : "Explore games & track your favorite streams on Twitch",

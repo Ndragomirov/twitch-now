@@ -201,6 +201,17 @@
     this.set(stored);
   }
 
+
+  Adapter.prototype.pick = function (obj, params){
+    var res = {};
+    for ( var i in obj ) {
+      if ( ~params.indexOf(i) && obj.hasOwnProperty(i) ) {
+        res[i] = obj[i];
+      }
+    }
+    return res;
+  }
+
   Adapter.prototype.query = function (o){
     var res = [];
     for ( var i in o ) {
@@ -255,7 +266,9 @@
     data["code"] = authorizationCode;
     data["client_secret"] = this.secret;
 
-    request({url: url, method: method, data: this.opts}, callback)
+    var values = this.pick(data, ["client_id", "client_secret", "grant_type", "redirect_uri", "code" ]);
+
+    request({url: url, method: method, data: values}, callback)
   }
 
   Adapter.prototype.openTab = function (url){
