@@ -69,11 +69,8 @@
 
     this.router.on("all", function (r){
       var route = r.split(":")[1];
-      console.log("ROUTE", route);
       if ( route ) {
         app.setCurrentView(route);
-//        _baron.update();
-
       }
     });
 
@@ -425,7 +422,6 @@
           self.model.openChat();
         })
         .on('click', '.js-open-stream', function (e){
-          console.log($(e.target).attr("data-type"));
           self.model.openStream($(e.target).attr("data-type"));
         })
         .on('click', '.js-follow', function (){

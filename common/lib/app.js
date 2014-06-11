@@ -85,7 +85,6 @@
     }
 
     if ( bgApp.htmlNotificationsSupported() ) {
-      console.log("html notifications supported");
       //close all previous opened windows
       var notificationWindows = chrome.extension.getViews({
         type: 'notification'
@@ -100,8 +99,6 @@
       n.show();
     }
     if ( bgApp.richNotificationsSupported() ) {
-      console.log("rich notifications supported");
-
       var buttons = [
         {title: utils.i18n.getMessage("m54")}
       ];
@@ -516,10 +513,8 @@
     model     : Video,
     channel   : null,
     updateData: function (){
-      console.log("fetching channel videos", this.channel);
       twitchApi.send("channelVideos", {channel: this.channel, limit: 20}, function (err, res){
         if ( err ) {
-          console.log("API error", err);
           return this.trigger("apierror");
         }
         res.videos.forEach(function (v){
@@ -556,7 +551,6 @@
       twitchApi.send("gamesTop", {}, function (err, res){
         this.timeout = setTimeout(this.updateData.bind(this), 5 * 60 * 1000);
         if ( err ) {
-          console.log("GamesTop API error", err);
           return this.trigger("apierror");
         }
         res.top.forEach(function (g){
@@ -583,7 +577,6 @@
       cb = cb || $.noop;
       var target = this.get("channel").name;
       twitchApi.send("follow", {target: target}, function (err, res){
-        console.log("follow", err, res);
         if ( err ) return cb(err);
         this.trigger("follow", this.attributes);
         cb();
@@ -594,7 +587,6 @@
       cb = cb || $.noop;
       var target = this.get("channel").name;
       twitchApi.send("unfollow", {target: target}, function (err, res){
-        console.log("unfollow", err, res);
         if ( err ) return cb(err);
         this.trigger("unfollow", this);
         cb();
@@ -629,38 +621,6 @@
     }
   });
 
-  var FollowingStream = Stream.extend({
-    initialize: function (){
-      Stream.prototype.initialize.call(this);
-
-      var notifyList = bgApp.get("notifyList") || [];
-
-      this.set("following", true, {silent: true});
-      this.set("notify", ~notifyList.indexOf(this.get("_id")), {silent: true});
-    },
-
-    notify: function (val){
-      var notifyList = bgApp.get("notifyList") || []
-        , id = this.get("_id");
-
-      this.set("notify", val);
-      console.log(id);
-
-      //add to list
-      if ( val ) {
-        _.union(notifyList, [id]);
-        //remove
-      } else {
-        _.without(notifyList, id);
-      }
-      console.log("notifyList", notifyList);
-
-      bgApp.set("notifyList", notifyList);
-
-      this.trigger("notify", this.get("notify"));
-    }
-  })
-
   var StreamCollection = Backbone.Collection.extend({
 
     model: Stream,
@@ -670,7 +630,6 @@
     initialize: function (){
       this.setComparator();
       settings.get("viewSort").on("change:value", function (){
-        console.log("view sort changed");
         this.setComparator();
       }.bind(this));
     },
@@ -690,7 +649,7 @@
 
   var FollowingCollection = StreamCollection.extend({
 
-    model: FollowingStream,
+    model: Stream,
 
     initialize: function (){
       setInterval(function (){
@@ -724,7 +683,6 @@
         this.timeout = setTimeout(this.updateData.bind(this), settings.get("refreshInterval").get("value") * 60 * 1000);
 
         if ( err ) {
-          console.log("Following API error", err);
           if ( err.status == 401 ) {
             return this.trigger("autherror", err);
           }
@@ -743,10 +701,8 @@
   var BrowsingCollection = StreamCollection.extend({
     game      : null,
     updateData: function (){
-      console.log("fetching game streams", this.game);
       twitchApi.send("streams", {game: this.game, limit: 50}, function (err, res){
         if ( err ) {
-          console.log("Following API error", err);
           return this.trigger("apierror");
         }
         this.reset(res.streams, {silent: true});
@@ -760,7 +716,6 @@
       twitchApi.send("streams", {limit: 50}, function (err, res){
         this.timeout = setTimeout(this.updateData.bind(this), 5 * 60 * 1000);
         if ( err ) {
-          console.log("Following API error", err);
           return this.trigger("apierror");
         }
         this.reset(res.streams, {silent: true});
@@ -774,7 +729,6 @@
     updateData: function (){
       twitchApi.send("searchStreams", {query: this.query, limit: 50}, function (err, res){
         if ( err ) {
-          console.log("Following API error", err);
           return this.trigger("apierror");
         }
         this.reset(res.streams, {silent: true});
