@@ -489,15 +489,6 @@
     }
   });
 
-  var SettingsGroup = Backbone.Model.extend();
-
-  var Groups = Backbone.Collection.extend({
-    model     : SettingsGroup,
-    initialize: function (){
-
-    }
-  })
-
   var TwitchItemModel = Backbone.Model.extend({
 
     idAttribute: "_id",
@@ -853,4 +844,3 @@
   bgApp.init();
 
 }).call(this);
-
