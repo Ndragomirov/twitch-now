@@ -50,3 +50,8 @@
     background-position: 10px center;
     background-repeat: no-repeat;
 }
+
+.direction-rtl .scroller__bar {
+    left: 0;
+    right: auto;
+}
