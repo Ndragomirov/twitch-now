@@ -10,16 +10,8 @@ var pageMod = require("sdk/page-mod");
 var ss = require("sdk/simple-storage");
 var i18n = require("./i18n.js");
 var OAuth2 = require("./oauth2.js");
+var constants = require("./constants.js").constants;
 var twitchNow = require("./twitch-now.js").twitchNow;
-
-var providerOpts = {
-  api          : "https://api.twitch.tv/kraken/oauth2/authorize",
-  response_type: 'code',
-  client_id    : 'b4sj5euottb8mm7pc1lfvi84kvzxqxk',
-  client_secret: '2m42qpmxfy5l2ik4c93s0qco4vzfgr0',
-  scope        : 'user_follows_edit user_read',
-  redirect_uri : 'http://ndragomirov.github.io/twitch.html'
-};
 
 var twitchOauth = OAuth2.addAdapter({
   id      : 'twitch',
@@ -27,13 +19,10 @@ var twitchOauth = OAuth2.addAdapter({
     method: "POST",
     url   : "https://api.twitch.tv/kraken/oauth2/token"
   },
-  opts    : providerOpts
+  opts    : constants.twitchApi
 });
 
-
 var scripts = [
-  "lib/analytics.js",
-  "lib/a.js",
   "lib/3rd/sinon-xhr.js",
   "lib/3rd/xhr-proxy-ff.js",
   "lib/utils.js",
@@ -49,7 +38,6 @@ var scripts = [
   "lib/handlebars-helpers.js",
   "lib/twitch-api.js",
   "lib/app.js",
-
   "lib/popup.js",
   "lib/routes.js",
   "lib/init.js",
@@ -70,7 +58,8 @@ var panel = panels.Panel({
     dataURL        : self.data.url(""),
     locale         : i18n.locale,
     defaultMessages: i18n.defaultMessages,
-    messages       : i18n.messages
+    messages       : i18n.messages,
+    constants      : constants
   },
   contentScriptWhen   : "ready"
 });

@@ -2,7 +2,7 @@
   "use strict";
 
   var root = this;
-  var isFirefox = self && self.port && self.port.emit;
+  var isFirefox = utils.rbrowser == "firefox";
 
   var TwitchApi = root.TwitchApi = function (clientId){
     if ( !clientId ) throw new Error("clientId is required");
@@ -237,5 +237,7 @@
       }
     }
   }
+
+  root.twitchApi = new TwitchApi(utils.getConstants().twitchApi.client_id);
 
 }).call(this);

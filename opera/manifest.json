@@ -1,11 +1,12 @@
 {
   "name"                    : "Twitch Now OPERA",
-  "version"                 : "1.1.108",
+  "version"                 : "1.1.109",
   "default_locale"          : "en",
   "manifest_version"        : 2,
   "description"             : "Explore games & track your favorite streams on Twitch",
   "background"              : {
     "scripts": [
+      "common/lib/constants.js",
       "common/lib/3rd/analytics.js",
       "common/lib/lytics.js",
       "common/lib/3rd/jquery.js",
