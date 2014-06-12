@@ -30,7 +30,7 @@
 .stream .stream-title {
     color: rgb(200, 200, 200);
     font-weight: bold;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .stream:hover .stream-title {
@@ -39,7 +39,7 @@
 
 .stream .stream-preview {
     width: 70px;
-    height: 39px;
+    height: 44px;
     overflow: hidden;
     border: 1px solid rgb(0, 0, 0);
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
@@ -47,12 +47,8 @@
     margin-right: 10px;
 }
 
-.stream-preview.game-preview {
-    height: 42px;
-}
-
 .stream .stream-preview img {
-    width: 70px;
+    width: 100%;
 }
 
 .stream .stream-info {

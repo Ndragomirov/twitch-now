@@ -314,7 +314,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   buffer += "<div class=\"stream\" data-route=\"browse/"
     + escapeExpression((helper = helpers['h-enc'] || (depth0 && depth0['h-enc']),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name), options) : helperMissing.call(depth0, "h-enc", ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name), options)))
     + "\">\n    <div class=\"stream-preview game-preview\">\n        <img alt=\"\" class=\"lazy\" data-original=\""
-    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.logo)),stack1 == null || stack1 === false ? stack1 : stack1.medium)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.box)),stack1 == null || stack1 === false ? stack1 : stack1.medium)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\"/>\n    </div>\n    <span class=\"stream-info stream-title\">\n            "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\n    </span>\n    <span class=\"stream-info\">\n            ";
@@ -458,7 +458,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   if (helper = helpers.url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
-    + "\">\n    <div class=\"stream-preview game-preview\">\n        <img alt=\"\" class=\"lazy\" data-original=\"";
+    + "\">\n    <div class=\"stream-preview\">\n        <img alt=\"\" class=\"lazy\" data-original=\"";
   if (helper = helpers.preview) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.preview); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
