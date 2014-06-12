@@ -143,6 +143,14 @@
     }
   }
 
+  that.getConstants = function (){
+    if ( browser == FIREFOX ) {
+      return self.options.constants;
+    } else {
+      return root.constants;
+    }
+  }
+
   root.utils = that;
 
 }).call(this);
