@@ -1,10 +1,6 @@
-.idea/*
-.hgignore
-.gitignore
-.git/*
-.hg/*
-tmp/*
-build/*
-node_modules/*
-fontello/*
-/fontello-39648cf2/
+.idea
+bower_components
+build
+dist
+node_modules
+tmp
