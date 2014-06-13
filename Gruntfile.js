@@ -1,5 +1,4 @@
-var fs = require('fs'),
-  semver = require('semver');
+var semver = require('semver');
 
 module.exports = function (grunt) {
 
