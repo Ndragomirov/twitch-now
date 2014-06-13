@@ -71,5 +71,6 @@
     "m70": { "message" : "épingler ce jeu"},
     "m71": { "message" : "ouvrir stream"},
     "m72": { "message" : "connecté en tant que"},
-    "m73": { "message" : "Connectez-vous pour voir vos chaînes favorites"}
+    "m73": { "message" : "Connectez-vous pour voir vos chaînes favorites"},
+	"m74": { "message" : "Si vous aimez cette application et que vous souhaitez nous aider, vous pouvez faire un don par Paypal ou Bitcoin :"}
 }
