@@ -68,5 +68,8 @@
     "m67": { "message" : "favoritos" },
     "m68": { "message" : "jogos" },
     "m69": { "message" : "melhores transmissões" },
-    "m70": { "message" : "destacar este jogo" }
+    "m70": { "message" : "destacar este jogo" },
+    "m71": { "message" : "abrir transmissão"},
+    "m72": { "message" : "Entrou como"},
+    "m73": { "message" : "Entre para ver as suas transmissões favoritas"}
 }
