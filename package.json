@@ -22,7 +22,7 @@
     "type": "git",
     "url": "git://github.com/Ndragomirov/twitch-now.git"
   },
-  "license": "BSD",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Ndragomirov/twitch-now/issues"
   },
