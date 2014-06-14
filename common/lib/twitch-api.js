@@ -157,6 +157,13 @@
     }
   }
 
+  methods.gameVideos = function (){
+    return {
+      type: "GET",
+      url : "/videos/top"
+    }
+  }
+
   methods.channelVideos = function (){
     return {
       type: "GET",

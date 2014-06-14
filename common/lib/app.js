@@ -518,10 +518,34 @@
     }
   });
 
+  var GameVideos = Backbone.Collection.extend({
+    model     : Video,
+    game      : null,
+    updateData: function (){
+      twitchApi.send("gameVideos", {game: this.game, limit: 20}, function (err, res){
+        if ( err ) {
+          return this.trigger("apierror");
+        }
+        res.videos.forEach(function (v){
+          //video duration in min
+          v.length = Math.ceil(v.length / 60);
+        });
+        this.reset(res.videos, {silent: true});
+        this.trigger("update");
+      }.bind(this));
+    }
+  });
+
   var Game = Backbone.Model.extend();
 
   var Games = Backbone.Collection.extend({
     model: Game,
+
+    findByName: function (gameName){
+      return this.find(function (g){
+        return g.get("game").name == gameName;
+      })
+    },
 
     favorite: function (){
       var favoriteGamesIds = bgApp.get("favorite_games");
@@ -689,7 +713,22 @@
     }
   });
 
-  var BrowsingCollection = StreamCollection.extend({
+  var GameLobby = Backbone.Model.extend({
+    initialize: function (){
+      this.streams = new GameStreams;
+      this.videos = new GameVideos;
+      this.game = new Game;
+    },
+    setGame   : function (gameName){
+      var gameJSON = games.findByName(gameName).toJSON();
+      console.log("gameJSON", gameJSON);
+      this.streams.game = gameName;
+      this.videos.game = gameName;
+      this.game.set(gameJSON);
+    }
+  });
+
+  var GameStreams = StreamCollection.extend({
     game      : null,
     updateData: function (){
       twitchApi.send("streams", {game: this.game, limit: 50}, function (err, res){
@@ -776,12 +815,13 @@
   var contributors = root.contributors = new ContributorCollection;
   var settings = root.settings = new Settings;
   var following = root.following = new FollowingCollection;
-  var browsing = root.browsing = new BrowsingCollection;
+  var browsing = root.browsing = new GameStreams;
   var topstreams = root.topstreams = new TopStreamsCollection;
   var videos = root.videos = new Videos;
   var games = root.games = new Games;
   var search = root.search = new SearchCollection;
   var user = root.user = new User;
+  var gameLobby = root.gameLobby = new GameLobby;
 
   var notify = function (){
 

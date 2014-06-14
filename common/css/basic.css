@@ -27,7 +27,7 @@ a {
     left: 40px;
     top: 31px;
     position: absolute;
-    height: 560px;
+    bottom: 0;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -207,4 +207,93 @@ a.js-tab {
     height: 20px;
     vertical-align: middle;
     margin-right: 3px;
+}
+
+.game {
+    width: 380px;
+    height: 102px;
+    display: block;
+    position: absolute;
+    left: 40px;
+    top: 31px;
+    padding: 10px;
+    background-color: rgb(35, 35, 35);
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+.game .game-preview {
+    width: 67px;
+    border: 3px solid rgb(44, 44, 44);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+    float: left;
+    margin-right: 10px;
+    height: 94px;
+}
+
+.game .game-preview img {
+    width: 100%
+}
+
+.game .stream-info {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.3;
+    font-size: 11px;
+}
+
+.game .stream-info.stream-title {
+    color: rgb(238, 238, 238);
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.game .buttons {
+    display: inline-block;
+    position: absolute;
+    bottom: 10px;
+}
+
+.game .buttons .button {
+    margin-right: 5px;
+
+}
+
+.button {
+    overflow: hidden;
+    display: inline-block;
+    color: rgb(238, 238, 238);
+    width: 90px;
+    height: 32px;
+    line-height: 32px;
+    background-color: rgb(44, 44, 44);
+    border-radius: 2px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 11px;
+    position: relative;
+}
+
+.button.active .indicator {
+    display: block;
+}
+
+.button span {
+    vertical-align: middle;
+}
+
+.button img {
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+.button .indicator {
+    width: 100%;
+    position: absolute;
+    display: none;
+    height: 2px;
+    bottom: 0;
+    /*background-color: rgb(220, 179, 255);*/
+    background-color: rgb(75, 40, 140);
 }

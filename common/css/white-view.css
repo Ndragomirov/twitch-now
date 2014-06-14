@@ -7,7 +7,7 @@
     background: rgba(55, 55, 55, 0.8);
 }
 
-.white-version .scroller__bar:active  {
+.white-version .scroller__bar:active {
     background: rgba(55, 55, 55, 1);
 }
 
@@ -63,4 +63,22 @@
 
 .white-version  .stream .stream-preview {
     border: 1px solid rgb(255, 255, 255);
+}
+
+.white-version .game {
+    background-color: rgb(244, 244, 244);
+    border-bottom: 1px solid rgb(204, 204, 204);
+}
+
+.white-version .game .game-preview {
+    border: 3px solid rgb(255, 255, 255);
+}
+
+.white-version .game .stream-info.stream-title {
+    color: rgb(44, 44, 44);
+}
+
+.white-version .button {
+    color: rgb(120, 120, 120);
+    background-color: rgb(255, 255, 255);
 }

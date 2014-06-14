@@ -1,51 +1,29 @@
 (function (w, app){
   "use strict";
 
-  var defaultRoute = function (fn){
-    var decodedArgs = [].slice.call(arguments, 0).map(function (a){
-      return decodeURIComponent(a);
-    });
-    return fn.apply(null, decodedArgs);
-  };
-
   var Router = app.Router = Backbone.Router.extend({
     routes: {
-      "topstreams"    : "topstreams",
-      "info"          : "info",
-      "following"     : "following",
-      "settings"      : "settings",
-      "search"        : "search",
-      "videos/:stream": "videos",
-      "browse"        : "browseGames",
-      "browse/:game"  : "browseStreams"
-    },
-
-    topstreams: function (){
-    },
-
-    info: function (){
-    },
-
-    settings: function (){
-    },
-
-    search: function (){
+      "topstreams"          : "topstreams",
+      "info"                : "info",
+      "following"           : "following",
+      "settings"            : "settings",
+      "search"              : "search",
+      "videos/:stream"      : "videos",
+      "browse"              : "browseGames",
+      "browse/:game/streams": "gameLobbyStreams",
+      "browse/:game/videos" : "gameLobbyVideos"
     },
 
     videos: function (stream){
-      stream = decodeURIComponent(stream);
-      app.views.videos.setStream(stream);
+      app.views.videos.setStream(decodeURIComponent(stream));
     },
 
-    following    : function (){
+    gameLobbyStreams: function (game){
+      app.views.gameLobby.setGame(decodeURIComponent(game));
     },
 
-    browseGames  : function (){
-    },
-
-    browseStreams: function (game){
-      game = decodeURIComponent(game);
-      app.views.browseStreams.setGame(game);
+    gameLobbyVideos: function (game){
+      app.views.gameLobby.setGame(decodeURIComponent(game));
     }
   });
 

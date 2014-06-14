@@ -313,7 +313,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 
   buffer += "<div class=\"stream\" data-route=\"browse/"
     + escapeExpression((helper = helpers['h-enc'] || (depth0 && depth0['h-enc']),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name), options) : helperMissing.call(depth0, "h-enc", ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name), options)))
-    + "\">\n    <div class=\"stream-preview game-preview\">\n        <img alt=\"\" class=\"lazy\" data-original=\""
+    + "/streams\">\n    <div class=\"stream-preview game-preview\">\n        <img alt=\"\" class=\"lazy\" data-original=\""
     + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.box)),stack1 == null || stack1 === false ? stack1 : stack1.medium)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\"/>\n    </div>\n    <span class=\"stream-info stream-title\">\n            "
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -326,6 +326,32 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   else { helper = (depth0 && depth0.channels); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
     + " __MSG_m46__\n    </span>\n</div>";
+  return buffer;
+  });
+
+this["Handlebars"]["templates"]["gameextended.html"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, helper, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
+
+
+  buffer += "<div class=\"game-preview\">\n    <img src=\""
+    + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.box)),stack1 == null || stack1 === false ? stack1 : stack1.medium)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" alt=\"\"/>\n</div>\n<span class=\"stream-info stream-title\">\n            "
+    + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\n    </span>\n<span class=\"stream-info\">\n            ";
+  if (helper = helpers.viewers) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.viewers); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + " __MSG_m45__\n        </span>\n<span class=\"stream-info\">\n            ";
+  if (helper = helpers.channels) { stack1 = helper.call(depth0, {hash:{},data:data}); }
+  else { helper = (depth0 && depth0.channels); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
+  buffer += escapeExpression(stack1)
+    + " __MSG_m46__\n    </span>\n<span class=\"buttons\">\n<span class=\"button\" data-route=\"browse/"
+    + escapeExpression((helper = helpers['h-enc'] || (depth0 && depth0['h-enc']),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name), options) : helperMissing.call(depth0, "h-enc", ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name), options)))
+    + "/streams\">\n    <img src=\"../css/img/cam.png\" alt=\"\"/>\n    <span>streams</span>\n    <div class=\"indicator\"></div>\n</span>\n<span class=\"button\" data-route=\"browse/"
+    + escapeExpression((helper = helpers['h-enc'] || (depth0 && depth0['h-enc']),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name), options) : helperMissing.call(depth0, "h-enc", ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name), options)))
+    + "/videos\">\n    <img src=\"../css/img/play.png\" alt=\"\"/>\n    <span>__MSG_m21__</span>\n    <div class=\"indicator\"></div>\n</span>\n</span>";
   return buffer;
   });
 

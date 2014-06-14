@@ -69,15 +69,33 @@
 
     this.router.on("all", function (r){
       var route = r.split(":")[1];
+      console.log("ROUTE", route);
       if ( route ) {
         app.setCurrentView(route);
       }
     });
 
-    views.browseStreams = new BrowseStreamListView({
-      el        : "#browse-game-streams-screen",
-      collection: b.browsing
+    var extGameView = new ExtendedGameView({
+      model: b.gameLobby.game,
+      el   : ".game"
+    })
+
+    views.gameLobbyStreams = new StreamListView({
+      el        : "#gamelobby-streams-screen",
+      collection: b.gameLobby.streams
     });
+
+    views.gameLobbyVideos = new VideoListView({
+      el        : "#gamelobby-videos-screen",
+      collection: b.gameLobby.videos
+    })
+
+    views.gameLobby = new GameLobbyView({
+      model     : b.gameLobby,
+      gameView  : extGameView,
+      streamView: views.gameLobbyStreams,
+      videoView : views.gameLobbyVideos
+    })
 
     views.info = new InfoView({
       el: "#info-screen"
@@ -120,6 +138,7 @@
       el        : ".donation-list",
       collection: b.donations
     })
+
     new ContributorListView({
       el        : ".contributor-list",
       collection: b.contributors
@@ -153,7 +172,6 @@
     template  : "",
     render    : function (){
       this.$el.empty().html($(Handlebars.templates[this.template](this.model.toJSON())));
-
       return this;
     },
     initialize: function (){
@@ -535,12 +553,59 @@
     }
   });
 
-  var BrowseStreamListView = StreamListView.extend({
-    setGame: function (game){
-      this.collection.game = game;
-      this.update();
+  var ExtendedGameView = DefaultView.extend({
+    template          : "gameextended.html",
+    initialize        : function (){
+      this.listenTo(this.app.router, "route", this.toggle);
+      this.listenTo(this.app.router, "route", this.toggleActiveButton);
+      DefaultView.prototype.initialize.apply(this, arguments);
+      this.render();
+    },
+    toggleActiveButton: function (r){
+      var $buttons = this.$el.find(".button").removeClass("active");
+      if ( /gamelobbystreams/i.exec(r) ) {
+        $buttons.eq(0).addClass("active");
+      }
+
+      if ( /gamelobbyvideos/i.exec(r) ) {
+        $buttons.eq(1).addClass("active");
+      }
+    },
+    toggle            : function (r){
+      if ( /gamelobby/i.exec(r) ) {
+        this.show();
+      } else {
+        this.hide();
+      }
+    },
+    show              : function (){
+      this.$el.show();
+      $("#content").css({top: 154});
+    },
+    hide              : function (){
+      this.$el.hide();
+      $("#content").css({top: 31});
     }
-  });
+  })
+
+  var GameLobbyView = DefaultView.extend({
+    initialize: function (options){
+      this.gameView = options.gameView;
+      this.videoView = options.videoView;
+      this.streamView = options.streamView;
+      this.listenTo(this.model.game, "change:game", this.update);
+    },
+
+    update: function (){
+      this.gameView.render();
+      this.videoView.update();
+      this.streamView.update();
+    },
+
+    setGame: function (game){
+      this.model.setGame(game);
+    }
+  })
 
   var DonationView = DefaultView.extend({
     template: "donation.html"

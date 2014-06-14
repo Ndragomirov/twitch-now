@@ -1,0 +1,24 @@
+<div class="game-preview">
+    <img src="{{game.box.medium}}" alt=""/>
+</div>
+<span class="stream-info stream-title">
+            {{game.name}}
+    </span>
+<span class="stream-info">
+            {{viewers}} __MSG_m45__
+        </span>
+<span class="stream-info">
+            {{channels}} __MSG_m46__
+    </span>
+<span class="buttons">
+<span class="button" data-route="browse/{{h-enc game.name}}/streams">
+    <img src="../css/img/cam.png" alt=""/>
+    <span>streams</span>
+    <div class="indicator"></div>
+</span>
+<span class="button" data-route="browse/{{h-enc game.name}}/videos">
+    <img src="../css/img/play.png" alt=""/>
+    <span>__MSG_m21__</span>
+    <div class="indicator"></div>
+</span>
+</span>
