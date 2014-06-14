@@ -311,7 +311,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, functionType="function";
 
 
-  buffer += "<div class=\"stream\" data-route=\"browse/"
+  buffer += "<div class=\"stream js-filterable\" data-route=\"browse/"
     + escapeExpression((helper = helpers['h-enc'] || (depth0 && depth0['h-enc']),options={hash:{},data:data},helper ? helper.call(depth0, ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name), options) : helperMissing.call(depth0, "h-enc", ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.name), options)))
     + "/streams\">\n    <div class=\"stream-preview game-preview\">\n        <img alt=\"\" class=\"lazy\" data-original=\""
     + escapeExpression(((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.game)),stack1 == null || stack1 === false ? stack1 : stack1.box)),stack1 == null || stack1 === false ? stack1 : stack1.medium)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
@@ -421,7 +421,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<div class=\"stream\">\n    <div class=\"stream-preview\">\n        <img class=\"lazy\" alt=\"\" data-original=\"";
+  buffer += "<div class=\"stream js-filterable\">\n    <div class=\"stream-preview\">\n        <img class=\"lazy\" alt=\"\" data-original=\"";
   if (helper = helpers.preview) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.preview); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)
@@ -480,7 +480,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, helper, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 
-  buffer += "<div class=\"stream js-tab\" data-href=\"";
+  buffer += "<div class=\"stream js-tab js-filterable\" data-href=\"";
   if (helper = helpers.url) { stack1 = helper.call(depth0, {hash:{},data:data}); }
   else { helper = (depth0 && depth0.url); stack1 = typeof helper === functionType ? helper.call(depth0, {hash:{},data:data}) : helper; }
   buffer += escapeExpression(stack1)

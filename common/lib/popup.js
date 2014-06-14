@@ -227,7 +227,7 @@
       fValue = fValue.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
       var rFilter = new RegExp(fValue);
       if ( this.app.curView ) {
-        this.app.curView.$el.find(".stream").each(function (i, e){
+        this.app.curView.$el.find(".js-filterable").each(function (i, e){
           $(e).toggle(!!$(e).text().toLowerCase().match(rFilter));
         });
       }
