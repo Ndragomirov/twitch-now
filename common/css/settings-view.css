@@ -29,7 +29,7 @@ select {
     background: -moz-linear-gradient(top, rgb(130, 102, 182), rgb(83, 55, 135));
     background: linear-gradient(top, rgb(130, 102, 182), rgb(83, 55, 135));
     background-color: rgb(106, 78, 158);
-    background-image: url(img/down.png);
+    background-image: url(../img/down.png);
     background-position: right center;
     background-repeat: no-repeat;
     border-top: 1px solid rgb(91, 63, 143);
@@ -100,19 +100,19 @@ input[type="checkbox"] + label span, input[type="radio"] + label span {
 }
 
 input[type="radio"] + label span {
-    background: url(img/radiobutton.png) left top no-repeat;
+    background: url(../img/radiobutton.png) left top no-repeat;
 }
 
 input[type="radio"]:checked + label span {
-    background: url(img/radiobutton.png) -25px top no-repeat;
+    background: url(../img/radiobutton.png) -25px top no-repeat;
 }
 
 input[type="checkbox"] + label span {
-    background: url(img/checkbox.png) left top no-repeat;
+    background: url(../img/checkbox.png) left top no-repeat;
 }
 
 input[type="checkbox"]:checked + label span {
-    background: url(img/checkbox.png) -25px top no-repeat;
+    background: url(../img/checkbox.png) -25px top no-repeat;
 }
 
 .range-helper {

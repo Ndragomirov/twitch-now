@@ -14,31 +14,31 @@
 }
 
 .icon.heart-icon {
-    background-image: url(img/heart.png);
+    background-image: url(../img/heart.png);
 }
 
 .icon.help-icon {
-    background-image: url(img/help.png);
+    background-image: url(../img/help.png);
 }
 
 .icon.joystick-icon {
-    background-image: url(img/joystick.png);
+    background-image: url(../img/joystick.png);
 }
 
 .icon.star-icon {
-    background-image: url(img/star.png);
+    background-image: url(../img/star.png);
 }
 
 .icon.refresh-icon {
-    background-image: url(img/refresh.png);
+    background-image: url(../img/refresh.png);
 }
 
 .icon.settings-icon {
-    background-image: url(img/settings.png);
+    background-image: url(../img/settings.png);
 }
 
 .icon.search-icon {
-    background-image: url(img/search.png);
+    background-image: url(../img/search.png);
 }
 
 .menu-btn {
