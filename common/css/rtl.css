@@ -55,3 +55,14 @@
     left: 0;
     right: auto;
 }
+
+.direction-rtl .game {
+    right: 40px;
+    left: 0;
+}
+
+.direction-rtl .game .game-preview {
+    float: right;
+    margin-left: 10px;
+    margin-right: 0;
+}
