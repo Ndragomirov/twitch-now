@@ -502,9 +502,8 @@
 
   var Videos = Backbone.Collection.extend({
     model     : Video,
-    channel   : null,
     updateData: function (){
-      twitchApi.send("channelVideos", {channel: this.channel, limit: 20}, function (err, res){
+      twitchApi.send(this.url, this.query(), function (err, res){
         if ( err ) {
           return this.trigger("apierror");
         }
@@ -518,23 +517,27 @@
     }
   });
 
-  var GameVideos = Backbone.Collection.extend({
-    model     : Video,
-    game      : null,
-    updateData: function (){
-      twitchApi.send("gameVideos", {game: this.game, limit: 20}, function (err, res){
-        if ( err ) {
-          return this.trigger("apierror");
-        }
-        res.videos.forEach(function (v){
-          //video duration in min
-          v.length = Math.ceil(v.length / 60);
-        });
-        this.reset(res.videos, {silent: true});
-        this.trigger("update");
-      }.bind(this));
+  var ChannelVideos = Videos.extend({
+    url    : "channelVideos",
+    channel: null,
+    query  : function (){
+      return {
+        channel: this.channel,
+        limit  : 20
+      }
     }
-  });
+  })
+
+  var GameVideos = Videos.extend({
+    url  : "gameVideos",
+    game : null,
+    query: function (){
+      return {
+        game : this.game,
+        limit: 20
+      }
+    }
+  })
 
   var Game = Backbone.Model.extend();
 
@@ -545,20 +548,6 @@
       return this.find(function (g){
         return g.get("game").name == gameName;
       })
-    },
-
-    favorite: function (){
-      var favoriteGamesIds = bgApp.get("favorite_games");
-      favoriteGamesIds[this.get("id")] = 1;
-      bgApp.set("favorite-games-ids", favoriteGamesIds);
-      this.set("favorite", true);
-    },
-
-    unfavorite: function (){
-      var favoriteGamesIds = bgApp.get("favorite_games");
-      delete favoriteGamesIds[this.get("id")];
-      bgApp.set("favorite-games-ids", favoriteGamesIds);
-      this.set("favorite", false);
     },
 
     updateData: function (){
@@ -721,7 +710,6 @@
     },
     setGame   : function (gameName){
       var gameJSON = games.findByName(gameName).toJSON();
-      console.log("gameJSON", gameJSON);
       this.streams.game = gameName;
       this.videos.game = gameName;
       this.game.set(gameJSON);
@@ -817,7 +805,7 @@
   var following = root.following = new FollowingCollection;
   var browsing = root.browsing = new GameStreams;
   var topstreams = root.topstreams = new TopStreamsCollection;
-  var videos = root.videos = new Videos;
+  var videos = root.videos = new ChannelVideos;
   var games = root.games = new Games;
   var search = root.search = new SearchCollection;
   var user = root.user = new User;
