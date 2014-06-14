@@ -42,8 +42,8 @@
   app.init = function (){
     app.container = $('#content');
     app.scroller = app.container.find(".scroller");
-    app.preloader = $("<div id='preloader'><img src='../css/img/spinner.gif'/></div>");
-    app.streamPreloader = $("<div id='preloader-stream'><img src='../css/img/spinner.gif'/></div>");
+    app.preloader = $("<div id='preloader'><img src='../img/spinner.gif'/></div>");
+    app.streamPreloader = $("<div id='preloader-stream'><img src='../img/spinner.gif'/></div>");
 
     i18n.setGetMessageFn(utils.i18n.getMessage);
     i18n.replace(document.body);
