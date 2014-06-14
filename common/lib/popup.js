@@ -216,7 +216,7 @@
     },
     initialize    : function (){
       DefaultView.prototype.initialize.apply(this, arguments);
-      this.listenTo(this.app.router, "route", this.resetFilterVal.bind(this));
+      this.listenTo(this.app.router, "route", this.resetFilterVal);
     },
     resetFilterVal: function (){
       this.$("#filterInput").val("").keyup();
@@ -278,12 +278,6 @@
       $("body").toggleClass("simple-version", value);
     },
 
-    changeWindowHeight: function (value){
-//            value = parseInt(value, 10);
-//            $( "html" ).height( value );
-//            $( "#content" ).height( value - 30 );
-    },
-
     onModelChange: function (model, options){
       var v = model.get("value");
 
@@ -294,10 +288,6 @@
 
         case "themeType":
           this.changeThemeType(model.get("value"));
-          break;
-
-        case "windowHeight":
-          this.changeWindowHeight(model.get("value"));
           break;
 
         default:
@@ -330,7 +320,6 @@
           type = t.attr('data-type'),
           controlId = t.attr('data-id');
 
-        //пропускаем radio инпуты без аттрибута checked
         if ( type == 'radio' ) {
           if ( t.prop("checked") ) {
             value = t.val();
