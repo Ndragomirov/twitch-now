@@ -642,6 +642,9 @@
     },
     "m73": {
       "message": "Log in to see your favorite channels"
+    },
+    "m74": {
+      "message": "If you enjoy the application and want to help me out, you can do so by donating via PayPal or Bitcoin:"
     }
   },
   "fr": {
@@ -652,7 +655,7 @@
       "message": "Ouvrir les streams avec"
     },
     "m3": {
-      "message": "Ouvrir le tchat dans"
+      "message": "Ouvrir le chat dans"
     },
     "m4": {
       "message": "Afficher le badge avec le nombre de streams en cours"
@@ -703,7 +706,7 @@
       "message": "nouvel onglet"
     },
     "m20": {
-      "message": "tchat"
+      "message": "chat"
     },
     "m21": {
       "message": "vidéos"
@@ -757,7 +760,7 @@
       "message": "Aide & Info"
     },
     "m38": {
-      "message": "Connectez-vous pour suivre vos streams et être notifier quand ils sont en direct"
+      "message": "Connectez-vous pour suivre vos streams et être notifié quand ils sont en direct"
     },
     "m39": {
       "message": "Support officiel"
@@ -817,16 +820,16 @@
       "message": "version claire"
     },
     "m58": {
-      "message": "dépôt github"
+      "message": "dépôt Github"
     },
     "m59": {
       "message": "Aidez-nous à traduire \"Twitch Now\" "
     },
     "m60": {
-      "message": "Si vous souhaitez nous aider à traduire, rendez-vous sur le dépôt github \"Twitch Now\""
+      "message": "Si vous souhaitez nous aider à traduire, rendez-vous sur le dépôt Github \"Twitch Now\""
     },
     "m61": {
-      "message": "Région des chaines Twitch.tv"
+      "message": "Région des chaînes Twitch.tv"
     },
     "m62": {
       "message": "Hauteur de la fenêtre"
@@ -854,6 +857,18 @@
     },
     "m70": {
       "message": "épingler ce jeu"
+    },
+    "m71": {
+      "message": "ouvrir stream"
+    },
+    "m72": {
+      "message": "connecté en tant que"
+    },
+    "m73": {
+      "message": "Connectez-vous pour voir vos chaînes favorites"
+    },
+    "m74": {
+      "message": "Si vous aimez cette application et que vous souhaitez nous aider, vous pouvez faire un don par Paypal ou Bitcoin :"
     }
   },
   "pl": {
@@ -1278,6 +1293,15 @@
     },
     "m70": {
       "message": "destacar este jogo"
+    },
+    "m71": {
+      "message": "abrir transmissão"
+    },
+    "m72": {
+      "message": "Entrou como"
+    },
+    "m73": {
+      "message": "Entre para ver as suas transmissões favoritas"
     }
   },
   "pt_PT": {

@@ -614,7 +614,7 @@
   var DonationListView = DefaultView.extend({
     initialize: function (){
       DefaultView.prototype.initialize.apply(this, arguments);
-      this.listenTo(this.collection, "add update sort remove", this.render);
+      this.listenTo(this.collection, "reset", this.render);
       this.render();
     },
     render    : function (){
@@ -633,7 +633,7 @@
   var ContributorListView = DefaultView.extend({
     initialize: function (){
       DefaultView.prototype.initialize.apply(this, arguments);
-      this.listenTo(this.collection, "add update sort remove", this.render);
+      this.listenTo(this.collection, "reset", this.render);
       this.render();
     },
     render    : function (){

@@ -759,17 +759,12 @@
 
   var ContributorCollection = Backbone.Collection.extend({
     model     : Contributor,
+    url       : "https://api.github.com/repos/ndragomirov/twitch-now/contributors",
     initialize: function (){
-      this.url = "https://api.github.com/repos/ndragomirov/twitch-now/contributors";
       this.updateData();
     },
     updateData: function (){
-      var self = this;
-      $.ajax({ method: "GET", url: self.url})
-        .done(function (contributors){
-          self.reset(contributors, {silent: true});
-          self.trigger("update");
-        })
+      this.fetch({reset: true});
     }
   });
 
@@ -777,21 +772,16 @@
 
   var DonationCollection = Backbone.Collection.extend({
     model     : Donation,
+    url       : "http://162.243.34.81:8080/payments",
     initialize: function (){
-      this.url = "http://162.243.34.81:8080/payments";
       this.interval = 10 * 60 * 1000;
       this.updateData();
     },
     updateData: function (){
       var self = this;
-      $.ajax({ method: "GET", url: self.url})
-        .done(function (donations){
-          self.reset(donations, {silent: true});
-          self.trigger("update");
-        })
-
+      this.fetch({reset: true});
       setTimeout(function (){
-        self.updateData()
+        self.fetch({reset: true})
       }, self.interval);
     }
   });
