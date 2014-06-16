@@ -27,6 +27,7 @@ var scripts = [
   "lib/3rd/xhr-proxy-ff.js",
   "lib/utils.js",
   "lib/3rd/jquery.js",
+  "lib/3rd/jquery.visible.js",
   "lib/3rd/baron.js",
   "lib/3rd/bootstrap.js",
   "lib/3rd/underscore.js",

@@ -13,13 +13,11 @@
     app.container.scrollTop(0);
   }
 
-  app.lazyload = function (){
-    var height = app.scroller.height();
-    var scrollTop = app.scroller.scrollTop();
-    app.scroller.find('.lazy').filter(':visible').each(function (){
+  app.lazyload = function(){
+    var collection = $('.game, .screen').filter(":visible").find(".lazy");
+    collection.each(function (){
       var t = $(this);
-      var pos = t.position();
-      if ( pos.top >= scrollTop && pos.top <= scrollTop + height ) {
+      if ( t.visible(true) ) {
         t.attr('src', t.attr('data-original'));
         t.removeClass('lazy');
       }
@@ -61,9 +59,7 @@
       scroller: '.scroller',
       bar     : '.scroller__bar',
       barOnCls: 'baron'
-    }).autoUpdate().controls({
-        delta: 120
-      })
+    }).autoUpdate();
 
     Backbone.history.start();
 
@@ -548,7 +544,7 @@
       this.listenTo(this.app.router, "route", this.toggle);
       this.listenTo(this.app.router, "route", this.toggleActiveButton);
       DefaultView.prototype.initialize.apply(this, arguments);
-      this.render();
+//      this.render();
     },
     toggleActiveButton: function (r){
       var $buttons = this.$el.find(".button").removeClass("active");

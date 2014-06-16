@@ -3,6 +3,7 @@
     "common/lib/onerror.js",
     "common/lib/utils.js",
     "common/lib/3rd/jquery.js",
+    "common/lib/3rd/jquery.visible.js",
     "common/lib/3rd/baron.js",
     "common/lib/3rd/bootstrap.js",
     "common/lib/3rd/underscore.js",
