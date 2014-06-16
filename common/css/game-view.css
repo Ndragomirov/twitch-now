@@ -11,6 +11,7 @@
 }
 
 .game .game-preview {
+    position: relative;
     width: 70px;
     border: 1px solid rgb(0, 0, 0);
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
@@ -18,6 +19,22 @@
     margin-right: 10px;
     height: 98px;
     overflow: hidden;
+}
+
+.game .game-preview > span {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(100, 65, 165, 0.8);
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+}
+
+.game .game-preview > span:hover {
+    background-color: rgba(100, 65, 165, 1);
 }
 
 .game .game-preview img {
@@ -70,7 +87,6 @@
 .button:hover {
     background-color: rgb(25, 25, 25);
 }
-
 
 .button.active .indicator {
     display: block;
