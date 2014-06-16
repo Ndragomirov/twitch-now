@@ -5,20 +5,20 @@
             {{game.name}}
     </span>
 <span class="stream-info">
-            {{viewers}} __MSG_m45__
+            {{h-num-format viewers}} __MSG_m45__
         </span>
 <span class="stream-info">
-            {{channels}} __MSG_m46__
+            {{h-num-format channels}} __MSG_m46__
     </span>
 <span class="buttons">
-<span class="button" data-route="browse/{{h-enc game.name}}/streams">
-    <img src="../img/cam.png" alt=""/>
-    <span>streams</span>
-    <div class="indicator"></div>
-</span>
-<span class="button" data-route="browse/{{h-enc game.name}}/videos">
-    <img src="../img/play.png" alt=""/>
-    <span>__MSG_m21__</span>
-    <div class="indicator"></div>
-</span>
+    <span class="button" data-route="browse/{{h-enc game.name}}/streams">
+        <i class="icon icon-camera"></i>
+        <span>streams</span>
+        <div class="indicator"></div>
+    </span>
+    <span class="button" data-route="browse/{{h-enc game.name}}/videos">
+        <i class="icon icon-play"></i>
+        <span>__MSG_m21__</span>
+        <div class="indicator"></div>
+    </span>
 </span>

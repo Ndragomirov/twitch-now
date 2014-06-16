@@ -2,15 +2,15 @@
     <div class="stream-preview">
         <img alt="" class="lazy" data-original="{{preview}}"/>
     </div>
-    <span class="stream-info stream-title">
+    <span class="stream-info stream-title" title="{{title}}">
             {{title}}
     </span>
 
     <span class="stream-info">
-            {{h-prettydate this.recorded_at}}
+            {{channel.display_name}} - {{game}}
     </span>
 
     <span class="stream-info">
-            {{length}} __MSG_m47__
+        {{length}} __MSG_m47__ - {{h-prettydate this.recorded_at}}
     </span>
 </div>

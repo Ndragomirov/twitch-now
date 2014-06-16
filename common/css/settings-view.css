@@ -32,18 +32,12 @@ select {
     background-image: url(../img/down.png);
     background-position: right center;
     background-repeat: no-repeat;
-    border-top: 1px solid rgb(91, 63, 143);
-    border-left: 1px solid rgb(65, 39, 113);
-    border-right: 1px solid rgb(65, 39, 113);
-    border-bottom: 1px solid rgb(42, 20, 83);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.15);
+    border: none;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
     color: white;
-
     -moz-appearance: none;
     -webkit-appearance: none;
     -webkit-text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
-    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.15);
     -webkit-padding-end: 20px;
     -webkit-padding-start: 5px;
 }

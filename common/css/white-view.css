@@ -71,7 +71,7 @@
 }
 
 .white-version .game .game-preview {
-    border: 3px solid rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255);
 }
 
 .white-version .game .stream-info.stream-title {
@@ -81,4 +81,16 @@
 .white-version .button {
     color: rgb(120, 120, 120);
     background-color: rgb(255, 255, 255);
+}
+
+.white-version .button:hover {
+    background-color: rgb(255, 255, 255);
+}
+
+.white-version .button .icon.icon-camera {
+    background-image: url(../img/camera-dark.png);
+}
+
+.white-version .button .icon.icon-play {
+    background-image: url(../img/play-dark.png);
 }

@@ -11,12 +11,13 @@
 }
 
 .game .game-preview {
-    width: 67px;
-    border: 3px solid rgb(44, 44, 44);
+    width: 70px;
+    border: 1px solid rgb(0, 0, 0);
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
     float: left;
     margin-right: 10px;
-    height: 94px;
+    height: 98px;
+    overflow: hidden;
 }
 
 .game .game-preview img {
@@ -62,7 +63,14 @@
     text-align: center;
     font-size: 11px;
     position: relative;
+    -webkit-transition: background 100ms linear;
+    -moz-transition: background 100ms linear;
 }
+
+.button:hover {
+    background-color: rgb(25, 25, 25);
+}
+
 
 .button.active .indicator {
     display: block;
@@ -72,9 +80,14 @@
     vertical-align: middle;
 }
 
-.button img {
+.button .icon {
+    display: inline-block;
     margin-right: 4px;
     vertical-align: middle;
+}
+
+.button:hover img {
+    opacity: 1;
 }
 
 .button .indicator {
@@ -85,3 +98,16 @@
     bottom: 0;
     background-color: rgb(75, 40, 140);
 }
+
+.button .icon-camera {
+    width: 16px;
+    height: 14px;
+    background-image: url(../img/camera.png);
+}
+
+.button .icon-play {
+    width: 16px;
+    height: 16px;
+    background-image: url(../img/play.png);
+}
+
