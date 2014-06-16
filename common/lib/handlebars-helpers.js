@@ -5,6 +5,10 @@ Handlebars.registerHelper('h-checked', function (input, parent){
   return  v ? 'checked' : '';
 });
 
+Handlebars.registerHelper('h-num-format', function (v){
+  return v ? v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : '';
+})
+
 Handlebars.registerHelper('h-prettydate', function (v){
   return humaneDate(v);
 });
