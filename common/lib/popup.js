@@ -544,7 +544,7 @@
       this.listenTo(this.app.router, "route", this.toggle);
       this.listenTo(this.app.router, "route", this.toggleActiveButton);
       DefaultView.prototype.initialize.apply(this, arguments);
-//      this.render();
+      this.render();
     },
     toggleActiveButton: function (r){
       var $buttons = this.$el.find(".button").removeClass("active");
