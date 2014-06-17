@@ -9,6 +9,22 @@ Handlebars.registerHelper('h-num-format', function (v){
   return v ? v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : '';
 })
 
+Handlebars.registerHelper('h-date-format', function (s){
+  s = parseInt(s, 10);
+
+  if ( isNaN(s) ) return '';
+  
+  var fm = [
+    Math.floor(s / 60 / 60) % 24,
+    Math.floor(s / 60) % 60,
+    s % 60
+  ];
+
+  return fm.map(function (v, i){
+    return ((v < 10) ? '0' : '') + v;
+  }).join(':').replace(/00:0{0,1}|^0/, "");
+})
+
 Handlebars.registerHelper('h-prettydate', function (v){
   return humaneDate(v);
 });

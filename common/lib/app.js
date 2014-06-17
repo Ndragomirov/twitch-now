@@ -507,10 +507,6 @@
         if ( err ) {
           return this.trigger("apierror");
         }
-        res.videos.forEach(function (v){
-          //video duration in min
-          v.length = Math.ceil(v.length / 60);
-        });
         this.reset(res.videos, {silent: true});
         this.trigger("update");
       }.bind(this));
