@@ -1,11 +1,13 @@
 .icon {
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: 50%;
 }
 
 .big-icon {
     width: 31px;
-    height: 22px;
+    height: 20px;
 }
 
 .small-icon {
@@ -14,31 +16,31 @@
 }
 
 .icon.heart-icon {
-    background-image: url(../img/heart.png);
+    background-image: url(../img/heart.svg);
 }
 
 .icon.help-icon {
-    background-image: url(../img/help.png);
+    background-image: url(../img/info.svg);
 }
 
 .icon.joystick-icon {
-    background-image: url(../img/joystick.png);
+    background-image: url(../img/joystick.svg);
 }
 
 .icon.star-icon {
-    background-image: url(../img/star.png);
+    background-image: url(../img/star.svg);
 }
 
 .icon.refresh-icon {
-    background-image: url(../img/refresh.png);
+    background-image: url(../img/refresh.svg);
 }
 
 .icon.settings-icon {
-    background-image: url(../img/settings.png);
+    background-image: url(../img/settings.svg);
 }
 
 .icon.search-icon {
-    background-image: url(../img/search.png);
+    background-image: url(../img/search.svg);
 }
 
 .menu-btn {
@@ -93,9 +95,8 @@
     display: inline-block;
     cursor: pointer;
     float: left;
-    margin-top: 5px;
+    margin-top: 6px;
     margin-left: 5px;
-    margin-right: 5px;
 }
 
 #filter-bar, #search-bar {
