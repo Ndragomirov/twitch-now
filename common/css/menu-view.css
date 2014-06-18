@@ -1,52 +1,8 @@
-.icon {
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position-x: 50%;
-    background-position-y: 50%;
-}
-
-.big-icon {
-    width: 31px;
-    height: 20px;
-}
-
-.small-icon {
-    width: 24px;
-    height: 18px;
-}
-
-.icon.heart-icon {
-    background-image: url(../img/heart.svg);
-}
-
-.icon.help-icon {
-    background-image: url(../img/info.svg);
-}
-
-.icon.joystick-icon {
-    background-image: url(../img/joystick.svg);
-}
-
-.icon.star-icon {
-    background-image: url(../img/star.svg);
-}
-
-.icon.refresh-icon {
-    background-image: url(../img/refresh.svg);
-}
-
-.icon.settings-icon {
-    background-image: url(../img/settings.svg);
-}
-
-.icon.search-icon {
-    background-image: url(../img/search.svg);
-}
-
 .menu-btn {
     cursor: pointer;
     padding: 10px 0px;
     opacity: 0.9;
+    text-align: center;
     -webkit-transition: background 100ms linear;
     -moz-transition: background 100ms linear;
 }
@@ -61,8 +17,9 @@
     background: rgb(75, 40, 140);
 }
 
-.menu-btn .icon {
-    margin-left: 4px;
+.menu-btn img {
+    vertical-align: middle;
+    height: 20px;
 }
 
 .top-menu {
@@ -79,24 +36,25 @@
 }
 
 #search-menu {
-    /*left: 39px;*/
     display: block;
 }
 
-#search {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    margin-left: 10px;
-    margin-top: 6px;
-}
-
-#top-menu .top-menu-btn {
+.top-menu-btn {
     display: inline-block;
     cursor: pointer;
     float: left;
     margin-top: 6px;
     margin-left: 5px;
+}
+
+#search img {
+    width: 18px;
+    height: 18px;
+}
+
+#refresh-btn img {
+    width: 18px;
+    height: 17px;
 }
 
 #filter-bar, #search-bar {

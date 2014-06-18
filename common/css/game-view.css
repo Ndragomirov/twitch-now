@@ -30,7 +30,8 @@
     text-align: center;
     color: white;
     cursor: pointer;
-    width: 100%;
+    left: 0;
+    right: 0;
 }
 
 .game .game-preview > span:hover {
@@ -126,4 +127,3 @@
     height: 16px;
     background-image: url(../img/play.png);
 }
-
