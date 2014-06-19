@@ -575,6 +575,7 @@
 
   var GameLobbyView = DefaultView.extend({
     initialize: function (options){
+      DefaultView.prototype.initialize.apply(this, arguments);
       this.gameView = options.gameView;
       this.videoView = options.videoView;
       this.streamView = options.streamView;
