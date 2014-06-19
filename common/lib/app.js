@@ -662,7 +662,7 @@
         self.remove(attr);
       });
 
-      this.on("update remove reset", function (){
+      this.on("add update remove reset", function (){
         badge.set("count", this.length);
       });
 
