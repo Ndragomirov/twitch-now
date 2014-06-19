@@ -22,9 +22,10 @@
   that.observer = null;
 
   that.config = {
-    attributes: true,
-    childList : true,
-    subtree   : true
+    attributes     : true,
+    attributeFilter: ["title"],
+    childList      : true,
+    subtree        : true
   };
 
   that.replaceOpts = {
@@ -87,6 +88,8 @@
     var textNodes
       , attributes
       , content;
+
+    console.log("replace", opts);
 
     opts = extend(that.replaceOpts, opts);
 
