@@ -652,13 +652,27 @@
     model: Stream,
 
     initialize: function (){
+      var self = this;
+
       setInterval(function (){
-        this.notified = [];
-      }.bind(this), 1000 * 60 * 60);
+        self.notified = [];
+      }, 1000 * 60 * 60);
 
       this.on("unfollow", function (attr){
-        this.remove(attr);
-      }.bind(this));
+        self.remove(attr);
+      });
+
+      this.on("update remove reset", function (){
+        badge.set("count", this.length);
+      });
+
+      twitchApi.on("authorize", function (){
+        self.updateData();
+      })
+
+      twitchApi.on("revoke", function (){
+        self.reset();
+      });
 
       StreamCollection.prototype.initialize.call(this);
     },
@@ -783,13 +797,41 @@
   });
 
 
+  var Badge = Backbone.Model.extend({
+    defaults         : {
+      count: 0
+    },
+    initialize       : function (){
+      var self = this;
+
+      self.on("change:count", function (){
+        if ( settings.get("showBadge").get("value") ) {
+          bgApp.setBadge(self.get("count"));
+        }
+      });
+
+      settings.on("change:value", function (model, value){
+        if ( model.get("id") == "showBadge" ) {
+          self.onShowBadgeChange(value);
+        }
+      });
+    },
+    onShowBadgeChange: function (value){
+      if ( value ) {
+        bgApp.setBadge(this.get("count"));
+      } else {
+        bgApp.clearBadge();
+      }
+    }
+  })
+
   bgApp.bindNotificationListeners();
 
+  var settings = root.settings = new Settings;
+  var badge = root.badge = new Badge;
   var donations = root.donations = new DonationCollection;
   var contributors = root.contributors = new ContributorCollection;
-  var settings = root.settings = new Settings;
   var following = root.following = new FollowingCollection;
-  var browsing = root.browsing = new GameStreams;
   var topstreams = root.topstreams = new TopStreamsCollection;
   var videos = root.videos = new ChannelVideos;
   var games = root.games = new Games;
@@ -798,7 +840,6 @@
   var gameLobby = root.gameLobby = new GameLobby;
 
   var notify = function (){
-
     if ( following.addedStreams.length > 0 ) {
       if ( settings.get("showDesktopNotification").get("value") ) {
         bgApp.sendNotification(following.getNewStreams());
@@ -809,48 +850,17 @@
     }
   };
 
-  function updateBadgeCount(){
-    if ( settings.get("showBadge").get("value") ) {
-      bgApp.setBadge(following.length);
-    }
-  }
-
-  browsing.on("follow", function (stream){
+  var addToFollowing = function (stream){
     following.add(stream);
     following.addedStreams = [stream._id];
     notify();
-    updateBadgeCount();
-  });
-
-  following.on("update", notify);
-  following.on("update remove", updateBadgeCount);
-
-  settings.on("change:value", function (model, value){
-    switch (model.get("id")) {
-      case "showBadge":
-        onShowBadgeChange(value);
-        break;
-      default:
-        break;
-    }
-  });
-
-  function onShowBadgeChange(value){
-    if ( value ) {
-      updateBadgeCount();
-    } else {
-      bgApp.clearBadge();
-    }
   }
 
-  twitchApi.on("authorize", function (){
-    following.updateData();
-  })
+  topstreams.on("follow", addToFollowing);
+  search.on("follow", addToFollowing)
+  gameLobby.streams.on("follow", addToFollowing);
 
-  twitchApi.on("revoke", function (){
-    following.reset();
-    bgApp.clearBadge();
-  });
+  following.on("update", notify);
 
   topstreams.updateData();
   games.updateData();
