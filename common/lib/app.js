@@ -564,13 +564,12 @@
 
   var Stream = TwitchItemModel.extend({
 
+    defaults: {
+      created_at: Date.now()
+    },
+
     initialize: function (){
-      var channelName = this.get("channel").name;
-      this.set({
-          name      : channelName,
-          created_at: Date.now()
-        },
-        {silent: true});
+
     },
 
     follow: function (cb){
@@ -680,14 +679,14 @@
     getNewStreams: function (){
       var ids = this.addedStreams;
       return this.filter(function (stream){
-        return ~ids.indexOf(stream.get("_id"));
+        return ~ids.indexOf(stream.get("name"));
       });
     },
 
     addedStreams: [],
     notified    : [], //store notified streams id here
     updateData  : function (){
-      var idsBeforeUpdate = this.pluck("_id");
+      var idsBeforeUpdate = this.pluck("name");
       var idsAfterUpdate;
 
       clearTimeout(this.timeout);
@@ -704,7 +703,7 @@
         }
         this.set(res.streams, {silent: true});
 
-        idsAfterUpdate = this.pluck("_id");
+        idsAfterUpdate = this.pluck("name");
         this.addedStreams = _.difference(idsAfterUpdate, idsBeforeUpdate, this.notified);
         this.notified = _.union(this.addedStreams, this.notified);
         this.trigger("update");
@@ -852,7 +851,7 @@
 
   var addToFollowing = function (stream){
     following.add(stream);
-    following.addedStreams = [stream._id];
+    following.addedStreams = [stream.name];
     notify();
   }
 
