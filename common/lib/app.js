@@ -149,7 +149,10 @@
     text = text === "0" ? "" : text;
     utils.browserAction.setBadgeText({
       text: text
-    })
+    });
+    utils.browserAction.setTitle({
+      title: "Twitch Now\n" + (text ? text + " " + utils.i18n.getMessage("m75") : "")
+    });
   };
 
   bgApp.audioSupported = function audioSupported(){

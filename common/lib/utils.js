@@ -56,6 +56,17 @@
 
   var _browserAction = that.browserAction = {};
 
+  _browserAction.setTitle = function (opts){
+    if ( browser == CHROME ) {
+      chrome.browserAction.setTitle({
+        title: opts.title
+      })
+    }
+    if ( browser == FIREFOX ) {
+     // throw new Error("Not Implemented");
+    }
+  }
+
   _browserAction.setBadgeText = function (opts){
     if ( browser == CHROME ) {
       chrome.browserAction.setBadgeText({
