@@ -67,6 +67,10 @@
     "m66": { "message" : "Domyślna zakładka"},
     "m67": { "message" : "ulubione"},
     "m68": { "message" : "gry"},
-    "m69": { "message" : "najpopularniejsze stramy"},
+    "m69": { "message" : "najpopularniejsze streamy"},
     "m70": { "message" : "przyczep tą grę"}
+    "m71": { "message" : "otwórz stream"},
+    "m72": { "message" : "zalogowany jako"},
+    "m73": { "message" : "Zaloguj się aby zobaczyć obserwowane streamy"},
+    "m74": { "message" : "Jeżeli podoba ci się ta aplikacja zapraszam do zostawienia dotacji:"}
 }
