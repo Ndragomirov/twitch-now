@@ -26,6 +26,11 @@ To build Firefox version:
 $ grunt firefox
 ```
 
+To run Firefox version:
+```
+$ grunt mozilla-cfx
+```
+
 To build Opera version:
 ```
 $ grunt opera
