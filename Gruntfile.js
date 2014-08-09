@@ -34,11 +34,32 @@ module.exports = function (grunt){
       }
     },
     concat             : {
-      options: {
+      options : {
         sourceMap: true,
         separator: '\r\n'
       },
-      popup  : {
+      popupjs : {
+        src : [
+          "common/lib/onerror.js",
+          "common/lib/utils.js",
+          "common/lib/3rd/jquery.js",
+          "common/lib/3rd/jquery.visible.js",
+          "common/lib/3rd/baron.js",
+          "common/lib/3rd/bootstrap.js",
+          "common/lib/3rd/underscore.js",
+          "common/lib/3rd/backbone.js",
+          "common/lib/3rd/handlebars.js",
+          "common/lib/3rd/prettydate.js",
+          "common/lib/3rd/i18n.js",
+          "common/dist/templates.js",
+          "common/lib/handlebars-helpers.js",
+          "common/lib/popup.js",
+          "common/lib/routes.js",
+          "common/lib/init.js"
+        ],
+        dest: "common/dist/popup.comb.js"
+      },
+      popupcss: {
         src : [
           "common/css/reset.css",
           "common/css/bootstrap.min.css",
@@ -214,8 +235,8 @@ module.exports = function (grunt){
   grunt.loadNpmTasks('grunt-git');
 
   grunt.registerTask('default', ['chrome']);
-  grunt.registerTask('opera', ['clean:opera', 'concat:popup', 'handlebars', 'copy:opera']);
-  grunt.registerTask('firefox', ['clean:firefox', 'concat:popup', 'i18n', 'handlebars', 'copy:firefox']);
-  grunt.registerTask('chrome', ['clean:chrome', 'concat:popup', 'handlebars', 'copy:chrome']);
+  grunt.registerTask('opera', ['clean:opera', 'concat:popupcss', 'concat:popupjs', 'handlebars', 'copy:opera']);
+  grunt.registerTask('firefox', ['clean:firefox', 'concat:popupcss', 'i18n', 'handlebars', 'copy:firefox']);
+  grunt.registerTask('chrome', ['clean:chrome', 'concat:popupcss', 'concat:popupjs', 'handlebars', 'copy:chrome']);
   grunt.registerTask('dist', ['clean:dist', 'bump', 'version', 'chrome', 'opera', 'firefox', 'compress:chrome', 'compress:opera', 'mozilla-addon-sdk', 'mozilla-cfx-xpi', 'gittag:bump']);
 };
