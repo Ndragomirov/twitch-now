@@ -5,7 +5,7 @@
   "description": "Explore games & track your favorite streams on Twitch",
   "author"     : "Ndragomirov<jdavid214@gmail.com>",
   "license"    : "MIT",
-  "version"    : "1.1.110",
+  "version"    : "1.1.111",
   "permissions": {
     "private-browsing"     : true,
     "unsafe-content-script": true

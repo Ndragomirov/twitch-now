@@ -375,9 +375,7 @@
       });
 
       twitchApi.on("authorize", function (){
-        self.populateUserInfo(function (){
-
-        });
+        self.populateUserInfo(function (){});
         self.set("authenticated", true);
       });
 
@@ -550,7 +548,7 @@
       clearTimeout(this.timeout);
       twitchApi.send("gamesTop", {}, function (err, res){
         this.timeout = setTimeout(this.updateData.bind(this), 5 * 60 * 1000);
-        if ( err ) {
+        if ( err || !res.top ) {
           return this.trigger("apierror");
         }
         res.top.forEach(function (g){
@@ -569,7 +567,11 @@
     },
 
     initialize: function (){
-
+      var channelName = this.get("channel").name;
+      this.set({
+          name: channelName
+        },
+        {silent: true});
     },
 
     follow: function (cb){
@@ -679,14 +681,14 @@
     getNewStreams: function (){
       var ids = this.addedStreams;
       return this.filter(function (stream){
-        return ~ids.indexOf(stream.get("name"));
+        return ~ids.indexOf(stream.get("_id"));
       });
     },
 
     addedStreams: [],
     notified    : [], //store notified streams id here
     updateData  : function (){
-      var idsBeforeUpdate = this.pluck("name");
+      var idsBeforeUpdate = this.pluck("_id");
       var idsAfterUpdate;
 
       clearTimeout(this.timeout);
@@ -703,7 +705,7 @@
         }
         this.set(res.streams, {silent: true});
 
-        idsAfterUpdate = this.pluck("name");
+        idsAfterUpdate = this.pluck("_id");
         this.addedStreams = _.difference(idsAfterUpdate, idsBeforeUpdate, this.notified);
         this.notified = _.union(this.addedStreams, this.notified);
         this.trigger("update");
@@ -851,7 +853,7 @@
 
   var addToFollowing = function (stream){
     following.add(stream);
-    following.addedStreams = [stream.name];
+    following.addedStreams = [stream._id];
     notify();
   }
 
