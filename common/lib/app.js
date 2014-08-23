@@ -216,51 +216,6 @@
       value : "viewers|-1"
     },
     {
-      id    : "twitchDefaultLocale",
-      desc  : "__MSG_m61__",
-      type  : "select",
-      select: true,
-      opts  : [
-        {id: "www", name: "__MSG_m63__"},
-        {id: "ar", name: "ar"},
-        {id: "bg", name: "bg"},
-        {id: "ca", name: "ca"},
-        {id: "cs", name: "cs"},
-        {id: "da", name: "da"},
-        {id: "de", name: "de"},
-        {id: "el", name: "el"},
-        {id: "en", name: "en"},
-        {id: "en-gb", name: "en-gb"},
-        {id: "es", name: "es"},
-        {id: "fi", name: "fi"},
-        {id: "fr", name: "fr"},
-        {id: "he", name: "he"},
-        {id: "hi", name: "hi"},
-        {id: "hu", name: "hu"},
-        {id: "id", name: "id"},
-        {id: "it", name: "it"},
-        {id: "ja", name: "ja"},
-        {id: "ko", name: "ko"},
-        {id: "lt", name: "lt"},
-        {id: "lv", name: "lv"},
-        {id: "nl", name: "nl"},
-        {id: "no", name: "no"},
-        {id: "pl", name: "pl"},
-        {id: "pt-br", name: "pt-br"},
-        {id: "ro", name: "ro"},
-        {id: "ru", name: "ru"},
-        {id: "sk", name: "sk"},
-        {id: "sv", name: "sv"},
-        {id: "th", name: "th"},
-        {id: "tr", name: "tr"},
-        {id: "vi", name: "vi"},
-        {id: "zh-cn", name: "zh-cn"},
-        {id: "zh-tw", name: "zh-tw"}
-      ],
-      show  : true,
-      value : "www"
-    },
-    {
       id   : "themeType",
       desc : "__MSG_m55__",
       type : "radio",
@@ -492,7 +447,7 @@
     idAttribute: "_id",
 
     baseUrl: function (){
-      return "http://LOCALE.twitch.tv".replace(/LOCALE/, settings.get("twitchDefaultLocale").get("value"));
+      return "http://www.twitch.tv";
     }
   });
 
