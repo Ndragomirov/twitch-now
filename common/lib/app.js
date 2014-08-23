@@ -66,14 +66,25 @@
 
   bgApp.sendNotification = function (streamList){
     var displayCount = 5;
+    var opt;
     var defaultIcon = utils.runtime.getURL("common/icons/64_2.png");
     var streamsToShow = streamList.slice(0, displayCount);
+    var isSingle = streamsToShow.length === 1;
     var streamTitles = streamsToShow.map(function (c){
       return c.get("channel").display_name;
     });
+    var buttons = [
+      {title: utils.i18n.getMessage("m54")}
+    ];
 
     if ( bgApp.growlNotificationsSupported() ) {
-      var opts = {title: "Twitch Now", text: streamTitles.join("\n"), iconURL: defaultIcon};
+
+      var opts = {
+        title  : "Twitch Now",
+        text   : streamTitles.join("\n"),
+        iconURL: defaultIcon
+      }
+
       if ( streamTitles.length == 1 ) {
         opts.data = streamsToShow[0].getStreamURL();
       }
@@ -81,31 +92,29 @@
     }
 
     if ( bgApp.richNotificationsSupported() ) {
-      var buttons = [
-        {title: utils.i18n.getMessage("m54")}
-      ];
+
       var items = streamTitles.map(function (t){
         return {title: t, message: ""}
       });
-      var isSingle = streamsToShow.length === 1;
-
-//      var iconImage = streamsToShow.length > 1 ? defaultIcon : streamsToShow[0].get("preview").small;
-
       var notificationId = _.uniqueId("TwitchNow.Notification.");
 
       try {
-        var opt = {
-          type   : "list",
-          title  : "",
-          message: "",
-          iconUrl: defaultIcon,
-          buttons: buttons,
-          items  : items
-        }
-
         if ( isSingle ) {
-          bgApp.notificationIds[notificationId] = streamsToShow[0];
-
+          opt = {
+            type   : "basic",
+            title  : streamsToShow[0].get("channel").display_name,
+            message: streamsToShow[0].get("game"),
+            iconUrl: streamsToShow[0].get("preview")
+          }
+        } else {
+          opt = {
+            type   : "list",
+            title  : "",
+            message: "",
+            iconUrl: defaultIcon,
+            buttons: buttons,
+            items  : items
+          }
         }
         chrome.notifications.create(notificationId, opt, function (){
 
@@ -118,7 +127,6 @@
         delete bgApp.notificationIds[notificationId];
         console.log("Notification error: ", e);
       }
-
     }
   };
 
@@ -312,7 +320,8 @@
       });
 
       twitchApi.on("authorize", function (){
-        self.populateUserInfo(function (){});
+        self.populateUserInfo(function (){
+        });
         self.set("authenticated", true);
       });
 
