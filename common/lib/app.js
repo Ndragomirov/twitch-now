@@ -41,10 +41,6 @@
     return utils.notifications.richNotificationsSupported();
   };
 
-  bgApp.htmlNotificationsSupported = function (){
-    return utils.notifications.htmlNotificationsSupported();
-  };
-
   bgApp.bindNotificationListeners = function (){
 
     if ( bgApp.richNotificationsSupported() ) {
@@ -84,20 +80,6 @@
       utils.notifications.create(opts);
     }
 
-    if ( bgApp.htmlNotificationsSupported() ) {
-      //close all previous opened windows
-      var notificationWindows = chrome.extension.getViews({
-        type: 'notification'
-      });
-      notificationWindows.forEach(function (window){
-        window.close();
-      });
-      var n = webkitNotifications.createHTMLNotification(chrome.runtime.getURL("common/html/notification.html"));
-      setTimeout(function (){
-        n.cancel();
-      }, 8000);
-      n.show();
-    }
     if ( bgApp.richNotificationsSupported() ) {
       var buttons = [
         {title: utils.i18n.getMessage("m54")}
