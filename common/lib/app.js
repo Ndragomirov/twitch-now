@@ -106,6 +106,9 @@
             message: streamsToShow[0].get("game"),
             iconUrl: streamsToShow[0].get("preview")
           }
+
+          bgApp.notificationIds[notificationId] = streamsToShow[0];
+
         } else {
           opt = {
             type   : "list",
@@ -446,12 +449,7 @@
 
     getNotificationSoundSource: function (){
       var val = this.get("notificationSound").get("value");
-      console.log("va1", val);
-      if ( val == "customsound" ) {
-        val = localStorage["customSound"];
-      }
-      console.log("val2", val);
-      return val;
+      return val == "customsound" ? localStorage["customSound"] : val;
     },
 
     saveToStorage: function (){
