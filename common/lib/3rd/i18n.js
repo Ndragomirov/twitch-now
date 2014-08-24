@@ -89,8 +89,6 @@
       , attributes
       , content;
 
-    console.log("replace", opts);
-
     opts = extend(that.replaceOpts, opts);
 
     if ( opts.content ) {

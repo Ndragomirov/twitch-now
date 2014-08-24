@@ -157,8 +157,15 @@
   };
 
   bgApp.playSound = function (path){
-    var p = /^http/i.test(path) ? path : utils.runtime.getURL(path);
-    new Audio(p).play();
+    var sound;
+
+    if ( !/^data:audio/.test(path) ) {
+      path = /^http/i.test(path) ? path : utils.runtime.getURL(path);
+    }
+
+    sound = new Audio();
+    sound.src = path;
+    sound.play();
   };
 
   bgApp.init = function (){
@@ -292,9 +299,18 @@
       opts : [
         {id: "common/audio/ding.ogg", name: "ding"},
         {id: "common/audio/chime.mp3", name: "chime"},
-        {id: "common/audio/click.wav", name: "click"}
+        {id: "common/audio/click.wav", name: "click"},
+        {id: "customsound", name: "__MSG_m76__"}
       ],
       value: "common/audio/ding.ogg"
+    },
+    {
+      id    : "customNotificationSound",
+      desc  : "__MSG_m75__",
+      button: true,
+      show  : true,
+      type  : "button",
+      value : ""
     },
     {
       id   : "refreshInterval",
@@ -426,6 +442,16 @@
 
       this.saveToStorage();
       this.on("change", this.saveToStorage);
+    },
+
+    getNotificationSoundSource: function (){
+      var val = this.get("notificationSound").get("value");
+      console.log("va1", val);
+      if ( val == "customsound" ) {
+        val = localStorage["customSound"];
+      }
+      console.log("val2", val);
+      return val;
     },
 
     saveToStorage: function (){
@@ -792,7 +818,7 @@
         bgApp.sendNotification(following.getNewStreams());
       }
       if ( settings.get("playNotificationSound").get("value") ) {
-        bgApp.playSound(settings.get("notificationSound").get("value"));
+        bgApp.playSound(settings.getNotificationSoundSource());
       }
     }
   };
