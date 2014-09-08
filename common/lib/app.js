@@ -637,6 +637,15 @@
         badge.set("count", this.length);
       });
 
+      this.on("update", function (){
+        self.notify();
+      });
+
+      this.on("add", function (stream){
+        self.addedStreams = [stream.id];
+        self.notify();
+      })
+
       twitchApi.on("authorize", function (){
         self.updateData();
       })
@@ -657,6 +666,16 @@
 
     addedStreams: [],
     notified    : [], //store notified streams id here
+    notify      : function (){
+      if ( this.addedStreams.length > 0 ) {
+        if ( settings.get("showDesktopNotification").get("value") ) {
+          bgApp.sendNotification(this.getNewStreams());
+        }
+        if ( settings.get("playNotificationSound").get("value") ) {
+          bgApp.playSound(settings.getNotificationSoundSource());
+        }
+      }
+    },
     updateData  : function (){
       var idsBeforeUpdate = this.pluck("_id");
       var idsAfterUpdate;
@@ -810,28 +829,14 @@
   var user = root.user = new User;
   var gameLobby = root.gameLobby = new GameLobby;
 
-  var notify = function (){
-    if ( following.addedStreams.length > 0 ) {
-      if ( settings.get("showDesktopNotification").get("value") ) {
-        bgApp.sendNotification(following.getNewStreams());
-      }
-      if ( settings.get("playNotificationSound").get("value") ) {
-        bgApp.playSound(settings.getNotificationSoundSource());
-      }
-    }
-  };
-
   var addToFollowing = function (stream){
-    following.add(stream);
-    following.addedStreams = [stream._id];
-    notify();
+    following.add(stream)
   }
 
   topstreams.on("follow", addToFollowing);
   search.on("follow", addToFollowing)
   gameLobby.streams.on("follow", addToFollowing);
 
-  following.on("update", notify);
 
   topstreams.updateData();
   games.updateData();
