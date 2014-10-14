@@ -1,9 +1,12 @@
 (function (){
-  var root = this;
-
-  var uploadButton = document.querySelector('#uploadSound');
-  var output = document.querySelector('#output');
-  var audio = new Audio();
+  var root = this
+    , uploadButton = document.querySelector('#uploadSound')
+    , toggleButton = document.querySelector('#toggleSound')
+    , playIcon = document.querySelector(".icon-play2")
+    , pauseIcon = document.querySelector(".icon-pause2")
+    , output = document.querySelector('#output')
+    , audio = new Audio()
+    ;
 
   /**
    *  Reads file and returns data-url
@@ -48,6 +51,34 @@
     fileReader.readAsDataURL(file);
   };
 
+  function showPauseButton(){
+    pauseIcon.style.display = "block";
+    playIcon.style.display = "none";
+  }
+
+  function showPlayButton(){
+    pauseIcon.style.display = "none";
+    playIcon.style.display = "block";
+  }
+
+  toggleButton.addEventListener('click', function (){
+    if ( audio.src ) {
+      if ( audio.paused ) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+  })
+
+  audio.addEventListener("play", function (){
+    showPauseButton();
+  })
+
+  audio.addEventListener("pause", function (){
+    showPlayButton();
+  })
+
   uploadButton.addEventListener('change', function (e){
     var file = this.files[0];
     if ( file ) {
@@ -64,5 +95,7 @@
       });
     }
   });
+
+  showPlayButton();
 
 }).call(this);
