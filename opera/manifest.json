@@ -35,5 +35,5 @@
     },
     "default_popup": "common/html/popup.html"
   },
-  "permissions"    : ["storage","https://*/*", "http://*/*", "tabs"]
+  "permissions"    : ["storage","https://*/*", "http://*/*", "tabs", "notifications"]
 }

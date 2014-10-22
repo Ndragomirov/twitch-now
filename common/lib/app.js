@@ -73,9 +73,6 @@
     var streamTitles = streamsToShow.map(function (c){
       return c.get("channel").display_name;
     });
-    var buttons = [
-      {title: utils.i18n.getMessage("m54")}
-    ];
 
     if ( bgApp.growlNotificationsSupported() ) {
 
@@ -93,9 +90,6 @@
 
     if ( bgApp.richNotificationsSupported() ) {
 
-      var items = streamTitles.map(function (t){
-        return {title: t, message: ""}
-      });
       var notificationId = _.uniqueId("TwitchNow.Notification.");
 
       try {
@@ -111,21 +105,22 @@
 
         } else {
           opt = {
-            type   : "list",
-            title  : "",
-            message: "",
-            iconUrl: defaultIcon,
-            buttons: buttons,
-            items  : items
+            type   : "basic",
+            title  : "Twitch Now",
+            message: streamTitles.join("\n"),
+            iconUrl: defaultIcon
           }
+
         }
         chrome.notifications.create(notificationId, opt, function (){
 
         });
+        
         setTimeout(function (){
           chrome.notifications.clear(notificationId, function (){
           });
         }, 10000);
+
       } catch (e) {
         delete bgApp.notificationIds[notificationId];
         console.log("Notification error: ", e);
