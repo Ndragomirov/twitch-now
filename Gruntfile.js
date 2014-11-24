@@ -6,17 +6,20 @@ module.exports = function (grunt){
   grunt.initConfig({
     pkg                : grunt.file.readJSON('package.json'),
     clean              : {
-      dist   : {
+      dist         : {
         src: ['dist/*']
       },
-      opera  : {
+      opera        : {
         src: ['build/opera/*']
       },
-      chrome : {
+      chrome       : {
         src: ['build/chrome/*']
       },
-      firefox: {
+      firefox      : {
         src: ['build/firefox/*']
+      },
+      firefox_after: {
+        src: ['build/firefox/data/common/dist/popup.comb.js', 'build/firefox/data/common/dist/popup.comb.js.map']
       }
     },
     watch              : {
@@ -129,6 +132,18 @@ module.exports = function (grunt){
         ]
       }
     },
+    replace            : {
+      firefox: {
+        options: {
+          patterns: [
+            {
+              match      : 'foo',
+              replacement: 'bar'
+            }
+          ]
+        }
+      }
+    },
     handlebars         : {
       compile: {
         options: {
@@ -177,12 +192,17 @@ module.exports = function (grunt){
         options: {
           revision: '1.16'
         }
+      },
+      '1_17': {
+        options: {
+          revision: '1.17'
+        }
       }
     },
     'mozilla-cfx'      : {
       'run_stable': {
         options: {
-          'mozilla-addon-sdk': '1_16',
+          'mozilla-addon-sdk': '1_17',
           extension_dir      : 'build/firefox',
           command            : 'run'
         }
@@ -191,7 +211,7 @@ module.exports = function (grunt){
     'mozilla-cfx-xpi'  : {
       stable: {
         options: {
-          'mozilla-addon-sdk': '1_16',
+          'mozilla-addon-sdk': '1_17',
           extension_dir      : 'build/firefox',
           dist_dir           : 'dist/',
           arguments          : '--output-file=twitch-now-firefox-<%= pkg.version %>.xpi'
@@ -231,12 +251,13 @@ module.exports = function (grunt){
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-replace');
   grunt.loadNpmTasks('grunt-version');
   grunt.loadNpmTasks('grunt-git');
 
   grunt.registerTask('default', ['chrome']);
   grunt.registerTask('opera', ['clean:opera', 'concat:popupcss', 'concat:popupjs', 'handlebars', 'copy:opera']);
-  grunt.registerTask('firefox', ['clean:firefox', 'concat:popupcss', 'i18n', 'handlebars', 'copy:firefox']);
+  grunt.registerTask('firefox', ['clean:firefox', 'concat:popupcss', 'i18n', 'handlebars', 'copy:firefox', 'clean:firefox_after']);
   grunt.registerTask('chrome', ['clean:chrome', 'concat:popupcss', 'concat:popupjs', 'handlebars', 'copy:chrome']);
   grunt.registerTask('dist', ['clean:dist', 'bump', 'version', 'chrome', 'opera', 'firefox', 'compress:chrome', 'compress:opera', 'mozilla-addon-sdk', 'mozilla-cfx-xpi', 'gittag:bump']);
 };

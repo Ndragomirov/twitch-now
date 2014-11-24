@@ -15,7 +15,7 @@
   };
 
   bgApp.get = function (key){
-    return  localStorage.hasOwnProperty(key) ?
+    return  key in localStorage ?
       JSON.parse(localStorage[ key ]) :
       undefined;
   };
@@ -115,7 +115,7 @@
         chrome.notifications.create(notificationId, opt, function (){
 
         });
-        
+
         setTimeout(function (){
           chrome.notifications.clear(notificationId, function (){
           });
