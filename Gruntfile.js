@@ -132,18 +132,6 @@ module.exports = function (grunt){
         ]
       }
     },
-    replace            : {
-      firefox: {
-        options: {
-          patterns: [
-            {
-              match      : 'foo',
-              replacement: 'bar'
-            }
-          ]
-        }
-      }
-    },
     handlebars         : {
       compile: {
         options: {
