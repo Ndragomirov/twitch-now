@@ -375,7 +375,7 @@
       var hideControls = {
         chrome : [],
         firefox: ["showBadge"],
-        opera  : ["showDesktopNotification", "closeNotificationDelay"]
+        opera  : []
       }
 
       var rbrowser = utils.rbrowser;
