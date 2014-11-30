@@ -38,8 +38,8 @@
 }
 
 .stream .stream-preview {
-    width: 70px;
-    height: 44px;
+    width: 74px;
+    height: 42px;
     overflow: hidden;
     border: 1px solid rgb(0, 0, 0);
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
