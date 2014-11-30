@@ -244,8 +244,8 @@ module.exports = function (grunt){
   grunt.loadNpmTasks('grunt-git');
 
   grunt.registerTask('default', ['chrome']);
-  grunt.registerTask('opera', ['clean:opera', 'concat:popupcss', 'concat:popupjs', 'handlebars', 'copy:opera']);
-  grunt.registerTask('firefox', ['clean:firefox', 'concat:popupcss', 'i18n', 'handlebars', 'copy:firefox', 'clean:firefox_after']);
   grunt.registerTask('chrome', ['clean:chrome', 'concat:popupcss', 'concat:popupjs', 'handlebars', 'copy:chrome']);
+  grunt.registerTask('opera', ['chrome', 'clean:opera', 'copy:opera']);
+  grunt.registerTask('firefox', ['clean:firefox', 'concat:popupcss', 'i18n', 'handlebars', 'copy:firefox', 'clean:firefox_after']);
   grunt.registerTask('dist', ['clean:dist', 'bump', 'version', 'chrome', 'opera', 'firefox', 'compress:chrome', 'compress:opera', 'mozilla-addon-sdk', 'mozilla-cfx-xpi', 'gittag:bump']);
 };
