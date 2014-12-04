@@ -38,6 +38,7 @@
   }
 
   app.init = function (){
+    app.lazyload();
     app.container = $('#content');
     app.scroller = app.container.find(".scroller");
     app.preloader = $("<div id='preloader'><img src='../img/spinner.gif'/></div>");
@@ -144,9 +145,6 @@
       .on('click', '*[data-route]', function (){
         var route = $(this).attr('data-route');
         window.location.hash = '#' + route;
-      })
-      .one('mouseenter', function (){
-        app.lazyload();
       })
       .on('click', '.js-tab', function (e){
         var href = $(this).attr('data-href');
