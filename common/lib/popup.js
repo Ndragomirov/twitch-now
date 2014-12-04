@@ -37,8 +37,10 @@
     }
   }
 
-  app.init = function (){
-    app.lazyload();
+  app.init = function () {
+    setTimeout(function(){
+      app.lazyload();
+    }, 1);
     app.container = $('#content');
     app.scroller = app.container.find(".scroller");
     app.preloader = $("<div id='preloader'><img src='../img/spinner.gif'/></div>");
