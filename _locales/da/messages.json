@@ -72,5 +72,11 @@
     "m71": { "message" : "Åben stream"},
     "m72": { "message" : "Logget på som"},
     "m73": { "message" : "Log ind for at se dine favorit kanaler"},
-    "m74": { "message" : "Hvis du kan lide dette program, donér på paypal, eller bitcoin:"}
+    "m74": { "message" : "Hvis du kan lide dette program, donér på paypal, eller bitcoin:"},
+	"m75": { "message" : "Upload din egen lyd"},
+    "m76": { "message" : "Brugerdefineret lyd"},
+    "m77": { "message" : "\"Twitch Now\" for andre browsere:"},
+    "m78": { "message" : "Chrome version"},
+    "m79": { "message" : "Opera version"},
+    "m80": { "message" : "Firefox version"}
 }
