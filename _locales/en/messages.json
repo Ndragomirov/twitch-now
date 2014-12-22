@@ -72,5 +72,11 @@
     "m71": { "message" : "open stream"},
     "m72": { "message" : "logged in as"},
     "m73": { "message" : "Log in to see your favorite channels"},
-    "m74": { "message" : "If you enjoy the application and want to help me out, you can do so by donating via PayPal or Bitcoin:"}
+    "m74": { "message" : "If you enjoy the application and want to help me out, you can do so by donating via PayPal or Bitcoin:"},
+    "m75": { "message" : "Upload your sound"},
+    "m76": { "message" : "custom sound"},
+    "m77": { "message" : "\"Twitch Now\" for other browsers"},
+    "m78": { "message" : "Chrome version"},
+    "m79": { "message" : "Opera version"},
+    "m80": { "message" : "Firefox version"}
 }

@@ -15,7 +15,7 @@
   };
 
   bgApp.get = function (key){
-    return  localStorage.hasOwnProperty(key) ?
+    return  key in localStorage ?
       JSON.parse(localStorage[ key ]) :
       undefined;
   };
@@ -39,10 +39,6 @@
 
   bgApp.richNotificationsSupported = function (){
     return utils.notifications.richNotificationsSupported();
-  };
-
-  bgApp.htmlNotificationsSupported = function (){
-    return utils.notifications.htmlNotificationsSupported();
   };
 
   bgApp.bindNotificationListeners = function (){
@@ -70,73 +66,65 @@
 
   bgApp.sendNotification = function (streamList){
     var displayCount = 5;
+    var opt;
     var defaultIcon = utils.runtime.getURL("common/icons/64_2.png");
     var streamsToShow = streamList.slice(0, displayCount);
+    var isSingle = streamsToShow.length === 1;
     var streamTitles = streamsToShow.map(function (c){
       return c.get("channel").display_name;
     });
 
     if ( bgApp.growlNotificationsSupported() ) {
-      var opts = {title: "Twitch Now", text: streamTitles.join("\n"), iconURL: defaultIcon};
+
+      var opts = {
+        title  : "Twitch Now",
+        text   : streamTitles.join("\n"),
+        iconURL: defaultIcon
+      }
+
       if ( streamTitles.length == 1 ) {
         opts.data = streamsToShow[0].getStreamURL();
       }
       utils.notifications.create(opts);
     }
 
-    if ( bgApp.htmlNotificationsSupported() ) {
-      //close all previous opened windows
-      var notificationWindows = chrome.extension.getViews({
-        type: 'notification'
-      });
-      notificationWindows.forEach(function (window){
-        window.close();
-      });
-      var n = webkitNotifications.createHTMLNotification(chrome.runtime.getURL("common/html/notification.html"));
-      setTimeout(function (){
-        n.cancel();
-      }, 8000);
-      n.show();
-    }
     if ( bgApp.richNotificationsSupported() ) {
-      var buttons = [
-        {title: utils.i18n.getMessage("m54")}
-      ];
-      var items = streamTitles.map(function (t){
-        return {title: t, message: ""}
-      });
-      var isSingle = streamsToShow.length === 1;
-
-//      var iconImage = streamsToShow.length > 1 ? defaultIcon : streamsToShow[0].get("preview").small;
 
       var notificationId = _.uniqueId("TwitchNow.Notification.");
 
       try {
-        var opt = {
-          type   : "list",
-          title  : "",
-          message: "",
-          iconUrl: defaultIcon,
-          buttons: buttons,
-          items  : items
-        }
-
         if ( isSingle ) {
+          opt = {
+            type   : "basic",
+            title  : streamsToShow[0].get("channel").display_name,
+            message: streamsToShow[0].get("game"),
+            iconUrl: streamsToShow[0].get("preview")
+          }
+
           bgApp.notificationIds[notificationId] = streamsToShow[0];
+
+        } else {
+          opt = {
+            type   : "basic",
+            title  : "Twitch Now",
+            message: streamTitles.join("\n"),
+            iconUrl: defaultIcon
+          }
 
         }
         chrome.notifications.create(notificationId, opt, function (){
 
         });
+
         setTimeout(function (){
           chrome.notifications.clear(notificationId, function (){
           });
         }, 10000);
+
       } catch (e) {
         delete bgApp.notificationIds[notificationId];
         console.log("Notification error: ", e);
       }
-
     }
   };
 
@@ -167,8 +155,15 @@
   };
 
   bgApp.playSound = function (path){
-    var p = /^http/i.test(path) ? path : utils.runtime.getURL(path);
-    new Audio(p).play();
+    var sound;
+
+    if ( !/^data:audio/.test(path) ) {
+      path = /^http/i.test(path) ? path : utils.runtime.getURL(path);
+    }
+
+    sound = new Audio();
+    sound.src = path;
+    sound.play();
   };
 
   bgApp.init = function (){
@@ -214,51 +209,6 @@
       ],
       show  : true,
       value : "viewers|-1"
-    },
-    {
-      id    : "twitchDefaultLocale",
-      desc  : "__MSG_m61__",
-      type  : "select",
-      select: true,
-      opts  : [
-        {id: "www", name: "__MSG_m63__"},
-        {id: "ar", name: "ar"},
-        {id: "bg", name: "bg"},
-        {id: "ca", name: "ca"},
-        {id: "cs", name: "cs"},
-        {id: "da", name: "da"},
-        {id: "de", name: "de"},
-        {id: "el", name: "el"},
-        {id: "en", name: "en"},
-        {id: "en-gb", name: "en-gb"},
-        {id: "es", name: "es"},
-        {id: "fi", name: "fi"},
-        {id: "fr", name: "fr"},
-        {id: "he", name: "he"},
-        {id: "hi", name: "hi"},
-        {id: "hu", name: "hu"},
-        {id: "id", name: "id"},
-        {id: "it", name: "it"},
-        {id: "ja", name: "ja"},
-        {id: "ko", name: "ko"},
-        {id: "lt", name: "lt"},
-        {id: "lv", name: "lv"},
-        {id: "nl", name: "nl"},
-        {id: "no", name: "no"},
-        {id: "pl", name: "pl"},
-        {id: "pt-br", name: "pt-br"},
-        {id: "ro", name: "ro"},
-        {id: "ru", name: "ru"},
-        {id: "sk", name: "sk"},
-        {id: "sv", name: "sv"},
-        {id: "th", name: "th"},
-        {id: "tr", name: "tr"},
-        {id: "vi", name: "vi"},
-        {id: "zh-cn", name: "zh-cn"},
-        {id: "zh-tw", name: "zh-tw"}
-      ],
-      show  : true,
-      value : "www"
     },
     {
       id   : "themeType",
@@ -347,9 +297,18 @@
       opts : [
         {id: "common/audio/ding.ogg", name: "ding"},
         {id: "common/audio/chime.mp3", name: "chime"},
-        {id: "common/audio/click.wav", name: "click"}
+        {id: "common/audio/click.wav", name: "click"},
+        {id: "customsound", name: "__MSG_m76__"}
       ],
       value: "common/audio/ding.ogg"
+    },
+    {
+      id    : "customNotificationSound",
+      desc  : "__MSG_m75__",
+      button: true,
+      show  : true,
+      type  : "button",
+      value : ""
     },
     {
       id   : "refreshInterval",
@@ -376,7 +335,6 @@
 
       twitchApi.on("authorize", function (){
         self.populateUserInfo(function (){
-
         });
         self.set("authenticated", true);
       });
@@ -417,7 +375,7 @@
       var hideControls = {
         chrome : [],
         firefox: ["showBadge"],
-        opera  : ["showDesktopNotification", "closeNotificationDelay"]
+        opera  : []
       }
 
       var rbrowser = utils.rbrowser;
@@ -484,6 +442,11 @@
       this.on("change", this.saveToStorage);
     },
 
+    getNotificationSoundSource: function (){
+      var val = this.get("notificationSound").get("value");
+      return val == "customsound" ? localStorage["customSound"] : val;
+    },
+
     saveToStorage: function (){
       bgApp.set("settings", this.toJSON());
     }
@@ -494,7 +457,7 @@
     idAttribute: "_id",
 
     baseUrl: function (){
-      return "http://LOCALE.twitch.tv".replace(/LOCALE/, settings.get("twitchDefaultLocale").get("value"));
+      return "http://www.twitch.tv";
     }
   });
 
@@ -550,7 +513,7 @@
       clearTimeout(this.timeout);
       twitchApi.send("gamesTop", {}, function (err, res){
         this.timeout = setTimeout(this.updateData.bind(this), 5 * 60 * 1000);
-        if ( err ) {
+        if ( err || !res.top ) {
           return this.trigger("apierror");
         }
         res.top.forEach(function (g){
@@ -569,7 +532,11 @@
     },
 
     initialize: function (){
-
+      var channelName = this.get("channel").name;
+      this.set({
+          name: channelName
+        },
+        {silent: true});
     },
 
     follow: function (cb){
@@ -665,6 +632,15 @@
         badge.set("count", this.length);
       });
 
+      this.on("update", function (){
+        self.notify();
+      });
+
+      this.on("add", function (stream){
+        self.addedStreams = [stream.id];
+        self.notify();
+      })
+
       twitchApi.on("authorize", function (){
         self.updateData();
       })
@@ -679,14 +655,24 @@
     getNewStreams: function (){
       var ids = this.addedStreams;
       return this.filter(function (stream){
-        return ~ids.indexOf(stream.get("name"));
+        return ~ids.indexOf(stream.get("_id"));
       });
     },
 
     addedStreams: [],
     notified    : [], //store notified streams id here
+    notify      : function (){
+      if ( this.addedStreams.length > 0 ) {
+        if ( settings.get("showDesktopNotification").get("value") ) {
+          bgApp.sendNotification(this.getNewStreams());
+        }
+        if ( settings.get("playNotificationSound").get("value") ) {
+          bgApp.playSound(settings.getNotificationSoundSource());
+        }
+      }
+    },
     updateData  : function (){
-      var idsBeforeUpdate = this.pluck("name");
+      var idsBeforeUpdate = this.pluck("_id");
       var idsAfterUpdate;
 
       clearTimeout(this.timeout);
@@ -703,7 +689,7 @@
         }
         this.set(res.streams, {silent: true});
 
-        idsAfterUpdate = this.pluck("name");
+        idsAfterUpdate = this.pluck("_id");
         this.addedStreams = _.difference(idsAfterUpdate, idsBeforeUpdate, this.notified);
         this.notified = _.union(this.addedStreams, this.notified);
         this.trigger("update");
@@ -838,28 +824,14 @@
   var user = root.user = new User;
   var gameLobby = root.gameLobby = new GameLobby;
 
-  var notify = function (){
-    if ( following.addedStreams.length > 0 ) {
-      if ( settings.get("showDesktopNotification").get("value") ) {
-        bgApp.sendNotification(following.getNewStreams());
-      }
-      if ( settings.get("playNotificationSound").get("value") ) {
-        bgApp.playSound(settings.get("notificationSound").get("value"));
-      }
-    }
-  };
-
   var addToFollowing = function (stream){
-    following.add(stream);
-    following.addedStreams = [stream.name];
-    notify();
+    following.add(stream)
   }
 
   topstreams.on("follow", addToFollowing);
   search.on("follow", addToFollowing)
   gameLobby.streams.on("follow", addToFollowing);
 
-  following.on("update", notify);
 
   topstreams.updateData();
   games.updateData();
