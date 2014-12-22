@@ -42,18 +42,6 @@ select {
     -webkit-padding-start: 5px;
 }
 
-input[type="button"] {
-    padding: 5px 10px;
-    border-radius: 3px;
-    display: inline-block;
-    cursor: pointer;
-    text-decoration: none;
-    background-color: rgb(106, 78, 158);
-    border: none;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
-    color: white;
-}
-
 input[type="range"] {
     -webkit-appearance: none;
     background-color: rgb(185, 163, 277);

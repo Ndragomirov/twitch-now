@@ -129,6 +129,12 @@
     return browser == FIREFOX;
   }
 
+  notifications.htmlNotificationsSupported = function (){
+    if ( browser == CHROME ) {
+      return window.webkitNotifications && window.webkitNotifications.createHTMLNotification;
+    }
+  }
+
   that._getBackgroundPage = function (){
     if ( browser == CHROME ) {
       return chrome.extension.getBackgroundPage();

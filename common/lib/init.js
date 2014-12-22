@@ -1,5 +1,3 @@
-(function (){
-  window.onload = function (){
+$( function () {
     app.init();
-  }
-})();
+} );

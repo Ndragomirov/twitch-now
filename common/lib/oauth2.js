@@ -301,7 +301,7 @@
     console.log("clear access token");
     var data = this.get();
     delete data.accessToken;
-    this.set(data);
+    this.set(data, true);
   }
 
   that.lookupAdapter = function (url){

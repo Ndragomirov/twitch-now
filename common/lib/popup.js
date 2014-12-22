@@ -13,7 +13,7 @@
     app.container.scrollTop(0);
   }
 
-  app.lazyload = function (){
+  app.lazyload = function(){
     var collection = $('.game, .screen').filter(":visible").find(".lazy");
     collection.each(function (){
       var t = $(this);
@@ -256,10 +256,9 @@
   var SettingsView = DefaultView.extend({
     el    : "#settings-screen",
     events: {
-      "click input[data-id=\"notificationSound\"]"      : "playSound",
-      "click input[data-id=\"customNotificationSound\"]": "uploadSound",
-      "change input[type=\"range\"]"                    : "rangeHelper",
-      "change input, select"                            : "serialize"
+      "click input[data-id=\"notificationSound\"]": "playSound",
+      "change input[type=\"range\"]"              : "rangeHelper",
+      "change input, select"                      : "serialize"
     },
 
     setDefaultTab: function (value){
@@ -292,12 +291,8 @@
       }
     },
 
-    uploadSound: function (e){
-      utils.tabs.create({url: utils.runtime.getURL("common/html/upload.html")});
-    },
-
     playSound  : function (e){
-      b.bgApp.playSound(b.settings.getNotificationSoundSource());
+      b.bgApp.playSound($(e.target).val());
     },
     rangeHelper: function (e){
       var t = $(e.target);
