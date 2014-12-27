@@ -12,7 +12,7 @@
     "m11": { "message" : "tittare minskande"},
     "m12": { "message" : "titel A-Z"},
     "m13": { "message" : "titel Z-A"},
-    "m14": { "message" : "recent"},
+    "m14": { "message" : "senaste"},
     "m15": { "message" : "gamla layouten"},
     "m16": { "message" : "nya layouten"},
     "m17": { "message" : "popout"},
@@ -74,5 +74,9 @@
     "m73": { "message" : "Logga in för att se dina vaorit kanaler."},
     "m74": { "message" : "Om du gillar programmet och vill hjälpa mig, då kan du göra det genom att donera via PayPal eller Bitcoin:"},
     "m75": { "message" : "Ladda upp ditt ljud"},
-    "m76": { "message" : "eget ljud"}
+    "m76": { "message" : "eget ljud"},
+    "m77": { "message" : "\"Twitch Now\" för andra webbläsare"},
+    "m78": { "message" : "Chrome versionen"},
+    "m79": { "message" : "Opera versionen"},
+    "m80": { "message" : "Firefox versionen"}
 }
