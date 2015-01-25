@@ -123,7 +123,9 @@
     getUserName.call(_self, function (err, userName){
       cb = cb || $.noop;
       if ( err ) return cb(err);
-      requestOpts.url = _self.basePath + requestOpts.url;
+
+      //rewrite basePath if full url provided by requestOpts
+      requestOpts.url = /^http/.exec(requestOpts.url) ? requestOpts.url : _self.basePath + requestOpts.url;
       requestOpts.url = requestOpts.url.replace(/:user/, userName);
       requestOpts = $.extend(true, requestOpts, {data: opts}, _self.getRequestParams());
       $.ajax(requestOpts)
@@ -132,9 +134,9 @@
           cb(null, data);
         })
         .fail(function (xhr){
-          if ( xhr.status == 401 ) {
-            _self.revoke();
-          }
+//          if ( xhr.status == 401 ) {
+//            _self.revoke();
+//          }
           _self.trigger("fail:" + methodName);
           cb({err: "err" + methodName, status: xhr.status});
         })
@@ -205,6 +207,16 @@
     return {
       type: "GET",
       url : "/users/:user/follows/channels",
+      data: {
+        limit: 100
+      }
+    }
+  }
+
+  methods.followsgames = function (){
+    return {
+      type: "GET",
+      url : "http://api.twitch.tv/api/users/:user/follows/games/live",
       data: {
         limit: 100
       }
