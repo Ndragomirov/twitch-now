@@ -191,6 +191,7 @@ module.exports = function (grunt){
       'run_stable': {
         options: {
           'mozilla-addon-sdk': '1_17',
+          pipe_output        : true,
           extension_dir      : 'build/firefox',
           command            : 'run'
         }
