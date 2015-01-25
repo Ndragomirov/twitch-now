@@ -5,7 +5,7 @@
   var constants = {
     twitchApi: {
       api          : "https://api.twitch.tv/kraken/oauth2/authorize",
-      response_type: 'code',
+      response_type: 'token',
       client_id    : 'nfsk9onrddch0sz4mfxjwykalhra6sr',
       client_secret: 'imouwsfvza6d4yt2on4eem1bkjxtwa9',
       scope        : 'user_follows_edit user_read',

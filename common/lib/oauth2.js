@@ -47,7 +47,7 @@
   var Adapter = function (id, opts, flow){
     this.lsPath = "oauth2_" + id;
     this.opts = opts;
-    this.flowType = this.opts.response_type;
+    this.responseType = this.opts.response_type;
     this.secret = this.opts.client_secret;
     this.redirect = this.opts.redirect_uri.replace(/https*:\/\//i, "");
     delete this.opts.client_secret;
@@ -79,7 +79,7 @@
         onAttach         : function (worker){
           console.log("\n\n\nattached to: " + worker.tab.url);
           worker.port.on("OAUTH2", function (msg){
-            console.log("\n\n\nnoAuth2 data :", msg)
+            console.log("\n\nAuth2 data :", msg)
             self.finalize(msg.value.params);
             worker.tab.close();
           });
@@ -97,7 +97,9 @@
       chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse){
         if ( msg.type == "OAUTH2" ) {
           self.finalize(msg.value.params);
-          chrome.tabs.remove(sender.tab.id);
+          setTimeout(function (){
+            chrome.tabs.remove(sender.tab.id);
+          }, 100)
         }
       });
     }
@@ -124,18 +126,12 @@
     }
 
     var send = function (){
-      var url = window.location.href;
-      var params = '?';
-      var index = url.indexOf(params);
-      if ( index > -1 ) {
-        params = url.substring(index);
-      }
 
-      url = url.split("?")[0];
+      var params = window.location.href;
 
-      params = params + "&from=" + encodeURIComponent(window.location.href);
+      console.log("\nSending back to background message = ", params);
 
-      sendMessage({url: url, params: params});
+      sendMessage({params: params});
     }
 
     send();
@@ -220,10 +216,18 @@
     return res.join("&");
   }
 
+  Adapter.prototype.parseAccessToken = function (url){
+    var error = url.match(/[&\?]error=([^&]+)/);
+    if ( error ) {
+      throw new Error('Error getting access token: ' + error[1]);
+    }
+    return url.match(/[&#]access_token=([\w\/\-]+)/)[1];
+  }
+
   Adapter.prototype.parseAuthorizationCode = function (url){
     var error = url.match(/[&\?]error=([^&]+)/);
     if ( error ) {
-      throw 'Error getting authorization code: ' + error[1];
+      throw new Error('Error getting authorization code: ' + error[1]);
     }
     return url.match(/[&\?]code=([\w\/\-]+)/)[1];
   }
@@ -236,24 +240,37 @@
   Adapter.prototype.finalize = function (params){
     var self = this;
     var callback = self._callback || noop;
-
     var code;
-    try {
-      code = this.parseAuthorizationCode(params);
-    } catch (err) {
-      console.log("\n\nerror parsing auth code\n\n");
-      return callback(err);
-    }
-    this.getAccessAndRefreshTokens(code, function (err, data){
-      if ( !err ) {
-        console.log("\n\nRecieve access token = ", data.access_token);
-        self.setAccessToken(data.access_token);
-        callback();
-      } else {
-        callback(err);
-        console.log("\n\nerror getting access token\n\n", err);
+    var token;
+
+    console.log("\nSelf response type", self.responseType);
+    if ( self.responseType == "code" ) {
+      try {
+        code = this.parseAuthorizationCode(params);
+      } catch (err) {
+        console.log("\n\nerror parsing auth code\n\n");
+        return callback(err);
       }
-    })
+
+      this.getAccessAndRefreshTokens(code, function (err, data){
+        if ( !err ) {
+          console.log("\n\nRecieve access token = ", data.access_token);
+          self.setAccessToken(data.access_token);
+          callback();
+        } else {
+          callback(err);
+        }
+      })
+    }
+
+    if ( self.responseType == "token" ) {
+      try {
+        self.setAccessToken(self.parseAccessToken(params));
+      } catch (err) {
+        return callback(err);
+      }
+      callback();
+    }
   }
 
   Adapter.prototype.getAccessAndRefreshTokens = function (authorizationCode, callback){
