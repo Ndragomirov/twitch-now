@@ -176,21 +176,16 @@ module.exports = function (grunt){
       }
     },
     'mozilla-addon-sdk': {
-      '1_16': {
+      'latest': {
         options: {
-          revision: '1.16'
+          dest_dir: 'tmp/'
         }
       },
-      '1_17': {
-        options: {
-          revision: '1.17'
-        }
-      }
     },
     'mozilla-cfx'      : {
       'run_stable': {
         options: {
-          'mozilla-addon-sdk': '1_17',
+          'mozilla-addon-sdk': 'latest',
           pipe_output        : true,
           extension_dir      : 'build/firefox',
           command            : 'run'
@@ -200,7 +195,7 @@ module.exports = function (grunt){
     'mozilla-cfx-xpi'  : {
       stable: {
         options: {
-          'mozilla-addon-sdk': '1_17',
+          'mozilla-addon-sdk': 'latest',
           extension_dir      : 'build/firefox',
           dist_dir           : 'dist/',
           arguments          : '--output-file=twitch-now-firefox-<%= pkg.version %>.xpi'
