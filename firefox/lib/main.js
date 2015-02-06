@@ -117,7 +117,11 @@ var button = buttons.ToggleButton({
     "16": self.data.url("common/icons/16_1.png"),
     "32": self.data.url("common/icons/32_1.png")
   },
-  onChange: onButtonStateChange
+  onChange: onButtonStateChange,
+  badge: "",
+});
+panel.port.on("setbadge", function(text) {
+	button.badge = text;
 });
 
 function onButtonStateChange(state){
