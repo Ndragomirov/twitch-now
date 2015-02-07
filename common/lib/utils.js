@@ -63,7 +63,7 @@
       })
     }
     if ( browser == FIREFOX ) {
-		self.port.emit("setbadge", opts.text);
+      self.port.emit("setbadge", opts.text);
     }
   }
 

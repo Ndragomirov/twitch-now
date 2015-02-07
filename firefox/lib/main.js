@@ -121,7 +121,7 @@ var button = buttons.ToggleButton({
   badge: "",
 });
 panel.port.on("setbadge", function(text) {
-	button.badge = text;
+  button.badge = text;
 });
 
 function onButtonStateChange(state){
