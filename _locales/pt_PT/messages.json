@@ -25,7 +25,7 @@
     "m24": { "message" : "Partilhar"},
     "m25": { "message" : "abrir em novo separador"},
     "m26": { "message" : "abrir em popout"},
-    "m27": { "message" : "Refresh tab"},
+    "m27": { "message" : "Atualizar"},
     "m28": { "message" : "Filtro"},
     "m29": { "message" : "partilhar no twitter"},
     "m30": { "message" : "partilhar no facebook"},
@@ -72,5 +72,11 @@
     "m71": { "message" : "abrir stream"},
     "m72": { "message" : "logado como"},
     "m73": { "message" : "Faça login para ver os seus canais favoritos"},
-    "m74": { "message" : "Se aprecia esta aplicação e gostaria de me ajudar, pode fazê-lo ao doar via Paypal ou Bitcoin:"}
+    "m74": { "message" : "Se aprecia esta aplicação e gostaria de me ajudar, pode fazê-lo ao doar via Paypal ou Bitcoin:"},
+    "m75": { "message" : "Carregar um som"},
+    "m76": { "message" : "som personalizado"},
+    "m77": { "message" : "\"Twitch Now\" para outros browsers"},
+    "m78": { "message" : "Versão Chrome"},
+    "m79": { "message" : "Versão Opera"},
+    "m80": { "message" : "Versão Firefox"}
 }
