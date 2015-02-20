@@ -73,4 +73,10 @@
     "m72": { "message" : "zalogowany jako"},
     "m73": { "message" : "Zaloguj się aby zobaczyć obserwowane streamy"},
     "m74": { "message" : "Jeżeli podoba ci się ta aplikacja zapraszam do zostawienia dotacji:"}
+    "m75": { "message" : "Wgraj własny dzwięk!"},
+    "m76": { "message" : "własny dzwięk"},
+    "m77": { "message" : "\"Twitch Now\" dla innych przeglądarek"},
+    "m78": { "message" : "Wersja na Chrome'a"},
+    "m79": { "message" : "Wersja na Operę"},
+    "m80": { "message" : "Wersja na Firefox'a"}
 }
