@@ -63,7 +63,7 @@
       })
     }
     if ( browser == FIREFOX ) {
-//      throw new Error("Not Implemented");
+      self.port.emit("setbadge", opts.text);
     }
   }
 
