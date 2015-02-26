@@ -24,6 +24,15 @@ that.notifications = {
   }
 }
 
+that.browserAction = {
+  setBadgeText: function (opts, panel, button){
+    button.badge = opts.text;
+  },
+  getBadgeText: function (opts, panel, button){
+    return button.badge;
+  }
+}
+
 that.windows = {
   create: function (opts, panel){
     windows.open({url: opts.url});
@@ -31,14 +40,14 @@ that.windows = {
   }
 }
 
-that.listen = function (panel){
+that.listen = function (panel, button){
   panel.port.on("twitchnow", function (msg){
     var chunks = msg.command.split(".");
     var argument = msg.value;
     var module = chunks[0];
     var action = chunks[1];
     if ( module && action && that[module] && that[module][action] ) {
-      that[module][action](argument, panel);
+      that[module][action](argument, panel, button);
     }
   });
 }

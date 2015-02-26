@@ -65,8 +65,18 @@ var panel = panels.Panel({
   contentScriptWhen   : "ready"
 });
 
+var button = buttons.ToggleButton({
+  id      : "twitch-now",
+  label   : "Twitch Now",
+  icon    : {
+    "16": self.data.url("common/icons/16_1.png"),
+    "32": self.data.url("common/icons/32_1.png")
+  },
+  onChange: onButtonStateChange,
+  badge: ""
+});
 
-twitchNow.listen(panel);
+twitchNow.listen(panel, button);
 
 panel.port.on("OAUTH2_AUTH", function (){
   panel.hide();
@@ -109,20 +119,6 @@ panel.port.on("XHR_PROXY", function (xhr){
 
   r[method]();
 })
-
-var button = buttons.ToggleButton({
-  id      : "twitch-now",
-  label   : "Twitch Now",
-  icon    : {
-    "16": self.data.url("common/icons/16_1.png"),
-    "32": self.data.url("common/icons/32_1.png")
-  },
-  onChange: onButtonStateChange,
-  badge: "",
-});
-panel.port.on("setbadge", function(text) {
-  button.badge = text;
-});
 
 function onButtonStateChange(state){
   if ( state.checked ) {
