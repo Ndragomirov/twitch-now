@@ -589,7 +589,7 @@
       this.gameView = options.gameView;
       this.videoView = options.videoView;
       this.streamView = options.streamView;
-      this.listenTo(this.model.game, "change:game", this.update);
+      this.listenTo(this.model.game, "change", this.update);
     },
 
     update: function (){

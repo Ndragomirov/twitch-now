@@ -731,11 +731,17 @@
       this.videos = new GameVideos;
       this.game = new Game;
     },
+    lookupGame: function (gameName){
+      return games.findByName(gameName) || followedgames.findByName(gameName);
+    },
     setGame   : function (gameName){
-      var gameJSON = (games.findByName(gameName) || followedgames.findByName(gameName)).toJSON();
-      this.streams.game = gameName;
-      this.videos.game = gameName;
-      this.game.set(gameJSON);
+      var game = this.lookupGame(gameName);
+      if ( game ) {
+        var gameJSON = game.toJSON();
+        this.streams.game = gameName;
+        this.videos.game = gameName;
+        this.game.set(gameJSON);
+      }
     }
   });
 
