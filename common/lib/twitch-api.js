@@ -213,7 +213,7 @@
     }
   }
 
-  methods.followsgames = function (){
+  methods.followedgames = function (){
     return {
       type: "GET",
       url : "http://api.twitch.tv/api/users/:user/follows/games/live",

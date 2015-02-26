@@ -525,6 +525,34 @@
     }
   });
 
+  var FollowedGames = Games.extend({
+    initialize: function (){
+      var self = this;
+
+      twitchApi.on("authorize", function (){
+        self.updateData();
+      })
+
+      twitchApi.on("revoke", function (){
+        self.reset();
+      });
+    },
+    updateData: function (){
+      clearTimeout(this.timeout);
+      twitchApi.send("followedgames", {}, function (err, res){
+        this.timeout = setTimeout(this.updateData.bind(this), 5 * 60 * 1000);
+        if ( err || !res.follows ) {
+          return this.trigger("apierror");
+        }
+        res.follows.forEach(function (g){
+          g._id = g.game._id;
+        });
+        this.reset(res.follows, {silent: true});
+        this.trigger("update");
+      }.bind(this));
+    }
+  })
+
   var Stream = TwitchItemModel.extend({
 
     defaults: {
@@ -704,7 +732,7 @@
       this.game = new Game;
     },
     setGame   : function (gameName){
-      var gameJSON = games.findByName(gameName).toJSON();
+      var gameJSON = (games.findByName(gameName) || followedgames.findByName(gameName)).toJSON();
       this.streams.game = gameName;
       this.videos.game = gameName;
       this.game.set(gameJSON);
@@ -820,6 +848,7 @@
   var topstreams = root.topstreams = new TopStreamsCollection;
   var videos = root.videos = new ChannelVideos;
   var games = root.games = new Games;
+  var followedgames = root.followedgames = new FollowedGames;
   var search = root.search = new SearchCollection;
   var user = root.user = new User;
   var gameLobby = root.gameLobby = new GameLobby;

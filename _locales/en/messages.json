@@ -78,5 +78,6 @@
     "m77": { "message" : "\"Twitch Now\" for other browsers"},
     "m78": { "message" : "Chrome version"},
     "m79": { "message" : "Opera version"},
-    "m80": { "message" : "Firefox version"}
+    "m80": { "message" : "Firefox version"},
+    "m81": { "message" : "Followed games"}
 }

@@ -76,6 +76,11 @@
       el   : ".game"
     })
 
+    views.followedGames = new GameListView({
+      el        : "#followed-game-screen",
+      collection: b.followedgames
+    })
+
     views.gameLobbyStreams = new StreamListView({
       el        : "#gamelobby-streams-screen",
       collection: b.gameLobby.streams

@@ -6,6 +6,7 @@
       "topstreams"          : "topstreams",
       "info"                : "info",
       "following"           : "following",
+      "followedgames"       : "followedGames",
       "settings"            : "settings",
       "search"              : "search",
       "videos/:stream"      : "videos",
