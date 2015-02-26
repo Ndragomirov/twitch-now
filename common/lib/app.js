@@ -374,7 +374,7 @@
     setShow: function (){
       var hideControls = {
         chrome : [],
-        firefox: ["showBadge"],
+        firefox: [/*"showBadge"*/],
         opera  : []
       }
 
