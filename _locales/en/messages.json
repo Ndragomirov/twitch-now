@@ -79,5 +79,6 @@
     "m78": { "message" : "Chrome version"},
     "m79": { "message" : "Opera version"},
     "m80": { "message" : "Firefox version"},
-    "m81": { "message" : "Followed games"}
+    "m81": { "message" : "Followed games"},
+    "m82": { "message" : "game"}
 }

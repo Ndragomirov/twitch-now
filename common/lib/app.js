@@ -202,9 +202,10 @@
       select: true,
       opts  : [
         { id: "viewers|1", name: "__MSG_m10__" },
-        { id: "viewers|-1", name: "__MSG_m11__"},
-        { id: "name|1", name: "__MSG_m12__"},
+        { id: "viewers|-1", name: "__MSG_m11__" },
+        { id: "name|1", name: "__MSG_m12__" },
         { id: "name|-1", name: "__MSG_m13__" },
+        { id: "game|1", name: "__MSG_m82__" },
         { id: "created_at|-1", name: "__MSG_m14__" }
       ],
       show  : true,
