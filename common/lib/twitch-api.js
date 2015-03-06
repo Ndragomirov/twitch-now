@@ -223,6 +223,20 @@
     }
   }
 
+  methods.gameFollow = function (){
+    return {
+      type: "PUT",
+      url : "http://api.twitch.tv/api/users/:user/follows/games/follow"
+    }
+  }
+
+  methods.gameUnfollow = function (){
+    return {
+      type: "DELETE",
+      url : "http://api.twitch.tv/api/users/:user/follows/games/unfollow"
+    }
+  }
+
   methods.follow = function (){
     return {
       type: "PUT",

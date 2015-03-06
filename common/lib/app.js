@@ -499,9 +499,32 @@
     }
   })
 
-  var Game = Backbone.Model.extend();
+  var Game = Backbone.Model.extend({
+    idAttribute: "_id",
+
+    follow: function (cb){
+      cb = cb || $.noop;
+      var target = this.get("game").name;
+      twitchApi.send("gameFollow", {name: target}, function (err, res){
+        if ( err ) return cb(err);
+        this.trigger("follow", this.attributes);
+        cb();
+      }.bind(this));
+    },
+
+    unfollow: function (cb){
+      cb = cb || $.noop;
+      var target = this.get("game").name;
+      twitchApi.send("gameUnfollow", {name: target}, function (err, res){
+        if ( err ) return cb(err);
+        this.trigger("unfollow", this);
+        cb();
+      }.bind(this));
+    }
+  });
 
   var Games = Backbone.Collection.extend({
+
     model: Game,
 
     findByName: function (gameName){
@@ -537,6 +560,9 @@
       twitchApi.on("revoke", function (){
         self.reset();
       });
+    },
+    comparator: function (a){
+      return a.get("game").name;
     },
     updateData: function (){
       clearTimeout(this.timeout);
@@ -868,6 +894,21 @@
   search.on("follow", addToFollowing)
   gameLobby.streams.on("follow", addToFollowing);
 
+  games.on("follow", function (game){
+    followedgames.add(game);
+  })
+
+  gameLobby.game.on("follow", function (game){
+    followedgames.add(game);
+  })
+
+  games.on("unfollow", function (game){
+    followedgames.remove(followedgames.findByName(game.get("game").name));
+  })
+
+  followedgames.on("unfollow", function (game){
+    followedgames.remove(game);
+  })
 
   topstreams.updateData();
   games.updateData();

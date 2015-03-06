@@ -169,17 +169,23 @@
   };
 
   var DefaultView = Backbone.View.extend({
-    app       : app,
-    template  : "",
-    render    : function (){
+    app          : app,
+    template     : "",
+    render       : function (){
       this.$el.empty().html($(Handlebars.templates[this.template](this.model.toJSON())));
       return this;
     },
-    initialize: function (){
+    initialize   : function (){
       $(self).unload(function (){
         this.undelegateEvents();
         this.stopListening();
       }.bind(this));
+    },
+    showPreloader: function (){
+      this.$el.append(this.app.streamPreloader);
+    },
+    hidePreloader: function (){
+      this.app.streamPreloader.detach();
     }
   });
 
@@ -360,15 +366,41 @@
       "contextmenu .stream": "showMenu"
     },
 
+    unfollow: function (){
+      var self = this;
+      self.showPreloader();
+      this.model.unfollow(function (){
+        self.hidePreloader();
+      });
+    },
+    follow  : function (){
+      var self = this;
+      self.showPreloader();
+      self.model.follow(function (){
+        self.hidePreloader();
+      });
+    },
+
     showMenu: function (e){
       var m = this.model.toJSON();
+      var self = this;
       m.authorized = app.twitchApi.isAuthorized();
 
       var menu = new MenuView({
         model: m
       })
 
-      return menu.showMenu("contextgamemenu.html", {y: e.clientY, x: e.clientX});
+      menu.showMenu("contextgamemenu.html", {y: e.clientY, x: e.clientX});
+
+      menu.$el
+        .on('click', '.js-follow-game', function (){
+          self.follow();
+        })
+        .on('click', '.js-unfollow-game', function (){
+          self.unfollow();
+        })
+
+      return false;
     },
     template: "game.html"
   });
@@ -447,17 +479,17 @@
       return false;
     },
     unfollow  : function (){
-      var preloader = this.app.streamPreloader;
-      this.$el.append(preloader);
+      var self = this;
+      self.showPreloader();
       this.model.unfollow(function (){
-        preloader.detach();
+        self.hidePreloader();
       });
     },
     follow    : function (){
-      var preloader = this.app.streamPreloader;
-      this.$el.append(preloader);
-      this.model.follow(function (){
-        preloader.detach();
+      var self = this;
+      self.showPreloader();
+      self.model.follow(function (){
+        self.hidePreloader();
       });
     },
     initialize: function (){
@@ -550,11 +582,18 @@
 
   var ExtendedGameView = DefaultView.extend({
     template          : "gameextended.html",
+    events            : {
+      "click .game-follow": "follow"
+    },
     initialize        : function (){
       this.listenTo(this.app.router, "route", this.toggle);
       this.listenTo(this.app.router, "route", this.toggleActiveButton);
       DefaultView.prototype.initialize.apply(this, arguments);
       this.render();
+    },
+    follow            : function (){
+      this.$el.find(".game-follow").addClass("active");
+      this.model.follow();
     },
     toggleActiveButton: function (r){
       var $buttons = this.$el.find(".button").removeClass("active");
