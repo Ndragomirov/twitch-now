@@ -580,6 +580,30 @@
     }
   })
 
+  var Channel = Backbone.Model.extend({
+  });
+
+  var ManageNotifications = Backbone.Collection.extend({
+    model: Channel,
+
+    comparator: function (a){
+      return a.get("channel").name;
+    },
+
+    initialize: function (){
+
+    },
+    updateData: function (){
+      twitchApi.send("follows", {offset: 0, limit: 100}, function (err, res){
+        if ( err || !res.follows ) {
+          return this.trigger("apierror");
+        }
+        this.reset(res.follows, {silent: true});
+        this.trigger("update");
+      }.bind(this));
+    }
+  })
+
   var Stream = TwitchItemModel.extend({
 
     defaults: {
@@ -875,6 +899,7 @@
 
   var settings = root.settings = new Settings;
   var badge = root.badge = new Badge;
+  var follows = root.follows = new ManageNotifications;
   var donations = root.donations = new DonationCollection;
   var contributors = root.contributors = new ContributorCollection;
   var following = root.following = new FollowingCollection;

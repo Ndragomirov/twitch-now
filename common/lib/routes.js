@@ -7,6 +7,7 @@
       "info"                : "info",
       "following"           : "following",
       "followedgames"       : "followedGames",
+      "user"                : "user",
       "settings"            : "settings",
       "search"              : "search",
       "videos/:stream"      : "videos",
