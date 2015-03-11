@@ -78,5 +78,9 @@
     "m77": { "message" : "\"Twitch Now\" para outros browsers"},
     "m78": { "message" : "Versão Chrome"},
     "m79": { "message" : "Versão Opera"},
-    "m80": { "message" : "Versão Firefox"}
+    "m80": { "message" : "Versão Firefox"},
+    "m81": { "message" : "Jogos seguidos"},
+    "m82": { "message" : "jogo"},
+    "m83": { "message" : "seguir jogo"},
+    "m84": { "message" : "deixar de seguir jogo"}
 }
