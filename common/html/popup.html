@@ -60,10 +60,6 @@
     </div>
 </div>
 
-<div class="game">
-
-</div>
-
 <div id="content">
     <div class="scroller">
         <div id="info-screen" class="screen spad">
@@ -120,7 +116,7 @@
                 <div class="info-section">
                     <h2 class="header">__MSG_m64__</h2>
 
-                    <div class="contributor-list">
+                    <div class="contributor-list lazy-container">
 
                     </div>
 
@@ -164,35 +160,40 @@
 
         </div>
 
-        <div id="followed-game-screen" class="screen">
+        <div id="followed-game-screen" class="screen lazy-container">
             <div class="screen-content"></div>
         </div>
 
-        <div id="browse-game-screen" class="screen">
+        <div id="browse-game-screen" class="screen lazy-container">
             <div class="screen-content"></div>
         </div>
 
-        <div id="topstreams-screen" class="screen">
+        <div id="topstreams-screen" class="screen lazy-container">
             <div class="screen-content"></div>
         </div>
 
-        <div id="gamelobby-streams-screen" class="screen">
+        <div id="gamelobby" class="screen">
+            <div id="gamelobby-game" class="game lazy-container">
+            </div>
+            <div class="tabs">
+                <div id="gamelobby-streams" class="lazy-container tab" tab-id="streams">
+                    <div class="screen-content"></div>
+                </div>
+                <div id="gamelobby-videos" class="lazy-container tab" tab-id="videos">
+                    <div class="screen-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="stream-screen" class="screen lazy-container">
             <div class="screen-content"></div>
         </div>
 
-        <div id="gamelobby-videos-screen" class="screen">
+        <div id="video-screen" class="screen lazy-container">
             <div class="screen-content"></div>
         </div>
 
-        <div id="stream-screen" class="screen">
-            <div class="screen-content"></div>
-        </div>
-
-        <div id="video-screen" class="screen">
-            <div class="screen-content"></div>
-        </div>
-
-        <div id="search-screen" class="screen">
+        <div id="search-screen" class="screen lazy-container">
             <div id="search-menu" class="top-menu">
                 <div id="search-bar">
                     <input id="searchInput" type="text" maxlength="30" placeholder="__MSG_m35__">

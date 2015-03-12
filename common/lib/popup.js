@@ -14,7 +14,7 @@
   }
 
   app.lazyload = function (){
-    var collection = $('.game, .screen').filter(":visible").find(".lazy");
+    var collection = $('.lazy-container').filter(":visible").find(".lazy");
     collection.each(function (){
       var t = $(this);
       if ( t.visible(true) ) {
@@ -71,31 +71,16 @@
       }
     });
 
-    var extGameView = new ExtendedGameView({
-      model: b.gameLobby.game,
-      el   : ".game"
-    })
 
     views.followedGames = new GameListView({
       el        : "#followed-game-screen",
       collection: b.followedgames
     })
 
-    views.gameLobbyStreams = new StreamListView({
-      el        : "#gamelobby-streams-screen",
-      collection: b.gameLobby.streams
-    });
-
-    views.gameLobbyVideos = new VideoListView({
-      el        : "#gamelobby-videos-screen",
-      collection: b.gameLobby.videos
-    })
-
     views.gameLobby = new GameLobbyView({
-      model     : b.gameLobby,
-      gameView  : extGameView,
-      streamView: views.gameLobbyStreams,
-      videoView : views.gameLobbyVideos
+      el   : "#gamelobby",
+      route: "gameLobby",
+      model: b.gameLobby
     })
 
     views.info = new InfoView({
@@ -174,6 +159,12 @@
     render       : function (){
       this.$el.empty().html($(Handlebars.templates[this.template](this.model.toJSON())));
       return this;
+    },
+    beforeRender : function (){
+
+    },
+    afterRender  : function (){
+
     },
     initialize   : function (){
       $(self).unload(function (){
@@ -507,9 +498,9 @@
       "nosearchresults": "__MSG_m50__"
     },
     itemView   : null, // single item view
-    initialize : function (){
+    initialize : function (opts){
       DefaultView.prototype.initialize.apply(this, arguments);
-      this.container = this.$el.find(".screen-content");
+      this.container = opts.container || this.$el.find(".screen-content");
       this.listenTo(this.collection, "add update sort remove reset", this.render);
       this.listenTo(this.collection, "apierror", this.showMessage.bind(this, this.messages.apierror));
       this.listenTo(this.collection, "autherror", this.showMessage.bind(this, this.messages.autherror));
@@ -585,53 +576,70 @@
     events            : {
       "click .game-follow": "follow"
     },
-    initialize        : function (){
-      this.listenTo(this.app.router, "route", this.toggle);
-      this.listenTo(this.app.router, "route", this.toggleActiveButton);
-      DefaultView.prototype.initialize.apply(this, arguments);
-      this.render();
+    render            : function (){
+      DefaultView.prototype.render.apply(this, arguments);
+      this.toggleActiveButton(this.view);
     },
-    follow            : function (){
-      this.$el.find(".game-follow").addClass("active");
-      this.model.follow();
+    setCurrentView    : function (game, view){
+      this.view = view;
+      this.toggleActiveButton(this.view);
     },
-    toggleActiveButton: function (r){
+    toggleActiveButton: function (view){
       var $buttons = this.$el.find(".button").removeClass("active");
-      if ( /gamelobbystreams/i.exec(r) ) {
+      if ( /streams$/i.exec(view) ) {
         $buttons.eq(0).addClass("active");
       }
 
-      if ( /gamelobbyvideos/i.exec(r) ) {
+      if ( /videos$/i.exec(view) ) {
         $buttons.eq(1).addClass("active");
       }
     },
-    toggle            : function (r){
-      if ( /gamelobby/i.exec(r) ) {
-        this.show();
-      } else {
-        this.hide();
-      }
+    follow    : function (){
+      this.$el.find(".game-follow").addClass("active");
+      this.model.follow();
     },
-    show              : function (){
-      this.$el.show();
-      $("#content").css({top: 154});
-    },
-    hide              : function (){
-      this.$el.hide();
-      $("#content").css({top: 31});
+    initialize: function (){
+      DefaultView.prototype.initialize.apply(this, arguments);
+      this.listenTo(this.app.router, "route:gameLobby", this.setCurrentView.bind(this));
+      this.render();
     }
   })
 
   var GameLobbyView = DefaultView.extend({
-    initialize: function (options){
+
+    initialize      : function (opts){
       DefaultView.prototype.initialize.apply(this, arguments);
-      this.gameView = options.gameView;
-      this.videoView = options.videoView;
-      this.streamView = options.streamView;
+      this.listenTo(this.app.router, "route:gameLobby", this.toggleActiveView.bind(this));
+      this.listenTo(this.app.router, "route", this.toggle.bind(this));
+
+      this.gameView = new ExtendedGameView({
+        el   : "#gamelobby-game",
+        model: this.model.game
+      })
+
+      this.streamView = new StreamListView({
+        el        : "#gamelobby-streams",
+        collection: b.gameLobby.streams
+      });
+
+      this.videoView = new VideoListView({
+        el        : "#gamelobby-videos",
+        collection: b.gameLobby.videos
+      })
       this.listenTo(this.model.game, "change", this.update);
     },
-
-    update: function (){
+    toggle          : function (r){
+      if ( /gamelobby/i.exec(r) ) {
+        $("#content").css({top: 154});
+      } else {
+        $("#content").css({top: 31});
+      }
+    },
+    toggleActiveView: function (game, view){
+      this.$el.find(".tabs [tab-id]").hide();
+      this.$el.find(".tabs [tab-id='" + view + "']").show();
+    },
+    update          : function (){
       this.gameView.render();
       this.videoView.update();
       this.streamView.update();
