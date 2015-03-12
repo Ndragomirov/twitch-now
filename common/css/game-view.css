@@ -2,12 +2,16 @@
     width: 380px;
     height: 102px;
     display: block;
-    position: absolute;
-    left: 40px;
-    top: 31px;
+    position: fixed;
     padding: 10px;
     background-color: rgb(35, 35, 35);
     border-bottom: 1px solid rgb(0, 0, 0);
+    z-index: 3;
+    top: 31px;
+}
+
+.tabs .tab {
+    display: none;
 }
 
 .game .game-preview {
