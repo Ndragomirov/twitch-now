@@ -275,7 +275,7 @@
     },
     {
       id      : "notifyOnFirstUpdate",
-      desc    : "__MSG_m86__",
+      desc    : "__MSG_m85__",
       checkbox: true,
       type    : "checkbox",
       show    : true,
@@ -323,7 +323,7 @@
     },
     {
       id   : "notificationVolume",
-      desc : "__MSG_m87__",
+      desc : "__MSG_m86__",
       range: true,
       show : true,
       type : "range",
