@@ -739,7 +739,7 @@
     addedStreams: [],
     notified    : [], //store notified streams id here
     notify      : function (){
-      if ( (this.startCommplete || settings.get("notifyOnFirstUpdate").get("value")) && this.addedStreams.length > 0 ) {
+      if ( (this.firstNotifyComplete || settings.get("notifyOnFirstUpdate").get("value")) && this.addedStreams.length > 0 ) {
         if ( settings.get("showDesktopNotification").get("value") ) {
           bgApp.sendNotification(this.getNewStreams());
         }
