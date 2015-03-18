@@ -308,7 +308,7 @@
     },
 
     playSound  : function (e){
-      b.bgApp.playSound(b.settings.getNotificationSoundSource());
+      b.bgApp.playSound(b.settings.getNotificationSoundSource(), b.settings.get("notificationVolume").get("value")/100);
     },
     rangeHelper: function (e){
       var t = $(e.target);

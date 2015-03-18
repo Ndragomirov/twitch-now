@@ -82,5 +82,7 @@
     "m81": { "message" : "Followed games"},
     "m82": { "message" : "game"},
     "m83": { "message" : "follow game"},
-    "m84": { "message" : "unfollow game"}
+    "m84": { "message" : "unfollow game"},
+    "m86": { "message" : "Notify on first update"},
+    "m87": { "message" : "Notification volume"}
 }

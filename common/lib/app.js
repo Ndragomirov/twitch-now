@@ -154,8 +154,9 @@
     return audioSupported.val;
   };
 
-  bgApp.playSound = function (path){
+  bgApp.playSound = function (path, volume){
     var sound;
+    if (typeof volume === 'undefined') volume = 1;
 
     if ( !/^data:audio/.test(path) ) {
       path = /^http/i.test(path) ? path : utils.runtime.getURL(path);
@@ -163,6 +164,7 @@
 
     sound = new Audio();
     sound.src = path;
+    sound.volume = volume;
     sound.play();
   };
 
@@ -272,6 +274,14 @@
       value   : true
     },
     {
+      id      : "notifyOnFirstUpdate",
+      desc    : "__MSG_m86__",
+      checkbox: true,
+      type    : "checkbox",
+      show    : true,
+      value   : true
+    },
+    {
       id   : "closeNotificationDelay",
       desc : "__MSG_m6__",
       range: true,
@@ -310,6 +320,17 @@
       show  : true,
       type  : "button",
       value : ""
+    },
+    {
+      id   : "notificationVolume",
+      desc : "__MSG_m87__",
+      range: true,
+      show : true,
+      type : "range",
+      tip  : "%",
+      min  : 1,
+      max  : 100,
+      value: 100
     },
     {
       id   : "refreshInterval",
@@ -714,17 +735,19 @@
       });
     },
 
+    firstNotifyComplete: false,
     addedStreams: [],
     notified    : [], //store notified streams id here
     notify      : function (){
-      if ( this.addedStreams.length > 0 ) {
+      if ( (this.startCommplete || settings.get("notifyOnFirstUpdate").get("value")) && this.addedStreams.length > 0 ) {
         if ( settings.get("showDesktopNotification").get("value") ) {
           bgApp.sendNotification(this.getNewStreams());
         }
         if ( settings.get("playNotificationSound").get("value") ) {
-          bgApp.playSound(settings.getNotificationSoundSource());
+          bgApp.playSound(settings.getNotificationSoundSource(), settings.get("notificationVolume").get("value")/100);
         }
       }
+      this.firstNotifyComplete = true;
     },
     updateData  : function (){
       var idsBeforeUpdate = this.pluck("_id");
