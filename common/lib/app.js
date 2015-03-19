@@ -719,7 +719,7 @@
 
       twitchApi.on("authorize", function (){
         self.notified = [];
-		self.firstNotifyComplete = false;
+        self.firstNotifyComplete = false;
         self.updateData();
       });
 
