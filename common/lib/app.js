@@ -715,11 +715,13 @@
       this.on("add", function (stream){
         self.addedStreams = [stream.id];
         self.notify();
-      })
+      });
 
       twitchApi.on("authorize", function (){
+        self.notified = [];
+		self.firstNotifyComplete = false;
         self.updateData();
-      })
+      });
 
       twitchApi.on("revoke", function (){
         self.reset();
