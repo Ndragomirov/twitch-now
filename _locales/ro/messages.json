@@ -71,5 +71,16 @@
     "m70": { "message" : "fixează jocul"},
     "m71": { "message" : "deschide flux"},
     "m72": { "message" : "autentificat ca"},
-    "m73": { "message" : "Autentifică-te pentru a vedea canalele preferate"}
+    "m73": { "message" : "Autentifică-te pentru a vedea canalele preferate"},
+    "m74": { "message" : "Dacă îţi place aplicaţia şi vrei să ne ajuţi, poţi s-o faci print-o donaţie via PayPal sau Bitcon:"},
+    "m75": { "message" : "Încarcă propriul sunet"},
+    "m76": { "message" : "sunet personalizat"},
+    "m77": { "message" : "\"Twitch Now\" pentru alte browsere"},
+    "m78": { "message" : "Versiunea pentru Chrome"},
+    "m79": { "message" : "Versiunea pentru Opera"},
+    "m80": { "message" : "Versiunea pentru Firefox"},
+    "m81": { "message" : "Jocuri pe care le urmărești"},
+    "m82": { "message" : "joc"},
+    "m83": { "message" : "urmărește joc"},
+    "m84": { "message" : "nu mai urmări"}
 }
