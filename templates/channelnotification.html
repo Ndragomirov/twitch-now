@@ -1,0 +1,26 @@
+<div class="stream js-filterable">
+    <div class="item-image-container channel-logo">
+        <img class="lazy" alt="" data-original="{{channel.logo}}"/>
+    </div>
+    <span class="stream-info stream-title">
+            {{channel.display_name}}
+    </span>
+    <span class="stream-info channel-notifications-options" data-channel-id="{{_id}}">
+        <div class="control-wrapper">
+            <input type="checkbox" data-notification-type="desktop" id="dn-{{channel.display_name}}" {{h-checked-2 notificationOpts.desktop}}/>
+            <label for="dn-{{channel.display_name}}">
+                <span></span>
+
+                <div class="control-desc">Desktop</div>
+            </label>
+        </div>
+        <div class="control-wrapper">
+            <input type="checkbox" data-notification-type="sound" id="sn-{{channel.display_name}}" {{h-checked-2 notificationOpts.sound}}/>
+            <label for="sn-{{channel.display_name}}">
+                <span></span>
+
+                <div class="control-desc">Sound</div>
+            </label>
+        </div>
+    </span>
+</div>
