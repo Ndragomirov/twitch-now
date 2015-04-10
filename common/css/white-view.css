@@ -15,6 +15,44 @@
     background: rgb(255, 255, 255);
 }
 
+.white-version .dropdown-menu {
+    background-color: rgb(255, 255, 255);
+}
+
+.white-version .dropdown-menu:after {
+    border-bottom: 6px solid rgb(255, 255, 255);
+}
+
+.white-version .dropdown-menu > li > a {
+    color: #333333;
+}
+
+.white-version .dropdown-menu > li > a:hover,
+.white-version .dropdown-menu > li > a:focus {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: rgb(100, 65, 165);
+}
+
+.white-version .dropdown-menu > .active > a,
+.white-version .dropdown-menu > .active > a:hover,
+.white-version .dropdown-menu > .active > a:focus {
+    color: #ffffff;
+    text-decoration: none;
+    outline: 0;
+    background-color: #337ab7;
+}
+
+.white-version .dropdown-menu > .disabled > a,
+.white-version .dropdown-menu > .disabled > a:hover,
+.white-version .dropdown-menu > .disabled > a:focus {
+    color: #777777;
+}
+
+.white-version .dropdown-menu .divider {
+    background-color: #e5e5e5;
+}
+
 .white-version #content {
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
 }
@@ -61,7 +99,7 @@
     background-color: rgb(248, 248, 248);
 }
 
-.white-version  .stream .stream-preview {
+.white-version  .stream .item-image-container {
     border: 1px solid rgb(255, 255, 255);
 }
 

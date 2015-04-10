@@ -18,6 +18,7 @@ body.direction-rtl {
 }
 
 a {
+    cursor: pointer;
     text-decoration: underline;
 }
 
@@ -101,6 +102,18 @@ a.js-tab {
     margin-bottom: 10px;
 }
 
+.item-image-container {
+    overflow: hidden;
+    border: 1px solid rgb(0, 0, 0);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+    margin-right: 10px;
+    float: left;
+}
+
+.item-image-container img {
+    width: 100%;
+}
+
 #menu {
     height: 100%;
     width: 39px;
@@ -137,6 +150,12 @@ a.js-tab {
     width: 300px;
 }
 
+.screen-msg h2 {
+    font-size: 16px;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
 .screen {
     display: none;
     min-height: 100%;
@@ -157,6 +176,7 @@ a.js-tab {
 .btn {
     padding: 5px 10px;
     border-radius: 3px;
+    border: none;
     display: inline-block;
     cursor: pointer;
     text-decoration: none;
@@ -170,6 +190,28 @@ a.js-tab {
     -moz-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(0, 0, 0, 0.15);
     -moz-text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
 
+}
+
+.btn.disabled {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(130, 102, 182, 0.4)), to(rgba(83, 55, 135, 0.4)));
+    background: -moz-linear-gradient(top, rgba(130, 102, 182, 0.4), rgba(83, 55, 135, 0.4));
+    background: linear-gradient(top, rgba(130, 102, 182, 0.4), rgba(83, 55, 135, 0.4));
+    background-color: rgb(255, 255, 255);
+    text-shadow: none;
+}
+
+.btn.disabled:active {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(130, 102, 182, 0.4)), to(rgba(83, 55, 135, 0.4)));
+    background: -moz-linear-gradient(top, rgba(130, 102, 182, 0.4), rgba(83, 55, 135, 0.4));
+    background: linear-gradient(top, rgba(130, 102, 182, 0.4), rgba(83, 55, 135, 0.4));
+    background-color: rgb(255, 255, 255);
+}
+
+.dropdown.open .btn {
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(85, 60, 135)), to(rgb(55, 35, 100)));
+    background: -moz-linear-gradient(top, rgb(85, 60, 135), rgb(55, 35, 100));
+    background: linear-gradient(top, rgb(85, 60, 135), rgb(55, 35, 100));
+    background-color: rgb(70, 47, 117);
 }
 
 .btn:active {
@@ -187,7 +229,8 @@ a.js-tab {
     color: whitesmoke;
     vertical-align: middle;
     float: right;
-    margin-right: 10px;
+    display: inline-block;
+    margin-right: 20px;
     line-height: 30px;
 }
 
@@ -196,10 +239,25 @@ a.js-tab {
     color: rgb(238, 238, 238);
 }
 
+.user-panel .icon-menu {
+    color: white !important;
+    font-size: 16px;
+    vertical-align: middle;
+}
+
 .user-panel img {
     width: 20px;
     height: 20px;
     vertical-align: middle;
     margin-right: 3px;
+}
+
+.user-panel .dropdown-menu-right {
+    right: -5px;
+}
+
+.user-panel .username {
+    display: inline-block;
+    cursor: pointer;
 }
 

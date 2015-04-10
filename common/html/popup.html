@@ -168,6 +168,47 @@
             <div class="screen-content"></div>
         </div>
 
+        <div id="notifications-screen" class="screen lazy-container">
+            <div class="js-notifications controls">
+                <h2 class="header">Manage channel notifications</h2>
+
+                <div class=info-section>
+                    You will receive a desktop/sound notification whenever a channel you follow begins broadcasting.
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                            data-toggle="dropdown" aria-expanded="true">
+                        Select
+                        <span class="caret"></span>
+                    </button>
+                    <div class="undo-message">
+                        Your notifications preferences was changed.
+                        <a>Undo</a>
+                    </div>
+                    <ul class="dropdown-menu dropdown-menu-left" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation">
+                            <a role="menuitem" data-notification-type="desktop" data-notification-value="1"
+                               tabindex="-1" href="#">All desktop</a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" data-notification-type="desktop" data-notification-value="0"
+                               tabindex="-1" href="#">None desktop</a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" data-notification-type="sound" data-notification-value="1" tabindex="-1"
+                               href="#">All sound</a>
+                        </li>
+                        <li role="presentation">
+                            <a role="menuitem" data-notification-type="sound" data-notification-value="0" tabindex="-1"
+                               href="#">None sound</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <div class="screen-content"></div>
+        </div>
+
         <div id="topstreams-screen" class="screen lazy-container">
             <div class="screen-content"></div>
         </div>

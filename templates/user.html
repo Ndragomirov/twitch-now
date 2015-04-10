@@ -1,8 +1,30 @@
 {{#if authenticated}}
-<a class="btn logout-btn" title="__MSG_m53__" id="logout-btn"><i class="icon-off"></i></a>
 <div class="user-panel">
-    <img class="lazy" alt="" src="{{logo}}"/>
-    <span title="__MSG_m72__">{{name}}</span>
+
+    <div class="dropdown">
+        <div class="username dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
+            <img class="lazy" alt="" src="{{logo}}"/>
+            {{name}}
+            <i class="icon-menu"></i>
+        </div>
+
+        <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu2">
+            <li role="presentation">
+                <a role="menuitem"
+                   tabindex="-1" href="#user/notifications">Manage notifications</a>
+            </li>
+            <li role="presentation">
+                <a role="menuitem"
+                   tabindex="-1" href="#">Language prefrences</a>
+            </li>
+            <li class="divider"></li>
+            <li role="presentation">
+                <a role="menuitem" id="logout-btn" tabindex="-1"
+                   href="#">Logout</a>
+            </li>
+        </ul>
+    </div>
+
 </div>
 {{else}}
 <a class="btn" title="__MSG_m52__" id="login-btn">__MSG_m52__</a>

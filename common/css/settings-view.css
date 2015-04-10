@@ -121,6 +121,22 @@ input[type="checkbox"]:checked + label span {
     background: url(../img/checkbox.png) -25px top no-repeat;
 }
 
+input.toggle[type="checkbox"] + label div:nth-child(2){
+    display: block;
+}
+
+input.toggle[type="checkbox"] + label div:nth-child(3){
+    display: none;
+}
+
+input.toggle[type="checkbox"]:checked + label div:nth-child(2){
+    display: none;
+}
+
+input.toggle[type="checkbox"]:checked + label div:nth-child(3){
+    display: block;
+}
+
 .range-helper {
     display: inline-block;
     position: relative;
