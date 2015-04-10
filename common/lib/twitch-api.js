@@ -56,7 +56,13 @@
     this.on("tokenchange", function (accessToken){
       _self.token = accessToken;
       if ( accessToken ) {
-        _self.trigger("authorize");
+        _self.getUserName(function (err){
+          if ( err ) {
+            console.log("getusername failed", err);
+          } else {
+            _self.trigger("authorize");
+          }
+        })
       } else {
         _self.userName = "";
         _self.trigger("revoke");
@@ -95,6 +101,7 @@
         if ( xhr.status == 401 ) {
           _self.revoke();
         }
+        return cb(err);
       })
       .done(function (res){
         if ( !res.token.user_name ) {

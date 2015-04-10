@@ -8,6 +8,8 @@
       "following"         : "following",
       "followedgames"     : "followedGames",
       "user"              : "user",
+      "user/notifications": "notifications",
+      "user/languages"    : "",
       "settings"          : "settings",
       "search"            : "search",
       "videos/:stream"    : "videos",

@@ -25,10 +25,9 @@
 .top-menu {
     position: fixed;
     top: 0;
-    z-index: 1;
+    z-index: 9999;
     background: rgb(18, 18, 18);
     left: 0;
-    opacity: 0.9;
     height: 30px;
     right: 0;
     width: 440px;
@@ -80,7 +79,7 @@ input[type="text"] {
     width: 150px;
 }
 
-#logout-btn, #login-btn {
+#login-btn {
     float: right;
     margin-right: 10px;
     margin-top: 4px;
@@ -92,6 +91,7 @@ input[type="text"] {
     border-radius: 3px;
     z-index: 10;
     display: none;
+    overflow: hidden;
 }
 
 #context-menu .context-row {

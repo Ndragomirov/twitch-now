@@ -5,6 +5,10 @@ Handlebars.registerHelper('h-checked', function (input, parent){
   return  v ? 'checked' : '';
 });
 
+Handlebars.registerHelper('h-checked-2', function (context, block){
+  return context == 1 ? 'checked' : '';
+});
+
 Handlebars.registerHelper('h-num-format', function (v){
   return v ? v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : '';
 })
@@ -13,7 +17,7 @@ Handlebars.registerHelper('h-date-format', function (s){
   s = parseInt(s, 10);
 
   if ( isNaN(s) ) return '';
-  
+
   var fm = [
     Math.floor(s / 60 / 60) % 24,
     Math.floor(s / 60) % 60,

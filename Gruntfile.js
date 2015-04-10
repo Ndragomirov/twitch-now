@@ -19,7 +19,10 @@ module.exports = function (grunt){
         src: ['build/firefox/*']
       },
       firefox_after: {
-        src: ['build/firefox/data/common/dist/popup.comb.js', 'build/firefox/data/common/dist/popup.comb.js.map']
+        src: [
+          'build/firefox/data/common/dist/popup.comb.js',
+          'build/firefox/data/common/dist/popup.comb.js.map'
+        ]
       }
     },
     watch              : {
@@ -38,7 +41,7 @@ module.exports = function (grunt){
     },
     concat             : {
       options : {
-        sourceMap: true,
+        sourceMap: false,
         separator: '\r\n'
       },
       popupjs : {
@@ -70,6 +73,7 @@ module.exports = function (grunt){
           "common/css/simple-view.css",
           "common/css/white-view.css",
           "common/css/stream-view.css",
+          "common/css/channel-view.css",
           "common/css/game-view.css",
           "common/css/settings-view.css",
           "common/css/menu-view.css",

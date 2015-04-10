@@ -24,6 +24,7 @@ var twitchOauth = OAuth2.addAdapter({
 
 var scripts = [
   "lib/3rd/sinon-xhr.js",
+  "lib/3rd/async.js",
   "lib/3rd/xhr-proxy-ff.js",
   "lib/utils.js",
   "lib/3rd/jquery.js",
@@ -32,6 +33,8 @@ var scripts = [
   "lib/3rd/bootstrap.js",
   "lib/3rd/underscore.js",
   "lib/3rd/backbone.js",
+  "lib/3rd/backbone.memento.js",
+  "lib/3rd/backbone.mixin.js",
   "lib/3rd/handlebars.js",
   "lib/3rd/prettydate.js",
   "lib/3rd/i18n.js",
@@ -52,6 +55,8 @@ var panel = panels.Panel({
   contentURL          : self.data.url("common/html/popup.html"),
   width               : 440,
   height              : 590,
+  contextMenu         : true,
+  focus               : false,
   onHide              : onPanelHide,
   contentScriptFile   : scripts,
   contentScriptOptions: {
@@ -73,7 +78,7 @@ var button = buttons.ToggleButton({
     "32": self.data.url("common/icons/32_1.png")
   },
   onChange: onButtonStateChange,
-  badge: ""
+  badge   : ""
 });
 
 twitchNow.listen(panel, button);
@@ -129,5 +134,6 @@ function onButtonStateChange(state){
 }
 
 function onPanelHide(){
+  console.log("\nPanel hide", arguments);
   button.state('window', {checked: false});
 }

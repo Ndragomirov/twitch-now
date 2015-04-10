@@ -1,7 +1,6 @@
-.simple-version .stream-preview {
+.simple-version .item-image-container {
     display: none !important;
 }
-
 
 .simple-version .stream-info-status {
     display: none !important;

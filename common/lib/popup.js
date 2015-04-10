@@ -29,10 +29,19 @@
 
   app.setCurrentView = function (viewName){
     if ( app.views[viewName] ) {
-      app.curView = app.views[viewName];
+      if ( app.curView && typeof app.curView.onhide == 'function' ) {
+        app.curView.onhide();
+      }
       $('.screen').hide();
+      app.curView = app.views[viewName];
       $('#filterInput:visible, #searchInput:visible').focus();
       app.curView.$el.show();
+      if ( app.curView.lazyrender ) {
+        app.curView.lazyrender();
+      }
+      if ( app.curView.onshow ) {
+        app.curView.onshow();
+      }
       app.resetScroll();
     }
   }
@@ -71,6 +80,10 @@
       }
     });
 
+    views.notifications = new ChannelNotificationListView({
+      el        : "#notifications-screen",
+      collection: b.notifications
+    })
 
     views.followedGames = new GameListView({
       el        : "#followed-game-screen",
@@ -112,7 +125,7 @@
       collection: b.games
     });
 
-    views.userView = new UserView({
+    new UserView({
       model: b.user
     });
 
@@ -130,6 +143,8 @@
       collection: b.contributors
     })
 
+//    app.lazyload();
+
     $("body")
       .on('click', '*[data-route]', function (){
         var route = $(this).attr('data-route');
@@ -140,7 +155,7 @@
       })
       .on('click', '.js-tab', function (e){
         var href = $(this).attr('data-href');
-        utils.tabs.create({ url: href });
+        utils.tabs.create({url: href});
         e.preventDefault();
       })
 
@@ -151,6 +166,8 @@
       })
 
     $('.tip').tooltip();
+
+    console.log(window.location.href);
   };
 
   var DefaultView = Backbone.View.extend({
@@ -160,10 +177,10 @@
       this.$el.empty().html($(Handlebars.templates[this.template](this.model.toJSON())));
       return this;
     },
-    beforeRender : function (){
+    onshow       : function (){
 
     },
-    afterRender  : function (){
+    onhide       : function (){
 
     },
     initialize   : function (){
@@ -179,6 +196,17 @@
       this.app.streamPreloader.detach();
     }
   });
+
+  var LazyRenderView = DefaultView.extend({
+    isRendered: false,
+    lazyrender: function (){
+      if ( !this.isRendered ) {
+        this.render();
+        console.log("\nLazyrender called");
+        this.isRendered = true;
+      }
+    }
+  })
 
   var UserView = DefaultView.extend({
     el        : "#user-info",
@@ -237,25 +265,34 @@
   });
 
   var Menu = DefaultView.extend({
-    el       : "#menu",
-    events   : {
+    el           : "#menu",
+    events       : {
       "click .menu-btn": "selectTab"
     },
-    selectTab: function (e){
-      this.$(".menu-btn").removeClass("active");
+    initialize   : function (){
+      DefaultView.prototype.initialize.apply(this, arguments);
+      this.listenTo(this.app.router, "route", this.onRouteChange.bind(this));
+    },
+    onRouteChange: function (route, r1){
+      console.log("_route", route, r1);
+      if ( /user/i.test(Backbone.history.fragment) ) {
+        this.$el.find(".menu-btn").removeClass("active");
+      }
+    },
+    selectTab    : function (e){
+      this.$el.find(".menu-btn").removeClass("active");
+//      this.$el.find(".menu-btn[data-route=" + route + "]").addClass("active");
       $(e.target).closest(".menu-btn").addClass("active");
     }
   });
 
-  var InfoView = DefaultView.extend({
-
-  });
+  var InfoView = DefaultView.extend({});
 
   var ControlView = DefaultView.extend({
     template: "control.html"
   });
 
-  var SettingsView = DefaultView.extend({
+  var SettingsView = LazyRenderView.extend({
     el    : "#settings-screen",
     events: {
       "click input[data-id=\"notificationSound\"]"      : "playSound",
@@ -280,7 +317,7 @@
     onModelChange: function (model, options){
       var v = model.get("value");
 
-      switch (model.get("id")) {
+      switch ( model.get("id") ) {
         case "simpleView":
           this.toggleSimpleView(model.get("value"))
           break;
@@ -306,14 +343,14 @@
       t.siblings(".range-helper").find(".range-helper-value").html(t.val());
     },
     initialize : function (){
-      DefaultView.prototype.initialize.apply(this, arguments);
+      LazyRenderView.prototype.initialize.apply(this, arguments);
       this.setDefaultTab(this.collection.get("defaultTab").get("value"));
       this.$container = this.$el.find("#settings-container");
       this.collection.forEach(function (m){
         this.onModelChange(m);
       }.bind(this));
       this.listenTo(this.collection, "change", this.onModelChange);
-      this.render();
+//      this.render();
     },
     serialize  : function (){
       var controls = [];
@@ -353,7 +390,8 @@
   });
 
   var GameView = DefaultView.extend({
-    events: {
+    template: "game.html",
+    events  : {
       "contextmenu .stream": "showMenu"
     },
 
@@ -392,8 +430,7 @@
         })
 
       return false;
-    },
-    template: "game.html"
+    }
   });
 
   var MenuView = DefaultView.extend({
@@ -429,6 +466,7 @@
   var VideoView = DefaultView.extend({
     template: "video.html"
   });
+
 
   var StreamView = DefaultView.extend({
     template  : "stream.html",
@@ -489,43 +527,144 @@
     }
   });
 
-  var ListView = DefaultView.extend({
+  var ListView = LazyRenderView.extend({
     template   : "screenmessage.html",
     messages   : {
-      "autherror"      : "__MSG_m73__",
-      "apierror"       : "__MSG_m48__",
-      "novideo"        : "__MSG_m49__",
-      "nosearchresults": "__MSG_m50__"
+      "auth"           : {
+        text: "__MSG_m73__"
+      },
+      "api"            : {
+        text: "__MSG_m48__"
+      },
+      "nostreams"      : {
+        header: "Your Following streams tab is empty.",
+        text  : "Only live following streams will be shown here."
+      },
+      "novideo"        : {
+        text: "__MSG_m49__"
+      },
+      "nosearchresults": {
+        text: "__MSG_m50__"
+      },
+      "nosearchquery"  : {
+        text: "No search query"
+      },
+      "nofollowedgames": {
+        header: "Your Following games tab is empty.",
+        text  : "No one is streaming your favorites games now."
+      }
     },
     itemView   : null, // single item view
     initialize : function (opts){
-      DefaultView.prototype.initialize.apply(this, arguments);
+      LazyRenderView.prototype.initialize.apply(this, arguments);
       this.container = opts.container || this.$el.find(".screen-content");
       this.listenTo(this.collection, "add update sort remove reset", this.render);
-      this.listenTo(this.collection, "apierror", this.showMessage.bind(this, this.messages.apierror));
-      this.listenTo(this.collection, "autherror", this.showMessage.bind(this, this.messages.autherror));
-      this.render();
+      this.listenTo(this.collection, "_error", this.showMessage.bind(this));
+//      this.render();
     },
-    showMessage: function (text){
-      this.container.html(Handlebars.templates[this.template]({
-        text: text
-      }));
+    showMessage: function (type){
+      console.log("\nShowing message. Type  = ", type);
+      console.log("\nShowing messages", this.messages);
+      if ( this.messages[type] ) {
+        var text = this.messages[type];
+        this.container.empty().html(Handlebars.templates[this.template](text));
+      }
     },
     update     : function (){
-      this.collection.updateData();
       this.container.empty().append(this.app.preloader);
+      this.collection.updateData();
     },
     render     : function (){
-      var views = this.collection.map(function (item){
-        return new this.itemView({model: item}).render().$el;
-      }, this);
-      this.container.empty().html(views);
+      if ( this.collection.lastErrorMessage ) {
+        this.container.empty();
+        this.showMessage(this.collection.lastErrorMessage);
+      } else {
+        var views = this.collection.map(function (item){
+          return new this.itemView({model: item}).render().$el;
+        }, this);
+        this.container.empty().html(views);
+      }
     }
   });
 
+  var ChannelNotificationView = DefaultView.extend({
+    template   : "channelnotification.html",
+    events     : {
+      "click .channel-logo": "openProfile"
+    },
+    openProfile: function (){
+      this.model.openProfilePage();
+    }
+  })
+
+  var ChannelNotificationListView = ListView.extend({
+    itemView    : ChannelNotificationView,
+    events      : {
+      "click .undo-message a"       : "undo",
+      "change .screen-content input": "serialize",
+      "click .dropdown-menu a"      : "toggle"
+    },
+    initialize  : function (){
+      this.$undoMessage = this.$el.find(".undo-message");
+      this.$selectMenuBtn = this.$el.find(".dropdown .btn");
+      this.listenTo(this.collection, "add update remove reset", this.updateMenuUI.bind(this));
+      this.updateMenuUI();
+      ListView.prototype.initialize.apply(this, arguments);
+    },
+    updateMenuUI: function (){
+      console.log("\nUpdating menu ui");
+      this.$selectMenuBtn.toggleClass("disabled", this.collection.length == 0);
+    },
+    update      : function (){
+      this.$selectMenuBtn.addClass("disabled");
+      this.$undoMessage.css({visibility: "hidden"});
+      ListView.prototype.update.apply(this, arguments);
+    },
+    onhide      : function (){
+      this.$undoMessage.css({visibility: "hidden"});
+    },
+    onshow      : function (){
+      //update once on view show if not updated before
+      if ( !this.collection.length ) {
+        this.update();
+      }
+    },
+    undo        : function (){
+      this.collection.restore();
+      this.$undoMessage.css({visibility: "hidden"});
+    },
+    toggle      : function (e){
+      var type = $(e.currentTarget).data("notification-type");
+      var val = $(e.currentTarget).data("notification-value") == "1" ? true : false;
+
+      this.$el
+        .find(".screen-content input[data-notification-type='" + type + "']")
+        .prop("checked", val);
+
+      this.$undoMessage.css({visibility: "visible"});
+      this.collection.store();
+      this.serialize();
+    },
+    serialize   : function (){
+      var attributes = [];
+      this.$el.find(".screen-content [data-channel-id]")
+        .map(function (i, e){
+          e = $(e);
+          attributes.push({
+            _id             : parseInt(e.attr("data-channel-id")),
+            notificationOpts: {
+              desktop: e.find("input[data-notification-type='desktop']").prop("checked"),
+              sound  : e.find("input[data-notification-type='sound']").prop("checked")
+            }
+          });
+        })
+      this.collection.set(attributes, {add: false, remove: false, silent: true});
+      this.collection.saveToStorage();
+    }
+  })
+
   var GameListView = ListView.extend({
     itemView: GameView
-
   });
 
   var StreamListView = ListView.extend({
@@ -546,13 +685,6 @@
     search  : function (){
       this.collection.query = this.$el.find("#searchInput").val();
       this.update();
-    },
-    render  : function (){
-      if ( this.collection.length ) {
-        ListView.prototype.render.apply(this, arguments);
-      } else {
-        this.showMessage(this.messages.nosearchresults);
-      }
     }
   });
 
@@ -561,13 +693,6 @@
     setStream: function (channel){
       this.collection.channel = channel;
       this.update();
-    },
-    render   : function (){
-      if ( this.collection.length ) {
-        ListView.prototype.render.apply(this, arguments);
-      } else {
-        this.showMessage(this.messages.novideo);
-      }
     }
   });
 
@@ -594,14 +719,13 @@
         $buttons.eq(1).addClass("active");
       }
     },
-    follow    : function (){
+    follow            : function (){
       this.$el.find(".game-follow").addClass("active");
       this.model.follow();
     },
-    initialize: function (){
+    initialize        : function (){
       DefaultView.prototype.initialize.apply(this, arguments);
       this.listenTo(this.app.router, "route:gameLobby", this.setCurrentView.bind(this));
-      this.render();
     }
   })
 
@@ -626,6 +750,10 @@
         el        : "#gamelobby-videos",
         collection: b.gameLobby.videos
       })
+
+      this.gameView.render();
+      this.videoView.render();
+      this.streamView.render();
       this.listenTo(this.model.game, "change", this.update);
     },
     toggle          : function (r){

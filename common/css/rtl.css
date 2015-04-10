@@ -1,9 +1,39 @@
+.direction-rtl .dropdown-menu-left {
+    left: auto;
+    right: 0;
+}
+
+.direction-rtl .dropdown-menu.dropdown-menu-left:before {
+    right: 10px;
+    left: auto;
+}
+
+.direction-rtl .dropdown-menu.dropdown-menu-left:after {
+    right: 9px;
+    left: auto;
+}
+
+.direction-rtl .user-panel .dropdown-menu-right {
+    left: -5px !important;
+    right: auto;
+}
+
+.direction-rtl .dropdown-menu.dropdown-menu-right:before {
+    left: 10px;
+    right: auto;
+}
+
+.direction-rtl .dropdown-menu.dropdown-menu-right:after {
+    left: 9px;
+    right: auto;
+}
+
 .direction-rtl #content {
     left: 0px;
     right: 40px;
 }
 
-.direction-rtl .stream .stream-preview {
+.direction-rtl .item-image-container {
     float: right;
     margin-left: 10px;
     margin-right: 0px;
@@ -35,7 +65,7 @@
     margin-right: 5px;
 }
 
-.direction-rtl #logout-btn, .direction-rtl #login-btn {
+.direction-rtl #login-btn {
     float: left;
     margin-left: 10px;
     margin-right: 0px;
@@ -43,7 +73,7 @@
 
 .direction-rtl .user-panel {
     float: left;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 
 .direction-rtl .stream {
