@@ -647,7 +647,7 @@
     },
     loadFromStorage       : function (){
       if ( twitchApi.isAuthorized() ) {
-        return bgApp.get("notifications_" + twitchApi.userName);
+        return bgApp.get("notifications_" + twitchApi.userName) || [];
       } else {
         this.trigger("error", "auth");
         return null;
