@@ -62,7 +62,7 @@
     "m61": { "message" : "Twitch.tv kanal språk"},
     "m62": { "message" : "Fönster höjd" },
     "m63": { "message" : "inget språk" },
-    "m64": { "message" : "Bidragande" },
+    "m64": { "message" : "Bidragare" },
     "m65": { "message" : "enkel vy(inga bilder, titlar, m.m)"},
     "m66": { "message" : "Standard flik"},
     "m67": { "message" : "favoriter"},
@@ -78,5 +78,9 @@
     "m77": { "message" : "\"Twitch Now\" för andra webbläsare"},
     "m78": { "message" : "Chrome versionen"},
     "m79": { "message" : "Opera versionen"},
-    "m80": { "message" : "Firefox versionen"}
+    "m80": { "message" : "Firefox versionen"},
+    "m81": { "message" : "Följda spel"},
+    "m82": { "message" : "spel"},
+    "m83": { "message" : "följ spel"},
+    "m84": { "message" : "sluta följa spel"}
 }
