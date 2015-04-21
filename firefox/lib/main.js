@@ -55,8 +55,6 @@ var panel = panels.Panel({
   contentURL          : self.data.url("common/html/popup.html"),
   width               : 440,
   height              : 590,
-  contextMenu         : true,
-  focus               : false,
   onHide              : onPanelHide,
   contentScriptFile   : scripts,
   contentScriptOptions: {

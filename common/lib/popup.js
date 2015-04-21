@@ -202,7 +202,6 @@
     lazyrender: function (){
       if ( !this.isRendered ) {
         this.render();
-        console.log("\nLazyrender called");
         this.isRendered = true;
       }
     }
@@ -691,6 +690,7 @@
   var VideoListView = ListView.extend({
     itemView : VideoView,
     setStream: function (channel){
+      this.lazyrender();
       this.collection.channel = channel;
       this.update();
     }
