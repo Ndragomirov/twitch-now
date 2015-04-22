@@ -56,13 +56,7 @@
     this.on("tokenchange", function (accessToken){
       _self.token = accessToken;
       if ( accessToken ) {
-        _self.getUserName(function (err){
-          if ( err ) {
-            console.log("getusername failed", err);
-          } else {
-            _self.trigger("authorize");
-          }
-        })
+        _self.trigger("authorize");
       } else {
         _self.userName = "";
         _self.trigger("revoke");
