@@ -583,10 +583,6 @@
     },
     updateData: function (){
       clearTimeout(this.timeout);
-
-      if ( !twitchApi.userName ) {
-        return this.trigger("error", "auth");
-      }
       twitchApi.send("followedgames", {}, function (err, res){
         this.timeout = setTimeout(this.updateData.bind(this), 5 * 60 * 1000);
         if ( err ) {
@@ -1070,10 +1066,10 @@
   var donations = root.donations = new DonationCollection;
   var contributors = root.contributors = new ContributorCollection;
   var following = root.following = new FollowingCollection;
+  var followedgames = root.followedgames = new FollowedGames;
   var topstreams = root.topstreams = new TopStreamsCollection;
   var videos = root.videos = new ChannelVideos;
   var games = root.games = new Games;
-  var followedgames = root.followedgames = new FollowedGames;
   var search = root.search = new SearchCollection;
   var user = root.user = new User;
   var gameLobby = root.gameLobby = new GameLobby;
