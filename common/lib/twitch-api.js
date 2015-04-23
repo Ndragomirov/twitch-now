@@ -23,7 +23,8 @@
     if ( isFirefox ) {
       self.port.emit("OAUTH2_AUTH");
     } else {
-      chrome.runtime.sendMessage({id: "OAUTH2_AUTH"});
+      twitchOauth.authorize(function (){
+      })
     }
   }
 
@@ -32,7 +33,7 @@
       if ( isFirefox ) {
         self.port.emit("OAUTH2_REVOKE");
       } else {
-        chrome.runtime.sendMessage({id: "OAUTH2_REVOKE"});
+        twitchOauth.clearAccessToken();
       }
     }
   }
@@ -69,10 +70,8 @@
       })
       self.port.emit("OAUTH2_TOKEN");
     } else {
-      chrome.runtime.onMessage.addListener(function (msg){
-        if ( msg.id == "OAUTH2_TOKEN" ) {
-          _self.trigger("tokenchange", msg.value);
-        }
+      twitchOauth.on("OAUTH2_TOKEN", function (token){
+        _self.trigger("tokenchange", token);
       })
     }
   }

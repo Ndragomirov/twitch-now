@@ -8,22 +8,3 @@ var twitchOauth = OAuth2.addAdapter({
   },
   opts    : constants.twitchApi
 });
-
-chrome.runtime.onMessage.addListener(function (msg){
-  if ( msg.id == "OAUTH2_AUTH" ) {
-    twitchOauth.authorize(function (){
-    })
-  }
-})
-
-chrome.runtime.onMessage.addListener(function (msg){
-  if ( msg.id == "OAUTH2_TOKEN_GET" ) {
-    chrome.runtime.sendMessage({id: "OAUTH2_TOKEN", value: twitchOauth.getAccessToken()});
-  }
-})
-
-chrome.runtime.onMessage.addListener(function (msg){
-  if ( msg.id == "OAUTH2_REVOKE" ) {
-    twitchOauth.clearAccessToken();
-  }
-})

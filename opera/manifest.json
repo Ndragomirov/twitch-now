@@ -15,11 +15,12 @@
       "common/lib/3rd/backbone.js",
       "common/lib/3rd/backbone.memento.js",
       "common/lib/3rd/backbone.mixin.js",
+      "common/lib/3rd/eventemitter.js",
       "common/lib/utils.js",
       "common/lib/oauth2.js",
       "background.js",
-      "common/lib/onerror.js",
       "common/lib/twitch-api.js",
+      "common/lib/onerror.js",
       "common/lib/app.js"
     ]
   },

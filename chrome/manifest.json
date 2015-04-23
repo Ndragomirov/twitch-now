@@ -15,13 +15,15 @@
       "common/lib/3rd/backbone.js",
       "common/lib/3rd/backbone.memento.js",
       "common/lib/3rd/backbone.mixin.js",
+      "common/lib/3rd/eventemitter.js",
       "common/lib/utils.js",
       "common/lib/oauth2.js",
-      "common/lib/twitch-api.js",
       "background.js",
+      "common/lib/twitch-api.js",
       "common/lib/onerror.js",
       "common/lib/app.js"
-    ]
+    ],
+    "persistent": true
   },
   "minimum_chrome_version"  : "1.1.123",
   "content_security_policy" : "script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://platform.twitter.com; object-src 'self'",
