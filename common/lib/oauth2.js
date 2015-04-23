@@ -186,7 +186,7 @@
     }
 
     if ( !isFirefox ) {
-      chrome.runtime.sendMessage({id: "OAUTH2_TOKEN", value: twitchOauth.getAccessToken()});
+      chrome.runtime.sendMessage({id: "OAUTH2_TOKEN", value: this.getAccessToken()});
     }
   }
 
