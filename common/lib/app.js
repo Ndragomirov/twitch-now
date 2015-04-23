@@ -646,10 +646,10 @@
         return bgApp.get("notifications_" + twitchApi.userName) || [];
       } else {
         this.trigger("error", "auth");
-        return null;
+        return [];
       }
     },
-    getChannelNotification: function (cid, type, callback){
+    getChannelNotification: function (cid, type){
       var self = this;
 
       var channel = _.findWhere(self.loadFromStorage(), {_id: cid});
@@ -687,40 +687,54 @@
     },
     updateData            : function (){
       var self = this;
-      var count = -1;
       var channels = [];
 
-      function getFollowedChannels(cb){
-        count++;
-        twitchApi.send("follows", {offset: count * 100, limit: 100}, function (err, res){
-          if ( err || !res.follows ) {
+      function getFollowedChannelsCount(cb){
+        twitchApi.send("follows", {offset: 0, limit: 1}, function (err, res){
+          if ( err || !res || !res._total ) {
             return cb(err || new Error("No Total channels"));
           }
-
-          if ( res.follows.length == 0 ) {
-            return cb(null, channels);
-          } else {
-            res.follows.forEach(function (c){
-              c._id = c.channel._id;
-              c.channel.logo = c.channel.logo || "http://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_50x50.png";
-              c.channel.logo = c.channel.logo.replace("300x300", "50x50");
-            });
-            channels = channels.concat(res.follows);
-          }
-          getFollowedChannels(cb);
+          return cb(null, parseInt(res._total));
         })
       }
 
-      getFollowedChannels(function (err, channels){
-        if ( err ) {
-          return self.trigger("error", "api");
-        } else {
-          self.reset(channels, {silent: true});
-          //merge with stored notification preferences
-          self.set(self.loadFromStorage(), {add: false, remove: false, merge: true, silent: true});
-          self.trigger("update");
+      function getFollowedChannels(count, cb){
+        twitchApi.send("follows", {offset: count * 100, limit: 100}, function (err, res){
+          if ( err || !res || !res.follows ) {
+            return cb(err || new Error("No Total channels"));
+          }
+
+          res.follows.forEach(function (c){
+            c._id = c.channel._id;
+            c.channel.logo = c.channel.logo || "http://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_50x50.png";
+            c.channel.logo = c.channel.logo.replace("300x300", "50x50");
+          });
+          channels = channels.concat(res.follows);
+
+          return cb(null);
+        })
+      }
+
+      getFollowedChannelsCount(function (err, count){
+        var fns = [];
+        var limit = 4;
+        var requestCount = Math.ceil(count / 100);
+
+        for ( var i = 0; i < requestCount; i++ ) {
+          fns.push(getFollowedChannels.bind(null, i));
         }
-      })
+
+        async.parallelLimit(fns, limit, function (err, results){
+          if ( err ) {
+            return self.trigger("error", "api");
+          } else {
+            self.reset(channels, {silent: true});
+            //merge with stored notification preferences
+            self.set(self.loadFromStorage(), {add: false, remove: false, merge: true, silent: true});
+            self.trigger("update");
+          }
+        })
+      });
     }
   })
 
@@ -862,35 +876,28 @@
     notified    : [], //store notified streams id here
     notify      : function (){
       var self = this;
-      twitchApi.getUserName(function (err){
 
+      twitchApi.getUserName(function (){
         //notify about all streams if error happens
-        var desktopNotifications = err ?
-          self.getNewStreams() :
-          self.getNewStreams()
-            .filter(function (stream){
-              return notifications.getChannelNotification(stream.get("channel")._id, "desktop")
-            })
+        var desktopNotifications = self.getNewStreams()
+          .filter(function (stream){
+            return notifications.getChannelNotification(stream.get("channel")._id, "desktop")
+          })
 
-        var soundNotifications = err ?
-          self.getNewStreams() :
-          self.getNewStreams()
-            .filter(function (stream){
-              return notifications.getChannelNotification(stream.get("channel")._id, "sound")
-            })
+        var soundNotifications = self.getNewStreams()
+          .filter(function (stream){
+            return notifications.getChannelNotification(stream.get("channel")._id, "sound")
+          })
 
-        if ( desktopNotifications.length ) {
-          if ( settings.get("showDesktopNotification").get("value") ) {
-            bgApp.sendNotification(desktopNotifications);
-          }
+        if ( desktopNotifications.length && settings.get("showDesktopNotification").get("value") ) {
+          bgApp.sendNotification(desktopNotifications);
         }
 
-        if ( soundNotifications.length ) {
-          if ( settings.get("playNotificationSound").get("value") ) {
-            bgApp.playSound(settings.getNotificationSoundSource());
-          }
+        if ( soundNotifications.length && settings.get("playNotificationSound").get("value") ) {
+          bgApp.playSound(settings.getNotificationSoundSource());
         }
       })
+
     },
     updateData  : function (){
       var idsBeforeUpdate = this.pluck("_id");
@@ -1100,7 +1107,6 @@
 
   topstreams.updateData();
   games.updateData();
-  notifications.updateData();
 
   bgApp.init();
 
