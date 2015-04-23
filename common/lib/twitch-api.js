@@ -74,7 +74,6 @@
           _self.trigger("tokenchange", msg.value);
         }
       })
-      chrome.runtime.sendMessage({id: "OAUTH2_TOKEN_GET"});
     }
   }
 
