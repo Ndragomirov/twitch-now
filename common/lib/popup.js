@@ -606,12 +606,11 @@
     initialize  : function (){
       this.$undoMessage = this.$el.find(".undo-message");
       this.$selectMenuBtn = this.$el.find(".dropdown .btn");
-      this.listenTo(this.collection, "add update remove reset", this.updateMenuUI.bind(this));
-      this.updateMenuUI();
+      this.listenTo(this.collection, "add update remove reset", this.toggleDropdown.bind(this));
+      this.toggleDropdown();
       ListView.prototype.initialize.apply(this, arguments);
     },
-    updateMenuUI: function (){
-      console.log("\nUpdating menu ui");
+    toggleDropdown: function (){
       this.$selectMenuBtn.toggleClass("disabled", this.collection.length == 0);
     },
     update      : function (){
@@ -635,7 +634,6 @@
     toggle      : function (e){
       var type = $(e.currentTarget).data("notification-type");
       var val = $(e.currentTarget).data("notification-value") == "1" ? true : false;
-
       this.$el
         .find(".screen-content input[data-notification-type='" + type + "']")
         .prop("checked", val);
