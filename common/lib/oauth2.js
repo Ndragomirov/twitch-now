@@ -189,7 +189,7 @@
     }
 
     if ( !isFirefox ) {
-      chrome.runtime.sendMessage({id: "OAUTH2_TOKEN", value: this.getAccessToken()});
+      this.trigger("OAUTH2_TOKEN", {value: this.getAccessToken()});
     }
   }
 

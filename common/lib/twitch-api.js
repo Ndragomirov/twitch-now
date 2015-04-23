@@ -70,8 +70,8 @@
       })
       self.port.emit("OAUTH2_TOKEN");
     } else {
-      twitchOauth.on("OAUTH2_TOKEN", function (token){
-        _self.trigger("tokenchange", token);
+      twitchOauth.on("OAUTH2_TOKEN", function (){
+        _self.trigger("tokenchange", twitchOauth.getAccessToken());
       })
     }
   }
