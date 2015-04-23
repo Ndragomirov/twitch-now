@@ -90,7 +90,7 @@ module.exports = function (grunt){
         files: [
           {
             expand: true,
-            src   : ['oauth2.js'],
+            src   : ['3rd/underscore.js', '3rd/eventemitter.js', 'oauth2.js'],
             cwd   : 'common/lib',
             dest  : 'build/firefox/lib'
           },
