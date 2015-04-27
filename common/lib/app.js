@@ -668,19 +668,6 @@
           }
         });
         bgApp.set("notifications_" + twitchApi.userName, val);
-
-
-        if ( !settings.get("playNotificationSound").get("value") ) {
-          var hasSoundNotifications = _.findIndex(this.models, function (ch){
-            return ch.attributes.notificationOpts.sound == true;
-          })
-          hasSoundNotifications = hasSoundNotifications > -1;
-
-          if ( hasSoundNotifications ) {
-            settings.get("playNotificationSound").set("value", true);
-          }
-        }
-
       } else {
         this.trigger("error", "auth");
       }
@@ -918,9 +905,9 @@
         if ( !res || !res.streams ) {
           return this.trigger("error", "api");
         }
-        if ( res.streams.length == 0 ) {
-          return this.trigger("error", "nostreams");
-        }
+        //if ( res.streams.length == 0 ) {
+        //  return this.trigger("error", "nostreams");
+        //}
 
         this.set(res.streams, {silent: true});
 
