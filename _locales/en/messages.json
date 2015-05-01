@@ -83,5 +83,6 @@
     "m82": { "message" : "game"},
     "m83": { "message" : "follow game"},
     "m84": { "message" : "unfollow game"},
-    "m85": { "message" : "Manage notifications"}
+    "m85": { "message" : "Manage notifications"},
+    "m86": { "message" : "Notification volume"}
 }

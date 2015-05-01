@@ -151,8 +151,9 @@
     return audioSupported.val;
   };
 
-  bgApp.playSound = function (path){
+  bgApp.playSound = function (path, volume){
     var sound;
+    if ( typeof volume === 'undefined' ) volume = 1;
 
     if ( !/^data:audio/.test(path) ) {
       path = /^http/i.test(path) ? path : utils.runtime.getURL(path);
@@ -160,6 +161,7 @@
 
     sound = new Audio();
     sound.src = path;
+    sound.volume = volume;
     sound.play();
   };
 
@@ -299,6 +301,17 @@
         {id: "customsound", name: "__MSG_m76__"}
       ],
       value: "common/audio/ding.ogg"
+    },
+    {
+      id   : "notificationVolume",
+      desc : "__MSG_m86__",
+      range: true,
+      show : true,
+      type : "range",
+      tip  : "%",
+      min  : 1,
+      max  : 100,
+      value: 100
     },
     {
       id    : "customNotificationSound",
@@ -881,7 +894,7 @@
         }
 
         if ( soundNotifications.length && settings.get("playNotificationSound").get("value") ) {
-          bgApp.playSound(settings.getNotificationSoundSource());
+          bgApp.playSound(settings.getNotificationSoundSource(), settings.get("notificationVolume").get("value") / 100);
         }
       })
 
