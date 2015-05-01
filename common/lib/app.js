@@ -153,7 +153,7 @@
 
   bgApp.playSound = function (path, volume){
     var sound;
-    if (typeof volume === 'undefined') volume = 1;
+    if ( typeof volume === 'undefined' ) volume = 1;
 
     if ( !/^data:audio/.test(path) ) {
       path = /^http/i.test(path) ? path : utils.runtime.getURL(path);
@@ -271,14 +271,6 @@
       value   : true
     },
     {
-      id      : "notifyOnFirstUpdate",
-      desc    : "__MSG_m86__",
-      checkbox: true,
-      type    : "checkbox",
-      show    : true,
-      value   : true
-    },
-    {
       id   : "closeNotificationDelay",
       desc : "__MSG_m6__",
       range: true,
@@ -311,16 +303,8 @@
       value: "common/audio/ding.ogg"
     },
     {
-      id    : "customNotificationSound",
-      desc  : "__MSG_m75__",
-      button: true,
-      show  : true,
-      type  : "button",
-      value : ""
-    },
-    {
       id   : "notificationVolume",
-      desc : "__MSG_m87__",
+      desc : "__MSG_m86__",
       range: true,
       show : true,
       type : "range",
@@ -328,6 +312,14 @@
       min  : 1,
       max  : 100,
       value: 100
+    },
+    {
+      id    : "customNotificationSound",
+      desc  : "__MSG_m75__",
+      button: true,
+      show  : true,
+      type  : "button",
+      value : ""
     },
     {
       id   : "refreshInterval",
@@ -902,7 +894,7 @@
         }
 
         if ( soundNotifications.length && settings.get("playNotificationSound").get("value") ) {
-          bgApp.playSound(settings.getNotificationSoundSource());
+          bgApp.playSound(settings.getNotificationSoundSource(), settings.get("notificationVolume").get("value") / 100);
         }
       })
 
