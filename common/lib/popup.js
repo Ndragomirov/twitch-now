@@ -559,11 +559,8 @@
       this.container = opts.container || this.$el.find(".screen-content");
       this.listenTo(this.collection, "add update sort remove reset", this.render);
       this.listenTo(this.collection, "_error", this.showMessage.bind(this));
-//      this.render();
     },
     showMessage: function (type){
-      console.log("\nShowing message. Type  = ", type);
-      console.log("\nShowing messages", this.messages);
       if ( this.messages[type] ) {
         var text = this.messages[type];
         this.container.empty().html(Handlebars.templates[this.template](text));
@@ -574,15 +571,15 @@
       this.collection.updateData();
     },
     render     : function (){
-      if ( this.collection.lastErrorMessage ) {
-        this.container.empty();
-        this.showMessage(this.collection.lastErrorMessage);
-      } else {
-        var views = this.collection.map(function (item){
-          return new this.itemView({model: item}).render().$el;
-        }, this);
-        this.container.empty().html(views);
-      }
+      //if ( this.collection.lastErrorMessage ) {
+      //  this.container.empty();
+      //  this.showMessage(this.collection.lastErrorMessage);
+      //} else {
+      var views = this.collection.map(function (item){
+        return new this.itemView({model: item}).render().$el;
+      }, this);
+      this.container.empty().html(views);
+      //}
     }
   });
 
@@ -597,13 +594,13 @@
   })
 
   var ChannelNotificationListView = ListView.extend({
-    itemView    : ChannelNotificationView,
-    events      : {
+    itemView      : ChannelNotificationView,
+    events        : {
       "click .undo-message a"       : "undo",
       "change .screen-content input": "serialize",
       "click .dropdown-menu a"      : "toggle"
     },
-    initialize  : function (){
+    initialize    : function (){
       this.$undoMessage = this.$el.find(".undo-message");
       this.$selectMenuBtn = this.$el.find(".dropdown .btn");
       this.listenTo(this.collection, "add update remove reset", this.toggleDropdown.bind(this));
@@ -613,25 +610,25 @@
     toggleDropdown: function (){
       this.$selectMenuBtn.toggleClass("disabled", this.collection.length == 0);
     },
-    update      : function (){
+    update        : function (){
       this.$selectMenuBtn.addClass("disabled");
       this.$undoMessage.css({visibility: "hidden"});
       ListView.prototype.update.apply(this, arguments);
     },
-    onhide      : function (){
+    onhide        : function (){
       this.$undoMessage.css({visibility: "hidden"});
     },
-    onshow      : function (){
+    onshow        : function (){
       //update once on view show if not updated before
       if ( !this.collection.length ) {
         this.update();
       }
     },
-    undo        : function (){
+    undo          : function (){
       this.collection.restore();
       this.$undoMessage.css({visibility: "hidden"});
     },
-    toggle      : function (e){
+    toggle        : function (e){
       var type = $(e.currentTarget).data("notification-type");
       var val = $(e.currentTarget).data("notification-value") == "1" ? true : false;
       this.$el
@@ -642,7 +639,7 @@
       this.collection.store();
       this.serialize();
     },
-    serialize   : function (){
+    serialize     : function (){
       var attributes = [];
       this.$el.find(".screen-content [data-channel-id]")
         .map(function (i, e){
