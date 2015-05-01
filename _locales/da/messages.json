@@ -58,7 +58,7 @@
     "m57": { "message" : "Hvid version"},
     "m58": { "message" : "Github repo"},
     "m59": { "message" : "Hjælp med at oversætte \"Twitch Now\" "},
-    "m60": { "message" : "hvis du vil hjælpe med at oversætte. Gør det her \"Twitch Now\" github repo"},
+    "m60": { "message" : "Hvis du vil hjælpe med at oversætte. Gør det her \"Twitch Now\" github repo"},
     "m61": { "message" : "Twitch.tv sprog"},
     "m62": { "message" : "Vindue højde" },
     "m63": { "message" : "Intet sprog" },
@@ -78,5 +78,9 @@
     "m77": { "message" : "\"Twitch Now\" for andre browsere:"},
     "m78": { "message" : "Chrome version"},
     "m79": { "message" : "Opera version"},
-    "m80": { "message" : "Firefox version"}
+    "m80": { "message" : "Firefox version"},
+	"m81": { "message" : "Spil du følger"},
+    "m82": { "message" : "Spil"},
+    "m83": { "message" : "Følg spil"},
+    "m84": { "message" : "Stop med at følge spil"}
 }
