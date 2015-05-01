@@ -1,6 +1,6 @@
 {
   "name"                    : "Twitch Now",
-  "version"                 : "1.1.126",
+  "version"                 : "1.1.127",
   "default_locale"          : "en",
   "manifest_version"        : 2,
   "description"             : "Explore games & track your favorite streams on Twitch",
@@ -24,7 +24,7 @@
       "common/lib/app.js"
     ]
   },
-  "minimum_chrome_version"  : "1.1.126",
+  "minimum_chrome_version"  : "1.1.127",
   "content_security_policy" : "script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://platform.twitter.com; object-src 'self'",
   "icons"                   : {
     "16" : "common/icons/32_1.png",
