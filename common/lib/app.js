@@ -151,8 +151,9 @@
     return audioSupported.val;
   };
 
-  bgApp.playSound = function (path){
+  bgApp.playSound = function (path, volume){
     var sound;
+    if (typeof volume === 'undefined') volume = 1;
 
     if ( !/^data:audio/.test(path) ) {
       path = /^http/i.test(path) ? path : utils.runtime.getURL(path);
@@ -160,6 +161,7 @@
 
     sound = new Audio();
     sound.src = path;
+    sound.volume = volume;
     sound.play();
   };
 
@@ -269,6 +271,14 @@
       value   : true
     },
     {
+      id      : "notifyOnFirstUpdate",
+      desc    : "__MSG_m86__",
+      checkbox: true,
+      type    : "checkbox",
+      show    : true,
+      value   : true
+    },
+    {
       id   : "closeNotificationDelay",
       desc : "__MSG_m6__",
       range: true,
@@ -307,6 +317,17 @@
       show  : true,
       type  : "button",
       value : ""
+    },
+    {
+      id   : "notificationVolume",
+      desc : "__MSG_m87__",
+      range: true,
+      show : true,
+      type : "range",
+      tip  : "%",
+      min  : 1,
+      max  : 100,
+      value: 100
     },
     {
       id   : "refreshInterval",
