@@ -9,7 +9,7 @@
     "m8" : { "message" : "Selecione o som de notificação:"},
     "m9" : { "message" : "Intervalo de atualização:"},
     "m10": { "message" : "espectadores cresc"},
-    "m11": { "message" : "espectadores decres"},
+    "m11": { "message" : "espectadores decresc"},
     "m12": { "message" : "título de A a Z"},
     "m13": { "message" : "título de Z a A"},
     "m14": { "message" : "mais recente"},
