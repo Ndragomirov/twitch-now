@@ -72,5 +72,17 @@
     "m71": { "message" : "ouvrir stream"},
     "m72": { "message" : "connecté en tant que"},
     "m73": { "message" : "Connectez-vous pour voir vos chaînes favorites"},
-	"m74": { "message" : "Si vous aimez cette application et que vous souhaitez nous aider, vous pouvez faire un don par Paypal ou Bitcoin :"}
+    "m74": { "message" : "Si vous aimez cette application et que vous souhaitez nous aider, vous pouvez faire un don par Paypal ou Bitcoin :"},
+    "m75": { "message" : "Télécharger votre son"},
+    "m76": { "message" : "son personalisé"},
+    "m77": { "message" : "\"Twitch Now\" pour d'autres navigateurs"},
+    "m78": { "message" : "Version Chrome"},
+    "m79": { "message" : "Version Opera"},
+    "m80": { "message" : "Version Firefox"},
+    "m81": { "message" : "Jeux suivis"},
+    "m82": { "message" : "jeu"},
+    "m83": { "message" : "suivre le jeu"},
+    "m84": { "message" : "ne plus suivre le jeu"},
+    "m85": { "message" : "Gérer les notifications"},
+    "m86": { "message" : "Volume des notification"}
 }
