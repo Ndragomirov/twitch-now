@@ -47,7 +47,7 @@
 
   _windows.create = function (opts){
     if ( browser == CHROME ) {
-      chrome.windows.create({url: opts.url, type: "popup", focused: true });
+      chrome.windows.create($.extend({type: "popup", focused: true }, opts));
     }
     if ( browser == FIREFOX ) {
       self.port.emit("twitchnow", {command: "windows.create", value: {url: opts.url}});
