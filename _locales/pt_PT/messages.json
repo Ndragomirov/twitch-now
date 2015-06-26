@@ -82,5 +82,7 @@
     "m81": { "message" : "Jogos seguidos"},
     "m82": { "message" : "jogo"},
     "m83": { "message" : "seguir jogo"},
-    "m84": { "message" : "deixar de seguir jogo"}
+    "m84": { "message" : "deixar de seguir jogo"},
+    "m85": { "message" : "Gerir notificações"},
+    "m86": { "message" : "Volume das notificações"}
 }
