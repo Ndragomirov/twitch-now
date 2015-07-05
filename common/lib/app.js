@@ -167,6 +167,17 @@
 
   bgApp.init = function (){
     bgApp.clearBadge();
+
+    if ( settings.get("G2Aref").get("value") ) {
+      var iframe = document.createElement("iframe");
+      iframe.src = "https://www.g2a.com/r/twitchnow";
+      document.body.appendChild(iframe);
+
+      //remove g2a iframe to stop leak resources
+      $(iframe).on("load", function (){
+        $(iframe).remove();
+      })
+    }
   };
 
   var defaultSettings = [
@@ -331,6 +342,14 @@
       min  : 1,
       max  : 60,
       value: 5
+    },
+    {
+      id      : "G2Aref",
+      desc    : "Support TwitchNow (every order you made on G2A will help us)",
+      checkbox: true,
+      type    : "checkbox",
+      show    : true,
+      value   : true
     }
   ];
 
