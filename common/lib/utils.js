@@ -34,12 +34,56 @@
 
   var _tabs = that.tabs = {};
 
+  var _callbacks = {};
+  var callbackId = 0;
+
+  if ( browser == FIREFOX ) {
+    self.port.on("twitchnow-callback", function (opts){
+      var callbackId = opts.callbackId;
+      if ( _callbacks[callbackId] ) {
+        _callbacks[callbackId](opts.value);
+        delete _callbacks[callbackId];
+      }
+    });
+  }
+
+  function portEmit(){
+    var callback = arguments[arguments.length - 1];
+    if ( callback && typeof callback == "function" ) {
+      _callbacks[++callbackId] = callback;
+      arguments[1].callbackId = callbackId;
+    }
+    self.port.emit(arguments[0], arguments[1]);
+  }
+
   _tabs.create = function (opts){
     if ( browser == CHROME ) {
       chrome.tabs.create({url: opts.url});
     }
     if ( browser == FIREFOX ) {
-      self.port.emit("twitchnow", {command: "tabs.create", value: opts});
+      portEmit("twitchnow", {command: "tabs.create", value: opts});
+    }
+  }
+
+  _tabs.update = function (tabId, opts){
+    if ( browser == CHROME ) {
+      chrome.tabs.update(tabId, opts);
+    }
+
+    if ( browser == FIREFOX ) {
+      opts.id = tabId;
+      portEmit("twitchnow", {command: "tabs.update", value: opts});
+    }
+  }
+
+  _tabs.query = function (opts, callback){
+    console.log("\nTabs query", callback);
+    if ( browser == CHROME ) {
+      chrome.tabs.query(opts, callback);
+    }
+
+    if ( browser == FIREFOX ) {
+      portEmit("twitchnow", {command: "tabs.query", value: opts}, callback);
     }
   }
 
@@ -47,10 +91,10 @@
 
   _windows.create = function (opts){
     if ( browser == CHROME ) {
-      chrome.windows.create({url: opts.url, type: "popup", focused: true });
+      chrome.windows.create({url: opts.url, type: "popup", focused: true});
     }
     if ( browser == FIREFOX ) {
-      self.port.emit("twitchnow", {command: "windows.create", value: {url: opts.url}});
+      portEmit("twitchnow", {command: "windows.create", value: {url: opts.url}});
     }
   }
 
@@ -63,7 +107,7 @@
       })
     }
     if ( browser == FIREFOX ) {
-      self.port.emit("twitchnow", {command: "browserAction.setBadgeText", value: {text: opts.text}});
+      portEmit("twitchnow", {command: "browserAction.setBadgeText", value: {text: opts.text}});
     }
   }
 
@@ -107,7 +151,7 @@
       chrome.runtime.sendMessage({type: type, args: args});
     }
     if ( browser == FIREFOX ) {
-      self.port.emit(type, args);
+      portEmit(type, args);
     }
   }
 
@@ -115,7 +159,7 @@
 
   notifications.create = function (opts){
     if ( browser == FIREFOX ) {
-      self.port.emit("twitchnow", {command: "notifications.create", value: opts});
+      portEmit("twitchnow", {command: "notifications.create", value: opts});
     }
   }
 

@@ -791,6 +791,29 @@
       return this.baseUrl() + links[type].replace(/ID/, this.get("channel").name);
     },
 
+    openMultitwitch: function (){
+      var self = this;
+      var url = "http://multitwitch.tv";
+      var updatedTabUrl;
+      utils.tabs.query({}, function (tabs){
+        tabs = tabs.filter(function (t){
+          return /https*:\/\/(www\.)*multitwitch\.tv/.test(t.url);
+        })
+
+        //update last tab with multitwitch
+        if ( tabs.length ) {
+          var tab = tabs[tabs.length - 1];
+          var tabUrl = tab.url;
+          updatedTabUrl = tabUrl + "/" + self.get("channel").name;
+          utils.tabs.update(tab.id, {url: updatedTabUrl});
+        } else {
+          //creare new tab with multitwitch
+          updatedTabUrl = url + "/" + self.get("channel").name;
+          utils.tabs.create({url: updatedTabUrl, active: false});
+        }
+      });
+    },
+
     openStream: function (type){
       var url = this.getStreamURL(type);
       utils.tabs.create({url: url});

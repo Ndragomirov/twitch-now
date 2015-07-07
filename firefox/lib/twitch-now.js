@@ -7,10 +7,28 @@ var that = {};
 
 that.tabs = {
   create: function (opts, panel){
-    tabs.open({ url: opts.url});
+    tabs.open({url: opts.url});
     panel.hide();
+  },
+
+  query: function (opts, panel, button){
+    var _tabs = [];
+    for ( var i = 0; i < tabs.length; i++ ) {
+      _tabs.push({url: tabs[i].url, id: tabs[i].id});
+    }
+    return _tabs;
+  },
+
+  update: function (opts, panel, button){
+    for ( var i = 0; i < tabs.length; i++ ) {
+      if ( tabs[i].id == opts.id ) {
+        tabs[i].url = opts.url;
+        break;
+      }
+    }
   }
 }
+
 
 that.notifications = {
   create: function (opts){
@@ -44,10 +62,15 @@ that.listen = function (panel, button){
   panel.port.on("twitchnow", function (msg){
     var chunks = msg.command.split(".");
     var argument = msg.value;
+    var callbackId = msg.callbackId;
+
     var module = chunks[0];
     var action = chunks[1];
     if ( module && action && that[module] && that[module][action] ) {
-      that[module][action](argument, panel, button);
+      var result = that[module][action](argument, panel, button);
+      if ( callbackId ) {
+        panel.port.emit("twitchnow-callback", {value: result, callbackId: callbackId});
+      }
     }
   });
 }

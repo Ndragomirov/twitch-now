@@ -335,7 +335,7 @@
     },
 
     playSound  : function (e){
-      b.bgApp.playSound(b.settings.getNotificationSoundSource(), b.settings.get("notificationVolume").get("value")/100);
+      b.bgApp.playSound(b.settings.getNotificationSoundSource(), b.settings.get("notificationVolume").get("value") / 100);
     },
     rangeHelper: function (e){
       var t = $(e.target);
@@ -493,6 +493,9 @@
       menu.$el
         .on('click', '.js-open-chat', function (){
           self.model.openChat();
+        })
+        .on('click', '.js-open-in-multitwitch', function (){
+          self.model.openMultitwitch();
         })
         .on('click', '.js-open-stream', function (e){
           self.model.openStream($(e.target).attr("data-type"));
