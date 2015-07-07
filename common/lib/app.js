@@ -167,17 +167,6 @@
 
   bgApp.init = function (){
     bgApp.clearBadge();
-
-    if ( settings.get("G2Aref").get("value") ) {
-      var iframe = document.createElement("iframe");
-      iframe.src = "https://www.g2a.com/r/twitchnow";
-      document.body.appendChild(iframe);
-
-      //remove g2a iframe to stop leak resources
-      $(iframe).on("load", function (){
-        $(iframe).remove();
-      })
-    }
   };
 
   var defaultSettings = [
