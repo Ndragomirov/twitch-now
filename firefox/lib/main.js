@@ -51,6 +51,12 @@ scripts = scripts.map(function (v){
   return self.data.url("common/" + v);
 })
 
+pageMod.PageMod({
+  contentScriptWhen: "start",
+  include          : ["*.twitch.tv"],
+  contentScriptFile: self.data.url("common/content/theatre-mode.js")
+});
+
 var panel = panels.Panel({
   contentURL          : self.data.url("common/html/popup.html"),
   width               : 440,

@@ -237,7 +237,8 @@
       radio: true,
       opts : [
         {id: "newlayout", name: "__MSG_m16__"},
-        {id: "popout", name: "__MSG_m17__"}
+        {id: "popout", name: "__MSG_m17__"},
+        {id: "theatrelayout", name: "__MSG_m88__"}
       ],
       show : true,
       value: "newlayout"
@@ -784,6 +785,7 @@
       type = type || settings.get("openStreamIn").get("value");
 
       var links = {
+        theatrelayout  : "/ID?mode=theater",
         newlayout: "/ID",
         popout   : "/ID/popout"
       };

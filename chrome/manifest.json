@@ -1,10 +1,17 @@
 {
-  "name"                    : "Twitch Now",
-  "version"                 : "1.1.130",
-  "default_locale"          : "en",
-  "manifest_version"        : 2,
-  "description"             : "Explore games & track your favorite streams on Twitch",
-  "background"              : {
+  "name": "Twitch Now",
+  "version": "1.1.130",
+  "default_locale": "en",
+  "manifest_version": 2,
+  "description": "Explore games & track your favorite streams on Twitch",
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["*://*.twitch.tv/*"],
+      "js": ["common/content/theatre-mode.js"]
+    }
+  ],
+  "background": {
     "scripts": [
       "common/lib/constants.js",
       "common/lib/3rd/analytics.js",
@@ -25,20 +32,33 @@
     ],
     "persistent": true
   },
-  "minimum_chrome_version"  : "1.1.130",
-  "content_security_policy" : "script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://platform.twitter.com; object-src 'self'",
-  "icons"                   : {
-    "16" : "common/icons/32_1.png",
-    "48" : "common/icons/48_1.png",
+  "minimum_chrome_version": "1.1.130",
+  "content_security_policy": "script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://platform.twitter.com; object-src 'self'",
+  "icons": {
+    "16": "common/icons/32_1.png",
+    "48": "common/icons/48_1.png",
     "128": "common/icons/128_1.png"
   },
-  "web_accessible_resources": ["common/*", "css/*", "dist/*", "oauth2/*", "lib/*"],
-  "browser_action"          : {
-    "default_icon" : {
+  "web_accessible_resources": [
+    "common/*",
+    "css/*",
+    "dist/*",
+    "oauth2/*",
+    "lib/*"
+  ],
+  "browser_action": {
+    "default_icon": {
       "19": "common/icons/19_2.png",
       "38": "common/icons/38_2.png"
     },
     "default_popup": "common/html/popup.html"
   },
-  "permissions"             : ["storage", "background", "https://*/*", "http://*/*", "notifications", "tabs"]
+  "permissions": [
+    "storage",
+    "background",
+    "https://*/*",
+    "http://*/*",
+    "notifications",
+    "tabs"
+  ]
 }
