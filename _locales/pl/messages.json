@@ -84,5 +84,7 @@
     "m83": { "message" : "Śledź gre"},
     "m84": { "message" : "Nie śledź gry"},
     "m85": { "message" : "Preferencje powiadomień"},
-    "m86": { "message" : "Głośność powiadomień"}
+    "m86": { "message" : "Głośność powiadomień"},
+    "m87": { "message" : "ogldaj na Multitwitch.tv"},
+    "m88": { "message" : "otwórz na nowej karcie w trybie kinowym"}
 }
