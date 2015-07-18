@@ -82,5 +82,9 @@
     "m81": { "message" : "Jocuri pe care le urmărești"},
     "m82": { "message" : "joc"},
     "m83": { "message" : "urmărește joc"},
-    "m84": { "message" : "nu mai urmări"}
+    "m84": { "message" : "nu mai urmări"},
+    "m85": { "message" : "Gestionaţi notificaările" },
+    "m86": { "message" : "Volum notificări" },
+    "m87": { "message" : "vezi pe Multitwitch.tv" },
+    "m88": { "message" : "deschide în modul cinema" }
 }
