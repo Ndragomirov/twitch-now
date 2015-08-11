@@ -1,5 +1,10 @@
 <div class="stream js-filterable">
     <div class="item-image-container stream-preview">
+        {{#if favorite}}
+        <div class="stream-uptime">
+            {{h-uptime created_at}}
+        </div>
+        {{/if}}
         <img class="lazy" alt="" data-original="{{preview}}"/>
     </div>
     <span class="stream-info stream-title">

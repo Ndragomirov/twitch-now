@@ -21,6 +21,18 @@
     -moz-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.25);
 }
 
+.stream-uptime {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: none;
+    -webkit-text-shadow: none;
+    -moz-text-shadow: none;
+    padding: 2px;
+}
+
 .stream .notify {
     background: url("../img/bubble.png") no-repeat;
     width: 17px;

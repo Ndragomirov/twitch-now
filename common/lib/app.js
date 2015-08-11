@@ -785,9 +785,9 @@
       type = type || settings.get("openStreamIn").get("value");
 
       var links = {
-        theatrelayout  : "/ID?mode=theater",
-        newlayout: "/ID",
-        popout   : "/ID/popout"
+        theatrelayout: "/ID?mode=theater",
+        newlayout    : "/ID",
+        popout       : "/ID/popout"
       };
 
       return this.baseUrl() + links[type].replace(/ID/, this.get("channel").name);
@@ -954,6 +954,10 @@
         //if ( res.streams.length == 0 ) {
         //  return this.trigger("error", "nostreams");
         //}
+
+        res.streams.forEach(function (s){
+          s.favorite = true;
+        })
 
         this.set(res.streams, {silent: true});
 
