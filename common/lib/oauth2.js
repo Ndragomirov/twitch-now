@@ -3,13 +3,21 @@
   var that = {};
   var isFirefox = !!root.require;
   var localStorage = isFirefox ? require("sdk/simple-storage").storage : root.localStorage;
-  var _ = isFirefox ? require("3rd/underscore.js") : root._;
   var EventEmitter = isFirefox ? require("3rd/eventemitter.js") : root.EventEmitter;
 
   function noop(){
   }
 
   that._adapters = {};
+
+  function extend(){
+    var s = arguments[0];
+    for ( var i = 1; i < arguments.length; i++ ) {
+      for ( var j in arguments[i] ) {
+        s[j] = arguments[i][j];
+      }
+    }
+  }
 
   var request = function (opts, callback){
     if ( root.require ) {
@@ -56,7 +64,7 @@
     this.flow = flow;
     this.codeUrl = opts.api + "?" + this.query(opts);
     this._watchInject();
-    _.extend(this, new EventEmitter());
+    extend(this, new EventEmitter());
     if ( !isFirefox ) {
       this.syncGet();
       this.sync();
