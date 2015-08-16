@@ -20,6 +20,7 @@ module.exports = function (grunt){
       },
       firefox_after: {
         src: [
+          'build/firefox/data/common/lib/3rd/analytics.js',
           'build/firefox/data/common/dist/popup.comb.js',
           'build/firefox/data/common/dist/popup.comb.js.map'
         ]
