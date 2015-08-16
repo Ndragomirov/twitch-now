@@ -20,7 +20,12 @@ module.exports = function (grunt){
       },
       firefox_after: {
         src: [
+          'build/firefox/data/common/dist/popup.comb.css.map',
           'build/firefox/data/common/lib/3rd/analytics.js',
+          'build/firefox/data/common/lib/analytics.js',
+          'build/firefox/data/common/lib/oauth2.js',
+          'build/firefox/data/common/lib/lytics.js',
+          'build/firefox/data/common/lib/onerror.js',
           'build/firefox/data/common/dist/popup.comb.js',
           'build/firefox/data/common/dist/popup.comb.js.map'
         ]
@@ -91,7 +96,7 @@ module.exports = function (grunt){
         files: [
           {
             expand: true,
-            src   : ['3rd/underscore.js', '3rd/eventemitter.js', 'oauth2.js'],
+            src   : ['3rd/eventemitter.js', 'oauth2.js'],
             cwd   : 'common/lib',
             dest  : 'build/firefox/lib'
           },
