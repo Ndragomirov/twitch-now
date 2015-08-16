@@ -1,26 +1,32 @@
 {
   "name": "twitch-now",
   "version": "1.1.134",
-  "description": "Twitch Now",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^0.5.0",
+  "description": "* Chrome version: https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk * Firefox version: https://docs.google.com/file/d/0BykW-NfUUzm5Z2RCWmcxTmQ5cEk * Opera version: https://addons.opera.com/extensions/details/twitch-now/",
+  "main": "Gruntfile.js",
+  "dependencies": {
     "grunt-contrib-compress": "^0.9.1",
-    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-copy": "^0.5.0",
-    "grunt-contrib-handlebars": "^0.8.0",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-handlebars": "^0.10.2",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-git": "^0.2.11",
+    "grunt-git": "^0.2.14",
     "grunt-mozilla-addon-sdk": "^0.4.0",
     "grunt-replace": "^0.8.0",
-    "grunt-version": "^0.3.0",
-    "semver": "^2.3.0"
+    "grunt": "^0.4.5",
+    "grunt-version": "^0.3.3",
+    "semver": "^2.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/Ndragomirov/twitch-now.git"
+    "url": "https://github.com/Ndragomirov/twitch-now"
   },
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/Ndragomirov/twitch-now/issues"
   },
