@@ -84,5 +84,7 @@
     "m83": { "message" : "seguir jogo"},
     "m84": { "message" : "deixar de seguir jogo"},
     "m85": { "message" : "Gerir notificações"},
-    "m86": { "message" : "Volume das notificações"}
+    "m86": { "message" : "Volume das notificações"},
+    "m87": { "message" : "ver em Multitwitch.tv"},
+    "m88": { "message" : "abrir num novo separador com o modo de teatro ativado"}
 }
