@@ -101,8 +101,8 @@
       if (length < 2 || obj == null) return obj;
       for (var index = 1; index < length; index++) {
         var source = arguments[index],
-          keys = keysFunc(source),
-          l = keys.length;
+            keys = keysFunc(source),
+            l = keys.length;
         for (var i = 0; i < l; i++) {
           var key = keys[i];
           if (!undefinedOnly || obj[key] === void 0) obj[key] = source[key];
@@ -165,8 +165,8 @@
   _.map = _.collect = function(obj, iteratee, context) {
     iteratee = cb(iteratee, context);
     var keys = !isArrayLike(obj) && _.keys(obj),
-      length = (keys || obj).length,
-      results = Array(length);
+        length = (keys || obj).length,
+        results = Array(length);
     for (var index = 0; index < length; index++) {
       var currentKey = keys ? keys[index] : index;
       results[index] = iteratee(obj[currentKey], currentKey, obj);
@@ -189,8 +189,8 @@
     return function(obj, iteratee, memo, context) {
       iteratee = optimizeCb(iteratee, context, 4);
       var keys = !isArrayLike(obj) && _.keys(obj),
-        length = (keys || obj).length,
-        index = dir > 0 ? 0 : length - 1;
+          length = (keys || obj).length,
+          index = dir > 0 ? 0 : length - 1;
       // Determine the initial value if none is provided.
       if (arguments.length < 3) {
         memo = obj[keys ? keys[index] : index];
@@ -239,7 +239,7 @@
   _.every = _.all = function(obj, predicate, context) {
     predicate = cb(predicate, context);
     var keys = !isArrayLike(obj) && _.keys(obj),
-      length = (keys || obj).length;
+        length = (keys || obj).length;
     for (var index = 0; index < length; index++) {
       var currentKey = keys ? keys[index] : index;
       if (!predicate(obj[currentKey], currentKey, obj)) return false;
@@ -252,7 +252,7 @@
   _.some = _.any = function(obj, predicate, context) {
     predicate = cb(predicate, context);
     var keys = !isArrayLike(obj) && _.keys(obj),
-      length = (keys || obj).length;
+        length = (keys || obj).length;
     for (var index = 0; index < length; index++) {
       var currentKey = keys ? keys[index] : index;
       if (predicate(obj[currentKey], currentKey, obj)) return true;
@@ -298,7 +298,7 @@
   // Return the maximum element (or element-based computation).
   _.max = function(obj, iteratee, context) {
     var result = -Infinity, lastComputed = -Infinity,
-      value, computed;
+        value, computed;
     if (iteratee == null && obj != null) {
       obj = isArrayLike(obj) ? obj : _.values(obj);
       for (var i = 0, length = obj.length; i < length; i++) {
@@ -323,7 +323,7 @@
   // Return the minimum element (or element-based computation).
   _.min = function(obj, iteratee, context) {
     var result = Infinity, lastComputed = Infinity,
-      value, computed;
+        value, computed;
     if (iteratee == null && obj != null) {
       obj = isArrayLike(obj) ? obj : _.values(obj);
       for (var i = 0, length = obj.length; i < length; i++) {
@@ -530,7 +530,7 @@
     var seen = [];
     for (var i = 0, length = getLength(array); i < length; i++) {
       var value = array[i],
-        computed = iteratee ? iteratee(value, i, array) : value;
+          computed = iteratee ? iteratee(value, i, array) : value;
       if (isSorted) {
         if (!i || seen !== computed) result.push(value);
         seen = computed;
@@ -646,9 +646,9 @@
       var i = 0, length = getLength(array);
       if (typeof idx == 'number') {
         if (dir > 0) {
-          i = idx >= 0 ? idx : Math.max(idx + length, i);
+            i = idx >= 0 ? idx : Math.max(idx + length, i);
         } else {
-          length = idx >= 0 ? Math.min(idx + 1, length) : idx + length + 1;
+            length = idx >= 0 ? Math.min(idx + 1, length) : idx + length + 1;
         }
       } else if (sortedIndex && idx && length) {
         idx = sortedIndex(array, item);
@@ -904,7 +904,7 @@
   // Keys in IE < 9 that won't be iterated by `for key in ...` and thus missed.
   var hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
   var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
-    'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
+                      'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
 
   function collectNonEnumProps(obj, keys) {
     var nonEnumIdx = nonEnumerableProps.length;
@@ -961,14 +961,14 @@
   _.mapObject = function(obj, iteratee, context) {
     iteratee = cb(iteratee, context);
     var keys =  _.keys(obj),
-      length = keys.length,
-      results = {},
-      currentKey;
-    for (var index = 0; index < length; index++) {
-      currentKey = keys[index];
-      results[currentKey] = iteratee(obj[currentKey], currentKey, obj);
-    }
-    return results;
+          length = keys.length,
+          results = {},
+          currentKey;
+      for (var index = 0; index < length; index++) {
+        currentKey = keys[index];
+        results[currentKey] = iteratee(obj[currentKey], currentKey, obj);
+      }
+      return results;
   };
 
   // Convert an object into a list of `[key, value]` pairs.
@@ -1039,7 +1039,7 @@
     return result;
   };
 
-  // Return a copy of the object without the blacklisted properties.
+   // Return a copy of the object without the blacklisted properties.
   _.omit = function(obj, iteratee, context) {
     if (_.isFunction(iteratee)) {
       iteratee = _.negate(iteratee);
@@ -1134,8 +1134,8 @@
       // from different frames are.
       var aCtor = a.constructor, bCtor = b.constructor;
       if (aCtor !== bCtor && !(_.isFunction(aCtor) && aCtor instanceof aCtor &&
-        _.isFunction(bCtor) && bCtor instanceof bCtor)
-        && ('constructor' in a && 'constructor' in b)) {
+                               _.isFunction(bCtor) && bCtor instanceof bCtor)
+                          && ('constructor' in a && 'constructor' in b)) {
         return false;
       }
     }
@@ -1332,7 +1332,7 @@
     return new Date().getTime();
   };
 
-  // List of HTML entities for escaping.
+   // List of HTML entities for escaping.
   var escapeMap = {
     '&': '&amp;',
     '<': '&lt;',
@@ -1447,8 +1447,8 @@
     if (!settings.variable) source = 'with(obj||{}){\n' + source + '}\n';
 
     source = "var __t,__p='',__j=Array.prototype.join," +
-    "print=function(){__p+=__j.call(arguments,'');};\n" +
-    source + 'return __p;\n';
+      "print=function(){__p+=__j.call(arguments,'');};\n" +
+      source + 'return __p;\n';
 
     try {
       var render = new Function(settings.variable || 'obj', '_', source);
