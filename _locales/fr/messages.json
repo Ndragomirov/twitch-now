@@ -85,4 +85,6 @@
     "m84": { "message" : "ne plus suivre le jeu"},
     "m85": { "message" : "Gérer les notifications"},
     "m86": { "message" : "Volume des notification"}
+    "m87": { "message" : "Regarder sur Multitwitch.tv"},
+    "m88": { "message" : "Ouvrir dans une nouvel onglet avec le mode cinéma activé"}
 }
