@@ -84,5 +84,7 @@
     "m83": { "message" : "följ spel"},
     "m84": { "message" : "sluta följa spel"},
     "m85": { "message" : "Hantera notifikationer"},
-    "m86": { "message" : "Volym för notifikationer"}
+    "m86": { "message" : "Volym för notifikationer"},
+    "m87": { "message" : "titta på Multitwitch.tv"},
+    "m88": { "message" : "öppna i en ny flik med \"Theatre Mode\" aktivt"}
 }
