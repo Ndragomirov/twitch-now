@@ -3,6 +3,7 @@
 
   var app = window.app = _.extend({}, Backbone.Events);
   var b = app.b = utils._getBackgroundPage();
+  var _baron;
 
   app.twitchApi = b.twitchApi;
   app.currentView = null;
@@ -11,6 +12,7 @@
 
   app.resetScroll = function (){
     app.container.scrollTop(0);
+    _baron.update();
   }
 
   app.lazyload = function (){
@@ -63,7 +65,7 @@
 
     views.topMenu = new TopMenu;
 
-    var _baron = baron({
+    _baron = baron({
       root    : '#content',
       scroller: '.scroller',
       bar     : '.scroller__bar',
