@@ -43,7 +43,7 @@
       timeout : this.timeout,
       dataType: "json",
       headers : {
-        "Accept"       : "application/vnd.twitchtv.v2+json",
+        "Accept"       : "application/vnd.twitchtv.v3+json",
         "Client-ID"    : this.clientId,
         "Authorization": " OAuth " + this.token
       }
