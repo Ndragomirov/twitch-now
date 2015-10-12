@@ -91,11 +91,13 @@
 
       try {
         if ( isSingle ) {
+          var preview = streamsToShow[0].get("preview");
+          preview = (preview && preview.medium) ? preview.medium : defaultIcon;
           opt = {
             type   : "basic",
             title  : streamsToShow[0].get("channel").display_name,
             message: streamsToShow[0].get("game"),
-            iconUrl: streamsToShow[0].get("preview").medium
+            iconUrl: preview
           }
 
           bgApp.notificationIds[notificationId] = streamsToShow[0];
@@ -951,10 +953,6 @@
         if ( !res || !res.streams ) {
           return this.trigger("error", "api");
         }
-        //if ( res.streams.length == 0 ) {
-        //  return this.trigger("error", "nostreams");
-        //}
-
         res.streams.forEach(function (s){
           s.favorite = true;
         })
