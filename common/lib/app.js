@@ -91,13 +91,11 @@
 
       try {
         if ( isSingle ) {
-          var preview = streamsToShow[0].get("preview");
-          preview = (preview && preview.medium) ? preview.medium : defaultIcon;
           opt = {
             type   : "basic",
             title  : streamsToShow[0].get("channel").display_name,
             message: streamsToShow[0].get("game"),
-            iconUrl: preview
+            iconUrl: streamsToShow[0].get("preview").medium
           }
 
           bgApp.notificationIds[notificationId] = streamsToShow[0];

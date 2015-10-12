@@ -129,6 +129,20 @@
       requestOpts = $.extend(true, requestOpts, {data: opts}, _self.getRequestParams());
       $.ajax(requestOpts)
         .done(function (data){
+          //workaround for inconsistent API preview returns
+          if ( /^(streams|searchStreams|followed)$/.test(methodName) ) {
+            if ( data.streams && data.streams.length ) {
+              data.streams = data.streams.map(function (s){
+                if ( s.preview && typeof s.preview == "string" ) {
+                  var medium = s.preview;
+                  s.preview = {
+                    medium: medium
+                  }
+                }
+                return s;
+              })
+            }
+          }
           _self.trigger("done:" + methodName);
           cb(null, data);
         })
