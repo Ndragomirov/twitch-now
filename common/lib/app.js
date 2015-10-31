@@ -496,22 +496,89 @@
     }
   });
 
+  var UpdatableCollection = Backbone.Collection.extend({
+    auto        : false,
+    timeout     : 60 * 1000,
+    defaultQuery: {},
+    updating    : false,
+    interval    : null,
+    send        : function (){
+      throw new Error("Not implemented");
+    },
+    parse       : function (){
+      throw new Error("Not Implemented");
+    },
+    beforeUpdate: function (){
+    },
+    afterUpdate : function (){
+    },
+    update      : function (query, opts, callback){
+      query = query || this.defaultQuery;
+      opts = opts || {reset: true};
+      callback = callback || $.noop;
+
+      clearTimeout(this.interval);
+
+      this.updating = true;
+      this.trigger("update-status", this.updating);
+      this.beforeUpdate();
+      this.send(query, function (err, res){
+        console.log(err, res);
+        this.updating = false;
+        this.trigger("update-status", this.updating);
+
+        if ( this.auto ) {
+          this.interval = setTimeout(function (){
+            this.update(this.defaultQuery, {reset: true}, $.noop);
+          }.bind(this), this.timeout);
+        }
+
+        if ( err ) {
+          if ( err.status == 401 ) {
+            this.trigger("error", "auth");
+          } else {
+            this.trigger("error", "api");
+          }
+          this.afterUpdate();
+          callback();
+        } else {
+          this.parse(res, function (err, result){
+            if ( err ) {
+              this.trigger("error", "api");
+            }
+
+            if ( opts.add ) {
+              this.add(result, {silent: true});
+              this.afterUpdate();
+              this.trigger("addarray");
+            } else {
+              this.reset(result, {silent: true});
+              this.afterUpdate();
+              this.trigger("update");
+            }
+            callback();
+          }.bind(this));
+        }
+
+      }.bind(this));
+    }
+  })
+
   var Video = TwitchItemModel.extend();
 
-  var Videos = Backbone.Collection.extend({
-    model     : Video,
-    updateData: function (){
-      twitchApi.send(this.url, this.query(), function (err, res){
-        if ( err || !res || !res.videos ) {
-          return this.trigger("error", "api");
-        }
-        if ( res.videos.length == 0 ) {
-          return this.trigger("error", "novideo");
-        }
-
-        this.reset(res.videos, {silent: true});
-        this.trigger("update");
-      }.bind(this));
+  var Videos = UpdatableCollection.extend({
+    model: Video,
+    send : function (query, callback){
+      twitchApi.send(this.url, this.query(), callback);
+    },
+    parse: function (res, callback){
+      if ( !res || !res.videos ) {
+        return callback(new Error("api"));
+      }
+      if ( res.videos.length == 0 ) {
+        return callback(new Error("emptyResult"));
+      }
+      return callback(null, res.videos);
     }
   });
 
@@ -561,9 +628,10 @@
     }
   });
 
-  var Games = Backbone.Collection.extend({
-
-    model: Game,
+  var Games = UpdatableCollection.extend({
+    auto   : true,
+    timeout: 5 * 60 * 1000,
+    model  : Game,
 
     findByName: function (gameName){
       return this.find(function (g){
@@ -571,61 +639,52 @@
       })
     },
 
-    updateData: function (){
-      clearTimeout(this.timeout);
-      twitchApi.send("gamesTop", {}, function (err, res){
-        this.timeout = setTimeout(this.updateData.bind(this), 5 * 60 * 1000);
-        if ( err || !res || !res.top ) {
-          return this.trigger("error", "api");
-        }
-        if ( res.top.length == 0 ) {
-          return this.trigger("error", "api");
-        }
-
-        res.top.forEach(function (g){
-          g._id = g.game._id;
-        });
-        this.reset(res.top, {silent: true});
-        this.trigger("update");
-      }.bind(this));
+    parse: function (res, callback){
+      if ( !res || !res.top ) {
+        return callback(new Error("api"));
+      }
+      if ( res.top.length == 0 ) {
+        return callback(new Error("emptyResult"));
+      }
+      res.top.forEach(function (g){
+        g._id = g.game._id;
+      });
+      return callback(null, res.top);
+    },
+    send : function (query, callback){
+      twitchApi.send("gamesTop", query, callback);
     }
   });
 
   var FollowedGames = Games.extend({
+    auto      : true,
+    timeout   : 5 * 60 * 1000,
     initialize: function (){
       var self = this;
 
       twitchApi.on("authorize", function (){
-        self.updateData();
+        self.update();
       })
 
       twitchApi.on("revoke", function (){
         self.reset();
       });
     },
-    updateData: function (){
-      clearTimeout(this.timeout);
-      twitchApi.send("followedgames", {}, function (err, res){
-        this.timeout = setTimeout(this.updateData.bind(this), 5 * 60 * 1000);
-        if ( err ) {
-          if ( err.status == 401 ) {
-            return this.trigger("error", "auth");
-          }
-          return this.trigger("error", "api");
-        }
-        if ( !res || !res.follows ) {
-          return this.trigger("error", "api");
-        }
+    send      : function (query, callback){
+      twitchApi.send("followedgames", query, callback);
+    },
+    parse     : function (res, callback){
+      if ( !res || !res.follows ) {
+        return callback(new Error("api"));
+      }
 
-        if ( res.follows.length == 0 ) {
-          return this.trigger("error", "nofollowedgames");
-        }
-        res.follows.forEach(function (g){
-          g._id = g.game._id;
-        });
-        this.reset(res.follows, {silent: true});
-        this.trigger("update");
-      }.bind(this));
+      if ( res.follows.length == 0 ) {
+        return callback(new Error("emptyResult"));
+      }
+      res.follows.forEach(function (g){
+        g._id = g.game._id;
+      });
+      return callback(null, res.follows);
     }
   })
 
@@ -833,7 +892,7 @@
     }
   });
 
-  var StreamCollection = Backbone.Collection.extend({
+  var StreamCollection = UpdatableCollection.extend({
 
     model: Stream,
 
@@ -856,10 +915,25 @@
           : a.get(prop) < b.get(prop) ? -1 * reverse : 0;
       };
       this.sort();
-    }
+    },
+
+    parse: function (res, callback){
+      if ( !res || !res.streams ) {
+        return callback(new Error("api"));
+      }
+      if ( res.streams.length == 0 ) {
+        return callback(new Error("emptyResult"));
+      }
+      return callback(null, res.streams);
+    },
   });
 
   var FollowingCollection = StreamCollection.extend({
+
+    auto   : true,
+    //TODO dynamic timeout
+    //timeout: settings.get("refreshInterval").get("value") * 60 * 1000,
+    timeout: 5 * 60 * 1000,
 
     model: Stream,
 
@@ -888,7 +962,7 @@
       })
 
       twitchApi.on("authorize", function (){
-        self.updateData();
+        self.update();
       })
 
       twitchApi.on("revoke", function (){
@@ -905,9 +979,11 @@
       });
     },
 
-    addedStreams: [],
-    notified    : [], //store notified streams id here
-    notify      : function (){
+    addedStreams   : [],
+    idsBeforeUpdate: [],
+    idsAfterUpdate : [],
+    notified       : [], //store notified streams id here
+    notify         : function (){
       var self = this;
 
       twitchApi.getUserName(function (){
@@ -932,36 +1008,25 @@
       })
 
     },
-    updateData  : function (){
-      var idsBeforeUpdate = this.pluck("_id");
-      var idsAfterUpdate;
-
-      clearTimeout(this.timeout);
-
-      twitchApi.send("followed", {}, function (err, res){
-
-        this.timeout = setTimeout(this.updateData.bind(this), settings.get("refreshInterval").get("value") * 60 * 1000);
-
-        if ( err ) {
-          if ( err.status && err.status == 401 ) {
-            return this.trigger("error", "auth");
-          }
-          return this.trigger("error", "api");
-        }
-        if ( !res || !res.streams ) {
-          return this.trigger("error", "api");
-        }
-        res.streams.forEach(function (s){
+    beforeUpdate   : function (){
+      this.idsBeforeUpdate = this.pluck("_id");
+    },
+    send           : function (query, callback){
+      twitchApi.send("followed", {}, callback);
+    },
+    parse          : function (res, callback){
+      StreamCollection.prototype.parse.call(this, res, function (err, streams){
+        if ( err ) return callback(err);
+        streams.forEach(function (s){
           s.favorite = true;
         })
-
-        this.set(res.streams, {silent: true});
-
-        idsAfterUpdate = this.pluck("_id");
-        this.addedStreams = _.difference(idsAfterUpdate, idsBeforeUpdate, this.notified);
-        this.notified = _.union(this.addedStreams, this.notified);
-        this.trigger("update");
-      }.bind(this));
+        return callback(null, streams);
+      })
+    },
+    afterUpdate    : function (){
+      this.idsAfterUpdate = this.pluck("_id");
+      this.addedStreams = _.difference(this.idsAfterUpdate, this.idsBeforeUpdate, this.notified);
+      this.notified = _.union(this.addedStreams, this.notified);
     }
   });
 
@@ -986,47 +1051,22 @@
   });
 
   var GameStreams = StreamCollection.extend({
-    game      : null,
-    updateData: function (){
-      twitchApi.send("streams", {game: this.game, limit: 50}, function (err, res){
-        if ( err ) {
-          return this.trigger("error", "api");
-        }
-        this.reset(res.streams, {silent: true});
-        this.trigger("update");
-      }.bind(this));
+    game : null,
+    send : function (query, callback){
+      twitchApi.send("streams", {game: this.game, limit: 50}, callback);
     }
   });
 
   var TopStreamsCollection = StreamCollection.extend({
-    updateData: function (){
-      twitchApi.send("streams", {limit: 50}, function (err, res){
-        this.timeout = setTimeout(this.updateData.bind(this), 5 * 60 * 1000);
-        if ( err ) {
-          return this.trigger("error", "api");
-        }
-        this.reset(res.streams, {silent: true});
-        this.trigger("update");
-      }.bind(this));
+    send : function (query, callback){
+      twitchApi.send("streams", {limit: 50}, callback);
     }
   });
 
   var SearchCollection = StreamCollection.extend({
-    query     : null,
-    updateData: function (){
-      if ( !this.query ) {
-        return this.trigger("error", "nosearchquery");
-      }
-      twitchApi.send("searchStreams", {query: this.query, limit: 50}, function (err, res){
-        if ( err || !res || !res.streams ) {
-          return this.trigger("error", "api");
-        }
-        if ( res.streams.length == 0 ) {
-          return this.trigger("error", "nosearchresults");
-        }
-        this.reset(res.streams, {silent: true});
-        this.trigger("update");
-      }.bind(this));
+    query: null,
+    send : function (query, callback){
+      twitchApi.send("searchStreams", {query: this.query, limit: 50}, callback);
     }
   });
 
@@ -1036,9 +1076,6 @@
     model     : Contributor,
     url       : "https://api.github.com/repos/ndragomirov/twitch-now/contributors",
     initialize: function (){
-      this.updateData();
-    },
-    updateData: function (){
       this.fetch({reset: true});
     }
   });
@@ -1138,8 +1175,8 @@
     followedgames.remove(game);
   })
 
-  topstreams.updateData();
-  games.updateData();
+  topstreams.update();
+  games.update();
 
   bgApp.init();
 

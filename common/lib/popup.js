@@ -573,7 +573,7 @@
     },
     update     : function (){
       this.container.empty().append(this.app.preloader);
-      this.collection.updateData();
+      this.collection.update();
     },
     render     : function (){
       //if ( this.collection.lastErrorMessage ) {
