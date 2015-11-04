@@ -1051,14 +1051,16 @@
   });
 
   var GameStreams = StreamCollection.extend({
-    game : null,
-    send : function (query, callback){
+    game: null,
+    send: function (query, callback){
       twitchApi.send("streams", {game: this.game, limit: 50}, callback);
     }
   });
 
   var TopStreamsCollection = StreamCollection.extend({
-    send : function (query, callback){
+    auto   : true,
+    timeout: 5 * 60 * 1000,
+    send   : function (query, callback){
       twitchApi.send("streams", {limit: 50}, callback);
     }
   });
