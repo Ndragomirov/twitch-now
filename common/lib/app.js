@@ -753,7 +753,7 @@
         this.trigger("error", "auth");
       }
     },
-    updateData            : function (){
+    update            : function (){
       var self = this;
       var channels = [];
 
