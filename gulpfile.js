@@ -3,14 +3,16 @@ var del = require('del');
 var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
+var merge = require('merge-stream');
 var concat = require('gulp-concat');
+var runSequence = require('run-sequence');
 var i18n = require('./gulp-i18n.js');
 var zip = require('gulp-zip');
 var bump = require('gulp-bump');
 var fs = require('fs');
 
 gulp.task('clean:firefox_after', function (){
-  del.sync([
+  return del.sync([
     'build/firefox/data/common/dist/popup.comb.css.map',
     'build/firefox/data/common/lib/3rd/analytics.js',
     'build/firefox/data/common/lib/analytics.js',
@@ -23,59 +25,64 @@ gulp.task('clean:firefox_after', function (){
 })
 
 gulp.task('copy:opera', function (){
-  gulp
+  var c1 = gulp
     .src([
       'build/chrome/**'
     ])
     .pipe(gulp.dest('build/opera/'))
 
-  gulp
+  var c2 = gulp
     .src([
       'opera/**'
     ])
     .pipe(gulp.dest('build/opera/'))
+
+  return merge(c1, c2);
 })
 
 gulp.task('copy:firefox', function (){
-  gulp
+  var c1 = gulp
     .src([
       'common/lib/3rd/eventemitter.js',
       'common/lib/oauth.js'
     ])
     .pipe(gulp.dest('build/firefox/lib'))
 
-  gulp
+  var c2 = gulp
     .src([
       'common/**'
     ])
     .pipe(gulp.dest('build/firefox/data/'))
 
-  gulp
+  var c3 = gulp
     .src([
       'firefox/**'
     ])
     .pipe(gulp.dest('build/firefox/'))
+
+  return merge(c1, c2, c3);
 })
 
 gulp.task('copy:chrome', function (){
-  gulp
+  var c1 = gulp
     .src([
       'common/**'
     ])
     .pipe(gulp.dest('build/chrome/common/'))
 
-  gulp
+  var c2 = gulp
     .src([
       "_locales/**"
     ])
     .pipe(gulp.dest('build/chrome/_locales/'))
 
-  gulp
+  var c3 = gulp
     .src([
       'chrome/**'
     ])
     .pipe(gulp.dest('build/chrome/'))
 
+  return merge(c1, c2, c3);
 })
 
 gulp.task('concat:popupjs', function (){
@@ -129,19 +136,19 @@ gulp.task('clean:dist', function (){
 });
 
 gulp.task('clean:opera', function (){
-  del.sync([
+  return del.sync([
     'build/opera/*'
   ]);
 });
 
 gulp.task('clean:chrome', function (){
-  del.sync([
-    'build/chrome'
+  return del.sync([
+    'build/chrome/*'
   ])
 });
 
 gulp.task('clean:firefox', function (){
-  del.sync([
+  return del.sync([
     'build/firefox/*'
   ]);
 });
@@ -149,17 +156,17 @@ gulp.task('clean:firefox', function (){
 gulp.task('compress:chrome', function (){
   var v = JSON.parse(fs.readFileSync("package.json")).version;
 
-  return gulp.src('build/chrome/*')
+  return gulp.src('build/chrome/**')
     .pipe(zip('twitch-now-chrome-' + v + '.zip'))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist/'));
 })
 
 gulp.task('compress:opera', function (){
   var v = JSON.parse(fs.readFileSync("package.json")).version;
 
-  return gulp.src('build/opera/*')
+  return gulp.src('build/opera/**')
     .pipe(zip('twitch-now-opera-' + v + '.zip'))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist/'));
 })
 
 gulp.task('handlebars', function (){
@@ -186,8 +193,31 @@ gulp.task('bump', function (){
     .pipe(gulp.dest('./'));
 });
 
-gulp.task('chrome', ['clean:chrome', 'handlebars', 'concat:popupcss', 'concat:popupjs', 'copy:chrome']);
-gulp.task('firefox', ['clean:firefox', 'concat:popupcss', 'i18n', 'handlebars', 'copy:firefox', 'clean:firefox_after']);
-gulp.task('opera', ['chrome', 'clean:opera', 'copy:opera']);
+gulp.task('chrome', function (cb){
+  runSequence(
+    'clean:chrome',
+    ['handlebars', 'concat:popupcss', 'concat:popupjs'],
+    'copy:chrome',
+    cb
+  );
+})
 
-gulp.task('dist', ['bump', 'clean:dist', 'chrome', 'opera', 'firefox', 'compress:chrome', 'compress:opera']);
+gulp.task('firefox', ['clean:firefox', 'concat:popupcss', 'i18n', 'handlebars', 'copy:firefox', 'clean:firefox_after']);
+gulp.task('opera', function (cb){
+  runSequence(
+    'chrome',
+    'clean:opera',
+    'copy:opera',
+    cb
+  );
+});
+
+gulp.task('dist', function (cb){
+  runSequence(
+    ['bump', 'clean:dist'],
+    'chrome',
+    'opera',
+    'firefox',
+    ['compress:chrome', 'compress:opera'],
+    cb);
+})
