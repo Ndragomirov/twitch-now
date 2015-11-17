@@ -215,7 +215,7 @@
       "click #logout-btn": "logout",
       "click #login-btn" : "login"
     },
-    template  : "user.html",
+    template  : "user",
     initialize: function (){
       DefaultView.prototype.initialize.apply(this, arguments);
       this.listenTo(this.model, "change", this.render);
@@ -290,7 +290,7 @@
   var InfoView = DefaultView.extend({});
 
   var ControlView = DefaultView.extend({
-    template: "control.html"
+    template: "control"
   });
 
   var SettingsView = LazyRenderView.extend({
@@ -333,7 +333,7 @@
     },
 
     uploadSound: function (e){
-      utils.tabs.create({url: utils.runtime.getURL("common/html/upload.html")});
+      utils.tabs.create({url: utils.runtime.getURL("common/html/upload")});
     },
 
     playSound  : function (e){
@@ -391,7 +391,7 @@
   });
 
   var GameView = DefaultView.extend({
-    template: "game.html",
+    template: "game",
     events  : {
       "contextmenu .stream": "showMenu"
     },
@@ -420,7 +420,7 @@
         model: m
       })
 
-      menu.showMenu("contextgamemenu.html", {y: e.clientY, x: e.clientX});
+      menu.showMenu("contextgamemenu", {y: e.clientY, x: e.clientX});
 
       menu.$el
         .on('click', '.js-follow-game', function (){
@@ -465,12 +465,12 @@
   })
 
   var VideoView = DefaultView.extend({
-    template: "video.html"
+    template: "video"
   });
 
 
   var StreamView = DefaultView.extend({
-    template  : "stream.html",
+    template  : "stream",
     menuEl    : '#context-menu',
     events    : {
       "contextmenu .stream": "showMenu",
@@ -490,7 +490,7 @@
       var menu = new MenuView({
         model: m
       })
-      menu.showMenu("contextstreammenu.html", {y: e.clientY, x: e.clientX});
+      menu.showMenu("contextstreammenu", {y: e.clientY, x: e.clientX});
 
       menu.$el
         .on('click', '.js-open-chat', function (){
@@ -532,7 +532,7 @@
   });
 
   var ListView = LazyRenderView.extend({
-    template   : "screenmessage.html",
+    template   : "screenmessage",
     messages   : {
       "auth"           : {
         text: "__MSG_m73__"
@@ -589,7 +589,7 @@
   });
 
   var ChannelNotificationView = DefaultView.extend({
-    template   : "channelnotification.html",
+    template   : "channelnotification",
     events     : {
       "click .channel-logo": "openProfile"
     },
@@ -697,7 +697,7 @@
   });
 
   var ExtendedGameView = DefaultView.extend({
-    template          : "gameextended.html",
+    template          : "gameextended",
     events            : {
       "click .game-follow": "follow"
     },
@@ -779,7 +779,7 @@
   })
 
   var DonationView = DefaultView.extend({
-    template: "donation.html"
+    template: "donation"
   });
 
   var DonationListView = DefaultView.extend({
@@ -798,7 +798,7 @@
   });
 
   var ContributorView = DefaultView.extend({
-    template: "contributor.html"
+    template: "contributor"
   });
 
   var ContributorListView = DefaultView.extend({
