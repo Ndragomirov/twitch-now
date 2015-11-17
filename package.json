@@ -1,6 +1,6 @@
 {
   "name": "twitch-now",
-  "version": "1.1.142",
+  "version": "1.1.162",
   "description": "* Chrome version: https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk * Firefox version: https://docs.google.com/file/d/0BykW-NfUUzm5Z2RCWmcxTmQ5cEk * Opera version: https://addons.opera.com/extensions/details/twitch-now/",
   "main": "Gruntfile.js",
   "dependencies": {
@@ -8,15 +8,17 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
-    "gulp-bump": "^1.0.0",
-    "gulp-util": "^3.0.7",
     "del": "^2.1.0",
     "gulp": "^3.9.0",
+    "gulp-bump": "^1.0.0",
     "gulp-concat": "^2.6.0",
     "gulp-declare": "^0.3.0",
     "gulp-handlebars": "^4.0.0",
+    "gulp-util": "^3.0.7",
     "gulp-wrap": "^0.11.0",
-    "gulp-zip": "^3.0.2"
+    "gulp-zip": "^3.0.2",
+    "merge-stream": "^1.0.0",
+    "run-sequence": "^1.1.4"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
