@@ -3,7 +3,7 @@
   var that = {};
   var isFirefox = !!root.require;
   var localStorage = isFirefox ? require("sdk/simple-storage").storage : root.localStorage;
-  var EventEmitter = isFirefox ? require("3rd/eventemitter.js") : root.EventEmitter;
+  var EventEmitter = isFirefox ? require("./eventemitter.js") : root.EventEmitter;
 
   function noop(){
   }

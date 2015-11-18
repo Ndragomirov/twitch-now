@@ -44,15 +44,21 @@ gulp.task('copy:firefox', function (){
   var c1 = gulp
     .src([
       'common/lib/3rd/eventemitter.js',
-      'common/lib/oauth.js'
+      'common/lib/oauth2.js'
     ])
-    .pipe(gulp.dest('build/firefox/lib'))
+    .pipe(gulp.dest('build/firefox/lib/'))
+
+  var c4 = gulp
+    .src([
+      'common/lib/3rd/eventemitter.js'
+    ])
+    .pipe(gulp.dest('build/firefox/lib/3rd/'))
 
   var c2 = gulp
     .src([
       'common/**'
     ])
-    .pipe(gulp.dest('build/firefox/data/'))
+    .pipe(gulp.dest('build/firefox/data/common/'))
 
   var c3 = gulp
     .src([
@@ -60,7 +66,7 @@ gulp.task('copy:firefox', function (){
     ])
     .pipe(gulp.dest('build/firefox/'))
 
-  return merge(c1, c2, c3);
+  return merge(c1, c2, c3, c4);
 })
 
 gulp.task('copy:chrome', function (){
@@ -202,7 +208,18 @@ gulp.task('chrome', function (cb){
   );
 })
 
-gulp.task('firefox', ['clean:firefox', 'concat:popupcss', 'i18n', 'handlebars', 'copy:firefox', 'clean:firefox_after']);
+gulp.task('firefox', function (cb){
+  runSequence(
+    'clean:firefox',
+    'concat:popupcss',
+    'i18n',
+    'handlebars',
+    'copy:firefox',
+    'clean:firefox_after',
+    cb
+  )
+});
+
 gulp.task('opera', function (cb){
   runSequence(
     'chrome',
