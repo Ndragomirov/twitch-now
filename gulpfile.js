@@ -210,9 +210,17 @@ gulp.task('i18n', function (){
 });
 
 gulp.task('bump', function (){
-  gulp.src('./package.json')
+  gulp
+    .src([
+      './package.json',
+      './chrome/manifest.json',
+      './opera/manifest.json',
+      './firefox/package.json'
+    ])
     .pipe(bump())
-    .pipe(gulp.dest('./'));
+    .pipe(gulp.dest(function (d){
+      return d.base;
+    }));
 });
 
 gulp.task('chrome', function (cb){

@@ -1,14 +1,18 @@
 {
   "name": "Twitch Now",
-  "version": "1.1.142",
+  "version": "1.1.167",
   "default_locale": "en",
   "manifest_version": 2,
   "description": "Explore games & track your favorite streams on Twitch",
   "content_scripts": [
     {
       "run_at": "document_start",
-      "matches": ["*://*.twitch.tv/*"],
-      "js": ["common/content/theatre-mode.js"]
+      "matches": [
+        "*://*.twitch.tv/*"
+      ],
+      "js": [
+        "common/content/theatre-mode.js"
+      ]
     }
   ],
   "background": {
