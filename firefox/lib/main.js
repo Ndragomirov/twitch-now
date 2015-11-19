@@ -105,6 +105,10 @@ panel.port.on("OAUTH2_TOKEN", function (){
 
 panel.port.on("XHR_PROXY", function (xhr){
 
+  if ( !xhr || !xhr.method ) {
+    return;
+  }
+
   var method = xhr.method.toLowerCase();
 
   var guid = xhr.guid;

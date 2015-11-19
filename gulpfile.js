@@ -204,7 +204,7 @@ gulp.task('handlebars', function (){
 });
 
 gulp.task('i18n', function (){
-  gulp.src(['_locales/**/*.json'])
+  return gulp.src(['_locales/**/*.json'])
     .pipe(i18n('locales.json'))
     .pipe(gulp.dest('common/dist/'));
 });
