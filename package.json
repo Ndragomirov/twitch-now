@@ -14,6 +14,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-declare": "^0.3.0",
     "gulp-handlebars": "^4.0.0",
+    "gulp-strip-debug": "^1.1.0",
     "gulp-util": "^3.0.7",
     "gulp-wrap": "^0.11.0",
     "gulp-zip": "^3.0.2",

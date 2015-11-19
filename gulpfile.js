@@ -4,6 +4,7 @@ var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
 var merge = require('merge-stream');
+var stripDebug = require('gulp-strip-debug');
 var concat = require('gulp-concat');
 var runSequence = require('run-sequence');
 var i18n = require('./gulp-i18n.js');
@@ -135,6 +136,16 @@ gulp.task('concat:popupcss', function (){
     .pipe(gulp.dest('common/dist/'));
 })
 
+
+gulp.task('stripdebug:firefox', function (){
+  gulp
+    .src([
+      "build/firefox/**/*.js"
+    ])
+    .pipe(stripDebug())
+    .pipe(gulp.dest("build/firefox/"));
+})
+
 gulp.task('clean:dist', function (){
   del.sync([
     'dist/*'
@@ -158,6 +169,10 @@ gulp.task('clean:firefox', function (){
     'build/firefox/*'
   ]);
 });
+
+gulp.task('compress:firefox', function(){
+
+})
 
 gulp.task('compress:chrome', function (){
   var v = JSON.parse(fs.readFileSync("package.json")).version;
@@ -215,6 +230,7 @@ gulp.task('firefox', function (cb){
     'i18n',
     'handlebars',
     'copy:firefox',
+    'stripdebug:firefox',
     'clean:firefox_after',
     cb
   )
