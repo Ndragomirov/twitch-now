@@ -3,6 +3,7 @@ var del = require('del');
 var handlebars = require('gulp-handlebars');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
+var shell = require('gulp-shell');
 var merge = require('merge-stream');
 var stripDebug = require('gulp-strip-debug');
 var concat = require('gulp-concat');
@@ -170,9 +171,9 @@ gulp.task('clean:firefox', function (){
   ]);
 });
 
-gulp.task('compress:firefox', function(){
-
-})
+gulp.task('compress:firefox', shell.task([
+  "cd ./build/firefox && jpm xpi && mv *.xpi ../../dist/"
+]))
 
 gulp.task('compress:chrome', function (){
   var v = JSON.parse(fs.readFileSync("package.json")).version;
@@ -251,6 +252,6 @@ gulp.task('dist', function (cb){
     'chrome',
     'opera',
     'firefox',
-    ['compress:chrome', 'compress:opera'],
+    ['compress:chrome', 'compress:opera', 'compress:firefox'],
     cb);
 })
