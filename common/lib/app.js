@@ -496,6 +496,29 @@
     }
   });
 
+  var PagenationMixin = {
+    curQuery: {
+      offset: 0,
+      limit : 20
+    },
+    reset   : function (){
+
+    },
+    stop    : function (){
+
+    },
+    resume  : function (){
+
+    },
+    loadNext: function (){
+      this.curQuery.offset = this.length;
+      console.log("loadNext() query", this.curQuery);
+      this.update(this.curQuery, {add: true}, function (){
+        console.log("loadNext() complete", arguments);
+      })
+    }
+  }
+
   var UpdatableCollection = Backbone.Collection.extend({
     auto        : false,
     timeout     : 60 * 1000,
@@ -513,7 +536,7 @@
     afterUpdate : function (){
     },
     update      : function (query, opts, callback){
-      query = query || this.defaultQuery;
+      query = $.extend(this.defaultQuery, query);
       opts = opts || {reset: true};
       callback = callback || $.noop;
 
@@ -753,7 +776,7 @@
         this.trigger("error", "auth");
       }
     },
-    update            : function (){
+    update                : function (){
       var self = this;
       var channels = [];
 
@@ -1135,6 +1158,7 @@
   Games.mixin(TrackLastErrorMixin);
   FollowingCollection.mixin(TrackLastErrorMixin);
   TopStreamsCollection.mixin(TrackLastErrorMixin);
+  TopStreamsCollection.mixin(PagenationMixin);
   Videos.mixin(TrackLastErrorMixin);
   FollowedGames.mixin(TrackLastErrorMixin);
   SearchCollection.mixin(TrackLastErrorMixin);
