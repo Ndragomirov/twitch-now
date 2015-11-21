@@ -579,9 +579,9 @@
     initialize : function (opts){
       LazyRenderView.prototype.initialize.apply(this, arguments);
       this.container = opts.container || this.$el.find(".screen-content");
-      this.listenTo(this.collection, "add update sort remove reset", this.render);
+      this.listenTo(this.collection, "remove update sort reset", this.render.bind(this, null));
       this.listenTo(this.collection, "_error", this.showMessage.bind(this));
-      this.listenTo(this.collection, "addarray", this.render.bind(this));
+      this.listenTo(this.collection, "add addarray", this.render.bind(this));
     },
     onunload   : function (){
       this.collection.trigger('unload');
@@ -606,7 +606,9 @@
       //  this.container.empty();
       //  this.showMessage(this.collection.lastErrorMessage);
       //} else {
+
       var elementsToRender = models ? models : this.collection;
+      elementsToRender = elementsToRender.length ? elementsToRender : [elementsToRender];
       var views = elementsToRender.map(function (item){
         return new this.itemView({model: item}).render().$el;
       }, this);

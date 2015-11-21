@@ -681,6 +681,9 @@
     auto      : true,
     pagination: false,
     timeout   : 5 * 60 * 1000,
+    comparator: function (a){
+      return -1 * a.get("viewers");
+    },
     initialize: function (){
       var self = this;
 
@@ -691,6 +694,7 @@
       twitchApi.on("revoke", function (){
         self.reset();
       });
+
     },
     send      : function (query, callback){
       twitchApi.send("followedgames", query, callback);
@@ -947,7 +951,7 @@
         return callback(new Error("emptyResult"));
       }
       return callback(null, res.streams);
-    },
+    }
   });
 
   var FollowingCollection = StreamCollection.extend({
