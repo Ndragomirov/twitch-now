@@ -51,6 +51,8 @@
   app.init = function (){
     app.container = $('#content');
     app.scroller = app.container.find(".scroller");
+    app._scroller = document.querySelector(".scroller");
+    app.scrollerBar = document.querySelector(".scroller__bar");
     app.preloader = $("<div id='preloader'><img src='../img/spinner.gif'/></div>");
     app.streamPreloader = $("<div id='preloader-stream'><img src='../img/spinner.gif'/></div>");
 
@@ -60,6 +62,15 @@
 
     var views = app.views;
     this.router = new this.Router;
+
+
+    app.scroller.on("scroll", function (){
+      if ( app._scroller.scrollTop + app._scroller.offsetHeight == app._scroller.scrollHeight ) {
+        if ( app.curView && app.curView.loadNext && $("#filterInput").val().length == 0 ) {
+          app.curView.loadNext();
+        }
+      }
+    })
 
     views.menu = new Menu;
 
@@ -185,10 +196,14 @@
     onhide       : function (){
 
     },
+    onunload     : function (){
+
+    },
     initialize   : function (){
       $(self).unload(function (){
         this.undelegateEvents();
         this.stopListening();
+        this.onunload();
       }.bind(this));
     },
     showPreloader: function (){
@@ -232,8 +247,8 @@
   var TopMenu = DefaultView.extend({
     el            : "#top-menu",
     events        : {
-      "click #refresh-btn": "refresh",
-      "keyup #filterInput": "filter"
+      "click #refresh-btn"  : "refresh",
+      "keyup #filterInput"  : "filter"
     },
     show          : function (){
       this.$el.show();
@@ -243,20 +258,22 @@
     },
     initialize    : function (){
       DefaultView.prototype.initialize.apply(this, arguments);
+      this.$filterInput = this.$("#filterInput");
       this.listenTo(this.app.router, "route", this.resetFilterVal);
     },
     resetFilterVal: function (){
-      this.$("#filterInput").val("").keyup();
+      this.$filterInput.val("").keyup();
       this.filter();
     },
     filter        : function (){
-      var fValue = this.$("#filterInput").val().toLowerCase();
+      var fValue = this.$filterInput.val().toLowerCase();
       fValue = fValue.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
       var rFilter = new RegExp(fValue);
       if ( this.app.curView ) {
         this.app.curView.$el.find(".js-filterable").each(function (i, e){
           $(e).toggle(!!$(e).text().toLowerCase().match(rFilter));
         });
+        _baron.update();
       }
     },
     refresh       : function (){
@@ -564,6 +581,10 @@
       this.container = opts.container || this.$el.find(".screen-content");
       this.listenTo(this.collection, "add update sort remove reset", this.render);
       this.listenTo(this.collection, "_error", this.showMessage.bind(this));
+      this.listenTo(this.collection, "addarray", this.render.bind(this));
+    },
+    onunload   : function (){
+      this.collection.trigger('unload');
     },
     showMessage: function (type){
       if ( this.messages[type] ) {
@@ -571,19 +592,29 @@
         this.container.empty().html(Handlebars.templates[this.template](text));
       }
     },
+    loadNext   : function (){
+      if ( this.collection.loadNext ) {
+        this.collection.loadNext();
+      }
+    },
     update     : function (){
       this.container.empty().append(this.app.preloader);
       this.collection.update();
     },
-    render     : function (){
+    render     : function (models){
       //if ( this.collection.lastErrorMessage ) {
       //  this.container.empty();
       //  this.showMessage(this.collection.lastErrorMessage);
       //} else {
-      var views = this.collection.map(function (item){
+      var elementsToRender = models ? models : this.collection;
+      var views = elementsToRender.map(function (item){
         return new this.itemView({model: item}).render().$el;
       }, this);
-      this.container.empty().html(views);
+      if ( models ) {
+        this.container.append($(document.createDocumentFragment()).html(views));
+      } else {
+        this.container.empty().html(views);
+      }
       //}
     }
   });
@@ -620,20 +651,21 @@
       this.$undoMessage.css({visibility: "hidden"});
       ListView.prototype.update.apply(this, arguments);
     },
-    onhide        : function (){
+
+    onhide   : function (){
       this.$undoMessage.css({visibility: "hidden"});
     },
-    onshow        : function (){
+    onshow   : function (){
       //update once on view show if not updated before
       if ( !this.collection.length ) {
         this.update();
       }
     },
-    undo          : function (){
+    undo     : function (){
       this.collection.restore();
       this.$undoMessage.css({visibility: "hidden"});
     },
-    toggle        : function (e){
+    toggle   : function (e){
       var type = $(e.currentTarget).data("notification-type");
       var val = $(e.currentTarget).data("notification-value") == "1" ? true : false;
       this.$el
@@ -644,7 +676,7 @@
       this.collection.store();
       this.serialize();
     },
-    serialize     : function (){
+    serialize: function (){
       var attributes = [];
       this.$el.find(".screen-content [data-channel-id]")
         .map(function (i, e){
@@ -763,6 +795,10 @@
         $("#content").css({top: 31});
       }
     },
+    loadNext        : function (){
+      this.videoView.loadNext();
+      this.streamView.loadNext();
+    },
     toggleActiveView: function (game, view){
       this.$el.find(".tabs [tab-id]").hide();
       this.$el.find(".tabs [tab-id='" + view + "']").show();
@@ -772,8 +808,7 @@
       this.videoView.update();
       this.streamView.update();
     },
-
-    setGame: function (game){
+    setGame         : function (game){
       this.model.setGame(game);
     }
   })

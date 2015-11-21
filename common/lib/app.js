@@ -496,33 +496,18 @@
     }
   });
 
-  var PagenationMixin = {
-    curQuery: {
+  var UpdatableCollection = Backbone.Collection.extend({
+    auto        : false,
+    pagination  : false,
+    timeout     : 60 * 1000,
+    pageQuery   : {
       offset: 0,
       limit : 20
     },
-    reset   : function (){
-
+    defaultQuery: {
+      limit : 50,
+      offset: 0
     },
-    stop    : function (){
-
-    },
-    resume  : function (){
-
-    },
-    loadNext: function (){
-      this.curQuery.offset = this.length;
-      console.log("loadNext() query", this.curQuery);
-      this.update(this.curQuery, {add: true}, function (){
-        console.log("loadNext() complete", arguments);
-      })
-    }
-  }
-
-  var UpdatableCollection = Backbone.Collection.extend({
-    auto        : false,
-    timeout     : 60 * 1000,
-    defaultQuery: {},
     updating    : false,
     interval    : null,
     send        : function (){
@@ -535,8 +520,22 @@
     },
     afterUpdate : function (){
     },
+    loadNext    : function (){
+      if ( this.pagination && !this.updating ) {
+        this.pageQuery.offset = this.length + 1;
+        this.update(this.pageQuery, {add: true}, function (){
+          console.log("loadNext() complete");
+        })
+      } else {
+
+      }
+    },
     update      : function (query, opts, callback){
-      query = $.extend(this.defaultQuery, query);
+      //reset pageQuery params on user update or reset
+      if ( arguments.length == 0 || opts.reset ) {
+        this.pageQuery.offset = 0;
+      }
+      query = $.extend({}, this.defaultQuery, query);
       opts = opts || {reset: true};
       callback = callback || $.noop;
 
@@ -569,11 +568,10 @@
             if ( err ) {
               this.trigger("error", "api");
             }
-
             if ( opts.add ) {
-              this.add(result, {silent: true});
+              var addedModels = this.add(result, {silent: true});
               this.afterUpdate();
-              this.trigger("addarray");
+              this.trigger("addarray", addedModels);
             } else {
               this.reset(result, {silent: true});
               this.afterUpdate();
@@ -652,17 +650,17 @@
   });
 
   var Games = UpdatableCollection.extend({
-    auto   : true,
-    timeout: 5 * 60 * 1000,
-    model  : Game,
+    auto      : true,
+    pagination: true,
+    timeout   : 5 * 60 * 1000,
+    model     : Game,
 
     findByName: function (gameName){
       return this.find(function (g){
         return g.get("game").name == gameName;
       })
     },
-
-    parse: function (res, callback){
+    parse     : function (res, callback){
       if ( !res || !res.top ) {
         return callback(new Error("api"));
       }
@@ -674,13 +672,14 @@
       });
       return callback(null, res.top);
     },
-    send : function (query, callback){
+    send      : function (query, callback){
       twitchApi.send("gamesTop", query, callback);
     }
   });
 
   var FollowedGames = Games.extend({
     auto      : true,
+    pagination: false,
     timeout   : 5 * 60 * 1000,
     initialize: function (){
       var self = this;
@@ -952,11 +951,11 @@
   });
 
   var FollowingCollection = StreamCollection.extend({
-
-    auto   : true,
+    pagination: false,
+    auto      : true,
     //TODO dynamic timeout
     //timeout: settings.get("refreshInterval").get("value") * 60 * 1000,
-    timeout: 5 * 60 * 1000,
+    timeout   : 5 * 60 * 1000,
 
     model: Stream,
 
@@ -1074,17 +1073,24 @@
   });
 
   var GameStreams = StreamCollection.extend({
-    game: null,
-    send: function (query, callback){
-      twitchApi.send("streams", {game: this.game, limit: 50}, callback);
+    game      : null,
+    pagination: true,
+    send      : function (query, callback){
+      query.game = this.game;
+      twitchApi.send("streams", query, callback);
     }
   });
 
   var TopStreamsCollection = StreamCollection.extend({
-    auto   : true,
-    timeout: 5 * 60 * 1000,
-    send   : function (query, callback){
-      twitchApi.send("streams", {limit: 50}, callback);
+    auto        : true,
+    pagination  : true,
+    timeout     : 5 * 60 * 1000,
+    defaultQuery: {
+      limit : 50,
+      offset: 0
+    },
+    send        : function (query, callback){
+      twitchApi.send("streams", query, callback);
     }
   });
 
@@ -1158,7 +1164,6 @@
   Games.mixin(TrackLastErrorMixin);
   FollowingCollection.mixin(TrackLastErrorMixin);
   TopStreamsCollection.mixin(TrackLastErrorMixin);
-  TopStreamsCollection.mixin(PagenationMixin);
   Videos.mixin(TrackLastErrorMixin);
   FollowedGames.mixin(TrackLastErrorMixin);
   SearchCollection.mixin(TrackLastErrorMixin);
