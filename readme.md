@@ -33,7 +33,7 @@ $ cd builds/firefox && jpm run
 
 To build Opera version:
 ```
-$ grunt opera
+$ gulp opera
 ```
 
 ## Translation guide
