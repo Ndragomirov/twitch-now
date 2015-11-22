@@ -223,6 +223,10 @@ gulp.task('bump', function (){
     }));
 });
 
+gulp.task('watch', function (){
+  gulp.watch(["common/**", "templates/**"], ['chrome']);
+})
+
 gulp.task('chrome', function (cb){
   runSequence(
     'clean:chrome',
