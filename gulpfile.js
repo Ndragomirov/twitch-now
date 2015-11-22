@@ -227,6 +227,10 @@ gulp.task('watch', function (){
   gulp.watch(["common/**", "templates/**"], ['chrome']);
 })
 
+gulp.task('jpm', shell.task([
+  "cd ./build/firefox && jpm run -b /usr/bin/firefox"
+]))
+
 gulp.task('chrome', function (cb){
   runSequence(
     'clean:chrome',
@@ -243,7 +247,7 @@ gulp.task('firefox', function (cb){
     'i18n',
     'handlebars',
     'copy:firefox',
-    'stripdebug:firefox',
+    //'stripdebug:firefox',
     'clean:firefox_after',
     cb
   )
