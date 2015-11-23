@@ -3,8 +3,8 @@
   var root = this;
 
   var bgApp = root.bgApp = {};
-
   bgApp.notificationIds = {};
+  bgApp.dispatcher = _.clone(Backbone.Events);
 
   var localStorage = root.localStorage;
 
@@ -510,6 +510,19 @@
     },
     updating    : false,
     interval    : null,
+    initialize  : function (){
+      bgApp.dispatcher.on('popup-close', function (){
+        this.rewind();
+      }.bind(this))
+    },
+    rewind      : function (){
+      if ( this.pagination ) {
+        this.pageQuery.offset = 0;
+        this.reset(this.slice(0, this.defaultQuery.limit).map(function (v){
+          return v.attributes;
+        }));
+      }
+    },
     send        : function (){
       throw new Error("Not implemented");
     },
@@ -526,20 +539,19 @@
         this.update(this.pageQuery, {add: true}, function (){
           console.log("loadNext() complete");
         })
-      } else {
-
       }
     },
     update      : function (query, opts, callback){
-      //reset pageQuery params on user update or reset
-      if ( arguments.length == 0 || opts.reset ) {
-        this.pageQuery.offset = 0;
-      }
       query = $.extend({}, this.defaultQuery, query);
       opts = opts || {reset: true};
       callback = callback || $.noop;
 
       clearTimeout(this.interval);
+
+      //reset pagination
+      if ( opts.reset ) {
+        this.pageQuery.offset = 0;
+      }
 
       this.updating = true;
       this.trigger("update-status", this.updating);
@@ -569,7 +581,15 @@
               this.trigger("error", "api");
             }
             if ( opts.add ) {
-              var addedModels = this.add(result, {silent: true});
+              var idsBefore = _.pluck(this.models, "id");
+              this.add(result, {silent: true});
+              var idsAfter = _.pluck(this.models, "id");
+              var addedModels = _
+                .difference(idsAfter, idsBefore)
+                .map(function (id){
+                  return this.get(id);
+                }.bind(this));
+
               this.afterUpdate();
               this.trigger("addarray", addedModels);
             } else {
@@ -925,6 +945,7 @@
     twitchApi: twitchApi,
 
     initialize: function (){
+      UpdatableCollection.prototype.initialize.apply(this, arguments);
       this.setComparator();
       settings.get("viewSort").on("change:value", function (){
         this.setComparator();
@@ -1086,14 +1107,10 @@
   });
 
   var TopStreamsCollection = StreamCollection.extend({
-    auto        : true,
-    pagination  : true,
-    timeout     : 5 * 60 * 1000,
-    defaultQuery: {
-      limit : 50,
-      offset: 0
-    },
-    send        : function (query, callback){
+    auto      : true,
+    pagination: true,
+    timeout   : 5 * 60 * 1000,
+    send      : function (query, callback){
       twitchApi.send("streams", query, callback);
     }
   });
@@ -1101,7 +1118,8 @@
   var SearchCollection = StreamCollection.extend({
     query: null,
     send : function (query, callback){
-      twitchApi.send("searchStreams", {query: this.query, limit: 50}, callback);
+      query.query = this.query;
+      twitchApi.send("searchStreams", query, callback);
     }
   });
 

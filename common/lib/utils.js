@@ -45,6 +45,10 @@
         delete _callbacks[callbackId];
       }
     });
+
+    self.port.on("panel-hide", function (){
+      $(window).trigger("popup-close");
+    })
   }
 
   function portEmit(){

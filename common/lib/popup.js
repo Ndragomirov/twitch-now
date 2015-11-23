@@ -63,9 +63,8 @@
     var views = app.views;
     this.router = new this.Router;
 
-
     app.scroller.on("scroll", function (){
-      if ( app._scroller.scrollTop + app._scroller.offsetHeight == app._scroller.scrollHeight ) {
+      if ( app._scroller.scrollTop + app._scroller.offsetHeight >= app._scroller.scrollHeight - 100 ) {
         if ( app.curView && app.curView.loadNext && $("#filterInput").val().length == 0 ) {
           app.curView.loadNext();
         }
@@ -156,6 +155,15 @@
       collection: b.contributors
     })
 
+    $(window).on("popup-close", function (){
+      app.scroller.scrollTop(0); //reset scroll on popup close for firefox
+      b.bgApp.dispatcher.trigger("popup-close");
+    });
+
+    $(self).on("unload", function (){
+      $(window).trigger("popup-close");
+    })
+
 //    app.lazyload();
 
     $("body")
@@ -196,14 +204,10 @@
     onhide       : function (){
 
     },
-    onunload     : function (){
-
-    },
     initialize   : function (){
       $(self).unload(function (){
         this.undelegateEvents();
         this.stopListening();
-        this.onunload();
       }.bind(this));
     },
     showPreloader: function (){
@@ -247,8 +251,8 @@
   var TopMenu = DefaultView.extend({
     el            : "#top-menu",
     events        : {
-      "click #refresh-btn"  : "refresh",
-      "keyup #filterInput"  : "filter"
+      "click #refresh-btn": "refresh",
+      "keyup #filterInput": "filter"
     },
     show          : function (){
       this.$el.show();
@@ -583,9 +587,6 @@
       this.listenTo(this.collection, "_error", this.showMessage.bind(this));
       this.listenTo(this.collection, "add addarray", this.render.bind(this));
     },
-    onunload   : function (){
-      this.collection.trigger('unload');
-    },
     showMessage: function (type){
       if ( this.messages[type] ) {
         var text = this.messages[type];
@@ -593,7 +594,7 @@
       }
     },
     loadNext   : function (){
-      if ( this.collection.loadNext ) {
+      if ( this.collection.pagination ) {
         this.collection.loadNext();
       }
     },
@@ -607,8 +608,13 @@
       //  this.showMessage(this.collection.lastErrorMessage);
       //} else {
 
-      var elementsToRender = models ? models : this.collection;
-      elementsToRender = elementsToRender.length ? elementsToRender : [elementsToRender];
+      var elementsToRender = [];
+      if ( models ) {
+        elementsToRender = models.length ? models : [models];
+      } else {
+        elementsToRender = this.collection;
+      }
+
       var views = elementsToRender.map(function (item){
         return new this.itemView({model: item}).render().$el;
       }, this);

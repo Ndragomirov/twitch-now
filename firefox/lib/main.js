@@ -143,5 +143,6 @@ function onButtonStateChange(state){
 
 function onPanelHide(){
   console.log("\nPanel hide", arguments);
+  panel.port.emit("panel-hide");
   button.state('window', {checked: false});
 }
