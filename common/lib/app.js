@@ -332,14 +332,6 @@
       min  : 1,
       max  : 60,
       value: 5
-    },
-    {
-      id      : "G2Aref",
-      desc    : "Support TwitchNow (every order you made on G2A will help us)",
-      checkbox: true,
-      type    : "checkbox",
-      show    : true,
-      value   : true
     }
   ];
 
@@ -574,13 +566,20 @@
             this.trigger("error", "api");
           }
           this.afterUpdate();
-          callback();
-        } else {
-          this.parse(res, function (err, result){
-            if ( err ) {
-              this.trigger("error", "api");
+          return callback(err);
+        }
+
+        this.parse(res, function (err, result){
+          if ( err ) {
+            if ( err.name != "emptyResult" || opts.reset ) {
+              this.trigger("error", "parse");
             }
-            if ( opts.add ) {
+          }
+          if ( opts.add ) {
+            //if err == emptyResult, then next page has no results
+            if ( err && err.name == "emptyResult" ) {
+              console.log("err", err.name);
+            } else {
               var idsBefore = _.pluck(this.models, "id");
               this.add(result, {silent: true});
               var idsAfter = _.pluck(this.models, "id");
@@ -592,14 +591,15 @@
 
               this.afterUpdate();
               this.trigger("addarray", addedModels);
-            } else {
-              this.reset(result, {silent: true});
-              this.afterUpdate();
-              this.trigger("update");
             }
-            callback();
-          }.bind(this));
-        }
+
+          } else {
+            this.reset(result, {silent: true});
+            this.afterUpdate();
+            this.trigger("update");
+          }
+          callback(err);
+        }.bind(this));
 
       }.bind(this));
     }
