@@ -603,14 +603,9 @@
       this.collection.update();
     },
     render     : function (models){
-      //if ( this.collection.lastErrorMessage ) {
-      //  this.container.empty();
-      //  this.showMessage(this.collection.lastErrorMessage);
-      //} else {
-
       var elementsToRender = [];
       if ( models ) {
-        elementsToRender = models.length ? models : [models];
+        elementsToRender = Array.isArray(models) ? models : [models];
       } else {
         elementsToRender = this.collection;
       }
@@ -623,7 +618,6 @@
       } else {
         this.container.empty().html(views);
       }
-      //}
     }
   });
 
