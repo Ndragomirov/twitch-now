@@ -1,7 +1,7 @@
 {
   "title": "Twitch Now",
   "name": "twitch-now",
-  "version": "1.1.174",
+  "version": "1.1.177",
   "id": "jid1-jwVSihNsgAw5jA@jetpack",
   "description": "Explore games & track your favorite streams on Twitch",
   "main": "lib/main.js",
