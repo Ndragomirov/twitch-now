@@ -138,13 +138,13 @@ gulp.task('concat:popupcss', function (){
 })
 
 
-gulp.task('stripdebug:firefox', function (){
+gulp.task('stripdebug', function (){
   gulp
     .src([
-      "build/firefox/**/*.js"
+      "build/**/*.js"
     ])
     .pipe(stripDebug())
-    .pipe(gulp.dest("build/firefox/"));
+    .pipe(gulp.dest("build/"));
 })
 
 gulp.task('clean:dist', function (){
@@ -236,6 +236,7 @@ gulp.task('chrome', function (cb){
     'clean:chrome',
     ['handlebars', 'concat:popupcss', 'concat:popupjs'],
     'copy:chrome',
+    'stripdebug',
     cb
   );
 })
@@ -247,7 +248,7 @@ gulp.task('firefox', function (cb){
     'i18n',
     'handlebars',
     'copy:firefox',
-    //'stripdebug:firefox',
+    'stripdebug',
     'clean:firefox_after',
     cb
   )
@@ -258,6 +259,7 @@ gulp.task('opera', function (cb){
     'chrome',
     'clean:opera',
     'copy:opera',
+    'stripdebug',
     cb
   );
 });
