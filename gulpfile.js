@@ -12,6 +12,7 @@ var i18n = require('./gulp-i18n.js');
 var zip = require('gulp-zip');
 var bump = require('gulp-bump');
 var fs = require('fs');
+var jshint = require('gulp-jshint');
 
 gulp.task('clean:firefox_after', function (){
   return del.sync([
@@ -25,6 +26,23 @@ gulp.task('clean:firefox_after', function (){
     'build/firefox/data/common/dist/popup.comb.js.map'
   ])
 })
+
+gulp.task('lint', function (){
+  return gulp
+    .src([
+      './common/lib/*.js',
+      './firefox/lib/*.js'
+    ])
+    .pipe(jshint({
+      moz          : true,
+      asi          : true,
+      maxparams    : 5,
+      maxdepth     : 4,
+      maxstatements: 35,
+      maxcomplexity: 10
+    }))
+    .pipe(jshint.reporter('default'));
+});
 
 gulp.task('copy:opera', function (){
   var c1 = gulp
