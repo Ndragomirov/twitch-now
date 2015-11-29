@@ -9,17 +9,6 @@
     border-radius: 3px;
 }
 
-.info-section .donation .user-avatar {
-    vertical-align: middle;
-    margin-right: 5px;
-}
-
-.info-section .donation-list div {
-    color: rgba(255, 255, 255, 1);
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
 .info-section .contributor-list div {
     display: inline-block;
     cursor: pointer;

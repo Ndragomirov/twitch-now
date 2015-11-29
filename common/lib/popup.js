@@ -145,11 +145,6 @@
       collection: b.settings
     });
 
-    new DonationListView({
-      el        : ".donation-list",
-      collection: b.donations
-    })
-
     new ContributorListView({
       el        : ".contributor-list",
       collection: b.contributors
@@ -814,25 +809,6 @@
       this.model.setGame(game);
     }
   })
-
-  var DonationView = DefaultView.extend({
-    template: "donation"
-  });
-
-  var DonationListView = DefaultView.extend({
-    initialize: function (){
-      DefaultView.prototype.initialize.apply(this, arguments);
-      this.listenTo(this.collection, "reset", this.render);
-      this.render();
-    },
-    render    : function (){
-      var views = this.collection.map(function (item){
-        return new DonationView({model: item}).render().$el;
-      }, this);
-
-      this.$el.empty().html(views);
-    }
-  });
 
   var ContributorView = DefaultView.extend({
     template: "contributor"

@@ -1133,25 +1133,6 @@
     }
   });
 
-  var Donation = Backbone.Model.extend();
-
-  var DonationCollection = Backbone.Collection.extend({
-    model     : Donation,
-    url       : "http://162.243.34.81:8080/payments",
-    initialize: function (){
-      this.interval = 10 * 60 * 1000;
-      this.updateData();
-    },
-    updateData: function (){
-      var self = this;
-      this.fetch({reset: true});
-      setTimeout(function (){
-        self.fetch({reset: true})
-      }, self.interval);
-    }
-  });
-
-
   var Badge = Backbone.Model.extend({
     defaults         : {
       count: 0
@@ -1193,7 +1174,6 @@
   var settings = root.settings = new Settings;
   var badge = root.badge = new Badge;
   var notifications = root.notifications = new NotificationSettings;
-  var donations = root.donations = new DonationCollection;
   var contributors = root.contributors = new ContributorCollection;
   var following = root.following = new FollowingCollection;
   var followedgames = root.followedgames = new FollowedGames;
