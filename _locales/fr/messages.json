@@ -87,6 +87,7 @@
     "m86": { "message" : "Volume des notification"},
     "m87": { "message" : "Regarder sur Multitwitch.tv"},
     "m88": { "message" : "Ouvrir dans un nouvel onglet avec le mode cinéma activé"},
+    "m89": { "message" : "streams"},
     "m90": { "message" : "Gérer les notifications de chaine"},
     "m91": { "message" : "Vous recevrez une notification de bureau/sonore dès que la diffusion commence pour chaque chaine que vous suivez."},
     "m92": { "message" : "Sélectionner"},

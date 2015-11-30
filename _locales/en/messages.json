@@ -87,6 +87,7 @@
     "m86": { "message" : "Notification volume"},
     "m87": { "message" : "watch on Multitwitch.tv"},
     "m88": { "message" : "open in newtab with activated theatre mode"},
+    "m89": { "message" : "streams"},
     "m90": { "message" : "Manage channel notifications"},
     "m91": { "message" : "You will receive a desktop/sound notification whenever a channel you follow begins broadcasting."},
     "m92": { "message" : "Select"},
