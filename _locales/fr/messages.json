@@ -86,5 +86,6 @@
     "m85": { "message" : "Gérer les notifications"},
     "m86": { "message" : "Volume des notification"},
     "m87": { "message" : "Regarder sur Multitwitch.tv"},
-    "m88": { "message" : "Ouvrir dans un nouvel onglet avec le mode cinéma activé"}
+    "m88": { "message" : "Ouvrir dans un nouvel onglet avec le mode cinéma activé"},
+    "m89": { "message" : "streams"}
 }
