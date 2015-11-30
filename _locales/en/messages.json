@@ -86,5 +86,14 @@
     "m85": { "message" : "Manage notifications"},
     "m86": { "message" : "Notification volume"},
     "m87": { "message" : "watch on Multitwitch.tv"},
-    "m88": { "message" : "open in newtab with activated theatre mode"}
+    "m88": { "message" : "open in newtab with activated theatre mode"},
+    "m89": { "message" : "Manage channel notifications"},
+    "m90": { "message" : "You will receive a desktop/sound notification whenever a channel you follow begins broadcasting."},
+    "m91": { "message" : "Select"},
+    "m92": { "message" : "Your notifications preferences was changed."},
+    "m93": { "message" : "Undo"},
+    "m94": { "message" : "All desktop"},
+    "m95": { "message" : "None desktop"},
+    "m96": { "message" : "All sound"},
+    "m97": { "message" : "None sound"}
 }
