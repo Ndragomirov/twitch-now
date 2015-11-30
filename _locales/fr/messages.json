@@ -87,13 +87,13 @@
     "m86": { "message" : "Volume des notification"},
     "m87": { "message" : "Regarder sur Multitwitch.tv"},
     "m88": { "message" : "Ouvrir dans un nouvel onglet avec le mode cinéma activé"},
-    "m89": { "message" : "Gérer les notifications de chaine"},
-    "m90": { "message" : "Vous recevrez une notification de bureau/sonore dès que la diffusion commence pour chaque chaine que vous suivez."},
-    "m91": { "message" : "Sélectionner"},
-    "m92": { "message" : "Vos préférences de notification ont été modifiées."},
-    "m93": { "message" : "Annuler"},
-    "m94": { "message" : "Toutes les notifications de bureau"},
-    "m95": { "message" : "Aucune notification de bureau"},
-    "m96": { "message" : "Toutes les notifications sonores"},
-    "m97": { "message" : "Aucune notification sonore"}
+    "m90": { "message" : "Gérer les notifications de chaine"},
+    "m91": { "message" : "Vous recevrez une notification de bureau/sonore dès que la diffusion commence pour chaque chaine que vous suivez."},
+    "m92": { "message" : "Sélectionner"},
+    "m93": { "message" : "Vos préférences de notification ont été modifiées."},
+    "m94": { "message" : "Annuler"},
+    "m95": { "message" : "Toutes les notifications de bureau"},
+    "m96": { "message" : "Aucune notification de bureau"},
+    "m97": { "message" : "Toutes les notifications sonores"},
+    "m98": { "message" : "Aucune notification sonore"}
 }
