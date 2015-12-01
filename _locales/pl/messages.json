@@ -86,5 +86,15 @@
     "m85": { "message" : "Preferencje powiadomień"},
     "m86": { "message" : "Głośność powiadomień"},
     "m87": { "message" : "ogldaj na Multitwitch.tv"},
-    "m88": { "message" : "otwórz na nowej karcie w trybie kinowym"}
+    "m88": { "message" : "otwórz na nowej karcie w trybie kinowym"},
+    "m89": { "message" : "streamy"},
+    "m90": { "message" : "Zarzadzaj powiadomieniami kanalów"},
+    "m91": { "message" : "Otrzymasz powiadomienie na pulpicie/glosowe kiedy streamer którego obserwujesz zacznie streamować."},
+    "m92": { "message" : "Wybierz"},
+    "m93": { "message" : "Twoje ustawienia powiadomień zostaly zmienione."},
+    "m94": { "message" : "Cofnij"},
+    "m95": { "message" : "Wszystko na pulpicie"},
+    "m96": { "message" : "Nic na pulpicie"},
+    "m97": { "message" : "Wszystkie dzwieki"},
+    "m98": { "message" : "Żadne dzwieki"}
 }
