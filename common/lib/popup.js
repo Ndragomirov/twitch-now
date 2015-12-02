@@ -349,7 +349,7 @@
     },
 
     uploadSound: function (e){
-      utils.tabs.create({url: utils.runtime.getURL("common/html/upload")});
+      utils.tabs.create({url: utils.runtime.getURL("common/html/upload.html")});
     },
 
     playSound  : function (e){
