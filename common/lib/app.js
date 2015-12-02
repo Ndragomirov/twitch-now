@@ -978,11 +978,8 @@
   var FollowingCollection = StreamCollection.extend({
     pagination: false,
     auto      : true,
-    //TODO dynamic timeout
-    //timeout: settings.get("refreshInterval").get("value") * 60 * 1000,
     timeout   : 5 * 60 * 1000,
-
-    model: Stream,
+    model     : Stream,
 
     initialize: function (){
       var self = this;
@@ -990,6 +987,10 @@
       setInterval(function (){
         self.notified = [];
       }, 1000 * 60 * 60);
+
+      settings.get("refreshInterval").on("change:value", function (){
+        self.timeout = settings.get("refreshInterval").get("value") * 60 * 1000;
+      });
 
       this.on("unfollow", function (attr){
         self.remove(attr);
