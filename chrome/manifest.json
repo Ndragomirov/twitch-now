@@ -62,8 +62,10 @@
     "background",
     "https://*.twitch.tv/",
     "http://*.twitch.tv/",
-    "http://*.github.com/",
     "https://*.github.com/",
+    "http://*.github.com/",
+    "https://*.github.io/",
+    "http://*.github.io/",
     "notifications",
     "tabs"
   ]
