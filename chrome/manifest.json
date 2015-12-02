@@ -60,8 +60,10 @@
   "permissions": [
     "storage",
     "background",
-    "https://*/*",
-    "http://*/*",
+    "https://*.twitch.tv/",
+    "http://*.twitch.tv/",
+    "http://*.github.com/",
+    "https://*.github.com/",
     "notifications",
     "tabs"
   ]
