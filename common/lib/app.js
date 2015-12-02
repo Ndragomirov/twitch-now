@@ -137,31 +137,31 @@
     })
   };
 
-  bgApp.audioSupported = function audioSupported(){
-    var saved = audioSupported.val;
-    if ( saved !== undefined ) {
-      return saved;
-    }
-    audioSupported.val = true;
-    try {
-      new Audio();
-    } catch (e) {
-      audioSupported.val = false;
-    }
-    return audioSupported.val;
-  };
+  bgApp.sound = new Audio();
 
-  bgApp.playSound = function (path, volume){
-    var sound;
-    if ( typeof volume === 'undefined' ) volume = 1;
+  bgApp.stopSound = function (){
+    if ( bgApp.sound ) {
+      bgApp.sound.pause();
+    }
+  }
+
+  bgApp.playSound = function (path, volume, loop){
+    var sound = bgApp.sound;
+
+    if ( typeof loop === 'undefined' ) {
+      loop = false;
+    }
+    if ( typeof volume === 'undefined' ) {
+      volume = 1;
+    }
 
     if ( !/^data:audio/.test(path) ) {
       path = /^http/i.test(path) ? path : utils.runtime.getURL(path);
     }
 
-    sound = new Audio();
     sound.src = path;
     sound.volume = volume;
+    sound.loop = loop;
     sound.play();
   };
 
@@ -286,6 +286,14 @@
       desc    : "__MSG_m7__",
       checkbox: true,
       show    : true,
+      type    : "checkbox",
+      value   : false
+    },
+    {
+      id      : "loopNotificationSound",
+      desc    : "__MSG_m99__",
+      checkbox: true,
+      show    : false,
       type    : "checkbox",
       value   : false
     },
@@ -1051,7 +1059,11 @@
         }
 
         if ( soundNotifications.length && settings.get("playNotificationSound").get("value") ) {
-          bgApp.playSound(settings.getNotificationSoundSource(), settings.get("notificationVolume").get("value") / 100);
+          bgApp.playSound(
+            settings.getNotificationSoundSource(),
+            settings.get("notificationVolume").get("value") / 100,
+            settings.get("loopNotificationSound").get("value")
+          );
         }
       })
 

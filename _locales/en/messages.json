@@ -96,5 +96,6 @@
     "m95": { "message" : "All desktop"},
     "m96": { "message" : "None desktop"},
     "m97": { "message" : "All sound"},
-    "m98": { "message" : "None sound"}
+    "m98": { "message" : "None sound"},
+    "m99": { "message" : "Loop notification sound"}
 }

@@ -312,7 +312,6 @@
   var SettingsView = LazyRenderView.extend({
     el    : "#settings-screen",
     events: {
-      "click input[data-id=\"notificationSound\"]"      : "playSound",
       "click input[data-id=\"customNotificationSound\"]": "uploadSound",
       "change input[type=\"range\"]"                    : "rangeHelper",
       "change input, select"                            : "serialize"
@@ -335,6 +334,10 @@
       var v = model.get("value");
 
       switch ( model.get("id") ) {
+        case "notificationSound":
+          this.playSound()
+          break;
+
         case "simpleView":
           this.toggleSimpleView(model.get("value"))
           break;
@@ -362,12 +365,11 @@
     initialize : function (){
       LazyRenderView.prototype.initialize.apply(this, arguments);
       this.setDefaultTab(this.collection.get("defaultTab").get("value"));
+      this.changeThemeType(this.collection.get("themeType").get("value"));
+      this.toggleSimpleView(this.collection.get("simpleView").get("value"));
+
       this.$container = this.$el.find("#settings-container");
-      this.collection.forEach(function (m){
-        this.onModelChange(m);
-      }.bind(this));
       this.listenTo(this.collection, "change", this.onModelChange);
-//      this.render();
     },
     serialize  : function (){
       var controls = [];
