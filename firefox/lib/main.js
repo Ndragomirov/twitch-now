@@ -23,7 +23,9 @@ var twitchOauth = OAuth2.addAdapter({
 });
 
 var scripts = [
+  "lib/3rd/sinon-xhr.js",
   "lib/3rd/async.js",
+  "lib/3rd/xhr-proxy-ff.js",
   "lib/utils.js",
   "lib/3rd/jquery.js",
   "lib/3rd/jquery.visible.js",
@@ -100,6 +102,36 @@ panel.port.on("OAUTH2_REVOKE", function (){
 panel.port.on("OAUTH2_TOKEN", function (){
   panel.port.emit("OAUTH2_TOKEN", twitchOauth.getAccessToken());
 });
+
+panel.port.on("XHR_PROXY", function (xhr){
+
+  if ( !xhr || !xhr.method ) {
+    return;
+  }
+
+  var method = xhr.method.toLowerCase();
+
+  var guid = xhr.guid;
+
+  var r = Request({
+    url       : xhr.url,
+    content   : xhr.requestBody,
+    headers   : xhr.requestHeaders,
+    onComplete: function (response){
+      var res = {
+        guid      : guid,
+        status    : response.status,
+        statusText: response.statusText,
+        text      : response.text,
+        headers   : response.headers
+      }
+
+      panel.port.emit("XHR_PROXY_RESPONSE", res);
+    }
+  });
+
+  r[method]();
+})
 
 function onButtonStateChange(state){
   if ( state.checked ) {

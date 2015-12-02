@@ -9,14 +9,6 @@
   "engines": {
     "firefox": ">=38.0a1"
   },
-  "cross-domain-content": [
-    "https://api.twitch.tv/",
-    "http://twitch.tv/",
-    "https://twitch.tv/",
-    "http://github.com/",
-    "https://github.com/",
-    "https://api.github.com/"
-  ],
   "license": "MIT",
   "keywords": [
     "jetpack"
