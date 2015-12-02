@@ -252,9 +252,10 @@ gulp.task('jpm', shell.task([
 gulp.task('chrome', function (cb){
   runSequence(
     'clean:chrome',
-    ['handlebars', 'concat:popupcss', 'concat:popupjs'],
+    'handlebars',
+    'concat:popupcss',
+    'concat:popupjs',
     'copy:chrome',
-    'stripdebug',
     cb
   );
 })
@@ -266,7 +267,6 @@ gulp.task('firefox', function (cb){
     'i18n',
     'handlebars',
     'copy:firefox',
-    'stripdebug',
     'clean:firefox_after',
     cb
   )
@@ -277,7 +277,6 @@ gulp.task('opera', function (cb){
     'chrome',
     'clean:opera',
     'copy:opera',
-    'stripdebug',
     cb
   );
 });
@@ -288,6 +287,7 @@ gulp.task('dist', function (cb){
     'chrome',
     'opera',
     'firefox',
+    'stripdebug',
     ['compress:chrome', 'compress:opera', 'compress:firefox'],
     cb);
 })
