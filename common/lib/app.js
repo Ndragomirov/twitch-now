@@ -707,7 +707,7 @@
     }
   });
 
-  var FollowedGames = Games.extend({
+  var FollowingGames = Games.extend({
     auto      : true,
     pagination: false,
     timeout   : 5 * 60 * 1000,
@@ -957,6 +957,12 @@
     }
   });
 
+  var FollowingStream = Stream.extend({
+    defaults: {
+      favorite: true
+    }
+  })
+
   var StreamCollection = UpdatableCollection.extend({
 
     model: Stream,
@@ -994,11 +1000,11 @@
     }
   });
 
-  var FollowingCollection = StreamCollection.extend({
+  var FollowingStreams = StreamCollection.extend({
     pagination: false,
     auto      : true,
     timeout   : 5 * 60 * 1000,
-    model     : Stream,
+    model     : FollowingStream,
 
     initialize: function (){
       var self = this;
@@ -1089,15 +1095,6 @@
     send           : function (query, callback){
       twitchApi.send("followed", {}, callback);
     },
-    parse          : function (res, callback){
-      StreamCollection.prototype.parse.call(this, res, function (err, streams){
-        if ( err ) return callback(err);
-        streams.forEach(function (s){
-          s.favorite = true;
-        })
-        return callback(null, streams);
-      })
-    },
     afterUpdate    : function (){
       this.idsAfterUpdate = this.pluck("_id");
       this.addedStreams = _.difference(this.idsAfterUpdate, this.idsBeforeUpdate, this.notified);
@@ -1134,7 +1131,7 @@
     }
   });
 
-  var TopStreamsCollection = StreamCollection.extend({
+  var TopStreams = StreamCollection.extend({
     auto      : true,
     pagination: true,
     timeout   : 5 * 60 * 1000,
@@ -1143,7 +1140,7 @@
     }
   });
 
-  var SearchCollection = StreamCollection.extend({
+  var Search = StreamCollection.extend({
     query: null,
     send : function (query, callback){
       query.query = this.query;
@@ -1153,7 +1150,7 @@
 
   var Contributor = Backbone.Model.extend();
 
-  var ContributorCollection = Backbone.Collection.extend({
+  var Contributors = Backbone.Collection.extend({
     model     : Contributor,
     url       : "https://api.github.com/repos/ndragomirov/twitch-now/contributors",
     initialize: function (){
@@ -1193,22 +1190,22 @@
 
   StreamCollection.mixin(TrackLastErrorMixin);
   Games.mixin(TrackLastErrorMixin);
-  FollowingCollection.mixin(TrackLastErrorMixin);
-  TopStreamsCollection.mixin(TrackLastErrorMixin);
+  FollowingStreams.mixin(TrackLastErrorMixin);
+  TopStreams.mixin(TrackLastErrorMixin);
   Videos.mixin(TrackLastErrorMixin);
-  FollowedGames.mixin(TrackLastErrorMixin);
-  SearchCollection.mixin(TrackLastErrorMixin);
+  FollowingGames.mixin(TrackLastErrorMixin);
+  Search.mixin(TrackLastErrorMixin);
 
   var settings = root.settings = new Settings;
   var badge = root.badge = new Badge;
   var notifications = root.notifications = new NotificationSettings;
-  var contributors = root.contributors = new ContributorCollection;
-  var following = root.following = new FollowingCollection;
-  var followedgames = root.followedgames = new FollowedGames;
-  var topstreams = root.topstreams = new TopStreamsCollection;
+  var contributors = root.contributors = new Contributors;
+  var following = root.following = new FollowingStreams;
+  var followedgames = root.followedgames = new FollowingGames;
+  var topstreams = root.topstreams = new TopStreams;
   var videos = root.videos = new ChannelVideos;
   var games = root.games = new Games;
-  var search = root.search = new SearchCollection;
+  var search = root.search = new Search;
   var user = root.user = new User;
   var gameLobby = root.gameLobby = new GameLobby;
 
