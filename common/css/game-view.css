@@ -14,14 +14,24 @@
     display: none;
 }
 
-.game .game-preview {
-    width: 70px;
-    height: 98px;
+.game-list-item {
+    float: left;
+    width: 77px;
+    background: none;
+    border: none !important;
+}
+
+.game-list-item .game-preview {
+    margin-bottom: 5px;
+}
+
+.game-list-item .item-image-container {
+    float: none;
 }
 
 .game-preview {
     width: 74px;
-    height: 42px;
+    height: 102px;
 }
 
 .game .game-preview .game-follow {
@@ -98,7 +108,7 @@
 .game .buttons {
     display: inline-block;
     position: absolute;
-    bottom: 10px;
+    bottom: 6px;
 }
 
 .game .buttons .button {

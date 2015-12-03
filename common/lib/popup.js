@@ -99,7 +99,13 @@
 
     views.followedGames = new GameListView({
       el        : "#followed-game-screen",
-      collection: b.followedgames
+      collection: b.followedgames,
+      messages  : {
+        noresults: {
+          header: "No Channels Live",
+          text  : "Nobody is streaming your favorites games right now"
+        }
+      }
     })
 
     views.gameLobby = new GameLobbyView({
@@ -119,7 +125,13 @@
 
     views.following = new StreamListView({
       el        : "#stream-screen",
-      collection: b.following
+      collection: b.following,
+      messages  : {
+        noresults: {
+          header: "No Channels Live",
+          text  : "Nobody is streaming right now"
+        }
+      }
     });
 
     views.videos = new VideoListView({
@@ -205,8 +217,9 @@
         this.stopListening();
       }.bind(this));
     },
-    showPreloader: function (){
-      this.$el.append(this.app.streamPreloader);
+    showPreloader: function (container){
+      container = container || this.$el;
+      container.append(this.app.streamPreloader);
     },
     hidePreloader: function (){
       this.app.streamPreloader.detach();
@@ -416,14 +429,14 @@
 
     unfollow: function (){
       var self = this;
-      self.showPreloader();
+      self.showPreloader(self.$el.find(".stream"));
       this.model.unfollow(function (){
         self.hidePreloader();
       });
     },
     follow  : function (){
       var self = this;
-      self.showPreloader();
+      self.showPreloader(self.$el.find(".stream"));
       self.model.follow(function (){
         self.hidePreloader();
       });
@@ -531,14 +544,14 @@
     },
     unfollow  : function (){
       var self = this;
-      self.showPreloader();
+      self.showPreloader(self.$el.find(".stream"));
       this.model.unfollow(function (){
         self.hidePreloader();
       });
     },
     follow    : function (){
       var self = this;
-      self.showPreloader();
+      self.showPreloader(self.$el.find(".stream"));
       self.model.follow(function (){
         self.hidePreloader();
       });
@@ -550,17 +563,12 @@
   });
 
   var ListView = LazyRenderView.extend({
-    template   : "screenmessage",
     messages   : {
       "auth"           : {
         text: "__MSG_m73__"
       },
       "api"            : {
         text: "__MSG_m48__"
-      },
-      "nostreams"      : {
-        header: "Your Following streams tab is empty.",
-        text  : "Only live following streams will be shown here."
       },
       "novideo"        : {
         text: "__MSG_m49__"
@@ -570,16 +578,13 @@
       },
       "nosearchquery"  : {
         text: "No search query"
-      },
-      "nofollowedgames": {
-        header: "Your Following games tab is empty.",
-        text  : "No one is streaming your favorites games now."
       }
     },
     itemView   : null, // single item view
     initialize : function (opts){
       LazyRenderView.prototype.initialize.apply(this, arguments);
       this.container = opts.container || this.$el.find(".screen-content");
+      this.messages = $.extend({}, this.messages, opts.messages);
       this.listenTo(this.collection, "remove update sort reset", this.render.bind(this, null));
       this.listenTo(this.collection, "_error", this.showMessage.bind(this));
       this.listenTo(this.collection, "add addarray", this.render.bind(this));
@@ -587,7 +592,7 @@
     showMessage: function (type){
       if ( this.messages[type] ) {
         var text = this.messages[type];
-        this.container.empty().html(Handlebars.templates[this.template](text));
+        this.container.empty().html(Handlebars.templates["screenmessage"](text));
       }
     },
     loadNext   : function (){
@@ -605,6 +610,9 @@
         elementsToRender = Array.isArray(models) ? models : [models];
       } else {
         elementsToRender = this.collection;
+        if ( !elementsToRender.length ) {
+          return this.showMessage("noresults");
+        }
       }
 
       var views = elementsToRender.map(function (item){

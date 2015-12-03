@@ -1,8 +1,8 @@
 .stream {
-    background: url("../img/row_arrow.png") 375px center no-repeat;
     border-bottom: 1px solid rgb(0, 0, 0);
     border-top: 1px solid rgb(38, 38, 38);
     padding: 10px;
+    position: relative;
     color: rgb(120, 120, 120);
     cursor: pointer;
     min-height: 40px;

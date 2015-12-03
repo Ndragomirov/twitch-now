@@ -131,14 +131,19 @@ a.js-tab {
     position: fixed;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
 }
 
 #preloader-stream {
+    z-index: 9999;
     position: absolute;
-    right: 5px;
-    margin-top: -26px;
+    top: 50%;
+    left: 50%;
+    /*transform: translate(-50%, -50%);*/
+    /*-webkit-transform: translate(-50%, -50%);*/
+    /*-moz-transform: translate(-50%, -50%);*/
 }
 
 .screen-msg {
