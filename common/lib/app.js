@@ -662,6 +662,7 @@
       twitchApi.send("gameFollow", {name: target}, function (err, res){
         if ( err ) return cb(err);
         this.trigger("follow", this.attributes);
+        bgApp.dispatcher.trigger("game:follow", this.attributes);
         cb();
       }.bind(this));
     },
@@ -672,6 +673,7 @@
       twitchApi.send("gameUnfollow", {name: target}, function (err, res){
         if ( err ) return cb(err);
         this.trigger("unfollow", this);
+        bgApp.dispatcher.trigger("game:unfollow", this.attributes);
         cb();
       }.bind(this));
     }
@@ -714,6 +716,14 @@
     },
     initialize: function (){
       var self = this;
+
+      bgApp.dispatcher.on("game:follow", function (model){
+        self.add(model);
+      })
+
+      bgApp.dispatcher.on("game:unfollow", function (model){
+        self.remove(model._id);
+      })
 
       twitchApi.on("authorize", function (){
         self.update();
@@ -880,6 +890,7 @@
       twitchApi.send("follow", {target: target}, function (err, res){
         if ( err ) return cb(err);
         this.trigger("follow", this.attributes);
+        bgApp.dispatcher.trigger("stream:follow", this.attributes);
         cb();
       }.bind(this));
     },
@@ -999,6 +1010,10 @@
       settings.get("refreshInterval").on("change:value", function (){
         self.timeout = settings.get("refreshInterval").get("value") * 60 * 1000;
       });
+
+      bgApp.dispatcher.on("stream:follow", function (model){
+        self.add(model);
+      })
 
       this.on("unfollow", function (attr){
         self.remove(attr);
@@ -1196,30 +1211,6 @@
   var search = root.search = new SearchCollection;
   var user = root.user = new User;
   var gameLobby = root.gameLobby = new GameLobby;
-
-  var addToFollowing = function (stream){
-    following.add(stream)
-  }
-
-  topstreams.on("follow", addToFollowing);
-  search.on("follow", addToFollowing)
-  gameLobby.streams.on("follow", addToFollowing);
-
-  games.on("follow", function (game){
-    followedgames.add(game);
-  })
-
-  gameLobby.game.on("follow", function (game){
-    followedgames.add(game);
-  })
-
-  games.on("unfollow", function (game){
-    followedgames.remove(followedgames.findByName(game.get("game").name));
-  })
-
-  followedgames.on("unfollow", function (game){
-    followedgames.remove(game);
-  })
 
   topstreams.update();
   games.update();
