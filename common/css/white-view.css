@@ -11,6 +11,10 @@
     background: rgba(55, 55, 55, 1);
 }
 
+.white-version .screen-msg h2 {
+    color: rgba(55, 55, 55, 1);
+}
+
 .white-version #context-menu {
     background: rgb(255, 255, 255);
 }
