@@ -91,7 +91,7 @@
     "m90": { "message" : "Manage channel notifications"},
     "m91": { "message" : "You will receive a desktop/sound notification whenever a channel you follow begins broadcasting."},
     "m92": { "message" : "Select"},
-    "m93": { "message" : "Your notifications preferences was changed."},
+    "m93": { "message" : "Your notifications preferences were changed."},
     "m94": { "message" : "Undo"},
     "m95": { "message" : "All desktop"},
     "m96": { "message" : "None desktop"},
