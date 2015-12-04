@@ -50,7 +50,7 @@
     "m49": { "message" : "Sem vídeos disponíveis para este canal"},
     "m50": { "message" : "Sem resultados de pesquisa"},
     "m51": { "message" : "Streams populares"},
-    "m52": { "message" : "Login"},
+    "m52": { "message" : "Iniciar"},
     "m53": { "message" : "Logout"},
     "m54": { "message" : "Ver Todas as Streams"},
     "m55": { "message" : "Tipo do Tema"},
@@ -86,5 +86,16 @@
     "m85": { "message" : "Gerir notificações"},
     "m86": { "message" : "Volume das notificações"},
     "m87": { "message" : "ver em Multitwitch.tv"},
-    "m88": { "message" : "abrir num novo separador com o modo de teatro ativado"}
+    "m88": { "message" : "abrir num novo separador com o modo de teatro ativo"},
+    "m89": { "message" : "streams"},
+    "m90": { "message" : "Gerir notificações do canal"},
+    "m91": { "message" : "Vai receber uma notificação no desktop ou com som quando um canal que segue iniciar a transmissão."},
+    "m92": { "message" : "Seleccionar"},
+    "m93": { "message" : "As suas preferências de notificação foram alteradas."},
+    "m94": { "message" : "Desfazer"},
+    "m95": { "message" : "Todo desktop"},
+    "m96": { "message" : "Nenhum desktop"},
+    "m97": { "message" : "Todo som"},
+    "m98": { "message" : "Nenhum som"},
+    "m99": { "message" : "Som da notificação com repetição"}
 }
