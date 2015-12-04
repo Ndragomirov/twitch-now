@@ -157,7 +157,7 @@ gulp.task('concat:popupcss', function (){
 
 
 gulp.task('stripdebug', function (){
-  gulp
+  return gulp
     .src([
       "build/**/*.js"
     ])
