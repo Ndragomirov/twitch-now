@@ -83,8 +83,19 @@
     "m82": { "message" : "joc"},
     "m83": { "message" : "urmărește joc"},
     "m84": { "message" : "nu mai urmări"},
-    "m85": { "message" : "Gestionaţi notificaările" },
+    "m85": { "message" : "Gestionaţi notificările" },
     "m86": { "message" : "Volum notificări" },
     "m87": { "message" : "vezi pe Multitwitch.tv" },
-    "m88": { "message" : "deschide în modul cinema" }
+    "m88": { "message" : "deschide în modul cinema" },
+    "m89": { "message" : "fluxuri" },
+    "m90": { "message" : "Gestionaţi notificările pentru canal" },
+    "m91": { "message" : "O să fi anunţat printr-o notificare audio când un canal începe difuziunea." },
+    "m92": { "message" : "Selectează" },
+    "m93": { "message" : "Preferinţele notificărilor tale au fost schimbate." },
+    "m94": { "message" : "Anulează" },
+    "m95": { "message" : "Toate desktop" },
+    "m96": { "message" : "Niciunul desktop" },
+    "m97": { "message" : "Toate cu sunet" },
+    "m98": { "message" : "Niciunul cu sunet" },
+    "m99": { "message" : "Sunet cu notificare aleatorie" }
 }
