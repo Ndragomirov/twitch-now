@@ -579,34 +579,29 @@
 
         this.parse(res, function (err, result){
           if ( err ) {
-            if ( err.name != "emptyResult" || opts.reset ) {
-              this.trigger("error", "parse");
-            }
+            this.trigger("error", err.message);
+            return callback(err);
           }
-          if ( opts.add ) {
-            //if err == emptyResult, then next page has no results
-            if ( err && err.name == "emptyResult" ) {
-              console.log("err", err.name);
-            } else {
-              var idsBefore = _.pluck(this.models, "id");
-              this.add(result, {silent: true});
-              var idsAfter = _.pluck(this.models, "id");
-              var addedModels = _
-                .difference(idsAfter, idsBefore)
-                .map(function (id){
-                  return this.get(id);
-                }.bind(this));
-
-              this.afterUpdate();
-              this.trigger("addarray", addedModels);
-            }
-
-          } else {
+          if ( opts.reset ) {
             this.reset(result, {silent: true});
             this.afterUpdate();
             this.trigger("update");
           }
-          callback(err);
+
+          if ( opts.add ) {
+            var idsBefore = _.pluck(this.models, "id");
+            this.add(result, {silent: true});
+            var idsAfter = _.pluck(this.models, "id");
+            var addedModels = _
+              .difference(idsAfter, idsBefore)
+              .map(function (id){
+                return this.get(id);
+              }.bind(this));
+
+            this.afterUpdate();
+            this.trigger("addarray", addedModels);
+          }
+          return callback(null);
         }.bind(this));
 
       }.bind(this));
@@ -623,9 +618,6 @@
     parse: function (res, callback){
       if ( !res || !res.videos ) {
         return callback(new Error("api"));
-      }
-      if ( res.videos.length == 0 ) {
-        return callback(new Error("emptyResult"));
       }
       return callback(null, res.videos);
     }
@@ -694,9 +686,6 @@
       if ( !res || !res.top ) {
         return callback(new Error("api"));
       }
-      if ( res.top.length == 0 ) {
-        return callback(new Error("emptyResult"));
-      }
       res.top.forEach(function (g){
         g._id = g.game._id;
       });
@@ -740,10 +729,6 @@
     parse     : function (res, callback){
       if ( !res || !res.follows ) {
         return callback(new Error("api"));
-      }
-
-      if ( res.follows.length == 0 ) {
-        return callback(new Error("emptyResult"));
       }
       res.follows.forEach(function (g){
         g._id = g.game._id;
@@ -993,9 +978,6 @@
       if ( !res || !res.streams ) {
         return callback(new Error("api"));
       }
-      if ( res.streams.length == 0 ) {
-        return callback(new Error("emptyResult"));
-      }
       return callback(null, res.streams);
     }
   });
@@ -1141,8 +1123,9 @@
   });
 
   var Search = StreamCollection.extend({
-    query: null,
-    send : function (query, callback){
+    query     : null,
+    pagination: true,
+    send      : function (query, callback){
       query.query = this.query;
       twitchApi.send("searchStreams", query, callback);
     }
