@@ -64,7 +64,7 @@
     this.router = new this.Router;
 
     app.scroller.on("scroll", function (){
-      if ( app._scroller.scrollTop + app._scroller.offsetHeight >= app._scroller.scrollHeight - 100 ) {
+      if ( app._scroller.scrollTop + app._scroller.offsetHeight >= app._scroller.scrollHeight - 200 ) {
         if ( app.curView && app.curView.loadNext && $("#filterInput").val().length == 0 ) {
           app.curView.loadNext();
         }
@@ -141,7 +141,12 @@
 
     views.search = new SearchView({
       el        : "#search-screen",
-      collection: b.search
+      collection: b.search,
+      messages  : {
+        noresults: {
+          text: "__MSG_m50__"
+        }
+      }
     });
 
     views.browseGames = new GameListView({
@@ -564,19 +569,16 @@
 
   var ListView = LazyRenderView.extend({
     messages   : {
-      "auth"           : {
+      "auth"         : {
         text: "__MSG_m73__"
       },
-      "api"            : {
+      "api"          : {
         text: "__MSG_m48__"
       },
-      "novideo"        : {
+      "novideo"      : {
         text: "__MSG_m49__"
       },
-      "nosearchresults": {
-        text: "__MSG_m50__"
-      },
-      "nosearchquery"  : {
+      "nosearchquery": {
         text: "No search query"
       }
     },
@@ -789,11 +791,11 @@
         el        : "#gamelobby-videos",
         collection: b.gameLobby.videos
       })
-
+    },
+    render          : function (){
       this.gameView.render();
       this.videoView.render();
       this.streamView.render();
-      this.listenTo(this.model.game, "change", this.update);
     },
     toggle          : function (r){
       if ( /gamelobby/i.exec(r) ) {
@@ -811,12 +813,20 @@
       this.$el.find(".tabs [tab-id='" + view + "']").show();
     },
     update          : function (){
-      this.gameView.render();
       this.videoView.update();
       this.streamView.update();
     },
     setGame         : function (game){
-      this.model.setGame(game);
+      if ( !this.model.game.get("game") || this.model.game.get("game").name != game ) {
+        this.model.setGame(game);
+        this.gameView.render();
+        this.update();
+      } else {
+        if ( !this.isRendered ) {
+          this.render();
+          this.isRendered = true;
+        }
+      }
     }
   })
 

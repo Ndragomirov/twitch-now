@@ -211,7 +211,7 @@
       type: "GET",
       url : "/games/top",
       data: {
-        limit: 50
+        limit: 40
       }
     }
   }
