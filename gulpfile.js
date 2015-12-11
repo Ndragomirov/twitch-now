@@ -18,6 +18,8 @@ gulp.task('clean:firefox_after', function (){
   return del.sync([
     'build/firefox/data/common/dist/popup.comb.css.map',
     'build/firefox/data/common/lib/3rd/analytics.js',
+    'build/firefox/data/common/lib/3rd/eventemitter.js',
+    'build/firefox/lib/3rd/eventemitter.js',
     'build/firefox/data/common/lib/analytics.js',
     'build/firefox/data/common/lib/oauth2.js',
     'build/firefox/data/common/lib/lytics.js',
