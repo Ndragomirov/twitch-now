@@ -86,7 +86,7 @@
     "m85": { "message" : "Administrar notificaciones"},
     "m86": { "message" : "Sonido de notificaciones"},
     "m87": { "message" : "Ver en Multitwitch.tv"},
-    "m88": { "message" : "Abrir en nueva pestaña con el modo teatro activado"}
+    "m88": { "message" : "Abrir en nueva pestaña con el modo teatro activado"},
     "m89": { "message" : "Streams"},
     "m90": { "message" : "Administrar las notificaciones del canal"},
     "m91": { "message" : "Recibirás un sonido de notificación cuando un canal que sigues comience su retransmisión."},
