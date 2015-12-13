@@ -67,7 +67,7 @@
     "m66": { "message" : "Pestaña por defecto"},
     "m67": { "message" : "Favoritos"},
     "m68": { "message" : "Juegos"},
-    "m69": { "message" : "Streams top"},
+    "m69": { "message" : "Top Streams"},
     "m70": { "message" : "Guarda este juego"},
     "m71": { "message" : "Abrir stream"},
     "m72": { "message" : "Conectado como"},
@@ -87,4 +87,15 @@
     "m86": { "message" : "Sonido de notificaciones"},
     "m87": { "message" : "Ver en Multitwitch.tv"},
     "m88": { "message" : "Abrir en nueva pestaña con el modo teatro activado"}
+    "m89": { "message" : "Streams"},
+    "m90": { "message" : "Administrar las notificaciones del canal"},
+    "m91": { "message" : "Recibirás un sonido de notificación cuando un canal que sigues comience su retransmisión."},
+    "m92": { "message" : "Seleccionar"},
+    "m93": { "message" : "Se cambiaron tus preferencias de notificación."},
+    "m94": { "message" : "Deshacer"},
+    "m95": { "message" : "Todo en escritorio"},
+    "m96": { "message" : "Nada en escritorio"},
+    "m97": { "message" : "Todos los sonidos"},
+    "m98": { "message" : "Sin sonidos"},
+    "m99": { "message" : "Sonido de notificación en bucle"}
 }
