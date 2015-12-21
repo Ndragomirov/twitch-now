@@ -9,6 +9,7 @@ var Request = require("sdk/request").Request;
 var pageMod = require("sdk/page-mod");
 var ss = require("sdk/simple-storage");
 var i18n = require("./i18n.js");
+var livestreamer = require("./livestreamer.js");
 var OAuth2 = require("./oauth2.js");
 var constants = require("./constants.js").constants;
 var twitchNow = require("./twitch-now.js").twitchNow;
@@ -86,6 +87,12 @@ var button = buttons.ToggleButton({
 });
 
 twitchNow.listen(panel, button);
+
+
+panel.port.on("LIVESTREAMER", function (opts){
+  console.log("\nOpening livestreamer", arguments);
+  livestreamer.runLivestreamer([opts.url, opts.quality]);
+})
 
 panel.port.on("OAUTH2_AUTH", function (){
   panel.hide();

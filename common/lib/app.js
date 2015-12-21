@@ -148,6 +148,10 @@
   bgApp.playSound = function (path, volume, loop){
     var sound = bgApp.sound;
 
+    if ( typeof path === 'undefined' ) {
+      return;
+    }
+
     if ( typeof loop === 'undefined' ) {
       loop = false;
     }
@@ -340,6 +344,19 @@
       min  : 1,
       max  : 60,
       value: 5
+    },
+    {
+      id    : "livestreamerQuality",
+      desc  : "Livestreamer video quality",
+      type  : "select",
+      select: true,
+      opts  : [
+        {id: "source", name: "source"},
+        {id: "high", name: "high"},
+        {id: "mobile", name: "mobile"}
+      ],
+      show  : true,
+      value : "source"
     }
   ];
 
@@ -926,8 +943,16 @@
     },
 
     openStream: function (type){
-      var url = this.getStreamURL(type);
-      utils.tabs.create({url: url});
+      if ( type == "livestreamer" ) {
+        console.log("\nOpen livestreamer", this.getStreamURL("newlayout"));
+        utils.runtime.sendMessage("LIVESTREAMER", {
+          url    : this.getStreamURL("newlayout"),
+          quality: settings.get("livestreamerQuality").get("value")
+        });
+      } else {
+        var url = this.getStreamURL(type);
+        utils.tabs.create({url: url});
+      }
     },
 
     openChat: function (){

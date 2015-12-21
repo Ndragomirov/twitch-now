@@ -199,8 +199,6 @@
       })
 
     $('.tip').tooltip();
-
-    console.log(window.location.href);
   };
 
   var DefaultView = Backbone.View.extend({
