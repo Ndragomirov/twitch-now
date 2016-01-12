@@ -530,9 +530,6 @@
         .on('click', '.js-open-chat', function (){
           self.model.openChat();
         })
-        .on('click', '.js-open-in-livestreamer', function (){
-          self.model.openLivestream();
-        })
         .on('click', '.js-open-in-multitwitch', function (){
           self.model.openMultitwitch();
         })

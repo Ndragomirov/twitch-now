@@ -919,14 +919,6 @@
       return this.baseUrl() + links[type].replace(/ID/, this.get("channel").name);
     },
 
-    openLivestream: function (){
-      console.log("\nOpen livestreamer", this.getStreamURL("newlayout"));
-      utils.runtime.sendMessage("LIVESTREAMER", {
-        url    : this.getStreamURL("newlayout"),
-        quality: settings.get("livestreamerQuality").get("value")
-      });
-    },
-
     openMultitwitch: function (){
       var self = this;
       var url = "http://multitwitch.tv";
@@ -951,8 +943,16 @@
     },
 
     openStream: function (type){
-      var url = this.getStreamURL(type);
-      utils.tabs.create({url: url});
+      if ( type == "livestreamer" ) {
+        console.log("\nOpen livestreamer", this.getStreamURL("newlayout"));
+        utils.runtime.sendMessage("LIVESTREAMER", {
+          url    : this.getStreamURL("newlayout"),
+          quality: settings.get("livestreamerQuality").get("value")
+        });
+      } else {
+        var url = this.getStreamURL(type);
+        utils.tabs.create({url: url});
+      }
     },
 
     openChat: function (){
