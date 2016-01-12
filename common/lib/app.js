@@ -1160,9 +1160,8 @@
 
   var Contributors = Backbone.Collection.extend({
     model     : Contributor,
-    url       : "https://api.github.com/repos/ndragomirov/twitch-now/contributors",
     initialize: function (){
-      this.fetch({reset: true});
+      this.add(contributorList);
     }
   });
 

@@ -13,6 +13,7 @@ var zip = require('gulp-zip');
 var bump = require('gulp-bump');
 var fs = require('fs');
 var jshint = require('gulp-jshint');
+var request = require('request');
 
 gulp.task('clean:firefox_after', function (){
   return del.sync([
@@ -229,6 +230,20 @@ gulp.task('i18n', function (){
     .pipe(gulp.dest('common/dist/'));
 });
 
+gulp.task('contributors', function (cb){
+  request({
+    method : "GET",
+    url    : "https://api.github.com/repos/ndragomirov/twitch-now/contributors",
+    headers: {
+      "User-Agent": "whatever"
+    }
+  }, function (err, res, body){
+    fs.writeFile("common/dist/contributors.js", 'var contributorList = ' + body + ';', function (err){
+      cb();
+    })
+  })
+})
+
 gulp.task('bump', function (){
   gulp
     .src([
@@ -255,6 +270,7 @@ gulp.task('chrome', function (cb){
   runSequence(
     'clean:chrome',
     'handlebars',
+    'contributors',
     'concat:popupcss',
     'concat:popupjs',
     'copy:chrome',

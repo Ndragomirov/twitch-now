@@ -24,6 +24,7 @@ var twitchOauth = OAuth2.addAdapter({
 });
 
 var scripts = [
+  "dist/contributors.js",
   "lib/3rd/sinon-xhr.js",
   "lib/3rd/async.js",
   "lib/3rd/xhr-proxy-ff.js",
