@@ -96,5 +96,7 @@
     "m95": { "message" : "Wszystko na pulpicie"},
     "m96": { "message" : "Nic na pulpicie"},
     "m97": { "message" : "Wszystkie dzwieki"},
-    "m98": { "message" : "Żadne dzwieki"}
+    "m98": { "message" : "Żadne dzwieki"},
+    "m99": { "message" : "Powtarzaj dzwiek powiadomienia"},
+    "m100": { "message" : "Otwórz przy użyciu livestreamer"}
 }
