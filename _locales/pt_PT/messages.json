@@ -97,5 +97,6 @@
     "m96": { "message" : "Nenhum desktop"},
     "m97": { "message" : "Todo som"},
     "m98": { "message" : "Nenhum som"},
-    "m99": { "message" : "Som da notificação com repetição"}
+    "m99": { "message" : "Som da notificação com repetição"},
+    "m100": { "message" : "abrir no livestreamer"}
 }
