@@ -238,9 +238,10 @@ gulp.task('contributors', function (cb){
       "User-Agent": "whatever"
     }
   }, function (err, res, body){
-    fs.writeFile("common/dist/contributors.js", 'var contributorList = ' + body + ';', function (err){
-      cb();
-    })
+    if ( err || !body ) {
+      return cb(err || new Error("No body"));
+    }
+    fs.writeFile("common/dist/contributors.js", 'var contributorList = ' + body + ';', cb)
   })
 })
 

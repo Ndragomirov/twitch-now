@@ -1,5 +1,7 @@
 (function (){
 
+  var theatreBtnSelector = '.js-control-theatre';
+
   function waitUntilVisible(selector, callback){
     var tm = setInterval(function (){
       var el = document.querySelector(selector);
@@ -11,7 +13,7 @@
   }
 
   function turnOn(){
-    var turnOnBtn = document.querySelector(".theatre-button.action a");
+    var turnOnBtn = document.querySelector(theatreBtnSelector);
     if ( turnOnBtn ) {
       turnOnBtn.click();
     }
@@ -20,7 +22,7 @@
   document.addEventListener("DOMContentLoaded", function (){
     var hash = window.location.search;
     if ( /mode=theater/i.test(hash) ) {
-      waitUntilVisible(".theatre-button.action a", function (){
+      waitUntilVisible(theatreBtnSelector, function (){
         turnOn();
       })
     }
