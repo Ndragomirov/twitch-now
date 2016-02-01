@@ -91,11 +91,12 @@
 
       try {
         if ( isSingle ) {
+          var singlePreview = streamsToShow[0].get("preview") && streamsToShow[0].get("preview").medium;
           opt = {
             type   : "basic",
             title  : streamsToShow[0].get("channel").display_name,
-            message: streamsToShow[0].get("game"),
-            iconUrl: streamsToShow[0].get("preview").medium
+            message: streamsToShow[0].get("game") || "Games & Demos",
+            iconUrl: singlePreview || defaultIcon
           }
 
           bgApp.notificationIds[notificationId] = streamsToShow[0];
@@ -107,16 +108,10 @@
             message: streamTitles.join("\n"),
             iconUrl: defaultIcon
           }
-
         }
         chrome.notifications.create(notificationId, opt, function (){
 
         });
-
-        setTimeout(function (){
-          chrome.notifications.clear(notificationId, function (){
-          });
-        }, 10000);
 
       } catch (e) {
         delete bgApp.notificationIds[notificationId];
