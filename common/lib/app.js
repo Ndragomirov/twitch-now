@@ -113,6 +113,11 @@
 
         });
 
+        setTimeout(function (){
+          chrome.notifications.clear(notificationId, function (){
+          });
+        }, 10000);
+
       } catch (e) {
         delete bgApp.notificationIds[notificationId];
         console.log("Notification error: ", e);
