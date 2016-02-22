@@ -359,6 +359,14 @@
       ],
       show  : true,
       value : "source"
+    },
+    {
+      id   : "livestreamerPath",
+      desc : "Livestreamer path",
+      type : "text",
+      text : true,
+      show : true,
+      value: ""
     }
   ];
 
@@ -944,13 +952,21 @@
       });
     },
 
+    openInLivestreamer: function (quality, path){
+      var url = this.getStreamURL("newlayout");
+      console.log("\nOpen livestreamer", url, quality, path);
+      if ( utils.rbrowser == "firefox" ) {
+        utils.runtime.sendMessage("LIVESTREAMER", {
+          url    : url,
+          quality: quality,
+          path   : path
+        });
+      }
+    },
+
     openStream: function (type){
       if ( type == "livestreamer" ) {
-        console.log("\nOpen livestreamer", this.getStreamURL("newlayout"));
-        utils.runtime.sendMessage("LIVESTREAMER", {
-          url    : this.getStreamURL("newlayout"),
-          quality: settings.get("livestreamerQuality").get("value")
-        });
+        this.openInLivestreamer(settings.get("livestreamerQuality").get("value"), settings.get("livestreamerPath").get("value"));
       } else {
         var url = this.getStreamURL(type);
         utils.tabs.create({url: url});

@@ -42,6 +42,19 @@ select {
     -webkit-padding-start: 5px;
 }
 
+input[type="text"] {
+    border-radius: 3px;
+    padding: 3px;
+    outline: none;
+}
+
+.control input[type="text"] {
+    width: 80%;
+    border: 1px solid black;
+    background-color: rgb(30, 30, 30);
+    color: rgb(221, 221, 221);
+}
+
 input[type="button"] {
     padding: 5px 10px;
     border-radius: 3px;
@@ -121,19 +134,19 @@ input[type="checkbox"]:checked + label span {
     background: url(../img/checkbox.png) -25px top no-repeat;
 }
 
-input.toggle[type="checkbox"] + label div:nth-child(2){
+input.toggle[type="checkbox"] + label div:nth-child(2) {
     display: block;
 }
 
-input.toggle[type="checkbox"] + label div:nth-child(3){
+input.toggle[type="checkbox"] + label div:nth-child(3) {
     display: none;
 }
 
-input.toggle[type="checkbox"]:checked + label div:nth-child(2){
+input.toggle[type="checkbox"]:checked + label div:nth-child(2) {
     display: none;
 }
 
-input.toggle[type="checkbox"]:checked + label div:nth-child(3){
+input.toggle[type="checkbox"]:checked + label div:nth-child(3) {
     display: block;
 }
 

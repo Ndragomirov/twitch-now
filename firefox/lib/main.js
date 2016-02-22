@@ -92,7 +92,7 @@ twitchNow.listen(panel, button);
 
 panel.port.on("LIVESTREAMER", function (opts){
   console.log("\nOpening livestreamer", arguments);
-  livestreamer.runLivestreamer([opts.url, opts.quality]);
+  livestreamer.runLivestreamer(opts.url, opts.quality, opts.path);
 })
 
 panel.port.on("OAUTH2_AUTH", function (){
