@@ -73,6 +73,12 @@
     text-shadow: none;
 }
 
+.white-version .control input[type="text"] {
+    border: 1px solid #cccccc;
+    background-color: rgb(255, 255, 255);
+    color: rgb(120, 120, 120);
+}
+
 .white-version .stream {
     border-top: 1px solid rgb(252, 252, 252);
     border-bottom: 1px solid rgb(220, 220, 220);
@@ -94,11 +100,11 @@
     -moz-box-shadow: none;
 }
 
-.white-version  .stream:hover {
+.white-version .stream:hover {
     background-color: rgb(248, 248, 248);
 }
 
-.white-version  .stream .item-image-container {
+.white-version .stream .item-image-container {
     border: 1px solid rgb(255, 255, 255);
 }
 
