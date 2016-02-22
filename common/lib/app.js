@@ -353,6 +353,8 @@
       opts  : [
         {id: "source", name: "source"},
         {id: "high", name: "high"},
+        {id: "low", name: "low"},
+        {id: "medium", name: "medium"},
         {id: "mobile", name: "mobile"}
       ],
       show  : true,
