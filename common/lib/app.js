@@ -242,7 +242,8 @@
       opts : [
         {id: "newlayout", name: "__MSG_m16__"},
         {id: "popout", name: "__MSG_m17__"},
-        {id: "theatrelayout", name: "__MSG_m88__"}
+        {id: "theatrelayout", name: "__MSG_m88__"},
+        {id: "html5", name: "__MSG_m101__"}
       ],
       show : true,
       value: "newlayout"
@@ -919,7 +920,9 @@
 
     getStreamURL: function (type){
       type = type || settings.get("openStreamIn").get("value");
-
+      if(type == "html5"){
+        return "http://player.twitch.tv/?channel=" + this.get("channel").name + "&html5";
+      }
       var links = {
         theatrelayout: "/ID?mode=theater",
         newlayout    : "/ID",

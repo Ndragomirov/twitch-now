@@ -98,5 +98,6 @@
     "m97": { "message" : "All sound"},
     "m98": { "message" : "None sound"},
     "m99": { "message" : "Loop notification sound"},
-    "m100": { "message" : "open in livestreamer"}
+    "m100": { "message" : "open in livestreamer"},
+    "m101": { "message" : "html5 player (no flash plugin required)"}
 }
