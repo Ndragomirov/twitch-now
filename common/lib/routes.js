@@ -3,26 +3,23 @@
 
   var Router = app.Router = Backbone.Router.extend({
     routes: {
-      "topstreams"        : "topstreams",
-      "info"              : "info",
-      "following"         : "following",
-      "followedgames"     : "followedGames",
-      "user"              : "user",
-      "user/notifications": "notifications",
-      "user/languages"    : "",
-      "settings"          : "settings",
-      "search"            : "search",
-      "videos/:stream"    : "videos",
-      "browse"            : "browseGames",
-      "browse/:game/:view": "gameLobby"
+      "topstreams"          : "topstreams",
+      "info"                : "info",
+      "following"           : "following",
+      "followedgames"       : "followedGames",
+      "user"                : "user",
+      "user/notifications"  : "notifications",
+      "user/languages"      : "",
+      "settings"            : "settings",
+      "search"              : "search",
+      "videos/:stream"      : "videos",
+      "browse"              : "browseGames",
+      "browse/:game/streams": "gameStreamsView",
+      "browse/:game/videos" : "gameVideosView"
     },
 
     videos: function (stream){
       app.views.videos.setStream(decodeURIComponent(stream));
-    },
-
-    gameLobby: function (game){
-      app.views.gameLobby.setGame(decodeURIComponent(game));
     }
   });
 

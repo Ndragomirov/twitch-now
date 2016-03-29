@@ -109,9 +109,20 @@
     })
 
     views.gameLobby = new GameLobbyView({
-      el   : "#gamelobby",
-      route: "gameLobby",
+      el   : "#gamelobby-game",
       model: b.gameLobby
+    })
+
+    views.gameStreamsView = new StreamListView({
+      el               : "#gamelobby-streams",
+      collection       : b.gameStreams,
+      preloaderOnUpdate: true
+    });
+
+    views.gameVideosView = new VideoListView({
+      el               : "#gamelobby-videos",
+      collection       : b.gameVideos,
+      preloaderOnUpdate: true
     })
 
     views.info = new InfoView({
@@ -588,6 +599,13 @@
       this.listenTo(this.collection, "remove update sort reset", this.render.bind(this, null));
       this.listenTo(this.collection, "_error", this.showMessage.bind(this));
       this.listenTo(this.collection, "add addarray", this.render.bind(this));
+      if ( opts.preloaderOnUpdate ) {
+        this.listenTo(this.collection, "update-status", function (isUpdating, opts){
+          if ( isUpdating && opts.reset ) {
+            this.container.empty().append(this.app.preloader);
+          }
+        }.bind(this));
+      }
     },
     showMessage: function (type){
       if ( this.messages[type] ) {
@@ -735,96 +753,39 @@
     }
   });
 
-  var ExtendedGameView = DefaultView.extend({
-    template          : "gameextended",
-    events            : {
+  var GameLobbyView = DefaultView.extend({
+    template     : "gameextended",
+    events       : {
       "click .game-follow": "follow"
     },
-    render            : function (){
-      DefaultView.prototype.render.apply(this, arguments);
-      this.toggleActiveButton(this.view);
-    },
-    setCurrentView    : function (game, view){
-      this.view = view;
-      this.toggleActiveButton(this.view);
-    },
-    toggleActiveButton: function (view){
-      var $buttons = this.$el.find(".button").removeClass("active");
-      if ( /streams$/i.exec(view) ) {
-        $buttons.eq(0).addClass("active");
-      }
+    onRouteChange: function (route, r1){
+      console.log("route", arguments);
+      var isActive = /gameStreams|gameVideos/i.test(route);
+      this.$el.toggle(isActive);
+      $("#content").toggleClass("shift", isActive);
+      if ( /gameStreams|gameVideos/i.test(route) ) {
+        var $buttons = this.$el.find(".button").removeClass("active");
 
-      if ( /videos$/i.exec(view) ) {
-        $buttons.eq(1).addClass("active");
+        if ( /gameStreams/i.exec(route) ) {
+          $buttons.eq(0).addClass("active");
+        }
+
+        if ( /gameVideos/i.exec(route) ) {
+          $buttons.eq(1).addClass("active");
+        }
+        var gameName = r1[0];
+        this.model.change(gameName);
       }
     },
-    follow            : function (){
+    follow       : function (){
       this.$el.find(".game-follow").addClass("active");
       this.model.follow();
     },
-    initialize        : function (){
+    initialize   : function (){
       DefaultView.prototype.initialize.apply(this, arguments);
-      this.listenTo(this.app.router, "route:gameLobby", this.setCurrentView.bind(this));
-    }
-  })
-
-  var GameLobbyView = DefaultView.extend({
-
-    initialize      : function (opts){
-      DefaultView.prototype.initialize.apply(this, arguments);
-      this.listenTo(this.app.router, "route:gameLobby", this.toggleActiveView.bind(this));
-      this.listenTo(this.app.router, "route", this.toggle.bind(this));
-
-      this.gameView = new ExtendedGameView({
-        el   : "#gamelobby-game",
-        model: this.model.game
-      })
-
-      this.streamView = new StreamListView({
-        el        : "#gamelobby-streams",
-        collection: b.gameLobby.streams
-      });
-
-      this.videoView = new VideoListView({
-        el        : "#gamelobby-videos",
-        collection: b.gameLobby.videos
-      })
-    },
-    render          : function (){
-      this.gameView.render();
-      this.videoView.render();
-      this.streamView.render();
-    },
-    toggle          : function (r){
-      if ( /gamelobby/i.exec(r) ) {
-        $("#content").css({top: 154});
-      } else {
-        $("#content").css({top: 31});
-      }
-    },
-    loadNext        : function (){
-      this.videoView.loadNext();
-      this.streamView.loadNext();
-    },
-    toggleActiveView: function (game, view){
-      this.$el.find(".tabs [tab-id]").hide();
-      this.$el.find(".tabs [tab-id='" + view + "']").show();
-    },
-    update          : function (){
-      this.videoView.update();
-      this.streamView.update();
-    },
-    setGame         : function (game){
-      if ( !this.model.game.get("game") || this.model.game.get("game").name != game ) {
-        this.model.setGame(game);
-        this.gameView.render();
-        this.update();
-      } else {
-        if ( !this.isRendered ) {
-          this.render();
-          this.isRendered = true;
-        }
-      }
+      this.listenTo(this.model, "change", this.render.bind(this));
+      this.listenTo(this.app.router, "route", this.onRouteChange.bind(this));
+      this.render();
     }
   })
 

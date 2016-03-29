@@ -582,12 +582,12 @@
       }
 
       this.updating = true;
-      this.trigger("update-status", this.updating);
+      this.trigger("update-status", this.updating, {reset: opts.reset});
       this.beforeUpdate();
       this.send(query, function (err, res){
         console.log(err, res);
         this.updating = false;
-        this.trigger("update-status", this.updating);
+        this.trigger("update-status", this.updating, {reset: opts.reset});
 
         if ( this.auto ) {
           this.interval = setTimeout(function (){
@@ -1130,25 +1130,22 @@
     }
   });
 
-  var GameLobby = Backbone.Model.extend({
-    initialize: function (){
-      this.streams = new GameStreams;
-      this.videos = new GameVideos;
-      this.game = new Game;
-    },
-    lookupGame: function (gameName){
-      return games.findByName(gameName) || followedgames.findByName(gameName);
-    },
-    setGame   : function (gameName){
-      var game = this.lookupGame(gameName);
-      if ( game ) {
-        var gameJSON = game.toJSON();
-        this.streams.game = gameName;
-        this.videos.game = gameName;
-        this.game.set(gameJSON);
+  var GameLobby = Game.extend({
+
+    lastChange: 0,
+
+    change: function (gameName){
+      var newGame = games.findByName(gameName) || followedgames.findByName(gameName);
+      if ( newGame ) {
+        console.log("lastchange", this.lastChange);
+        if ( !this.get("game") || newGame.get("game").name != this.get("game").name || ( Date.now() - this.lastChange ) > 5 * 1000 * 60 ) {
+          this.set(newGame.toJSON());
+          this.lastChange = Date.now();
+          bgApp.dispatcher.trigger("gameLobby:change", gameName);
+        }
       }
     }
-  });
+  })
 
   var GameStreams = StreamCollection.extend({
     game      : null,
@@ -1158,6 +1155,26 @@
       twitchApi.send("streams", query, callback);
     }
   });
+
+  var GameLobbyStreams = GameStreams.extend({
+    initialize: function (){
+      bgApp.dispatcher.on("gameLobby:change", function (game){
+        this.game = game;
+        this.update();
+      }.bind(this));
+      GameStreams.prototype.initialize.apply(this, arguments);
+    }
+  })
+
+  var GameLobbyVideos = GameVideos.extend({
+    initialize: function (){
+      bgApp.dispatcher.on("gameLobby:change", function (game){
+        this.game = game;
+        this.update();
+      }.bind(this));
+      GameVideos.prototype.initialize.apply(this, arguments);
+    }
+  })
 
   var TopStreams = StreamCollection.extend({
     auto      : true,
@@ -1236,6 +1253,8 @@
   var search = root.search = new Search;
   var user = root.user = new User;
   var gameLobby = root.gameLobby = new GameLobby;
+  var gameVideos = root.gameVideos = new GameLobbyVideos;
+  var gameStreams = root.gameStreams = new GameLobbyStreams;
 
   topstreams.update();
   games.update();
