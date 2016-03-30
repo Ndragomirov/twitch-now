@@ -6,7 +6,7 @@
     "m5" : { "message" : "Mostrar notificações quando as streams seguidas iniciam a transmissão"},
     "m6" : { "message" : "Fechar automaticamente a notificação depois"},
     "m7" : { "message" : "Reproduzir som de notificação"},
-    "m8" : { "message" : "Seleccionar o som de notificação"},
+    "m8" : { "message" : "Selecionar o som de notificação"},
     "m9" : { "message" : "Intervalo de atualização"},
     "m10": { "message" : "espectadores ascendente"},
     "m11": { "message" : "espectadores descendente"},
@@ -90,7 +90,7 @@
     "m89": { "message" : "streams"},
     "m90": { "message" : "Gerir notificações do canal"},
     "m91": { "message" : "Vai receber uma notificação no desktop ou com som quando um canal que segue iniciar a transmissão."},
-    "m92": { "message" : "Seleccionar"},
+    "m92": { "message" : "Selecionar"},
     "m93": { "message" : "As suas preferências de notificação foram alteradas."},
     "m94": { "message" : "Desfazer"},
     "m95": { "message" : "Todo desktop"},
@@ -98,5 +98,6 @@
     "m97": { "message" : "Todo som"},
     "m98": { "message" : "Nenhum som"},
     "m99": { "message" : "Som da notificação com repetição"},
-    "m100": { "message" : "abrir no livestreamer"}
+    "m100": { "message" : "abrir no livestreamer"},
+    "m101": { "message" : "leitor html5 (flash plugin não é necessário)"}
 }
