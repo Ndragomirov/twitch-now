@@ -84,9 +84,9 @@
     "m83": { "message" : "suivre le jeu"},
     "m84": { "message" : "ne plus suivre le jeu"},
     "m85": { "message" : "Gérer les notifications"},
-    "m86": { "message" : "Volume des notification"},
-    "m87": { "message" : "Regarder sur Multitwitch.tv"},
-    "m88": { "message" : "Ouvrir dans un nouvel onglet avec le mode cinéma activé"},
+    "m86": { "message" : "Volume des notifications"},
+    "m87": { "message" : "regarder sur Multitwitch.tv"},
+    "m88": { "message" : "ouvrir dans un nouvel onglet avec le Mode Studio activé"},
     "m89": { "message" : "streams"},
     "m90": { "message" : "Gérer les notifications de chaine"},
     "m91": { "message" : "Vous recevrez une notification de bureau/sonore dès que la diffusion commence pour chaque chaine que vous suivez."},
@@ -96,5 +96,8 @@
     "m95": { "message" : "Toutes les notifications de bureau"},
     "m96": { "message" : "Aucune notification de bureau"},
     "m97": { "message" : "Toutes les notifications sonores"},
-    "m98": { "message" : "Aucune notification sonore"}
+    "m98": { "message" : "Aucune notification sonore"},
+    "m99": { "message" : "Boucle de notification sonore"},
+    "m100": { "message" : "ouvrir dans livestreamer"},
+    "m101": { "message" : "lecteur html5 (aucun plugin flash requis)"}
 }
