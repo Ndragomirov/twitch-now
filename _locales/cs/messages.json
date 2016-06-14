@@ -87,4 +87,17 @@
     "m86": { "message" : "Hlasitost upozornění"},
     "m87": { "message" : "sledovat na Multitwitch.tv"},
     "m88": { "message" : "otevřít v novém panelu se zapnutým kino režimem"}
+	"m89": { "message" : "streams"},
+    "m90": { "message" : "Spravovat notifikace kanálů"},
+    "m91": { "message" : "Pokud sledující začne streamovat, obdržíte notifikaci."},
+    "m92": { "message" : "Vybrat"},
+    "m93": { "message" : "Vaše nastavení notifikací bylo změněno."},
+    "m94": { "message" : "Vrátit"},
+    "m95": { "message" : "Všechny notifikace na ploše"},
+    "m96": { "message" : "Žádné notifikace na ploše"},
+    "m97": { "message" : "Všechny zvuky"},
+    "m98": { "message" : "Žádný zvuk"},
+    "m99": { "message" : "Přehrát notifikační zvuk ve smyčce"},
+    "m100": { "message" : "otevřít v livestreameru"},
+    "m101": { "message" : "html5 přehrávač (flash doplněk není vyžadován)"}
 }
