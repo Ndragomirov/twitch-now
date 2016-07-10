@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50" height="16" viewBox="0 0 50 16">
+  <defs>
+    <filter id="f" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity=".3" flood-color="#000" result="f1"/>
+      <feComposite in="f1" in2="SourceGraphic" operator="out" result="c1"/>
+      <feGaussianBlur in="c1" stdDeviation="1" result="b1"/>
+      <feComposite in="b1" in2="SourceGraphic" operator="atop"/>
+    </filter>
+  </defs>
+  <rect id="a" ry="3" y="0" height="16" width="16" fill="#6441a5" filter="url(#f)"/>
+  <use xlink:href="#a" transform="translate(25)"/>
+  <path d="M26.812 6.566l6.753 6.455 9.98-10.56L41.71.658l-8.143 8.44L28.7 4.58z" fill="#b9a3e3" fill-rule="evenodd"/>
+</svg>
