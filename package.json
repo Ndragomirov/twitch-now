@@ -22,6 +22,7 @@
     "gulp-zip": "^3.0.2",
     "jshint": "^2.8.0",
     "merge-stream": "^1.0.0",
+    "request": "^2.73.0",
     "run-sequence": "^1.1.4"
   },
   "scripts": {

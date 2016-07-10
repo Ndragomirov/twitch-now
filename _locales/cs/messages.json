@@ -86,8 +86,8 @@
     "m85": { "message" : "Spravovat upozornění"},
     "m86": { "message" : "Hlasitost upozornění"},
     "m87": { "message" : "sledovat na Multitwitch.tv"},
-    "m88": { "message" : "otevřít v novém panelu se zapnutým kino režimem"}
-	"m89": { "message" : "streams"},
+    "m88": { "message" : "otevřít v novém panelu se zapnutým kino režimem"},
+    "m89": { "message" : "streams"},
     "m90": { "message" : "Spravovat notifikace kanálů"},
     "m91": { "message" : "Pokud sledující začne streamovat, obdržíte notifikaci."},
     "m92": { "message" : "Vybrat"},
