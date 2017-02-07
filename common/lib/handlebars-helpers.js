@@ -26,7 +26,7 @@ Handlebars.registerHelper('h-checked-2', function (context, block){
 });
 
 Handlebars.registerHelper('h-num-format', function (v){
-  return v ? v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") : '';
+  return isNaN(v) ? '' : v.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 })
 
 Handlebars.registerHelper('h-uptime', function (v){
