@@ -1,6 +1,6 @@
 {
-    "m1" : { "message" : "Ordenar streams por"},
-    "m2" : { "message" : "Abrir streams com"},
+    "m1" : { "message" : "Ordenar transmissões por"},
+    "m2" : { "message" : "Abrir transmissões com"},
     "m3" : { "message" : "Abrir chat em"},
     "m4" : { "message" : "Mostrar um emblema com as transmissões seguidas que estão em direto"},
     "m5" : { "message" : "Mostrar notificações quando as transmissões seguidas iniciam o direto"},
