@@ -1,9 +1,8 @@
 (function (){
   var root = this;
   var that = {};
-  var isFirefox = !!root.require;
-  var localStorage = isFirefox ? require("sdk/simple-storage").storage : root.localStorage;
-  var EventEmitter = isFirefox ? require("./eventemitter.js") : root.EventEmitter;
+  var isFirefox = !!root.browser;
+  var _browser = isFirefox ? root.browser : chrome;
 
   function noop(){
   }
@@ -20,38 +19,19 @@
   }
 
   var request = function (opts, callback){
-    if ( root.require ) {
-      opts.method = opts.method.toLowerCase();
-      var Request = require("sdk/request").Request;
-      Request({
-        url       : opts.url,
-        content   : opts.data,
-        onComplete: function (response){
-          if ( response.status == 200 ) {
-            callback(null, JSON.parse(response.text));
-          } else {
-            callback(response.status);
-          }
+    var $ = root.jQuery;
+    $.ajax({
+      url : opts.url,
+      type: opts.method,
+      data: opts.data
+    })
+      .always(function (data, textStatus, jqXHR){
+        if ( textStatus == "success" ) {
+          callback(null, data);
+        } else {
+          callback(data);
         }
-      })[opts.method]()
-    }
-
-    if ( root.jQuery ) {
-      console.log("using jquery", opts);
-      var $ = root.jQuery;
-      $.ajax({
-        url : opts.url,
-        type: opts.method,
-        data: opts.data
-      })
-        .always(function (data, textStatus, jqXHR){
-          if ( textStatus == "success" ) {
-            callback(null, data);
-          } else {
-            callback(data);
-          }
-        });
-    }
+      });
   }
 
   var Adapter = function (id, opts, flow){
@@ -76,51 +56,27 @@
     var injectScript = '(' + this.injectScript.toString() + ')()';
     var injectTo;
 
-    if ( isFirefox ) {
-      var pageMode = require("sdk/page-mod");
+    injectTo = this.redirect;
+    _browser.tabs.onUpdated.addListener(function (tabId, changeInfo){
+      if ( changeInfo.url && changeInfo.url.indexOf(injectTo) != -1 ) {
+        console.log("\nExecuting scripts");
+        _browser.tabs.executeScript(tabId, {code: injectScript});
+      }
+    })
 
-      injectTo = this.redirect + "*";
-
-      console.log("\n\n\nInjecting\n\n\n");
-      pageMode.PageMod({
-        include          : ["https://" + injectTo, "http://" + injectTo],
-        contentScript    : injectScript,
-        contentScriptWhen: "ready",
-        attachTo         : "top",
-        onAttach         : function (worker){
-          console.log("\n\n\nattached to: " + worker.tab.url);
-          worker.port.on("OAUTH2", function (msg){
-            console.log("\n\nAuth2 data :", msg)
-            self.finalize(msg.value.params);
-            worker.tab.close();
-          });
-        }
-      });
-    } else {
-      injectTo = this.redirect;
-      chrome.tabs.onUpdated.addListener(function (tabId, changeInfo){
-        if ( changeInfo.url && changeInfo.url.indexOf(injectTo) != -1 ) {
-          console.log("\nExecuting scripts");
-          chrome.tabs.executeScript(tabId, {code: injectScript});
-        }
-      })
-
-      chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse){
-        if ( msg.type == "OAUTH2" ) {
-          self.finalize(msg.value.params);
-          setTimeout(function (){
-            chrome.tabs.remove(sender.tab.id);
-          }, 100)
-        }
-      });
-    }
+    _browser.runtime.onMessage.addListener(function (msg, sender, sendResponse){
+      if ( msg.type == "OAUTH2" ) {
+        self.finalize(msg.value.params);
+        setTimeout(function (){
+          _browser.tabs.remove(sender.tab.id);
+        }, 100)
+      }
+    });
   }
 
   Adapter.prototype.injectScript = function (){
 
     console.log("\n\nInjecting\n\n");
-    var self = window.self;
-    var isFirefox = self && self.port && self.port.emit;
 
     var sendMessage = function (msg){
 
@@ -129,11 +85,7 @@
         type : "OAUTH2"
       };
 
-      if ( isFirefox ) {
-        self.port.emit("OAUTH2", data);
-      } else {
-        chrome.runtime.sendMessage(data);
-      }
+      chrome.runtime.sendMessage(data);
     }
 
     var send = function (){
@@ -151,7 +103,7 @@
 
   Adapter.prototype.syncGet = function (){
     var self = this;
-    chrome.storage.sync.get(this.lsPath, function (item){
+    _browser.storage.sync.get(this.lsPath, function (item){
       console.log("SYNC_GET", item);
       if ( item[self.lsPath] ) {
         self.set(JSON.parse(item[self.lsPath]), true);
@@ -161,7 +113,7 @@
 
   Adapter.prototype.sync = function (){
     var self = this;
-    chrome.storage.onChanged.addListener(function (changes, namespace){
+    _browser.storage.onChanged.addListener(function (changes, namespace){
       if ( namespace === "sync" ) {
         console.log("SYNC_CHANGED", changes);
         if ( self.lsPath in changes ) {
@@ -191,14 +143,12 @@
 
       console.log("set sync data", syncData);
 
-      chrome.storage.sync.set(syncData, function (){
+      _browser.storage.sync.set(syncData, function (){
         console.log("SYNC_SET_DONE", arguments);
       });
     }
 
-    if ( !isFirefox ) {
-      this.trigger("OAUTH2_TOKEN", {value: this.getAccessToken()});
-    }
+    this.trigger("OAUTH2_TOKEN", {value: this.getAccessToken()});
   }
 
   Adapter.prototype.updateLocalStorage = function (){
@@ -300,16 +250,7 @@
   }
 
   Adapter.prototype.openTab = function (url){
-    if ( isFirefox ) {
-      var tabs = require('sdk/tabs');
-
-      tabs.open({
-        url: url
-      });
-
-    } else {
-      chrome.tabs.create({url: url});
-    }
+    _browser.tabs.create({url: url});
   }
 
   Adapter.prototype.setAccessToken = function (token){

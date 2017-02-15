@@ -15,20 +15,6 @@ var fs = require('fs');
 var jshint = require('gulp-jshint');
 var request = require('request');
 
-gulp.task('clean:firefox_after', function (){
-  return del.sync([
-    'build/firefox/data/common/dist/popup.comb.css.map',
-    'build/firefox/data/common/lib/3rd/analytics.js',
-    'build/firefox/data/common/lib/3rd/eventemitter.js',
-    'build/firefox/lib/3rd/eventemitter.js',
-    'build/firefox/data/common/lib/analytics.js',
-    'build/firefox/data/common/lib/oauth2.js',
-    'build/firefox/data/common/lib/lytics.js',
-    'build/firefox/data/common/lib/onerror.js',
-    'build/firefox/data/common/dist/popup.comb.js',
-    'build/firefox/data/common/dist/popup.comb.js.map'
-  ])
-})
 
 gulp.task('lint', function (){
   return gulp
@@ -48,48 +34,21 @@ gulp.task('lint', function (){
 });
 
 gulp.task('copy:opera', function (){
-  var c1 = gulp
+  return gulp
     .src([
-      'build/chrome/**'
-    ])
-    .pipe(gulp.dest('build/opera/'))
-
-  var c2 = gulp
-    .src([
+      'build/chrome/**',
       'opera/**'
     ])
     .pipe(gulp.dest('build/opera/'))
-
-  return merge(c1, c2);
 })
 
+
 gulp.task('copy:firefox', function (){
-  var c1 = gulp
-    .src([
-      'common/lib/3rd/eventemitter.js',
-      'common/lib/oauth2.js'
-    ])
-    .pipe(gulp.dest('build/firefox/lib/'))
-
-  var c4 = gulp
-    .src([
-      'common/lib/3rd/eventemitter.js'
-    ])
-    .pipe(gulp.dest('build/firefox/lib/3rd/'))
-
-  var c2 = gulp
-    .src([
-      'common/**'
-    ])
-    .pipe(gulp.dest('build/firefox/data/common/'))
-
-  var c3 = gulp
-    .src([
-      'firefox/**'
-    ])
+  return gulp.src([
+    'build/chrome/**',
+    'firefox/**'
+  ])
     .pipe(gulp.dest('build/firefox/'))
-
-  return merge(c1, c2, c3, c4);
 })
 
 gulp.task('copy:chrome', function (){
@@ -192,10 +151,6 @@ gulp.task('clean:firefox', function (){
   ]);
 });
 
-gulp.task('compress:firefox', shell.task([
-  "cd ./build/firefox && jpm xpi && mv *.xpi ../../dist/"
-]))
-
 gulp.task('compress:chrome', function (){
   var v = JSON.parse(fs.readFileSync("package.json")).version;
 
@@ -209,6 +164,14 @@ gulp.task('compress:opera', function (){
 
   return gulp.src('build/opera/**')
     .pipe(zip('twitch-now-opera-' + v + '.zip'))
+    .pipe(gulp.dest('dist/'));
+})
+
+gulp.task('compress:firefox', function (){
+  var v = JSON.parse(fs.readFileSync("package.json")).version;
+
+  return gulp.src('build/opera/**')
+    .pipe(zip('twitch-now-firefox-' + v + '.zip'))
     .pipe(gulp.dest('dist/'));
 })
 
@@ -279,23 +242,21 @@ gulp.task('chrome', function (cb){
   );
 })
 
-gulp.task('firefox', function (cb){
-  runSequence(
-    'clean:firefox',
-    'concat:popupcss',
-    'i18n',
-    'handlebars',
-    'copy:firefox',
-    'clean:firefox_after',
-    cb
-  )
-});
-
 gulp.task('opera', function (cb){
   runSequence(
     'chrome',
     'clean:opera',
     'copy:opera',
+    cb
+  );
+});
+
+
+gulp.task('firefox', function (cb){
+  runSequence(
+    'chrome',
+    'clean:firefox',
+    'copy:firefox',
     cb
   );
 });

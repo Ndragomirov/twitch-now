@@ -20,21 +20,13 @@
   }
 
   TwitchApi.prototype.authorize = function (){
-    if ( isFirefox ) {
-      self.port.emit("OAUTH2_AUTH");
-    } else {
-      twitchOauth.authorize(function (){
-      })
-    }
+    twitchOauth.authorize(function (){
+    })
   }
 
   TwitchApi.prototype.revoke = function (){
     if ( this.token && this.token.length > 0 ) {
-      if ( isFirefox ) {
-        self.port.emit("OAUTH2_REVOKE");
-      } else {
-        twitchOauth.clearAccessToken();
-      }
+      twitchOauth.clearAccessToken();
     }
   }
 
@@ -64,16 +56,9 @@
       }
     });
 
-    if ( isFirefox ) {
-      self.port.on("OAUTH2_TOKEN", function (accessToken){
-        _self.trigger("tokenchange", accessToken);
-      })
-      self.port.emit("OAUTH2_TOKEN");
-    } else {
-      twitchOauth.on("OAUTH2_TOKEN", function (){
-        _self.trigger("tokenchange", twitchOauth.getAccessToken());
-      })
-    }
+    twitchOauth.on("OAUTH2_TOKEN", function (){
+      _self.trigger("tokenchange", twitchOauth.getAccessToken());
+    })
   }
 
   TwitchApi.prototype.getUserName = function (cb){
@@ -220,6 +205,16 @@
     return {
       type: "GET",
       url : "/users/:user/follows/channels",
+      data: {
+        limit: 100
+      }
+    }
+  }
+
+  methods.hosts = function (){
+    return {
+      type: "GET",
+      url : "http://api.twitch.tv/api/users/:user/followed/hosting",
       data: {
         limit: 100
       }

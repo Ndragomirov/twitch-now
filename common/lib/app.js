@@ -33,10 +33,6 @@
     return OSName;
   };
 
-  bgApp.growlNotificationsSupported = function (){
-    return utils.notifications.growlNotificationsSupported();
-  };
-
   bgApp.richNotificationsSupported = function (){
     return utils.notifications.richNotificationsSupported();
   };
@@ -70,20 +66,6 @@
     var streamTitles = streamsToShow.map(function (c){
       return c.get("channel").display_name;
     });
-
-    if ( bgApp.growlNotificationsSupported() ) {
-
-      var opts = {
-        title  : "Twitch Now",
-        text   : streamTitles.join("\n"),
-        iconURL: defaultIcon
-      }
-
-      if ( streamTitles.length == 1 ) {
-        opts.data = streamsToShow[0].getStreamURL();
-      }
-      utils.notifications.create(opts);
-    }
 
     if ( bgApp.richNotificationsSupported() ) {
 
@@ -525,7 +507,7 @@
   });
 
   var UpdatableCollection = Backbone.Collection.extend({
-    auto        : false,
+    auto        : false, // auto updates every `timeout` interval
     pagination  : false,
     timeout     : 60 * 1000,
     pageQuery   : {
@@ -920,7 +902,7 @@
 
     getStreamURL: function (type){
       type = type || settings.get("openStreamIn").get("value");
-      if(type == "html5"){
+      if ( type == "html5" ) {
         return "http://player.twitch.tv/?channel=" + this.get("channel").name + "&html5";
       }
       var links = {
@@ -1027,6 +1009,47 @@
       return callback(null, res.streams);
     }
   });
+
+  var Hosts = StreamCollection.extend({
+    pagination: false,
+    auto      : true,
+    timeout   : 5 * 60 * 1000,
+    model     : Stream,
+    initialize: function (){
+      var self = this;
+
+      twitchApi.on("authorize", function (){
+        self.update();
+      })
+
+      twitchApi.on("revoke", function (){
+        self.reset();
+      });
+
+      StreamCollection.prototype.initialize.call(this);
+    },
+    parse     : function (res, callback){
+      console.log(res.hosts);
+      if ( !res || !res.hosts ) {
+        return callback(new Error("api"));
+      }
+      var streams = res.hosts.map(function (host){
+        return Object.assign(
+          {},
+          host.target,
+          {
+            host: _.pick(host, 'display_name', 'id', 'name')
+          }
+        );
+      })
+
+      callback(null, streams);
+    },
+    send      : function (query, callback){
+      console.log("hosts", arguments);
+      twitchApi.send("hosts", {}, callback);
+    }
+  })
 
   var FollowingStreams = StreamCollection.extend({
     pagination: false,
@@ -1255,6 +1278,7 @@
   var gameLobby = root.gameLobby = new GameLobby;
   var gameVideos = root.gameVideos = new GameLobbyVideos;
   var gameStreams = root.gameStreams = new GameLobbyStreams;
+  var hosts = root.hosts = new Hosts;
 
   topstreams.update();
   games.update();
