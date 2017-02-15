@@ -28,7 +28,7 @@ $ gulp firefox
 
 To run Firefox version:
 ```
-$ cd builds/firefox && jpm run
+$ run firefox, goto about:debugging, then load build/firefox/manifest.json
 ```
 
 To build Opera version:
