@@ -4,6 +4,7 @@ function formatDuration(s){
   if ( isNaN(s) ) return '';
 
   var fm = [
+    Math.floor(s / 60 / 60 / 24),
     Math.floor(s / 60 / 60) % 24,
     Math.floor(s / 60) % 60,
     s % 60
@@ -11,7 +12,7 @@ function formatDuration(s){
 
   return fm.map(function (v, i){
     return ((v < 10) ? '0' : '') + v;
-  }).join(':').replace(/00:0{0,1}|^0/, "");
+  }).join(':').replace(/^(00:)*/, "").replace(/^0(\d)/, '$1')
 }
 
 Handlebars.registerHelper('h-checked', function (input, parent){
