@@ -19,8 +19,7 @@ var request = require('request');
 gulp.task('lint', function (){
   return gulp
     .src([
-      './common/lib/*.js',
-      './firefox/lib/*.js'
+      './common/lib/*.js'
     ])
     .pipe(jshint({
       moz          : true,
@@ -170,7 +169,7 @@ gulp.task('compress:opera', function (){
 gulp.task('compress:firefox', function (){
   var v = JSON.parse(fs.readFileSync("package.json")).version;
 
-  return gulp.src('build/opera/**')
+  return gulp.src('build/firefox/**')
     .pipe(zip('twitch-now-firefox-' + v + '.zip'))
     .pipe(gulp.dest('dist/'));
 })
@@ -184,12 +183,6 @@ gulp.task('handlebars', function (){
       noRedeclare: true // Avoid duplicate declarations
     }))
     .pipe(concat('templates.js'))
-    .pipe(gulp.dest('common/dist/'));
-});
-
-gulp.task('i18n', function (){
-  return gulp.src(['_locales/**/*.json'])
-    .pipe(i18n('locales.json'))
     .pipe(gulp.dest('common/dist/'));
 });
 
@@ -214,7 +207,7 @@ gulp.task('bump', function (){
       './package.json',
       './chrome/manifest.json',
       './opera/manifest.json',
-      './firefox/package.json'
+      './firefox/manifest.json'
     ])
     .pipe(bump())
     .pipe(gulp.dest(function (d){
@@ -225,10 +218,6 @@ gulp.task('bump', function (){
 gulp.task('watch', function (){
   gulp.watch(["common/**", "templates/**"], ['chrome']);
 })
-
-gulp.task('jpm', shell.task([
-  "cd ./build/firefox && jpm run -b /usr/bin/firefox"
-]))
 
 gulp.task('chrome', function (cb){
   runSequence(
