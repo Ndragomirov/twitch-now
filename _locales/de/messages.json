@@ -86,5 +86,18 @@
     "m85": { "message" : "Benachrichtigungen verwalten"},
     "m86": { "message" : "Benachrichtungslautstärke"},
     "m87": { "message" : "Auf Multitwitch.tv ansehen"},
-    "m88": { "message" : "Im Theatermodus in neuem Tab öffnen"}
+    "m88": { "message" : "Im Theatermodus in neuem Tab öffnen"},
+    "m89": { "message" : "Streams"},
+    "m90": { "message" : "Benachrichtigungen für Kanäle verwalten"},
+    "m91": { "message" : "Eine Benachrichtigung und ein Ton erklingen, wenn ein Kanal, dem du folst, anfängt zu senden."},
+    "m92": { "message" : "Auswählen"},
+    "m93": { "message" : "Deine Benachrichtigungseinstellungen wurden geändert."},
+    "m94": { "message" : "Rückgängig"},
+    "m95": { "message" : "Alle Benachrichtigungen"},
+    "m96": { "message" : "Keine Benachrichtigungen"},
+    "m97": { "message" : "Alle Töne"},
+    "m98": { "message" : "Keine Töne"},
+    "m99": { "message" : "Wiederhole Töne"},
+    "m100": { "message" : "Öffnen mit livestreamer"},
+    "m101": { "message" : "html5 player (Kein Flash plugin notwendig)"}
 }
