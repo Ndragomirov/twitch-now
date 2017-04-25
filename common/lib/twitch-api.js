@@ -8,6 +8,7 @@
     if ( !clientId ) throw new Error("clientId is required");
     this.basePath = "https://api.twitch.tv/kraken";
     this.userName = "";
+    this.userId = "";
     this.clientId = clientId;
     this.timeout = 10 * 1000;
     this.token = "";
@@ -35,7 +36,7 @@
       timeout : this.timeout,
       dataType: "json",
       headers : {
-        "Accept"       : "application/vnd.twitchtv.v3+json",
+        "Accept"       : "application/vnd.twitchtv.v5+json",
         "Client-ID"    : this.clientId,
         "Authorization": " OAuth " + this.token
       }
@@ -84,6 +85,7 @@
         if ( !res.token.user_name ) {
           return cb(err);
         }
+        _self.userId = res.token.user_id;
         _self.userName = userName = res.token.user_name;
         return cb(null, userName);
       });
@@ -110,7 +112,8 @@
 
       //rewrite basePath if full url provided by requestOpts
       requestOpts.url = /^http/.exec(requestOpts.url) ? requestOpts.url : _self.basePath + requestOpts.url;
-      requestOpts.url = requestOpts.url.replace(/:user/, userName);
+      requestOpts.url = requestOpts.url.replace(/:user_name/, userName);
+      requestOpts.url = requestOpts.url.replace(/:user_id/, _self.userId);
       requestOpts = $.extend(true, requestOpts, {data: opts}, _self.getRequestParams());
       $.ajax(requestOpts)
         .done(function (data){
@@ -204,7 +207,7 @@
   methods.follows = function (){
     return {
       type: "GET",
-      url : "/users/:user/follows/channels",
+      url : "/users/:user_id/follows/channels",
       data: {
         limit: 100
       }
@@ -214,7 +217,7 @@
   methods.hosts = function (){
     return {
       type: "GET",
-      url : "http://api.twitch.tv/api/users/:user/followed/hosting",
+      url : "http://api.twitch.tv/api/users/:user_name/followed/hosting",
       data: {
         limit: 100
       }
@@ -224,7 +227,7 @@
   methods.followedgames = function (){
     return {
       type: "GET",
-      url : "http://api.twitch.tv/api/users/:user/follows/games/live",
+      url : "http://api.twitch.tv/api/users/:user_name/follows/games/live",
       data: {
         limit: 100
       }
@@ -234,28 +237,28 @@
   methods.gameFollow = function (){
     return {
       type: "PUT",
-      url : "http://api.twitch.tv/api/users/:user/follows/games/follow"
+      url : "http://api.twitch.tv/api/users/:user_name/follows/games/follow"
     }
   }
 
   methods.gameUnfollow = function (){
     return {
       type: "DELETE",
-      url : "http://api.twitch.tv/api/users/:user/follows/games/unfollow"
+      url : "http://api.twitch.tv/api/users/:user_name/follows/games/unfollow"
     }
   }
 
   methods.follow = function (){
     return {
       type: "PUT",
-      url : "/users/:user/follows/channels/:target"
+      url : "/users/:user_id/follows/channels/:target"
     }
   }
 
   methods.unfollow = function (){
     return {
       type: "DELETE",
-      url : "/users/:user/follows/channels/:target"
+      url : "/users/:user_id/follows/channels/:target"
     }
   }
 
