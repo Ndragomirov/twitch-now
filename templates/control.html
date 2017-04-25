@@ -1,69 +1,84 @@
 {{#if show}}
 <div class="control">
-    <label>
-        {{#if range}}
-        <div class="control-desc">{{desc}}</div>
-        <div class="control-wrapper">
-            <input data-type={{type}} data-id={{id}} type="range" value="{{value}}" min="{{min}}" max="{{max}}">
+    {{#if range}}
+    <div class="control-desc">{{desc}}</div>
+    <div class="control-wrapper">
+        <input data-type={{type}} data-id={{id}} type="range" value="{{value}}" min="{{min}}" max="{{max}}">
 
-            <div class="range-helper">
-                <span class="range-helper-value"> {{value}} </span> <span>{{tip}}</span>
-            </div>
+        <div class="range-helper">
+            <span class="range-helper-value"> {{value}} </span> <span>{{tip}}</span>
         </div>
-        {{/if}}
+    </div>
+    {{/if}}
 
-        {{#if radio}}
-        <div class="control-desc">{{desc}}</div>
-        <div class="control-wrapper">
+    {{#if radio}}
+    <div class="control-desc">{{desc}}</div>
+    <div class="control-wrapper">
+        {{#each opts}}
+        <input data-type="{{../this.type}}" id="{{id}}" data-id={{../this.id}} name="{{../this.id}}" type="radio"
+               value="{{id}}" {{h-checked this ../this}}>
+
+        <label for="{{id}}">
+            <span></span>
+            <div class="radio-tip">{{name}}</div>
+        </label>
+        <br/>
+        {{/each}}
+    </div>
+    {{/if}}
+
+    {{#if button}}
+    <div class="control-wrapper">
+        <input data-type={{type}} data-id={{id}} type="button" value="{{desc}}">
+    </div>
+    {{/if}}
+
+    {{#if checkbox}}
+    <div class="control-wrapper">
+        <input type="checkbox" id="{{id}}" data-type={{type}} data-id={{id}} {{h-checked this }}/>
+        <label for="{{id}}">
+            <span></span>
+
+            <div class="control-desc">{{desc}}</div>
+        </label>
+    </div>
+    {{/if}}
+
+    {{#if select}}
+    <div class="control-desc">{{desc}}</div>
+    <div class="control-wrapper">
+        <select data-type={{type}} data-id={{id}}>
             {{#each opts}}
-            <input data-type="{{../this.type}}" id="{{id}}" data-id={{../this.id}} name="{{../this.id}}" type="radio"
-                   value="{{id}}" {{h-checked this ../this}}>
-
-            <label for="{{id}}">
-                <span></span>
-                <div class="radio-tip">{{name}}</div>
-            </label>
-            <br/>
+            <option value="{{id}}"
+                    {{h-selected this ../this}} >{{name}}</option>
             {{/each}}
-        </div>
-        {{/if}}
+        </select>
 
-        {{#if button}}
-        <div class="control-wrapper">
-            <input data-type={{type}} data-id={{id}} type="button" value="{{desc}}">
-        </div>
-        {{/if}}
+    </div>
+    {{/if}}
 
-        {{#if checkbox}}
-        <div class="control-wrapper">
-            <input type="checkbox" id="{{id}}" data-type={{type}} data-id={{id}} {{h-checked}} />
+    {{#if mcheckbox}}
+    <div class="control-desc">{{desc}}</div>
+    <div class="control-wrapper">
+        {{#each opts}}
+        <div class="group-wrapper">
+            <input type="checkbox" data-parent-id="{{../this.id}}" data-type="{{../this.type}}" data-id="{{id}}" id="{{id}}" {{h-checked this ../this }}/>
             <label for="{{id}}">
                 <span></span>
 
-                <div class="control-desc">{{desc}}</div>
+                <div class="control-desc">{{name}}</div>
             </label>
         </div>
-        {{/if}}
+        {{/each}}
+    </div>
+    <div class="clearfix"></div>
+    {{/if}}
 
-        {{#if select}}
-        <div class="control-desc">{{desc}}</div>
-        <div class="control-wrapper">
-            <select data-type={{type}} data-id={{id}}>
-                {{#each opts}}
-                <option value="{{id}}"
-                {{h-selected this ../this}} >{{name}}</option>
-                {{/each}}
-            </select>
-
-        </div>
-        {{/if}}
-
-        {{#if text}}
-        <div class="control-desc">{{desc}}</div>
-        <div class="control-wrapper">
-            <input data-type={{type}} data-id={{id}} type="text" value="{{value}}">
-        </div>
-        {{/if}}
-    </label>
+    {{#if text}}
+    <div class="control-desc">{{desc}}</div>
+    <div class="control-wrapper">
+        <input data-type={{type}} data-id={{id}} type="text" value="{{value}}">
+    </div>
+    {{/if}}
 </div>
 {{/if}}

@@ -157,6 +157,124 @@
 
   var defaultSettings = [
     {
+      id       : "streamLanguage",
+      desc     : "__MSG_m102__",
+      mcheckbox: true,
+      type     : "mcheckbox",
+      opts     : [
+        {
+          "id"  : "ru",
+          "name": "Русский"
+        },
+        {
+          "id"  : "en",
+          "name": "English"
+        },
+        {
+          "id"  : "da",
+          "name": "Dansk"
+        },
+        {
+          "id"  : "de",
+          "name": "Deutsch"
+        },
+        {
+          "id"  : "es",
+          "name": "Español"
+        },
+        {
+          "id"  : "fr",
+          "name": "Français"
+        },
+        {
+          "id"  : "it",
+          "name": "Italiano"
+        },
+        {
+          "id"  : "hu",
+          "name": "Magyar"
+        },
+        {
+          "id"  : "nl",
+          "name": "Nederlands"
+        },
+        {
+          "id"  : "no",
+          "name": "Norsk"
+        },
+        {
+          "id"  : "pl",
+          "name": "Polski"
+        },
+        {
+          "id"  : "pt",
+          "name": "Português"
+        },
+        {
+          "id"  : "sk",
+          "name": "Slovenčina"
+        },
+        {
+          "id"  : "fi",
+          "name": "Suomi"
+        },
+        {
+          "id"  : "sv",
+          "name": "Svenska"
+        },
+        {
+          "id"  : "vi",
+          "name": "Tiếng Việt"
+        },
+        {
+          "id"  : "tr",
+          "name": "Türkçe"
+        },
+        {
+          "id"  : "cs",
+          "name": "Čeština"
+        },
+        {
+          "id"  : "el",
+          "name": "Ελληνικά"
+        },
+        {
+          "id"  : "bg",
+          "name": "Български"
+        },
+        {
+          "id"  : "ar",
+          "name": "العربية"
+        },
+        {
+          "id"  : "th",
+          "name": "ภาษาไทย"
+        },
+        {
+          "id"  : "zh",
+          "name": "中文"
+        },
+        {
+          "id"  : "ja",
+          "name": "日本語"
+        },
+        {
+          "id"  : "ko",
+          "name": "한국어"
+        },
+        {
+          "id"  : "asl",
+          "name": "American Sign Language"
+        },
+        {
+          "id"  : "other",
+          "name": "Прочее"
+        }
+      ],
+      show     : true,
+      value    : ["en"]
+    },
+    {
       id   : "windowHeight",
       desc : "__MSG_m62__",
       range: true,
@@ -445,6 +563,9 @@
         }
         return false;
       }
+      else if ( type == 'mcheckbox' ) {
+        return Array.isArray(v);
+      }
 
       return false;
     }
@@ -457,6 +578,19 @@
       var storedSettings = bgApp.get("settings") || [];
 
       this.add(defaultSettings);
+
+      var streamLanguage = this.get("streamLanguage");
+      var streamLanguageValue = streamLanguage.get("value");
+      var UILang = chrome.i18n.getUILanguage();
+
+      var curLang = streamLanguage.get("opts").filter(function (v){
+        return v.id == UILang;
+      })
+
+      if ( curLang.length ) {
+        streamLanguageValue.push(curLang[0].id);
+      }
+
 
       this.forEach(function (control){
         var saved = _.find(storedSettings, function (storedControl){
@@ -514,9 +648,12 @@
       offset: 0,
       limit : 20
     },
-    defaultQuery: {
-      limit : 50,
-      offset: 0
+    defaultQuery: function (){
+      return {
+        broadcaster_language: settings.get("streamLanguage").get("value").join(","),
+        limit               : 50,
+        offset              : 0
+      }
     },
     updating    : false,
     interval    : null,
@@ -524,11 +661,16 @@
       bgApp.dispatcher.on('popup-close', function (){
         this.rewind();
       }.bind(this))
+
+      settings.get("streamLanguage").on("change:value", function (){
+        this.update();
+      }.bind(this))
+
     },
     rewind      : function (){
       if ( this.pagination ) {
         this.pageQuery.offset = 0;
-        this.reset(this.slice(0, this.defaultQuery.limit).map(function (v){
+        this.reset(this.slice(0, this.defaultQuery().limit).map(function (v){
           return v.attributes;
         }));
       }
@@ -552,7 +694,7 @@
       }
     },
     update      : function (query, opts, callback){
-      query = $.extend({}, this.defaultQuery, query);
+      query = $.extend({}, this.defaultQuery(), query);
       opts = opts || {reset: true};
       callback = callback || $.noop;
 
@@ -573,7 +715,7 @@
 
         if ( this.auto ) {
           this.interval = setTimeout(function (){
-            this.update(this.defaultQuery, {reset: true}, $.noop);
+            this.update(this.defaultQuery(), {reset: true}, $.noop);
           }.bind(this), this.timeout);
         }
 
@@ -881,7 +1023,7 @@
 
     follow: function (cb){
       cb = cb || $.noop;
-      var target = this.get("channel").name;
+      var target = this.get("channel")._id;
       twitchApi.send("follow", {target: target}, function (err, res){
         if ( err ) return cb(err);
         this.trigger("follow", this.attributes);
@@ -892,7 +1034,7 @@
 
     unfollow: function (cb){
       cb = cb || $.noop;
-      var target = this.get("channel").name;
+      var target = this.get("channel")._id;
       twitchApi.send("unfollow", {target: target}, function (err, res){
         if ( err ) return cb(err);
         this.trigger("unfollow", this);
@@ -1003,9 +1145,10 @@
     },
 
     parse: function (res, callback){
-      if ( !res || !res.streams ) {
+      if ( !res ) {
         return callback(new Error("api"));
       }
+      res.streams = Array.isArray(res.streams) ? res.streams : [];
       return callback(null, res.streams);
     }
   });
@@ -1056,6 +1199,13 @@
     auto      : true,
     timeout   : 5 * 60 * 1000,
     model     : FollowingStream,
+
+    defaultQuery: function (){
+      return {
+        limit : 50,
+        offset: 0
+      }
+    },
 
     initialize: function (){
       var self = this;
