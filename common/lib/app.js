@@ -1256,7 +1256,7 @@
     getNewStreams: function (){
       var ids = this.addedStreams;
       return this.filter(function (stream){
-        return ~ids.indexOf(stream.get("_id"));
+        return ~ids.indexOf(stream.get("channel")._id);
       });
     },
 
@@ -1294,13 +1294,18 @@
 
     },
     beforeUpdate   : function (){
-      this.idsBeforeUpdate = this.pluck("_id");
+      this.idsBeforeUpdate = this.pluck("channel").map(function (v){
+        return v._id;
+      });
     },
     send           : function (query, callback){
       twitchApi.send("followed", {}, callback);
     },
     afterUpdate    : function (){
-      this.idsAfterUpdate = this.pluck("_id");
+      this.idsAfterUpdate = this.pluck("channel").map(function (v){
+        return v._id;
+      })
+
       this.addedStreams = _.difference(this.idsAfterUpdate, this.idsBeforeUpdate, this.notified);
       this.notified = _.union(this.addedStreams, this.notified);
     }
