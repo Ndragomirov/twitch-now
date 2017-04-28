@@ -763,23 +763,31 @@
   var Video = TwitchItemModel.extend();
 
   var Videos = UpdatableCollection.extend({
-    model: Video,
+    model     : Video,
+    pagination: true,
+
     send : function (query, callback){
-      twitchApi.send(this.url, this.query(), callback);
+      twitchApi.send(this.url, query, callback);
     },
     parse: function (res, callback){
       if ( !res ) {
         return callback(new Error("api"));
       }
-      res.videos = Array.isArray(res.vods) ? res.vods : [];
-      return callback(null, res.vods);
+      if ( Array.isArray(res.vods) ) {
+        res.videos = res.vods;
+      }
+      if ( Array.isArray(res.videos) ) {
+        res.videos = res.videos;
+      }
+      res.videos = res.videos || [];
+      return callback(null, res.videos);
     }
   });
 
   var ChannelVideos = Videos.extend({
-    url    : "channelVideos",
-    channel: null,
-    query  : function (){
+    url         : "channelVideos",
+    channel     : null,
+    defaultQuery: function (){
       return {
         channel: this.channel,
         limit  : 20
@@ -788,9 +796,9 @@
   })
 
   var GameVideos = Videos.extend({
-    url  : "gameVideos",
-    game : null,
-    query: function (){
+    url         : "gameVideos",
+    game        : null,
+    defaultQuery: function (){
       return {
         game : this.game,
         limit: 20
@@ -1436,7 +1444,7 @@
   var gameLobby = root.gameLobby = new GameLobby;
   var gameVideos = root.gameVideos = new GameLobbyVideos;
   var gameStreams = root.gameStreams = new GameLobbyStreams;
-  var hosts = root.hosts = new Hosts;
+  // var hosts = root.hosts = new Hosts;
 
   topstreams.update();
   games.update();
