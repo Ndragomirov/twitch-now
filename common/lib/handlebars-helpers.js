@@ -16,9 +16,18 @@ function formatDuration(s){
 }
 
 Handlebars.registerHelper('h-checked', function (input, parent){
-  var v = input && parent ?
-  input.id === parent.value :
-    this.value;
+  var v = false;
+
+  if ( input && !parent.type ) {
+    v = input.value;
+  }
+  else if ( input && parent.type ) {
+    if ( Array.isArray(parent.value) ) {
+      v = parent.value.indexOf(input.id) > -1;
+    } else {
+      v = input.id === parent.value;
+    }
+  }
   return v ? 'checked' : '';
 });
 

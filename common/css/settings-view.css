@@ -14,6 +14,12 @@
     margin-top: 5px;
 }
 
+.group-wrapper {
+    margin-bottom: 5px;
+    width: 120px;
+    float: left;
+}
+
 .control-desc {
     display: inline;
     cursor: pointer;

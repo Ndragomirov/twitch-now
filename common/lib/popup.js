@@ -116,7 +116,12 @@
     views.gameStreamsView = new StreamListView({
       el               : "#gamelobby-streams",
       collection       : b.gameStreams,
-      preloaderOnUpdate: true
+      preloaderOnUpdate: true,
+      messages         : {
+        "noresults": {
+          text: "__MSG_m103__"
+        }
+      }
     });
 
     views.gameVideosView = new VideoListView({
@@ -360,7 +365,7 @@
     onModelChange: function (model, options){
       var v = model.get("value");
 
-      switch ( model.get("id") ) {
+      switch (model.get("id")) {
         case "notificationSound":
           this.playSound()
           break;
@@ -400,6 +405,8 @@
     },
     serialize  : function (){
       var controls = [];
+      var groups = {};
+
       this.$container.find('input, select').each(function (e){
         var t = $(this),
           value,
@@ -413,7 +420,8 @@
             return;
           }
         }
-        if ( type == 'checkbox' ) {
+
+        if ( type == 'checkbox' || type == 'mcheckbox' ) {
           value = t.prop('checked');
         }
         else if ( type == 'range' ) {
@@ -422,8 +430,24 @@
         else {
           value = t.val();
         }
-        controls.push({id: controlId, value: value});
+
+        if ( t.attr("data-parent-id") ) {
+          if ( value ) {
+            var parentId = t.attr("data-parent-id");
+            groups[parentId] = groups[parentId] || [];
+            groups[parentId].push(controlId);
+          }
+        } else {
+          controls.push({id: controlId, value: value});
+        }
       });
+
+      console.log(groups);
+
+      for ( var i in groups ) {
+        controls.push({id: i, value: groups[i]});
+      }
+
       this.collection.set(controls, {add: false, remove: false});
     },
     render     : function (){
@@ -724,6 +748,7 @@
   });
 
   var StreamListView = ListView.extend({
+
     itemView: StreamView
   });
 
