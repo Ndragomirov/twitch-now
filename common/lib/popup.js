@@ -192,15 +192,12 @@
       $(window).trigger("popup-close");
     })
 
-//    app.lazyload();
+   app.lazyload();
 
     $("body")
       .on('click', '*[data-route]', function (){
         var route = $(this).attr('data-route');
         window.location.hash = '#' + route;
-      })
-      .one('mouseenter', function (){
-        app.lazyload();
       })
       .on('click', '.js-tab', function (e){
         var href = $(this).attr('data-href');
