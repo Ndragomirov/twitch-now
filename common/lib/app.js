@@ -768,10 +768,11 @@
       twitchApi.send(this.url, this.query(), callback);
     },
     parse: function (res, callback){
-      if ( !res || !res.videos ) {
+      if ( !res ) {
         return callback(new Error("api"));
       }
-      return callback(null, res.videos);
+      res.videos = Array.isArray(res.vods) ? res.vods : [];
+      return callback(null, res.vods);
     }
   });
 
@@ -835,9 +836,10 @@
       })
     },
     parse     : function (res, callback){
-      if ( !res || !res.top ) {
+      if ( !res ) {
         return callback(new Error("api"));
       }
+      res.top = Array.isArray(res.top) ? res.top : [];
       res.top.forEach(function (g){
         g._id = g.game._id;
       });
@@ -879,9 +881,10 @@
       twitchApi.send("followedgames", query, callback);
     },
     parse     : function (res, callback){
-      if ( !res || !res.follows ) {
+      if ( !res ) {
         return callback(new Error("api"));
       }
+      res.follows = Array.isArray(res.follows) ? res.follows : [];
       res.follows.forEach(function (g){
         g._id = g.game._id;
       });

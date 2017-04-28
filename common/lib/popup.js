@@ -116,7 +116,12 @@
     views.gameStreamsView = new StreamListView({
       el               : "#gamelobby-streams",
       collection       : b.gameStreams,
-      preloaderOnUpdate: true
+      preloaderOnUpdate: true,
+      messages         : {
+        "noresults": {
+          text: "__MSG_m103__"
+        }
+      }
     });
 
     views.gameVideosView = new VideoListView({
@@ -743,6 +748,7 @@
   });
 
   var StreamListView = ListView.extend({
+
     itemView: StreamView
   });
 
