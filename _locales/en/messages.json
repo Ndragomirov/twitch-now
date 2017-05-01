@@ -101,5 +101,6 @@
     "m100": { "message" : "open in livestreamer"},
     "m101": { "message" : "html5 player (no flash plugin required)"},
     "m102": { "message" : "Show streams only for selected languages:"},
-    "m103": { "message" : "No streams available for selected languages"}
+    "m103": { "message" : "No streams available for selected languages"},
+    "m104": { "message" : "No videos available for this channel"}
 }

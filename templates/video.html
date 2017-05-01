@@ -1,6 +1,9 @@
 <div class="stream js-tab js-filterable" data-href="{{url}}">
     <div class="item-image-container stream-preview">
         <img alt="" class="lazy" data-original="{{preview.medium}}"/>
+        <div class="stream-uptime">
+            {{h-date-format length}}
+        </div>
     </div>
     <span class="stream-info stream-title" title="{{title}}">
             {{title}}
@@ -11,6 +14,6 @@
     </span>
 
     <span class="stream-info">
-        {{h-date-format length}} - {{h-prettydate recorded_at}}
+        {{h-prettydate recorded_at}}
     </span>
 </div>

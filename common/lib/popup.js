@@ -118,7 +118,7 @@
       collection       : b.gameStreams,
       preloaderOnUpdate: true,
       messages         : {
-        "noresults": {
+        noresults: {
           text: "__MSG_m103__"
         }
       }
@@ -152,7 +152,12 @@
 
     views.videos = new VideoListView({
       el        : "#video-screen",
-      collection: b.videos
+      collection: b.videos,
+      messages         : {
+        noresults: {
+          text: "__MSG_m104__"
+        }
+      }
     });
 
     views.search = new SearchView({
