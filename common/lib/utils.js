@@ -43,7 +43,11 @@
   var _windows = that.windows = {};
 
   _windows.create = function (opts){
-    _browser.windows.create({url: opts.url, type: "popup", focused: true});
+    var defaults = {url: opts.url, type: "popup"};
+    if ( !isFirefox ) {
+      defaults.focused = true;
+    }
+    _browser.windows.create(defaults);
   }
 
   var _browserAction = that.browserAction = {};
