@@ -59,7 +59,6 @@
   },
   "permissions": [
     "storage",
-    "background",
     "https://*/*",
     "http://*/*",
     "notifications",
