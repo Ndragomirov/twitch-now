@@ -191,15 +191,6 @@
 
         type: 'mousemove touchmove'
       }, {
-        // onResize:
-        element: window,
-
-        handler: function() {
-          item.update();
-        },
-
-        type: 'resize'
-      }, {
         // sizeChange:
         element: item.root,
 
