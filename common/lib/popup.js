@@ -5,6 +5,7 @@
   var b = app.b = utils._getBackgroundPage();
   var _baron;
 
+
   app.twitchApi = b.twitchApi;
   app.currentView = null;
   app.views = {};
@@ -49,12 +50,14 @@
   }
 
   app.init = function (){
+
     app.container = $('#content');
     app.scroller = app.container.find(".scroller");
     app._scroller = document.querySelector(".scroller");
     app.scrollerBar = document.querySelector(".scroller__bar");
     app.preloader = $("<div id='preloader'><img src='../img/spinner.gif'/></div>");
     app.streamPreloader = $("<div id='preloader-stream'><img src='../img/spinner.gif'/></div>");
+    app.btnPreloader = $("<div id='preloader-btn'><img src='../img/spinner.gif'/></div>");
 
     i18n.setGetMessageFn(utils.i18n.getMessage);
     i18n.replace(document.body);
@@ -102,8 +105,18 @@
       collection: b.followedgames,
       messages  : {
         noresults: {
-          header: "No Channels Live",
-          text  : "Nobody is streaming your favorites games right now"
+          header: "__MSG_m107__",
+          text  : "__MSG_m108__"
+        }
+      }
+    })
+
+    new FollowedChannelsView({
+      el        : "#followed-channels-screen",
+      collection: b.followedChannels,
+      messages  : {
+        noresults: {
+          text: ""
         }
       }
     })
@@ -113,13 +126,18 @@
       model: b.gameLobby
     })
 
-    views.gameStreamsView = new StreamListView({
+    views.gameStreamsView = new GameStreamsView({
       el               : "#gamelobby-streams",
       collection       : b.gameStreams,
       preloaderOnUpdate: true,
       messages         : {
         noresults: {
-          text: "__MSG_m103__"
+          button : "__MSG_m105__",
+          onclick: function (){
+            this.collection.disableLanguageFilter();
+            this.collection.update();
+          },
+          text   : "__MSG_m103__"
         }
       }
     });
@@ -139,13 +157,14 @@
       collection: b.topstreams
     });
 
-    views.following = new StreamListView({
-      el        : "#stream-screen",
-      collection: b.following,
-      messages  : {
+    views.following = new FollowingStreamsView({
+      el                : "#stream-screen",
+      collection        : b.following,
+      channelsCollection: b.followedChannels,
+      messages          : {
         noresults: {
-          header: "No Channels Live",
-          text  : "Nobody is streaming right now"
+          header: "__MSG_m107__",
+          text  : "__MSG_m109__"
         }
       }
     });
@@ -153,7 +172,7 @@
     views.videos = new VideoListView({
       el        : "#video-screen",
       collection: b.videos,
-      messages         : {
+      messages  : {
         noresults: {
           text: "__MSG_m104__"
         }
@@ -197,7 +216,7 @@
       $(window).trigger("popup-close");
     })
 
-   app.lazyload();
+    app.lazyload();
 
     $("body")
       .on('click', '*[data-route]', function (){
@@ -208,15 +227,18 @@
         var href = $(this).attr('data-href');
         utils.tabs.create({url: href});
         e.preventDefault();
+        window.close();
       })
 
       .on('click', '.js-window', function (e){
         var windowOpts = JSON.parse($(this).attr('data-window-opts') || "{}");
         utils.windows.create($.extend({url: $(this).attr('data-href')}, windowOpts));
         e.preventDefault();
+        window.close();
       })
 
     $('.tip').tooltip();
+
   };
 
   var DefaultView = Backbone.View.extend({
@@ -549,9 +571,11 @@
     },
     openStream: function (){
       this.model.openStream();
+      window.close();
     },
     openChat  : function (){
       this.model.openChat();
+      window.close();
     },
     showMenu  : function (e){
       var self = this;
@@ -566,12 +590,15 @@
       menu.$el
         .on('click', '.js-open-chat', function (){
           self.model.openChat();
+          window.close();
         })
         .on('click', '.js-open-in-multitwitch', function (){
           self.model.openMultitwitch();
+          window.close();
         })
         .on('click', '.js-open-stream', function (e){
           self.model.openStream($(e.target).attr("data-type"));
+          window.close();
         })
         .on('click', '.js-follow', function (){
           self.follow();
@@ -603,7 +630,10 @@
   });
 
   var ListView = LazyRenderView.extend({
-    messages   : {
+    events        : {
+      "click .screen-msg-btn": "onMessageClick"
+    },
+    messages      : {
       "auth"         : {
         text: "__MSG_m73__"
       },
@@ -617,11 +647,12 @@
         text: "No search query"
       }
     },
-    itemView   : null, // single item view
-    initialize : function (opts){
+    itemView      : null, // single item view
+    initialize    : function (opts){
       LazyRenderView.prototype.initialize.apply(this, arguments);
-      this.container = opts.container || this.$el.find(".screen-content");
+      this.container = opts.container || this.$el.children(".screen-content");
       this.messages = $.extend({}, this.messages, opts.messages);
+      this.currentMessage = null;
       this.listenTo(this.collection, "remove update sort reset", this.render.bind(this, null));
       this.listenTo(this.collection, "_error", this.showMessage.bind(this));
       this.listenTo(this.collection, "add addarray", this.render.bind(this));
@@ -633,22 +664,28 @@
         }.bind(this));
       }
     },
-    showMessage: function (type){
+    onMessageClick: function (){
+      if ( this.currentMessage.onclick ) {
+        this.currentMessage.onclick.call(this);
+      }
+    },
+    showMessage   : function (type){
       if ( this.messages[type] ) {
         var text = this.messages[type];
+        this.currentMessage = this.messages[type];
         this.container.empty().html(Handlebars.templates["screenmessage"](text));
       }
     },
-    loadNext   : function (){
+    loadNext      : function (){
       if ( this.collection.pagination ) {
         this.collection.loadNext();
       }
     },
-    update     : function (){
+    update        : function (){
       this.container.empty().append(this.app.preloader);
       this.collection.update();
     },
-    render     : function (models){
+    render        : function (models){
       var elementsToRender = [];
       if ( models ) {
         elementsToRender = Array.isArray(models) ? models : [models];
@@ -670,6 +707,7 @@
     }
   });
 
+
   var ChannelNotificationView = DefaultView.extend({
     template   : "channelnotification",
     events     : {
@@ -678,6 +716,21 @@
     openProfile: function (){
       this.model.openProfilePage();
     }
+  })
+
+  var ChannelView = DefaultView.extend({
+    template   : "channel",
+    events     : {
+      "click .stream": "openChannelPage"
+    },
+    openChannelPage: function (){
+      this.model.openChannelPage();
+    }
+  })
+
+
+  var FollowedChannelsView = ListView.extend({
+    itemView: ChannelView
   })
 
   var ChannelNotificationListView = ListView.extend({
@@ -750,9 +803,69 @@
   });
 
   var StreamListView = ListView.extend({
-
     itemView: StreamView
   });
+
+  var FollowingStreamsView = StreamListView.extend({
+    events             : {
+      "click #load-offline-channels-btn": "loadOfflineChannels"
+    },
+    showOfflineChannels: false,
+    channelsCollection : null,
+    initialize         : function (opts){
+      StreamListView.prototype.initialize.apply(this, arguments);
+      _.extend(this.events, StreamListView.prototype.events);
+
+      this.$loadBtn = $('#load-offline-channels-btn');
+      this.$channels = $('#followed-channels-screen');
+      this.channelsCollection = opts.channelsCollection;
+
+      if ( app.twitchApi.isAuthorized() ) {
+        this.$loadBtn.removeClass('hide');
+      } else {
+        this.$loadBtn.addClass('hide');
+      }
+
+      this.listenTo(app.twitchApi, "authorize", function (){
+        this.$loadBtn.removeClass('hide');
+      }.bind(this));
+
+      this.listenTo(app.twitchApi, "revoke", function (){
+        this.$loadBtn.addClass('hide');
+      }.bind(this));
+
+      this.listenTo(this.collection, "update-status", function (){
+        this.$loadBtn.addClass('hide');
+        this.$channels.addClass('hide');
+      }.bind(this));
+
+      this.listenTo(this.collection, "update", function (){
+        if ( !this.showOfflineChannels ) {
+          this.$loadBtn.removeClass('hide');
+        }
+        this.$channels.removeClass('hide');
+      }.bind(this));
+
+      this.listenTo(this.channelsCollection, "update", function (isUpdating, opts){
+        console.log("\nUpdate status", arguments);
+        this.app.btnPreloader.detach();
+        this.$loadBtn.addClass('hide');
+      }.bind(this));
+    },
+    loadOfflineChannels: function (){
+      console.log("\nLoad offline Channels");
+      this.showOfflineChannels = true;
+      this.$loadBtn.append(this.app.btnPreloader);
+      this.channelsCollection.update();
+    }
+  })
+
+  var GameStreamsView = StreamListView.extend({
+    onhide: function (){
+      this.collection.enableLanguageFilter();
+    }
+  })
+
 
   var SearchView = ListView.extend({
     events  : {
@@ -834,4 +947,5 @@
       this.$el.empty().html(views);
     }
   });
+
 })(window);

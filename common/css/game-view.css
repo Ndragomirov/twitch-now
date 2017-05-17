@@ -127,10 +127,19 @@
     cursor: pointer;
     text-align: center;
     font-size: 11px;
+    text-decoration: none;
     position: relative;
     -webkit-transition: background 100ms linear;
     -moz-transition: background 100ms linear;
     padding: 0 10px;
+}
+
+.button.button-load-more {
+    left: 50%;
+    transform: translate(-50%);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    bottom: 0px;
 }
 
 .button:hover {

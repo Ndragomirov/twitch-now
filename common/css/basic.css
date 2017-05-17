@@ -145,9 +145,13 @@ a.js-tab {
     position: absolute;
     top: 50%;
     left: 50%;
-    /*transform: translate(-50%, -50%);*/
-    /*-webkit-transform: translate(-50%, -50%);*/
-    /*-moz-transform: translate(-50%, -50%);*/
+}
+
+#preloader-btn {
+    display: inline-block;
+    line-height: 12px;
+    vertical-align: middle;
+    margin-left: 10px;
 }
 
 .screen-msg {
@@ -164,6 +168,10 @@ a.js-tab {
     font-size: 16px;
     color: rgba(255, 255, 255, 1);
     margin-bottom: 10px;
+}
+
+.screen-msg .screen-msg-btn {
+    margin-top: 10px;
 }
 
 .screen {

@@ -7,6 +7,10 @@
     height: 32px;
 }
 
+.channel-logo.offline {
+    filter: grayscale(100%);
+}
+
 .controls .undo-message {
     margin-top: 10px;
     margin-left: 10px;

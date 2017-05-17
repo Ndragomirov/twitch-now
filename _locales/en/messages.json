@@ -102,5 +102,10 @@
     "m101": { "message" : "html5 player (no flash plugin required)"},
     "m102": { "message" : "Show streams only for selected languages:"},
     "m103": { "message" : "No streams available for selected languages"},
-    "m104": { "message" : "No videos available for this channel"}
+    "m104": { "message" : "No videos available for this channel"},
+    "m105": { "message" : "Show all streams"},
+    "m106": { "message" : "Other"},
+    "m107": { "message" : "No Channels Live"},
+    "m108": { "message" : "Nobody is streaming your favorites games right now"},
+    "m109": { "message" : "Nobody is streaming right now"}
 }

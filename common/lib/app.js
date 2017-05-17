@@ -268,7 +268,7 @@
         },
         {
           "id"  : "other",
-          "name": "Прочее"
+          "name": "__MSG_m106__"
         }
       ],
       show     : true,
@@ -919,6 +919,79 @@
     }
   });
 
+  var FollowedChannel = TwitchItemModel.extend({
+    openChannelPage      : function (){
+      utils.tabs.create({url: this.get("channel").url})
+    }
+  })
+
+  var FollowedChannels = Backbone.Collection.extend({
+    model                   : FollowedChannel,
+    updating                : false,
+    initialize              : function (){
+      twitchApi.on("revoke", function (){
+        this.reset();
+      }.bind(this));
+    },
+    comparator              : function (a){
+      return a.get("channel").name;
+    },
+    getFollowedChannelsCount: function (cb){
+      twitchApi.send("follows", {offset: 0, limit: 1}, function (err, res){
+        if ( err || !res || !res._total ) {
+          return cb(err || new Error("No Total channels"));
+        }
+        return cb(null, parseInt(res._total));
+      })
+    },
+    getFollowedChannels     : function (page, cb){
+      twitchApi.send("follows", {offset: page * 100, limit: 100}, function (err, res){
+        if ( err || !res || !res.follows ) {
+          return cb(err || new Error("No Total channels"));
+        }
+
+        res.follows.forEach(function (c){
+          c._id = c.channel._id;
+          c.channel.logo = c.channel.logo || "http://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_50x50.png";
+          c.channel.logo = c.channel.logo.replace("300x300", "50x50");
+        });
+        return cb(null, res.follows);
+      })
+    },
+    update                  : function (){
+      var self = this;
+      if ( self.updating ) {
+        return;
+      }
+      self.updating = true;
+      self.getFollowedChannelsCount(function (err, count){
+        if ( err ) {
+          self.updating = false;
+          return self.trigger("error", "api");
+        }
+        var fns = [];
+        var limit = 4;
+        var requestCount = Math.ceil(count / 100);
+
+        for ( var i = 0; i < requestCount; i++ ) {
+          fns.push(self.getFollowedChannels.bind(null, i));
+        }
+
+        async.parallelLimit(fns, limit, function (err, results){
+          self.updating = false;
+          if ( err ) {
+            return self.trigger("error", "api");
+          } else {
+            results = _.flatten(results);
+            console.log("\nUpd success", results);
+            self.reset(results, {silent: true});
+            self.trigger("update");
+          }
+        })
+      });
+    }
+  })
+
   var NotificationSettings = Backbone.Collection.extend({
     model: ChannelNotification,
 
@@ -1337,10 +1410,26 @@
   })
 
   var GameStreams = StreamCollection.extend({
-    game      : null,
-    pagination: true,
-    send      : function (query, callback){
+    game                 : null,
+    enableLanguage       : true,
+    pagination           : true,
+    initialize           : function (){
+      StreamCollection.prototype.initialize.apply(this, arguments);
+      bgApp.dispatcher.on('popup-close', function (){
+        this.enableLanguageFilter();
+      }.bind(this))
+    },
+    disableLanguageFilter: function (){
+      this.enableLanguage = false;
+    },
+    enableLanguageFilter : function (){
+      this.enableLanguage = true;
+    },
+    send                 : function (query, callback){
       query.game = this.game;
+      if ( !this.enableLanguage ) {
+        delete query.broadcaster_language;
+      }
       twitchApi.send("streams", query, callback);
     }
   });
@@ -1444,6 +1533,7 @@
   var gameLobby = root.gameLobby = new GameLobby;
   var gameVideos = root.gameVideos = new GameLobbyVideos;
   var gameStreams = root.gameStreams = new GameLobbyStreams;
+  var followedChannels = root.followedChannels = new FollowedChannels;
   // var hosts = root.hosts = new Hosts;
 
   topstreams.update();
