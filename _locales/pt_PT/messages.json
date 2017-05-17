@@ -101,5 +101,11 @@
     "m100": { "message" : "abrir no livestreamer"},
     "m101": { "message" : "leitor html5 (flash plugin não é necessário)"},
     "m102": { "message" : "Mostrar transmissões apenas para os idiomas selecionados:"},
-    "m103": { "message" : "Sem transmissões disponíveis para os idiomas selecionados"}
+    "m103": { "message" : "Sem transmissões disponíveis para os idiomas selecionados"},
+    "m104": { "message" : "Sem vídeos disponíveis para este canal"},
+    "m105": { "message" : "Mostrar todas as transmissões"},
+    "m106": { "message" : "Outras"},
+    "m107": { "message" : "Nenhum canal em direto"},
+    "m108": { "message" : "Ninguém está a transmitir os seus jogos favoritos agora"},
+    "m109": { "message" : "Ninguém está a transmitir agora"}
 }
