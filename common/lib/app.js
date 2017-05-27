@@ -1292,7 +1292,7 @@
 
       setInterval(function (){
         self.notified = [];
-      }, 1000 * 60 * 60);
+      }, 1000 * 60 * 10);
 
       settings.get("refreshInterval").on("change:value", function (){
         self.timeout = settings.get("refreshInterval").get("value") * 60 * 1000;
