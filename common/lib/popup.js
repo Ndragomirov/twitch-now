@@ -12,6 +12,7 @@
   app.windowOpened = false;
 
   app.resetScroll = function (){
+    app.container.removeClass('shift');
     app.container.scrollTop(0);
     _baron.update();
   }
@@ -456,9 +457,9 @@
         }
 
         if ( t.attr("data-parent-id") ) {
+          var parentId = t.attr("data-parent-id");
+          groups[parentId] = groups[parentId] || [];
           if ( value ) {
-            var parentId = t.attr("data-parent-id");
-            groups[parentId] = groups[parentId] || [];
             groups[parentId].push(controlId);
           }
         } else {
@@ -719,8 +720,8 @@
   })
 
   var ChannelView = DefaultView.extend({
-    template   : "channel",
-    events     : {
+    template       : "channel",
+    events         : {
       "click .stream": "openChannelPage"
     },
     openChannelPage: function (){
@@ -839,10 +840,18 @@
         this.$channels.addClass('hide');
       }.bind(this));
 
-      this.listenTo(this.collection, "update", function (){
-        if ( !this.showOfflineChannels ) {
+      if ( !this.collection.length ) {
+        this.$loadBtn.addClass('hide');
+      }
+
+      this.listenTo(this.collection, "remove update sort reset", function (){
+        this.$loadBtn.addClass('hide');
+        if ( !this.showOfflineChannels && this.collection.length ) {
           this.$loadBtn.removeClass('hide');
         }
+      }.bind(this));
+
+      this.listenTo(this.collection, "update", function (){
         this.$channels.removeClass('hide');
       }.bind(this));
 

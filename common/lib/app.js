@@ -272,7 +272,7 @@
         }
       ],
       show     : true,
-      value    : ["en"]
+      value    : []
     },
     {
       id   : "windowHeight",
@@ -579,19 +579,6 @@
 
       this.add(defaultSettings);
 
-      var streamLanguage = this.get("streamLanguage");
-      var streamLanguageValue = streamLanguage.get("value");
-      var UILang = chrome.i18n.getUILanguage();
-
-      var curLang = streamLanguage.get("opts").filter(function (v){
-        return v.id == UILang;
-      })
-
-      if ( curLang.length ) {
-        streamLanguageValue.push(curLang[0].id);
-      }
-
-
       this.forEach(function (control){
         var saved = _.find(storedSettings, function (storedControl){
           return storedControl.id === control.get("id");
@@ -650,9 +637,8 @@
     },
     defaultQuery: function (){
       return {
-        broadcaster_language: settings.get("streamLanguage").get("value").join(","),
-        limit               : 50,
-        offset              : 0
+        limit : 50,
+        offset: 0
       }
     },
     updating    : false,
@@ -661,11 +647,6 @@
       bgApp.dispatcher.on('popup-close', function (){
         this.rewind();
       }.bind(this))
-
-      settings.get("streamLanguage").on("change:value", function (){
-        this.update();
-      }.bind(this))
-
     },
     rewind      : function (){
       if ( this.pagination ) {
@@ -920,7 +901,7 @@
   });
 
   var FollowedChannel = TwitchItemModel.extend({
-    openChannelPage      : function (){
+    openChannelPage: function (){
       utils.tabs.create({url: this.get("channel").url})
     }
   })
@@ -1208,12 +1189,27 @@
 
     twitchApi: twitchApi,
 
+    defaultQuery: function (){
+      return {
+        broadcaster_language: settings.get("streamLanguage").get("value").join(","),
+        limit               : 50,
+        offset              : 0
+      }
+    },
+
     initialize: function (){
       UpdatableCollection.prototype.initialize.apply(this, arguments);
       this.setComparator();
+
       settings.get("viewSort").on("change:value", function (){
         this.setComparator();
       }.bind(this));
+
+      settings.get("streamLanguage").on("change:value", function (){
+        if ( this.length ) {
+          this.update();
+        }
+      }.bind(this))
     },
 
     setComparator: function (){
@@ -1286,7 +1282,7 @@
 
     defaultQuery: function (){
       return {
-        limit : 50,
+        limit : 100,
         offset: 0
       }
     },
@@ -1412,6 +1408,7 @@
   var GameStreams = StreamCollection.extend({
     game                 : null,
     enableLanguage       : true,
+    langFilter           : true,
     pagination           : true,
     initialize           : function (){
       StreamCollection.prototype.initialize.apply(this, arguments);
@@ -1420,14 +1417,14 @@
       }.bind(this))
     },
     disableLanguageFilter: function (){
-      this.enableLanguage = false;
+      this.langFilter = false;
     },
     enableLanguageFilter : function (){
-      this.enableLanguage = true;
+      this.langFilter = true;
     },
     send                 : function (query, callback){
       query.game = this.game;
-      if ( !this.enableLanguage ) {
+      if ( !this.langFilter ) {
         delete query.broadcaster_language;
       }
       twitchApi.send("streams", query, callback);

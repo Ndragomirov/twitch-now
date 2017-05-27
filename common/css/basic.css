@@ -155,13 +155,15 @@ a.js-tab {
 }
 
 .screen-msg {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
+    position: relative;
+    margin-top: 100px;
+    left: 0px;
+    -webkit-transform: translate(-50%);
+    -moz-transform: translate(-50%);
     text-align: center;
     width: 300px;
+    height: 100px;
+    margin-left: 50%;
 }
 
 .screen-msg h2 {
@@ -176,7 +178,6 @@ a.js-tab {
 
 .screen {
     display: none;
-    min-height: 100%;
     box-sizing: border-box;
     position: relative;
 }

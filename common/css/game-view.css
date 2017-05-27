@@ -129,8 +129,8 @@
     font-size: 11px;
     text-decoration: none;
     position: relative;
-    -webkit-transition: background 100ms linear;
-    -moz-transition: background 100ms linear;
+    /*-webkit-transition: background 100ms linear;*/
+    /*-moz-transition: background 100ms linear;*/
     padding: 0 10px;
 }
 
