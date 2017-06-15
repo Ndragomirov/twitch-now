@@ -1080,8 +1080,11 @@
 
     initialize: function (){
       var channelName = this.get("channel").name;
+      var streamType = this.get("stream_type");
+      var isVodcast = !!streamType && streamType == 'watch_party';
       this.set({
-          name: channelName
+          vodcast: isVodcast,
+          name   : channelName
         },
         {silent: true});
     },

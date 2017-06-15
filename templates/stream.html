@@ -11,6 +11,9 @@
             {{channel.display_name}}
     </span>
     <span class="stream-info stream-info-viewers">
+        {{#if vodcast}}
+        <span class="icon-vodcast" title="vodcast"></span>
+        {{/if}}
             {{game}} - {{h-num-format viewers}} __MSG_m45__
         </span>
     <span class="stream-info stream-info-status" title="{{channel.status}} ">

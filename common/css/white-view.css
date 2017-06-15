@@ -137,3 +137,7 @@
 .white-version .button .icon.icon-play {
     background-image: url(../img/play-dark.png);
 }
+
+.white-version .stream .icon-vodcast {
+    background-image: url(../img/video-dark.svg);
+}
