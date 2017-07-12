@@ -272,7 +272,7 @@
         }
       ],
       show     : true,
-      value    : []
+      value    : ''
     },
     {
       id   : "windowHeight",
@@ -564,7 +564,7 @@
         return false;
       }
       else if ( type == 'mcheckbox' ) {
-        return Array.isArray(v);
+        return typeof v === 'string';
       }
 
       return false;
@@ -1194,7 +1194,7 @@
 
     defaultQuery: function (){
       return {
-        broadcaster_language: settings.get("streamLanguage").get("value").join(","),
+        broadcaster_language: settings.get("streamLanguage").get("value"),
         limit               : 50,
         offset              : 0
       }

@@ -470,7 +470,7 @@
       console.log(groups);
 
       for ( var i in groups ) {
-        controls.push({id: i, value: groups[i]});
+        controls.push({id: i, value: groups[i].join(",")});
       }
 
       this.collection.set(controls, {add: false, remove: false});
