@@ -96,5 +96,17 @@
     "m95": { "message" : "Все уведомления"},
     "m96": { "message" : "Ни одного уведомления"},
     "m97": { "message" : "Все звуковые уведомления"},
-    "m98": { "message" : "Ни одного звукового уведомления"}
+    "m98": { "message" : "Ни одного звукового уведомления"},
+    "m99": { "message" : "Повторять звук уведомления"},
+    "m100": { "message" : "Запустить стрим в livestreamer"},
+    "m101": { "message" : "html5 player"},
+    "m102": { "message" : "Показывать стримы только для выбранных языков:"},
+    "m103": { "message" : "Нет доступных стримов для выбранных языков"},
+    "m104": { "message" : "Нет доступных видео для выбранного канала"},
+    "m105": { "message" : "Показать все стримы"},
+    "m106": { "message" : "Другое"},
+    "m107": { "message" : "No Channels Live"},
+    "m108": { "message" : "Nobody is streaming your favorites games right now"},
+    "m109": { "message" : "Nobody is streaming right now"},
+    "m110": { "message" : "Скрывать Vodcast стримы"}
 }

@@ -107,5 +107,6 @@
     "m106": { "message" : "Other"},
     "m107": { "message" : "No Channels Live"},
     "m108": { "message" : "Nobody is streaming your favorites games right now"},
-    "m109": { "message" : "Nobody is streaming right now"}
+    "m109": { "message" : "Nobody is streaming right now"},
+    "m110": { "message" : "Hide vodcasts"}
 }

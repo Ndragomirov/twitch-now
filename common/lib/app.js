@@ -369,6 +369,14 @@
       value   : true
     },
     {
+      id      : "hideVodcasts",
+      desc    : "__MSG_m110__",
+      checkbox: true,
+      type    : "checkbox",
+      show    : true,
+      value   : false
+    },
+    {
       id      : "showDesktopNotification",
       desc    : "__MSG_m5__",
       checkbox: true,
@@ -1232,6 +1240,14 @@
         return callback(new Error("api"));
       }
       res.streams = Array.isArray(res.streams) ? res.streams : [];
+      if ( settings.get("hideVodcasts").get("value") ) {
+        res.streams = res.streams.filter(function (v){
+          if ( v.stream_type && v.stream_type == 'watch_party' ) {
+            return false;
+          }
+          return true;
+        })
+      }
       return callback(null, res.streams);
     }
   });
