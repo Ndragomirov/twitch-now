@@ -58,6 +58,10 @@
     })
   }
 
+  _browserAction.setBadgeBackgroundColor = function(color){
+    _browser.browserAction.setBadgeBackgroundColor(color);
+  }
+
   var _i18n = that.i18n = {};
 
   _i18n.getMessage = function (id){
