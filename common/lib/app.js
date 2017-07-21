@@ -1503,6 +1503,8 @@
     },
     initialize       : function (){
       var self = this;
+      utils.browserAction.setBadgeBackgroundColor({"color": [100, 100, 100, 255]});
+
 
       self.on("change:count", function (){
         if ( settings.get("showBadge").get("value") ) {
