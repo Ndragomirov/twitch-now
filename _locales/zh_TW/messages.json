@@ -97,7 +97,7 @@
     "m96": { "message" : "全部取消桌面通知"},
     "m97": { "message" : "全部使用通知音效"},
     "m98": { "message" : "全部取消通知音效"},
-    "m99": { "message" : "重複撥放通知音效},
+    "m99": { "message" : "重複撥放通知音效"},
     "m100": { "message" : "在livestreamer中開啟"},
     "m101": { "message" : "html5 播放器 (不需要flash插件)"},
     "m102": { "message" : "只顯示選擇語言的串流:"},
