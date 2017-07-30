@@ -74,7 +74,7 @@
     "m73": { "message" : "Connectez-vous pour voir vos chaînes favorites"},
     "m74": { "message" : "Si vous aimez cette application et que vous souhaitez nous aider, vous pouvez faire un don par Paypal ou Bitcoin :"},
     "m75": { "message" : "Télécharger votre son"},
-    "m76": { "message" : "Son personalisé"},
+    "m76": { "message" : "son personalisé"},
     "m77": { "message" : "\"Twitch Now\" pour d'autres navigateurs"},
     "m78": { "message" : "Version Chrome"},
     "m79": { "message" : "Version Opera"},
@@ -102,7 +102,7 @@
     "m101": { "message" : "Avec le lecteur html5 (aucun plugin flash requis)"}
     "m102": { "message" : "Montrer les diffusions uniquement dans les langues selectionnées:"},
     "m103": { "message" : "Pas de diffusions disponibles dans les langues selectionnées"},
-    "m104": { "message" : "Pas de vidéos disponibles pour cette chaine"},
+    "m104": { "message" : "Pas de vidéos disponibles pour cette chaîne"},
     "m105": { "message" : "Montrer toutes les diffusions"},
     "m106": { "message" : "Autre"},
     "m107": { "message" : "Pas de chaînes en direct"},
