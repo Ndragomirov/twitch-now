@@ -1,15 +1,19 @@
 (function (){
   var root = this;
   var that = root.lytics = {};
+  var isAnalyticsEnabled = !!window.analytics;
 
   function isObject(obj){
     return obj === Object(obj);
   }
 
+
   var Lytics = function (trackingId){
-    this.service = analytics.getService('twitch-chrome-extension');
-    this.tracker = this.service.getTracker(trackingId);
-    this.listen();
+    if ( isAnalyticsEnabled ) {
+      this.service = analytics.getService('twitch-chrome-extension');
+      this.tracker = this.service.getTracker(trackingId);
+      this.listen();
+    }
   }
 
   Lytics.prototype.listen = function (){
