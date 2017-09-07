@@ -1,6 +1,6 @@
 {
   "name": "Twitch Now",
-  "version": "1.1.192",
+  "version": "1.1.193",
   "default_locale": "en",
   "manifest_version": 2,
   "description": "Explore games & track your favorite streams on Twitch",
@@ -19,7 +19,6 @@
     "scripts": [
       "common/lib/constants.js",
       "common/dist/contributors.js",
-      "common/lib/3rd/analytics.js",
       "common/lib/3rd/async.js",
       "common/lib/lytics.js",
       "common/lib/3rd/jquery.js",
@@ -37,19 +36,11 @@
     ]
   },
   "minimum_chrome_version": "1.1.142",
-  "content_security_policy": "script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://platform.twitter.com; object-src 'self'",
   "icons": {
     "16": "common/icons/32_1.png",
     "48": "common/icons/48_1.png",
     "128": "common/icons/128_1.png"
   },
-  "web_accessible_resources": [
-    "common/*",
-    "css/*",
-    "dist/*",
-    "oauth2/*",
-    "lib/*"
-  ],
   "browser_action": {
     "default_icon": {
       "19": "common/icons/19_2.png",
