@@ -99,7 +99,7 @@
     "m98": { "message" : "Aucune notification sonore"},
     "m99": { "message" : "Boucle de notification sonore"},
     "m100": { "message" : "Ouvrir dans livestreamer"},
-    "m101": { "message" : "Avec le lecteur html5 (aucun plugin flash requis)"}
+    "m101": { "message" : "Avec le lecteur html5 (aucun plugin flash requis)"},
     "m102": { "message" : "Montrer les diffusions uniquement dans les langues selectionnées:"},
     "m103": { "message" : "Pas de diffusions disponibles dans les langues selectionnées"},
     "m104": { "message" : "Pas de vidéos disponibles pour cette chaîne"},
