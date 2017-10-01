@@ -1,6 +1,6 @@
 {
   "name": "Twitch Now",
-  "version": "1.1.194",
+  "version": "1.1.195",
   "default_locale": "en",
   "manifest_version": 2,
   "description": "Explore games & track your favorite streams on Twitch",
@@ -10,6 +10,7 @@
       "matches": [
         "*://*.twitch.tv/*"
       ],
+      "all_frames": true,
       "js": [
         "common/content/theatre-mode.js"
       ]
