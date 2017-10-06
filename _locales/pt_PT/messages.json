@@ -107,5 +107,6 @@
     "m106": { "message" : "Outros"},
     "m107": { "message" : "Nenhum canal em direto"},
     "m108": { "message" : "Ninguém está a transmitir os seus jogos favoritos agora"},
-    "m109": { "message" : "Ninguém está a transmitir agora"}
+    "m109": { "message" : "Ninguém está a transmitir agora"},
+    "m110": { "message" : "Ocultar vodcasts"}
 }
