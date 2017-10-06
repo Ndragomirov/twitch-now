@@ -21,7 +21,6 @@
       "common/lib/constants.js",
       "common/dist/contributors.js",
       "common/lib/3rd/async.js",
-      "common/lib/lytics.js",
       "common/lib/3rd/jquery.js",
       "common/lib/3rd/underscore.js",
       "common/lib/3rd/backbone.js",
