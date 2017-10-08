@@ -105,7 +105,7 @@
     "m104": { "message" : "Keine Videos für diesen Kanal verfügbar"},
     "m105": { "message" : "Zeige alle Streams"},
     "m106": { "message" : "Andere"},
-    "m107": { "message" : "Keien Kanäle Live"},
+    "m107": { "message" : "Keine Kanäle Live"},
     "m108": { "message" : "Momentan streamt niemand deine bevorzugten Spiele"},
     "m109": { "message" : "Momentan streamt niemand"},
     "m110": { "message" : "Verberge Vodcsats"}
