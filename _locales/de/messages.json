@@ -99,5 +99,14 @@
     "m98": { "message" : "Keine Töne"},
     "m99": { "message" : "Wiederhole Töne"},
     "m100": { "message" : "Öffnen mit Livestreamer"},
-    "m101": { "message" : "html5 Player (Kein Flash plugin notwendig)"}
+    "m101": { "message" : "html5 Player (Kein Flash plugin notwendig)"},
+    "m102": { "message" : "Zeige Streams nur in den ausgewählten Sprachen:"},
+    "m103": { "message" : "Keine Streams für die ausgewählten Sprachen verfügbar"},
+    "m104": { "message" : "Keine Videos für diesen Kanal verfügbar"},
+    "m105": { "message" : "Zeige alle Streams"},
+    "m106": { "message" : "Andere"},
+    "m107": { "message" : "Keien Kanäle Live"},
+    "m108": { "message" : "Momentan streamt niemand deine bevorzugten Spiele"},
+    "m109": { "message" : "Momentan streamt niemand"},
+    "m110": { "message" : "Verberge Vodcsats"}
 }
