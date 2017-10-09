@@ -115,9 +115,44 @@
       requestOpts.url = requestOpts.url.replace(/:user_name/, userName);
       requestOpts.url = requestOpts.url.replace(/:user_id/, _self.userId);
       requestOpts = $.extend(true, requestOpts, {data: opts}, _self.getRequestParams());
-      $.ajax(requestOpts)
-        .done(function (data){
-          //workaround for inconsistent API preview returns
+
+      var url = new URL(requestOpts.url);
+
+      if ( requestOpts.type == "GET" && requestOpts.data ) {
+        Object
+          .keys(requestOpts.data)
+          .forEach(key => url.searchParams.append(key, requestOpts.data[key]));
+      }
+
+      var _h = new Headers();
+      for ( var i in requestOpts.headers ) {
+        _h.append(i, requestOpts.headers[i]);
+      }
+
+      var _ropts = {
+        method  : requestOpts.type,
+        headers : _h,
+        redirect: 'follow',
+      }
+      if ( requestOpts.type != "GET" && requestOpts.type != "HEAD" ) {
+        if ( requestOpts.data ) {
+          var payload = new FormData();
+          for ( var i in requestOpts.data ) {
+            payload.append(i, requestOpts.data[i]);
+          }
+          _ropts.body = payload;
+        }
+      }
+
+      var _r = new Request(url, _ropts);
+
+      fetch(_r).then(function (res){
+        console.log(res.body);
+        if ( res.status == 204 ) {
+          _self.trigger("done:" + methodName);
+          return cb(null, res);
+        }
+        res.json().then(function (data){
           if ( /^(streams|searchStreams|followed)$/.test(methodName) ) {
             if ( data.streams && data.streams.length ) {
               data.streams = data.streams.map(function (s){
@@ -134,12 +169,10 @@
           _self.trigger("done:" + methodName);
           cb(null, data);
         })
-        .fail(function (xhr){
-//          if ( xhr.status == 401 ) {
-//            _self.revoke();
-//          }
+      })
+        .catch(function (res){
           _self.trigger("fail:" + methodName);
-          cb({err: "err" + methodName, status: xhr.status});
+          cb({err: "err" + methodName, status: res.status});
         })
     });
   }
