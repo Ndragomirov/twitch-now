@@ -50,9 +50,8 @@
       this.sync();
     } else {
       setTimeout(function (){
-        console.log("\nFirefox. Triggering token");
         this.trigger("OAUTH2_TOKEN", {value: this.getAccessToken()});
-      }, 2000)
+      }.bind(this), 2000)
     }
   }
 
