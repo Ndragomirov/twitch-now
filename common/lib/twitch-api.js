@@ -62,6 +62,16 @@
     })
   }
 
+  function encode(o){
+    var r = [];
+    for ( var i in o ) {
+      if ( o.hasOwnProperty(i) ) {
+        r.push(encodeURIComponent(i) + '=' + encodeURIComponent(o[i]));
+      }
+    }
+    return r.join('&');
+  }
+
   TwitchApi.prototype.getUserName = function (cb){
     var _self = this
       , userName = _self.userName
@@ -136,11 +146,8 @@
       }
       if ( requestOpts.type != "GET" && requestOpts.type != "HEAD" ) {
         if ( requestOpts.data ) {
-          var payload = new FormData();
-          for ( var i in requestOpts.data ) {
-            payload.append(i, requestOpts.data[i]);
-          }
-          _ropts.body = payload;
+          _ropts.headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+          _ropts.body = encode(requestOpts.data);
         }
       }
 
