@@ -99,5 +99,14 @@
     "m98": { "message" : "Żadne dzwieki"},
     "m99": { "message" : "Powtarzaj dzwiek powiadomienia"},
     "m100": { "message" : "Otwórz przy użyciu livestreamer"},
-    "m101": { "message" : "Player HTML5 (nie wymaga flash'a)"}
+    "m101": { "message" : "Player HTML5 (nie wymaga flash'a)"},
+    "m102": { "message" : "Pokazuj strumienie tylko dla wybranych języków:"},
+    "m103": { "message" : "Brak dostępnych strumieni dla wybranych języków"},
+    "m104": { "message" : "Brak filmów dostępnych dla tego kanału"},
+    "m105": { "message" : "Pokaż wszystkie strumienie"},
+    "m106": { "message" : "Inne"},
+    "m107": { "message" : "Brak kanałów w trakcie strumieniowania"},
+    "m108": { "message" : "Nikt nie streamuje twoich ulubionych gier w tej chwili"},
+    "m109": { "message" : "Nikt w tym momencie nie streamuje"},
+    "m110": { "message" : "Ukryj vodcasty"}
 }
