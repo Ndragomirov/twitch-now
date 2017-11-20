@@ -14,7 +14,9 @@
   app.resetScroll = function (){
     app.container.removeClass('shift');
     app.container.scrollTop(0);
-    _baron.update();
+    if (utils.rbrowser != 'firefox') {
+      _baron.update();
+    }
   }
 
   app.lazyload = function (){
@@ -79,12 +81,15 @@
 
     views.topMenu = new TopMenu;
 
-    _baron = baron({
-      root    : '#content',
-      scroller: '.scroller',
-      bar     : '.scroller__bar',
-      barOnCls: 'baron'
-    }).autoUpdate();
+    if (utils.rbrowser != 'firefox'){
+      _baron = baron({
+        root    : '#content',
+        scroller: '.scroller',
+        bar     : '.scroller__bar',
+        barOnCls: 'baron'
+      }).autoUpdate();
+    }
+
 
     Backbone.history.start();
 
@@ -329,7 +334,10 @@
         this.app.curView.$el.find(".js-filterable").each(function (i, e){
           $(e).toggle(!!$(e).text().toLowerCase().match(rFilter));
         });
-        _baron.update();
+        if (utils.rbrowser != 'firefox') {
+          _baron.update();
+        }
+
       }
     },
     refresh       : function (){

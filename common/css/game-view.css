@@ -17,6 +17,7 @@
 .game-list-item {
     float: left;
     width: 77px;
+    padding: 10px 9px;
     background: none;
     border: none !important;
 }
