@@ -257,7 +257,7 @@
   methods.hosts = function (){
     return {
       type: "GET",
-      url : "http://api.twitch.tv/api/users/:user_name/followed/hosting",
+      url : "https://api.twitch.tv/api/users/:user_name/followed/hosting",
       data: {
         limit: 100
       }
@@ -267,7 +267,7 @@
   methods.followedgames = function (){
     return {
       type: "GET",
-      url : "http://api.twitch.tv/api/users/:user_name/follows/games/live",
+      url : "https://api.twitch.tv/api/users/:user_name/follows/games/live",
       data: {
         limit: 100
       }
@@ -277,14 +277,14 @@
   methods.gameFollow = function (){
     return {
       type: "PUT",
-      url : "http://api.twitch.tv/api/users/:user_name/follows/games/follow"
+      url : "https://api.twitch.tv/api/users/:user_name/follows/games/follow"
     }
   }
 
   methods.gameUnfollow = function (){
     return {
       type: "DELETE",
-      url : "http://api.twitch.tv/api/users/:user_name/follows/games/unfollow"
+      url : "https://api.twitch.tv/api/users/:user_name/follows/games/unfollow"
     }
   }
 
