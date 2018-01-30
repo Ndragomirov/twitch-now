@@ -1089,7 +1089,7 @@
     initialize: function (){
       var channelName = this.get("channel").name;
       var streamType = this.get("stream_type");
-      var isVodcast = !!streamType && streamType == 'watch_party';
+      var isVodcast = ['rerun', 'watch_party'].includes(streamType);
       this.set({
           vodcast: isVodcast,
           name   : channelName
@@ -1242,7 +1242,7 @@
       res.streams = Array.isArray(res.streams) ? res.streams : [];
       if ( settings.get("hideVodcasts").get("value") ) {
         res.streams = res.streams.filter(function (v){
-          if ( v.stream_type && v.stream_type == 'watch_party' ) {
+          if ( ['rerun', 'watch_party'].includes(v.stream_type) ) {
             return false;
           }
           return true;
