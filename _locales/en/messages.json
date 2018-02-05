@@ -108,5 +108,7 @@
     "m107": { "message" : "No Channels Live"},
     "m108": { "message" : "Nobody is streaming your favorites games right now"},
     "m109": { "message" : "Nobody is streaming right now"},
-    "m110": { "message" : "Hide vodcasts"}
+    "m110": { "message" : "Hide vodcasts"},
+    "m111": { "message" : "Livestreamer video quality"},
+    "m112": { "message" : "Livestreamer path"}
 }
