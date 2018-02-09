@@ -456,7 +456,7 @@
     },
     {
       id    : "livestreamerQuality",
-      desc  : "Livestreamer video quality",
+      desc  : "__MSG_m111__",
       type  : "select",
       select: true,
       opts  : [
@@ -471,7 +471,7 @@
     },
     {
       id   : "livestreamerPath",
-      desc : "Livestreamer path",
+      desc : "__MSG_m112__",
       type : "text",
       text : true,
       show : true,
