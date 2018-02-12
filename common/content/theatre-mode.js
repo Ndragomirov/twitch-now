@@ -1,6 +1,6 @@
 (function (){
 
-  var theatreBtnSelector = '.js-control-theatre';
+  var theatreBtnSelector = '.qa-theatre-mode-button';
   const MAX_TRIES = 400;
 
   function waitUntilVisible(selector, callback){
