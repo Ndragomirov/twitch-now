@@ -131,7 +131,9 @@
       if ( requestOpts.type == "GET" && requestOpts.data ) {
         Object
           .keys(requestOpts.data)
-          .forEach(key => url.searchParams.append(key, requestOpts.data[key]));
+          .forEach(function(key) {
+            return url.searchParams.append(key, requestOpts.data[key]);
+          });
       }
 
       var _h = new Headers();
