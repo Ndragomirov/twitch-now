@@ -108,5 +108,7 @@
     "m107": { "message" : "Nenhum canal em direto"},
     "m108": { "message" : "Ninguém está a transmitir os seus jogos favoritos agora"},
     "m109": { "message" : "Ninguém está a transmitir agora"},
-    "m110": { "message" : "Ocultar vodcasts"}
+    "m110": { "message" : "Ocultar vodcasts"},
+    "m111": { "message" : "Qualidade de vídeo do Livestreamer"},
+    "m112": { "message" : "Caminho do Livestreamer"}
 }
