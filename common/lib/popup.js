@@ -579,7 +579,7 @@
 
     openStream: function (e){
       // Open stream on left and middle click
-      let canOpenStreamTab = e.which <= 2;
+      const canOpenStreamTab = e.which <= 2;
       if (canOpenStreamTab) {
         this.model.openStream();
         window.close();
