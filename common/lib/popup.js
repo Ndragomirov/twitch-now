@@ -574,18 +574,16 @@
     menuEl    : '#context-menu',
     events    : {
       "contextmenu .stream": "showMenu",
-      "click .stream"      : "openStream",
-      "mousedown .stream"  : "mouseDownEvent"
+      "mousedown .stream"  : "openStream",
     },
-    mouseDownEvent: function(e) {
-      // Open stream on mouse wheel button
-      if (e.which === 2) {
-        this.openStream();
+
+    openStream: function (e){
+      // Open stream on left and middle click
+      let canOpenStreamTab = e.which <= 2;
+      if (canOpenStreamTab) {
+        this.model.openStream();
+        window.close();
       }
-    },
-    openStream: function (){
-      this.model.openStream();
-      window.close();
     },
     openChat  : function (){
       this.model.openChat();
