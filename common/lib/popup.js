@@ -235,16 +235,14 @@
         e.preventDefault();
         window.close();
       })
-
       .on('click', '.js-window', function (e){
         var windowOpts = JSON.parse($(this).attr('data-window-opts') || "{}");
         utils.windows.create($.extend({url: $(this).attr('data-href')}, windowOpts));
         e.preventDefault();
         window.close();
-      })
+      });
 
     $('.tip').tooltip();
-
   };
 
   var DefaultView = Backbone.View.extend({
@@ -576,11 +574,16 @@
     menuEl    : '#context-menu',
     events    : {
       "contextmenu .stream": "showMenu",
-      "click .stream"      : "openStream"
+      "mousedown .stream"  : "openStream",
     },
-    openStream: function (){
-      this.model.openStream();
-      window.close();
+
+    openStream: function (e){
+      // Open stream on left and middle click
+      const canOpenStreamTab = e.which <= 2;
+      if (canOpenStreamTab) {
+        this.model.openStream();
+        window.close();
+      }
     },
     openChat  : function (){
       this.model.openChat();
