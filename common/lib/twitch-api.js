@@ -162,6 +162,13 @@
           return cb(null, res);
         }
         res.json().then(function (data){
+          if (methodName === 'followedgames') {
+            data.follows = data.follows.filter(game => game.game.popularity).sort((a, b) => {
+              if (a.game.popularity < b.game.popularity) return 1;
+              if (a.game.popularity > b.game.popularity) return -1;
+            });
+          }
+
           if ( /^(streams|searchStreams|followed)$/.test(methodName) ) {
             if ( data.streams && data.streams.length ) {
               data.streams = data.streams.map(function (s){
@@ -269,7 +276,7 @@
   methods.followedgames = function (){
     return {
       type: "GET",
-      url : "https://api.twitch.tv/api/users/:user_name/follows/games/live",
+      url : "https://api.twitch.tv/kraken/users/:user_id/follows/games",
       data: {
         limit: 100
       }
