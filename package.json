@@ -4,7 +4,7 @@
   "description": "* Chrome version: https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk * Firefox version: https://docs.google.com/file/d/0BykW-NfUUzm5Z2RCWmcxTmQ5cEk * Opera version: https://addons.opera.com/extensions/details/twitch-now/",
   "main": "Gruntfile.js",
   "dependencies": {
-    "semver": "^6.3.0",
+    "semver": "^4.3.2",
     "through2": "^2.0.0"
   },
   "devDependencies": {
