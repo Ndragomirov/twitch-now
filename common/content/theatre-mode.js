@@ -1,6 +1,6 @@
 (function (){
 
-  var theatreBtnSelector = '.qa-theatre-mode-button';
+  var theatreBtnSelector = '[data-a-target="player-theatre-mode-button"]';
   const MAX_TRIES = 400;
 
   function waitUntilVisible(selector, callback){
@@ -39,7 +39,7 @@
   document.addEventListener("DOMContentLoaded", function (){
     var hash = window.location.search; // no iframes
     var ref = document.referrer || ""; //inside player's iframe
-    if ( /mode=theater/i.test(ref) || /mode=theater/i.test(hash) ) {
+    if ( /mode=theatre/i.test(ref) || /mode=theatre/i.test(hash) ) {
       waitUntilVisible(theatreBtnSelector, function (err){
         if ( !err ) {
           turnOn();
