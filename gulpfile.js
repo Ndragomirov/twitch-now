@@ -1,6 +1,6 @@
 var gulp = require('gulp');
-var del = require('del');
 var handlebars = require('gulp-handlebars');
+var del = require('del');
 var wrap = require('gulp-wrap');
 var declare = require('gulp-declare');
 var shell = require('gulp-shell');
@@ -13,26 +13,26 @@ var zip = require('gulp-zip');
 var bump = require('gulp-bump');
 var fs = require('fs');
 var jshint = require('gulp-jshint');
+var jshint = require('gulp-jshint');
 var request = require('request');
 
-
-gulp.task('lint', function (){
+gulp.task('lint', function () {
   return gulp
     .src([
       './common/lib/*.js'
     ])
     .pipe(jshint({
-      moz          : true,
-      asi          : true,
-      maxparams    : 5,
-      maxdepth     : 4,
+      moz: true,
+      asi: true,
+      maxparams: 5,
+      maxdepth: 4,
       maxstatements: 35,
       maxcomplexity: 10
     }))
     .pipe(jshint.reporter('default'));
 });
 
-gulp.task('copy:opera', function (){
+gulp.task('copy:opera', function () {
   return gulp
     .src([
       'build/chrome/**',
@@ -42,7 +42,7 @@ gulp.task('copy:opera', function (){
 })
 
 
-gulp.task('copy:firefox', function (){
+gulp.task('copy:firefox', function () {
   return gulp.src([
     'build/chrome/**',
     'firefox/**'
@@ -50,7 +50,7 @@ gulp.task('copy:firefox', function (){
     .pipe(gulp.dest('build/firefox/'))
 })
 
-gulp.task('copy:chrome', function (){
+gulp.task('copy:chrome', function () {
   var c1 = gulp
     .src([
       'common/**'
@@ -72,7 +72,7 @@ gulp.task('copy:chrome', function (){
   return merge(c1, c2, c3);
 })
 
-gulp.task('concat:popupjs', function (){
+gulp.task('concat:popupjs', function () {
   return gulp.src([
     "common/lib/onerror.js",
     "common/lib/utils.js",
@@ -95,7 +95,7 @@ gulp.task('concat:popupjs', function (){
     .pipe(gulp.dest('common/dist/'));
 })
 
-gulp.task('concat:popupcss', function (){
+gulp.task('concat:popupcss', function () {
   return gulp.src([
     "common/css/reset.css",
     "common/css/bootstrap.min.css",
@@ -117,7 +117,7 @@ gulp.task('concat:popupcss', function (){
 })
 
 
-gulp.task('stripdebug', function (){
+gulp.task('stripdebug', function () {
   return gulp
     .src([
       "build/**/*.js"
@@ -126,31 +126,35 @@ gulp.task('stripdebug', function (){
     .pipe(gulp.dest("build/"));
 })
 
-gulp.task('clean:dist', function (){
+gulp.task('clean:dist', function (done) {
   del.sync([
     'dist/*'
   ]);
+  done();
 });
 
-gulp.task('clean:opera', function (){
-  return del.sync([
+gulp.task('clean:opera', function (done) {
+  del.sync([
     'build/opera/*'
   ]);
+  done();
 });
 
-gulp.task('clean:chrome', function (){
-  return del.sync([
+gulp.task('clean:chrome', function (done) {
+  del.sync([
     'build/chrome/*'
   ])
+  done();
 });
 
-gulp.task('clean:firefox', function (){
-  return del.sync([
+gulp.task('clean:firefox', function (done) {
+  del.sync([
     'build/firefox/*'
   ]);
+  done();
 });
 
-gulp.task('compress:chrome', function (){
+gulp.task('compress:chrome', function () {
   var v = JSON.parse(fs.readFileSync("package.json")).version;
 
   return gulp.src('build/chrome/**')
@@ -158,7 +162,7 @@ gulp.task('compress:chrome', function (){
     .pipe(gulp.dest('dist/'));
 })
 
-gulp.task('compress:opera', function (){
+gulp.task('compress:opera', function () {
   var v = JSON.parse(fs.readFileSync("package.json")).version;
 
   return gulp.src('build/opera/**')
@@ -166,7 +170,7 @@ gulp.task('compress:opera', function (){
     .pipe(gulp.dest('dist/'));
 })
 
-gulp.task('compress:firefox', function (){
+gulp.task('compress:firefox', function () {
   var v = JSON.parse(fs.readFileSync("package.json")).version;
 
   return gulp.src('build/firefox/**')
@@ -174,34 +178,34 @@ gulp.task('compress:firefox', function (){
     .pipe(gulp.dest('dist/'));
 })
 
-gulp.task('handlebars', function (){
+gulp.task('handlebars', function () {
   return gulp.src('templates/*.html')
     .pipe(handlebars())
     .pipe(wrap('Handlebars.template(<%= contents %>)'))
     .pipe(declare({
-      namespace  : 'Handlebars.templates',
+      namespace: 'Handlebars.templates',
       noRedeclare: true // Avoid duplicate declarations
     }))
     .pipe(concat('templates.js'))
     .pipe(gulp.dest('common/dist/'));
 });
 
-gulp.task('contributors', function (cb){
+gulp.task('contributors', function (cb) {
   request({
-    method : "GET",
-    url    : "https://api.github.com/repos/ndragomirov/twitch-now/contributors",
+    method: "GET",
+    url: "https://api.github.com/repos/ndragomirov/twitch-now/contributors",
     headers: {
       "User-Agent": "whatever"
     }
-  }, function (err, res, body){
-    if ( err || !body ) {
+  }, function (err, res, body) {
+    if (err || !body) {
       return cb(err || new Error("No body"));
     }
     fs.writeFile("common/dist/contributors.js", 'var contributorList = ' + body + ';', cb)
   })
 })
 
-gulp.task('bump', function (){
+gulp.task('bump', function (done) {
   gulp
     .src([
       './package.json',
@@ -210,53 +214,47 @@ gulp.task('bump', function (){
       './firefox/manifest.json'
     ])
     .pipe(bump())
-    .pipe(gulp.dest(function (d){
+    .pipe(gulp.dest(function (d) {
       return d.base;
     }));
+  done();
 });
 
-gulp.task('watch', function (){
+gulp.task('watch', function () {
   gulp.watch(["common/**", "templates/**"], ['chrome']);
 })
 
-gulp.task('chrome', function (cb){
-  runSequence(
-    'clean:chrome',
-    'handlebars',
-    'contributors',
-    'concat:popupcss',
-    'concat:popupjs',
-    'copy:chrome',
-    cb
-  );
-})
+gulp.task('chrome', gulp.series('clean:chrome',
+  'handlebars',
+  'contributors',
+  'concat:popupcss',
+  'concat:popupjs',
+  'copy:chrome', function (done) {
+    done();
+  }));
 
-gulp.task('opera', function (cb){
-  runSequence(
-    'chrome',
-    'clean:opera',
-    'copy:opera',
-    cb
-  );
-});
+gulp.task('opera', gulp.series(
+  'chrome',
+  'clean:opera',
+  'copy:opera', function (done) {
+    done();
+  }));
 
 
-gulp.task('firefox', function (cb){
-  runSequence(
-    'chrome',
-    'clean:firefox',
-    'copy:firefox',
-    cb
-  );
-});
+gulp.task('firefox', gulp.series(
+  'chrome',
+  'clean:firefox',
+  'copy:firefox', function (done) {
+    done();
+  }));
 
-gulp.task('dist', function (cb){
-  runSequence(
-    ['bump', 'clean:dist'],
-    'chrome',
-    'opera',
-    'firefox',
-    'stripdebug',
-    ['compress:chrome', 'compress:opera', 'compress:firefox'],
-    cb);
-})
+gulp.task('dist', gulp.series(
+  ['bump', 'clean:dist'],
+  'chrome',
+  'opera',
+  'firefox',
+  'stripdebug',
+  ['compress:chrome', 'compress:opera', 'compress:firefox'],
+  function (done) {
+    done();
+  }));
