@@ -105,8 +105,8 @@
     "m104": { "message" : "Нет доступных видео для выбранного канала"},
     "m105": { "message" : "Показать все стримы"},
     "m106": { "message" : "Другое"},
-    "m107": { "message" : "No Channels Live"},
-    "m108": { "message" : "Nobody is streaming your favorites games right now"},
-    "m109": { "message" : "Nobody is streaming right now"},
+    "m107": { "message" : "Никто не стримит"},
+    "m108": { "message" : "Никто не стримит твои любимые игры на данный момент"},
+    "m109": { "message" : "Никто не стримит на данный момент"},
     "m110": { "message" : "Скрывать Vodcast стримы"}
 }
