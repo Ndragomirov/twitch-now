@@ -1,32 +1,32 @@
-(function (){
+(function () {
   var root = this;
   var that = {};
   var isFirefox = !!root.browser;
   var _browser = isFirefox ? root.browser : chrome;
 
-  function noop(){
+  function noop() {
   }
 
   that._adapters = {};
 
-  function extend(){
+  function extend() {
     var s = arguments[0];
-    for ( var i = 1; i < arguments.length; i++ ) {
-      for ( var j in arguments[i] ) {
+    for (var i = 1; i < arguments.length; i++) {
+      for (var j in arguments[i]) {
         s[j] = arguments[i][j];
       }
     }
   }
 
-  var request = function (opts, callback){
+  var request = function (opts, callback) {
     var $ = root.jQuery;
     $.ajax({
-      url : opts.url,
+      url: opts.url,
       type: opts.method,
       data: opts.data
     })
-      .always(function (data, textStatus, jqXHR){
-        if ( textStatus == "success" ) {
+      .always(function (data, textStatus, jqXHR) {
+        if (textStatus == "success") {
           callback(null, data);
         } else {
           callback(data);
@@ -34,7 +34,7 @@
       });
   }
 
-  var Adapter = function (id, opts, flow){
+  var Adapter = function (id, opts, flow) {
     this.lsPath = "oauth2_" + id;
     this.opts = opts;
     this.responseType = this.opts.response_type;
@@ -45,171 +45,170 @@
     this.codeUrl = opts.api + "?" + this.query(opts);
     this._watchInject();
     extend(this, new EventEmitter());
-    if ( !isFirefox ) {
+    if (!isFirefox) {
       this.syncGet();
       this.sync();
     } else {
-      setTimeout(function (){
-        this.trigger("OAUTH2_TOKEN", {value: this.getAccessToken()});
+      setTimeout(function () {
+        this.trigger("OAUTH2_TOKEN", { value: this.getAccessToken() });
       }.bind(this), 2000)
     }
   }
 
-  Adapter.prototype._watchInject = function (){
+  Adapter.prototype._watchInject = function () {
     var self = this;
     var injectScript = '(' + this.injectScript.toString() + ')()';
     var injectTo;
 
     injectTo = this.redirect;
-    _browser.tabs.onUpdated.addListener(function (tabId, changeInfo){
-      if ( changeInfo.url && changeInfo.url.indexOf(injectTo) != -1 ) {
+    _browser.tabs.onUpdated.addListener(function (tabId, changeInfo) {
+      if (changeInfo.url && changeInfo.url.indexOf(injectTo) != -1) {
         console.log("\nExecuting scripts");
-        _browser.tabs.executeScript(tabId, {code: injectScript});
+        _browser.tabs.executeScript(tabId, { code: injectScript });
       }
     })
 
-    _browser.runtime.onMessage.addListener(function (msg, sender, sendResponse){
-      if ( msg.type == "OAUTH2" ) {
+    _browser.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+      if (msg.type == "OAUTH2") {
         self.finalize(msg.value.params);
-        setTimeout(function (){
-          _browser.tabs.remove(sender.tab.id);
-        }, 100)
+        console.log('finalize', sender.tab.id);
+        _browser.tabs.remove(sender.tab.id);
       }
     });
   }
 
-  Adapter.prototype.injectScript = function (){
+  Adapter.prototype.injectScript = function () {
 
     console.log("\n\nInjecting\n\n");
 
-    var sendMessage = function (msg){
+    var sendMessage = function (msg) {
 
       var data = {
         value: msg,
-        type : "OAUTH2"
+        type: "OAUTH2"
       };
 
       chrome.runtime.sendMessage(data);
     }
 
-    var send = function (){
+    var send = function () {
 
       var params = window.location.href;
 
       console.log("\nSending back to background message = ", params);
 
-      sendMessage({params: params});
+      sendMessage({ params: params });
     }
 
     send();
 
   }
 
-  Adapter.prototype.syncGet = function (){
+  Adapter.prototype.syncGet = function () {
     var self = this;
-    _browser.storage.sync.get(this.lsPath, function (item){
+    _browser.storage.sync.get(this.lsPath, function (item) {
       console.log("SYNC_GET", item);
-      if ( item[self.lsPath] ) {
+      if (item[self.lsPath]) {
         self.set(JSON.parse(item[self.lsPath]), true);
       }
     });
   }
 
-  Adapter.prototype.sync = function (){
+  Adapter.prototype.sync = function () {
     var self = this;
-    _browser.storage.onChanged.addListener(function (changes, namespace){
-      if ( namespace === "sync" ) {
+    _browser.storage.onChanged.addListener(function (changes, namespace) {
+      if (namespace === "sync") {
         console.log("SYNC_CHANGED", changes);
-        if ( self.lsPath in changes ) {
+        if (self.lsPath in changes) {
           self.set(JSON.parse(changes[self.lsPath].newValue), true);
         }
       }
     });
   }
 
-  Adapter.prototype.del = function (/*keys*/){
+  Adapter.prototype.del = function (/*keys*/) {
     delete localStorage[this.lsPath];
   }
 
-  Adapter.prototype.get = function (){
+  Adapter.prototype.get = function () {
     return typeof localStorage[this.lsPath] != "undefined" ?
       JSON.parse(localStorage[this.lsPath]) :
       undefined;
   }
 
-  Adapter.prototype.set = function (val, passSync){
+  Adapter.prototype.set = function (val, passSync) {
     localStorage[this.lsPath] = JSON.stringify(val);
 
 
-    if ( !isFirefox && passSync == undefined ) {
+    if (!isFirefox && passSync == undefined) {
       var syncData = {};
       syncData[this.lsPath] = JSON.stringify(val);
 
       console.log("set sync data", syncData);
 
-      _browser.storage.sync.set(syncData, function (){
+      _browser.storage.sync.set(syncData, function () {
         console.log("SYNC_SET_DONE", arguments);
       });
     }
 
-    this.trigger("OAUTH2_TOKEN", {value: this.getAccessToken()});
+    this.trigger("OAUTH2_TOKEN", { value: this.getAccessToken() });
   }
 
-  Adapter.prototype.updateLocalStorage = function (){
+  Adapter.prototype.updateLocalStorage = function () {
     var stored = this.get();
-    stored = stored || {accessToken: ""};
+    stored = stored || { accessToken: "" };
     stored.accessToken = stored.accessToken || "";
     this.set(stored);
   }
 
 
-  Adapter.prototype.pick = function (obj, params){
+  Adapter.prototype.pick = function (obj, params) {
     var res = {};
-    for ( var i in obj ) {
-      if ( ~params.indexOf(i) && obj.hasOwnProperty(i) ) {
+    for (var i in obj) {
+      if (~params.indexOf(i) && obj.hasOwnProperty(i)) {
         res[i] = obj[i];
       }
     }
     return res;
   }
 
-  Adapter.prototype.query = function (o){
+  Adapter.prototype.query = function (o) {
     var res = [];
-    for ( var i in o ) {
+    for (var i in o) {
       res.push(encodeURIComponent(i) + "=" + encodeURIComponent(o[i]));
     }
     return res.join("&");
   }
 
-  Adapter.prototype.parseAccessToken = function (url){
+  Adapter.prototype.parseAccessToken = function (url) {
     var error = url.match(/[&\?]error=([^&]+)/);
-    if ( error ) {
+    if (error) {
       throw new Error('Error getting access token: ' + error[1]);
     }
     return url.match(/[&#]access_token=([\w\/\-]+)/)[1];
   }
 
-  Adapter.prototype.parseAuthorizationCode = function (url){
+  Adapter.prototype.parseAuthorizationCode = function (url) {
     var error = url.match(/[&\?]error=([^&]+)/);
-    if ( error ) {
+    if (error) {
       throw new Error('Error getting authorization code: ' + error[1]);
     }
     return url.match(/[&\?]code=([\w\/\-]+)/)[1];
   }
 
-  Adapter.prototype.authorize = function (callback){
+  Adapter.prototype.authorize = function (callback) {
     this._callback = callback;
     this.openTab(this.codeUrl);
   }
 
-  Adapter.prototype.finalize = function (params){
+  Adapter.prototype.finalize = function (params) {
     var self = this;
     var callback = self._callback || noop;
     var code;
     var token;
 
     console.log("\nSelf response type", self.responseType);
-    if ( self.responseType == "code" ) {
+    if (self.responseType == "code") {
       try {
         code = this.parseAuthorizationCode(params);
       } catch (err) {
@@ -217,8 +216,8 @@
         return callback(err);
       }
 
-      this.getAccessAndRefreshTokens(code, function (err, data){
-        if ( !err ) {
+      this.getAccessAndRefreshTokens(code, function (err, data) {
+        if (!err) {
           console.log("\n\nRecieve access token = ", data.access_token);
           self.setAccessToken(data.access_token);
           callback();
@@ -228,7 +227,7 @@
       })
     }
 
-    if ( self.responseType == "token" ) {
+    if (self.responseType == "token") {
       try {
         self.setAccessToken(self.parseAccessToken(params));
       } catch (err) {
@@ -238,7 +237,7 @@
     }
   }
 
-  Adapter.prototype.getAccessAndRefreshTokens = function (authorizationCode, callback){
+  Adapter.prototype.getAccessAndRefreshTokens = function (authorizationCode, callback) {
 
     var method = this.flow.method;
     var url = this.flow.url;
@@ -250,54 +249,54 @@
 
     var values = this.pick(data, ["client_id", "client_secret", "grant_type", "redirect_uri", "code"]);
 
-    request({url: url, method: method, data: values}, callback)
+    request({ url: url, method: method, data: values }, callback)
   }
 
-  Adapter.prototype.openTab = function (url){
-    _browser.tabs.create({url: url});
+  Adapter.prototype.openTab = function (url) {
+    _browser.tabs.create({ url: url });
   }
 
-  Adapter.prototype.setAccessToken = function (token){
-    this.set({accessToken: token});
+  Adapter.prototype.setAccessToken = function (token) {
+    this.set({ accessToken: token });
   }
 
-  Adapter.prototype.hasAccessToken = function (){
+  Adapter.prototype.hasAccessToken = function () {
     var g = this.get();
     return g && g.hasOwnProperty("accessToken");
   }
 
-  Adapter.prototype.getAccessToken = function (){
+  Adapter.prototype.getAccessToken = function () {
     return this.hasAccessToken() ? this.get().accessToken : "";
   }
 
-  Adapter.prototype.clearAccessToken = function (){
+  Adapter.prototype.clearAccessToken = function () {
     console.log("clear access token");
     var data = this.get();
     delete data.accessToken;
     this.set(data);
   }
 
-  that.lookupAdapter = function (url){
+  that.lookupAdapter = function (url) {
     console.log("lookup adapter for url = ", url);
     var adapters = that._adapters;
-    for ( var i in adapters ) {
-      if ( adapters[i].opts.redirect_uri == url ) {
+    for (var i in adapters) {
+      if (adapters[i].opts.redirect_uri == url) {
         return adapters[i];
       }
     }
   }
 
-  that.addAdapter = function (opts){
+  that.addAdapter = function (opts) {
     var id = opts.id;
     var adapter = that._adapters[id];
-    if ( !adapter ) {
+    if (!adapter) {
       adapter = that._adapters[id] = new Adapter(id, opts.opts, opts.codeflow);
     }
     return adapter;
   }
 
-  if ( typeof exports !== 'undefined' ) {
-    if ( typeof module !== 'undefined' && module.exports ) {
+  if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
       exports = module.exports = that;
     }
     exports.OAuth2 = that;

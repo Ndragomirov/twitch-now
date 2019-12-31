@@ -1,6 +1,6 @@
 {
   "name": "twitch-now",
-  "version": "1.1.206",
+  "version": "1.1.207",
   "description": "* Chrome version: https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk * Firefox version: https://docs.google.com/file/d/0BykW-NfUUzm5Z2RCWmcxTmQ5cEk * Opera version: https://addons.opera.com/extensions/details/twitch-now/",
   "dependencies": {
     "semver": "^6.3.0",
