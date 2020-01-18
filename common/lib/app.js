@@ -78,7 +78,7 @@
             type   : "basic",
             title  : streamsToShow[0].get("channel").display_name,
             message: streamsToShow[0].get("game") || "Games & Demos",
-            iconUrl: defaultIcon
+            iconUrl: streamsToShow[0].get("channel").logo
           }
 
           bgApp.notificationIds[notificationId] = streamsToShow[0];
