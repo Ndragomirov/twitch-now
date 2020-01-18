@@ -1124,7 +1124,7 @@
         return "http://player.twitch.tv/?channel=" + this.get("channel").name + "&html5";
       }
       var links = {
-        theatrelayout: "/ID?mode=theater",
+        theatrelayout: "/ID?mode=theatre",
         newlayout    : "/ID",
         popout       : "/ID/popout"
       };
