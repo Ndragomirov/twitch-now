@@ -77,7 +77,7 @@
           opt = {
             type   : "basic",
             title  : streamsToShow[0].get("channel").display_name,
-            message: streamsToShow[0].get("game") || "Games & Demos",
+            message: streamsToShow[0].get("game") + "\n" + streamsToShow[0].get("channel").status,
             iconUrl: streamsToShow[0].get("channel").logo
           }
 
