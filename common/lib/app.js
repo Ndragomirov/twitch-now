@@ -77,8 +77,8 @@
           opt = {
             type   : "basic",
             title  : streamsToShow[0].get("channel").display_name,
-            message: streamsToShow[0].get("game") || "Games & Demos",
-            iconUrl: defaultIcon
+            message: streamsToShow[0].get("channel").game + "\n" + streamsToShow[0].get("channel").status,
+            iconUrl: streamsToShow[0].get("channel").logo
           }
 
           bgApp.notificationIds[notificationId] = streamsToShow[0];
@@ -1124,7 +1124,7 @@
         return "http://player.twitch.tv/?channel=" + this.get("channel").name + "&html5";
       }
       var links = {
-        theatrelayout: "/ID?mode=theater",
+        theatrelayout: "/ID?mode=theatre",
         newlayout    : "/ID",
         popout       : "/ID/popout"
       };
