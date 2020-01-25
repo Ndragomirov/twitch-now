@@ -513,11 +513,17 @@
     userpic         : utils.runtime.getURL("common/icons/default_userpic.png"),
     initialize      : function (){
       var self = this;
-      this.set({
-        "authenticated": twitchApi.isAuthorized(),
-        "logo"         : self.userpic,
-        "name"         : "Twitchuser"
-      });
+      if(twitchOauth.hasAccessToken()) {
+        twitchApi.token = twitchOauth.getAccessToken();
+        self.populateUserInfo(function (e, res){
+          self.set("authenticated", true);
+          self.set({
+            "logo": res.logo,
+            "name": res.display_name
+          });
+          following.update();
+        });
+      }
 
       twitchApi.on("authorize", function (){
         self.populateUserInfo(function (){
