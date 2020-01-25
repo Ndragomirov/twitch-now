@@ -392,6 +392,14 @@
       value   : true
     },
     {
+      id      : "invertNotification",
+      desc    : "__MSG_m115__",
+      checkbox: true,
+      type    : "checkbox",
+      show    : true,
+      value   : true
+    },
+    {
       id    : "notifyCount",
       desc  : "__MSG_m113__",
       type  : "select",
@@ -926,7 +934,9 @@
       utils.tabs.create({url: this.getProfileUrl()});
     },
     initialize     : function (){
-
+      let i = settings.get("invertNotification").get("value");
+      this.defaults.notificationOpts.desktop = i;
+      this.defaults.notificationOpts.sound = i;
     }
   });
 
@@ -1033,7 +1043,7 @@
       if ( channel ) {
         return channel.notificationOpts[type];
       } else {
-        return true;
+        return settings.get("invertNotification").get("value");
       }
     },
     saveToStorage         : function (){
