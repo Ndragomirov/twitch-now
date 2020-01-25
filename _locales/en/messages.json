@@ -110,5 +110,8 @@
     "m109": { "message" : "Nobody is streaming right now"},
     "m110": { "message" : "Hide vodcasts"},
     "m111": { "message" : "Livestreamer video quality"},
-    "m112": { "message" : "Livestreamer path"}
+    "m112": { "message" : "Livestreamer path"},
+    "m113": { "message" : "Number of split notifications"},
+    "m114": { "message" : "Other channels: "},
+    "m115": { "message" : "Show notifications by default for new follows"}
 }
