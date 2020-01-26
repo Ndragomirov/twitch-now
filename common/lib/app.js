@@ -82,30 +82,31 @@
           setTimeout(function() {
               chrome.notifications.create(notificationId, opt, function (){});
           }, sec);
-          sec = (sec + 1000)
-          if (i == (displayCount - 1) && streamsOther.length != 0) {
-            let notificationId = _.uniqueId("TwitchNow.Notification.");
-            if (streamsOther.length > 3) {
-              let moreStreamers = streamTitles.slice(0, 2);
-              var opt2 = {
-                type   : "basic",
-                title  : "Twitch Now",
-                message: moreStreamers.join("\n") + "\n" + utils.i18n.getMessage("m114") + (streamsOther.length - moreStreamers.length),
-                iconUrl: defaultIcon
-              }
-            } else {
-              let moreStreamers = streamTitles.slice(0, 3);
-              var opt2 = {
-                type   : "basic",
-                title  : "Twitch Now",
-                message: moreStreamers.join("\n"),
-                iconUrl: defaultIcon
-              }              
-            }
-            setTimeout(function() {
-              chrome.notifications.create(notificationId, opt2, function (){});
-            }, sec);
+          sec = (sec + 1000);
+        } catch (e) {
+          delete bgApp.notificationIds[notificationId];
+          console.log("Notification error: ", e);
+        }
+      }
+      
+      if (streamsOther.length) {
+        try {
+          let notificationId = _.uniqueId("TwitchNow.Notification.");
+          var opt2 = {
+            type   : "basic",
+            title  : "Twitch Now",
+            iconUrl: defaultIcon
           }
+          if (streamsOther.length > 3) {
+            let moreStreamers = streamTitles.slice(0, 2);
+            opt2.message = moreStreamers.join("\n") + "\n" + utils.i18n.getMessage("m114") + (streamsOther.length - moreStreamers.length);
+          } else {
+            let moreStreamers = streamTitles.slice(0, 3);
+            opt2.message = moreStreamers.join("\n");           
+          }
+          setTimeout(function() {
+            chrome.notifications.create(notificationId, opt2, function (){});
+          }, sec);
         } catch (e) {
           delete bgApp.notificationIds[notificationId];
           console.log("Notification error: ", e);
