@@ -316,7 +316,8 @@
       type: "GET",
       url : "/streams/followed",
       data: {
-        limit: 100
+        limit: 100,
+        stream_type	: "all"
       }
     }
   }

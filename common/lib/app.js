@@ -58,51 +58,59 @@
   };
 
   bgApp.sendNotification = function (streamList){
-    var displayCount = 5;
-    var opt;
-    var defaultIcon = utils.runtime.getURL("common/icons/64_2.png");
+    var displayCount = settings.get("notifyCount").get("value");
+    var defaultIcon = utils.runtime.getURL("common/icons/64_1.png");
     var streamsToShow = streamList.slice(0, displayCount);
-    var isSingle = streamsToShow.length === 1;
-    var streamTitles = streamsToShow.map(function (c){
+    var streamsOther = streamList.slice(displayCount, streamList.length);
+    var streamTitles = streamsOther.map(function (c){
       return c.get("channel").display_name;
     });
 
     if ( bgApp.richNotificationsSupported() ) {
-
-      var notificationId = _.uniqueId("TwitchNow.Notification.");
-
-      try {
-        if ( isSingle ) {
-          var singlePreview = streamsToShow[0].get("preview") && streamsToShow[0].get("preview").medium;
-          opt = {
-            type   : "basic",
-            title  : streamsToShow[0].get("channel").display_name,
-            message: streamsToShow[0].get("channel").game + "\n" + streamsToShow[0].get("channel").status,
-            iconUrl: streamsToShow[0].get("channel").logo
+      let sec = 0;
+      for (let i in streamsToShow) {
+        try {
+          let num = i;
+          let notificationId = _.uniqueId("TwitchNow.Notification.");
+          let opt = {
+              type    : "basic",
+              title   : (streamsToShow[num].get("stream_type") != 'live' ? '🔄 ' : '') + streamsToShow[num].get("channel").display_name,
+              message : streamsToShow[num].get("channel").game + "\n" + streamsToShow[num].get("channel").status,
+              iconUrl : streamsToShow[num].get("channel").logo
           }
-
-          bgApp.notificationIds[notificationId] = streamsToShow[0];
-
-        } else {
-          opt = {
+          bgApp.notificationIds[notificationId] = streamsToShow[num];
+          setTimeout(function() {
+              chrome.notifications.create(notificationId, opt, function (){});
+          }, sec);
+          sec = (sec + 1000);
+        } catch (e) {
+          delete bgApp.notificationIds[notificationId];
+          console.log("Notification error: ", e);
+        }
+      }
+      
+      if (streamsOther.length) {
+        try {
+          let notificationId = _.uniqueId("TwitchNow.Notification.");
+          var opt2 = {
             type   : "basic",
             title  : "Twitch Now",
-            message: streamTitles.join("\n"),
             iconUrl: defaultIcon
           }
+          if (streamsOther.length > 3) {
+            let moreStreamers = streamTitles.slice(0, 2);
+            opt2.message = moreStreamers.join("\n") + "\n" + utils.i18n.getMessage("m114") + (streamsOther.length - moreStreamers.length);
+          } else {
+            let moreStreamers = streamTitles.slice(0, 3);
+            opt2.message = moreStreamers.join("\n");           
+          }
+          setTimeout(function() {
+            chrome.notifications.create(notificationId, opt2, function (){});
+          }, sec);
+        } catch (e) {
+          delete bgApp.notificationIds[notificationId];
+          console.log("Notification error: ", e);
         }
-        chrome.notifications.create(notificationId, opt, function (){
-
-        });
-
-        setTimeout(function (){
-          chrome.notifications.clear(notificationId, function (){
-          });
-        }, 10000);
-
-      } catch (e) {
-        delete bgApp.notificationIds[notificationId];
-        console.log("Notification error: ", e);
       }
     }
   };
@@ -385,6 +393,29 @@
       value   : true
     },
     {
+      id      : "invertNotification",
+      desc    : "__MSG_m115__",
+      checkbox: true,
+      type    : "checkbox",
+      show    : true,
+      value   : true
+    },
+    {
+      id    : "notifyCount",
+      desc  : "__MSG_m113__",
+      type  : "select",
+      select: true,
+      opts  : [
+        {id: "1", name: "1"},
+        {id: "2", name: "2"},
+        {id: "3", name: "3"},
+        {id: "4", name: "4"},
+        {id: "5", name: "5"}
+      ],
+      show  : true,
+      value : "3"
+    },
+    {
       id   : "closeNotificationDelay",
       desc : "__MSG_m6__",
       range: true,
@@ -483,11 +514,17 @@
     userpic         : utils.runtime.getURL("common/icons/default_userpic.png"),
     initialize      : function (){
       var self = this;
-      this.set({
-        "authenticated": twitchApi.isAuthorized(),
-        "logo"         : self.userpic,
-        "name"         : "Twitchuser"
-      });
+      if(twitchOauth.hasAccessToken()) {
+        twitchApi.token = twitchOauth.getAccessToken();
+        self.populateUserInfo(function (e, res){
+          self.set("authenticated", true);
+          self.set({
+            "logo": res.logo,
+            "name": res.display_name
+          });
+          following.update();
+        });
+      }
 
       twitchApi.on("authorize", function (){
         self.populateUserInfo(function (){
@@ -904,7 +941,9 @@
       utils.tabs.create({url: this.getProfileUrl()});
     },
     initialize     : function (){
-
+      let i = settings.get("invertNotification").get("value");
+      this.defaults.notificationOpts.desktop = i;
+      this.defaults.notificationOpts.sound = i;
     }
   });
 
@@ -1011,7 +1050,7 @@
       if ( channel ) {
         return channel.notificationOpts[type];
       } else {
-        return true;
+        return settings.get("invertNotification").get("value");
       }
     },
     saveToStorage         : function (){
