@@ -1,14 +1,18 @@
 <div class="stream game-list-item js-filterable" data-route="browse/{{h-enc game.name}}/streams">
     <div class="item-image-container game-preview">
-        <img alt="" class="lazy" src="{{game.box.medium}}"/>
+        <img alt="" class="lazy" src="{{game.box.medium}}" />
     </div>
     <span title="{{game.name}}" class="stream-info stream-title">
-            {{game.name}}
+        {{game.name}}
     </span>
+    {{#if viewers}}
     <span class="stream-info">
-            {{h-num-format viewers}} __MSG_m45__
-        </span>
-    <span class="stream-info">
-            {{h-num-format channels}} __MSG_m46__
+        {{h-num-format viewers}} __MSG_m45__
     </span>
+    {{/if}}
+    {{#if channels}}
+    <span class="stream-info">
+        {{h-num-format channels}} __MSG_m46__
+    </span>
+    {{/if}}
 </div>
