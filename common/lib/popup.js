@@ -259,7 +259,7 @@
 
     },
     initialize   : function (){
-      $(self).unload(function (){
+      $(window).on("unload", function (){
         this.undelegateEvents();
         this.stopListening();
       }.bind(this));
