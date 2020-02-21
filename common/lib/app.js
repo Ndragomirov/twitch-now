@@ -438,7 +438,7 @@
         { id: "5", name: "5" }
       ],
       show: true,
-      value: "3"
+      value: "0"
     },
     {
       id: "closeNotificationDelay",
