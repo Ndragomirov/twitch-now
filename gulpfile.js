@@ -240,13 +240,16 @@ gulp.task('opera', gulp.series(
     done();
   }));
 
-
 gulp.task('firefox', gulp.series(
   'chrome',
   'clean:firefox',
   'copy:firefox', function (done) {
     done();
   }));
+
+gulp.task('firefox-watch' , function (){
+  gulp.watch('common/lib/*', gulp.series('chrome', 'clean:firefox', 'copy:firefox', function (done) {done();}));
+});
 
 gulp.task('dist', gulp.series(
   ['bump', 'clean:dist'],
