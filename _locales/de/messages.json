@@ -108,5 +108,10 @@
     "m107": { "message" : "Keine Kanäle Live"},
     "m108": { "message" : "Momentan streamt niemand deine bevorzugten Spiele"},
     "m109": { "message" : "Momentan streamt niemand"},
-    "m110": { "message" : "Verberge Vodcasts"}
+    "m110": { "message" : "Verberge Vodcasts"},
+	"m111": { "message" : "Livestreamer Video Qualität"},
+	"m112": { "message" : "Livestreamer pfad"},
+	"m113": { "message" : "Anzahl der geteilten Benachrichtigungen"},
+	"m114": { "message" : "Andere Kanäle"},
+	"m115": { "message" : "Zeige standardmäßig Benachrichtigungen für neue Follows"}
 }
