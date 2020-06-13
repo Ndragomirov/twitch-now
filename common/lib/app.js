@@ -1266,7 +1266,7 @@
 
     defaultQuery: function () {
       return {
-        broadcaster_language: settings.get("streamLanguage").get("value"),
+        language: settings.get("streamLanguage").get("value"),
         limit: 50,
         offset: 0
       }
