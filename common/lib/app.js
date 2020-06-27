@@ -1242,7 +1242,7 @@
 
     openChat: function () {
       var openIn = settings.get("openChatIn").get("value");
-      var href = this.baseUrl() + "/chat/embed?channel=ID&popout_chat=true".replace(/ID/, this.get("channel").name);
+      var href = this.baseUrl() + "/popout/ID/chat?popout=".replace(/ID/, this.get("channel").name);
 
       if (openIn == "newwindow") {
         utils.windows.create({ url: href, width: 400 });
