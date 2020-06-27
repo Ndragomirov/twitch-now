@@ -108,7 +108,7 @@
     "m107": { "message" : "Pas de chaînes en direct"},
     "m108": { "message" : "Personne ne diffuse vos jeux préférés en ce moment"},
     "m109": { "message" : "Personne ne diffuse en ce moment"},
-    "m110": { "message" : "Cacher les vodcasts"}
+    "m110": { "message" : "Cacher les vodcasts"},
     "m111": { "message" : "Qualité vidéo de la diffusion"},
     "m112": { "message" : "Chemin de la diffusion"},
     "m113": { "message" : "Nombre de notifications séparées"},
