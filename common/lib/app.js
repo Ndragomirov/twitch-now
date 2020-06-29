@@ -189,11 +189,15 @@
 
   var defaultSettings = [
     {
-      id: "streamLanguage",
+      id: "streamLanguage2",
       desc: "__MSG_m102__",
-      mcheckbox: true,
-      type: "mcheckbox",
+      type: "select",
+      select: true,
       opts: [
+        {
+          "id": "any",
+          "name": "Any",
+        },
         {
           "id": "ru",
           "name": "Русский"
@@ -304,7 +308,7 @@
         }
       ],
       show: true,
-      value: ''
+      value: 'any'
     },
     {
       id: "windowHeight",
@@ -935,6 +939,9 @@
         self.reset();
       });
 
+      if (twitchApi.isAuthorized) {
+        self.update();
+      }
     },
     send: function (query, callback) {
       twitchApi.send("followedgames", query, callback);
@@ -1265,8 +1272,10 @@
     twitchApi: twitchApi,
 
     defaultQuery: function () {
+      let language = settings.get("streamLanguage2").get("value");
+      language = language == 'any' ? '' : language;
       return {
-        language: settings.get("streamLanguage").get("value"),
+        language: language,
         limit: 50,
         offset: 0
       }
@@ -1280,7 +1289,7 @@
         this.setComparator();
       }.bind(this));
 
-      settings.get("streamLanguage").on("change:value", function () {
+      settings.get("streamLanguage2").on("change:value", function () {
         if (this.length) {
           this.update();
         }
