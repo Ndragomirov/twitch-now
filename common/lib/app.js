@@ -189,11 +189,15 @@
 
   var defaultSettings = [
     {
-      id: "streamLanguage",
+      id: "streamLanguage2",
       desc: "__MSG_m102__",
-      mcheckbox: true,
-      type: "mcheckbox",
+      type: "select",
+      select: true,
       opts: [
+        {
+          "id": "any",
+          "name": "Any",
+        },
         {
           "id": "ru",
           "name": "Русский"
@@ -304,7 +308,7 @@
         }
       ],
       show: true,
-      value: ''
+      value: 'any'
     },
     {
       id: "windowHeight",
@@ -438,7 +442,7 @@
         { id: "5", name: "5" }
       ],
       show: true,
-      value: "3"
+      value: "0"
     },
     {
       id: "closeNotificationDelay",
@@ -935,6 +939,9 @@
         self.reset();
       });
 
+      if (twitchApi.isAuthorized) {
+        self.update();
+      }
     },
     send: function (query, callback) {
       twitchApi.send("followedgames", query, callback);
@@ -1185,7 +1192,7 @@
     getStreamURL: function (type) {
       type = type || settings.get("openStreamIn").get("value");
       if (type == "html5") {
-        return "http://player.twitch.tv/?channel=" + this.get("channel").name + "&html5";
+        return "http://player.twitch.tv/?channel=" + this.get("channel").name + "&html5" + "&parent=twitch-now";
       }
       var links = {
         theatrelayout: "/ID?mode=theatre",
@@ -1242,7 +1249,7 @@
 
     openChat: function () {
       var openIn = settings.get("openChatIn").get("value");
-      var href = this.baseUrl() + "/chat/embed?channel=ID&popout_chat=true".replace(/ID/, this.get("channel").name);
+      var href = this.baseUrl() + "/popout/ID/chat?popout=".replace(/ID/, this.get("channel").name);
 
       if (openIn == "newwindow") {
         utils.windows.create({ url: href, width: 400 });
@@ -1265,8 +1272,10 @@
     twitchApi: twitchApi,
 
     defaultQuery: function () {
+      let language = settings.get("streamLanguage2").get("value");
+      language = language == 'any' ? '' : language;
       return {
-        broadcaster_language: settings.get("streamLanguage").get("value"),
+        language: language,
         limit: 50,
         offset: 0
       }
@@ -1280,7 +1289,7 @@
         this.setComparator();
       }.bind(this));
 
-      settings.get("streamLanguage").on("change:value", function () {
+      settings.get("streamLanguage2").on("change:value", function () {
         if (this.length) {
           this.update();
         }

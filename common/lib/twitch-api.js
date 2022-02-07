@@ -2,7 +2,6 @@
   "use strict";
 
   var root = this;
-  var isFirefox = utils.rbrowser == "firefox";
 
   var TwitchApi = root.TwitchApi = function (clientId){
     if ( !clientId ) throw new Error("clientId is required");
