@@ -80,7 +80,7 @@
     var streamsToShow = streamList.slice(0, displayCount);
     var streamsOther = streamList.slice(displayCount, streamList.length);
     var streamTitles = streamsOther.map(function (c) {
-      return c.get("channel").display_name;
+      return c.get("name");
     });
 
     if (bgApp.richNotificationsSupported()) {
@@ -88,18 +88,29 @@
       for (let i in streamsToShow) {
         let num = i;
         let notificationId = _.uniqueId("TwitchNow.Notification.");
-        let iconUrl;
-        try {
-          iconUrl = await bgApp.downloadImageAsBlob(streamsToShow[num].get("channel").logo, "image/png");
-        } catch (e) {
-          //unable to download channels image as blob
-          iconUrl = defaultIconl;
+        let iconUrl = await getIcon();
+
+        async function getIcon() {
+          return new Promise((res, rej) => {
+            try {
+              let target = streamsToShow[num].get("user_id")
+              twitchApi.send("user", { id: target }, async function (err, resp) {
+                if (err) return rej(err);
+                let iconUrl = await bgApp.downloadImageAsBlob(resp.data[0].profile_image_url, "image/png");
+                res(iconUrl)
+              })
+            } catch (e) {
+              //unable to download channels image as blob
+              let iconUrl = defaultIcon;
+              res(iconUrl)
+            }
+          });
         }
         try {
           let opt = {
             type: "basic",
-            title: (streamsToShow[num].get("stream_type") != 'live' ? '🔄 ' : '') + streamsToShow[num].get("channel").display_name,
-            message: streamsToShow[num].get("channel").game + "\n" + streamsToShow[num].get("channel").status,
+            title: streamsToShow[num].get("name"),
+            message: streamsToShow[num].get("game_name") + "\n" + streamsToShow[num].get("title"),
             iconUrl: iconUrl
           }
           bgApp.notificationIds[notificationId] = streamsToShow[num];
@@ -409,7 +420,7 @@
       desc: "__MSG_m110__",
       checkbox: true,
       type: "checkbox",
-      show: true,
+      show: false,
       value: false
     },
     {
@@ -551,7 +562,6 @@
             "logo": res.logo,
             "name": res.display_name
           });
-          following.update();
         });
       }
 
@@ -572,8 +582,8 @@
       twitchApi.send("user", {}, function (err, res) {
         if (!err) {
           self.set({
-            logo: res.logo || self.userpic,
-            name: res.display_name
+            logo: res.data[0].profile_image_url || self.userpic,
+            name: res.data[0].display_name
           })
         }
         cb(err, res);
@@ -711,7 +721,7 @@
     },
     defaultQuery: function () {
       return {
-        limit: 50,
+        first: 100,
         offset: 0
       }
     },
@@ -855,8 +865,8 @@
     game: null,
     defaultQuery: function () {
       return {
-        game: this.game,
-        limit: 20
+        game_id: this.gameid,
+        period: "week"
       }
     }
   })
@@ -895,18 +905,19 @@
 
     findByName: function (gameName) {
       return this.find(function (g) {
-        return g.get("game").name == gameName;
+        return g.get("name") == gameName;
       })
     },
     parse: function (res, callback) {
       if (!res) {
         return callback(new Error("api"));
       }
-      res.top = Array.isArray(res.top) ? res.top : [];
-      res.top.forEach(function (g) {
-        g._id = g.game._id;
+      res.data = Array.isArray(res.data) ? res.data : [];
+      res.data.forEach(function (g) {
+        g.box_art_url = g.box_art_url.replace(/{width}/, 136)
+        g.box_art_url = g.box_art_url.replace(/{height}/, 190)
       });
-      return callback(null, res.top);
+      return callback(null, res.data);
     },
     send: function (query, callback) {
       twitchApi.send("gamesTop", query, callback);
@@ -944,7 +955,7 @@
       }
     },
     send: function (query, callback) {
-      twitchApi.send("followedgames", query, callback);
+      // twitchApi.send("followedgames", query, callback);
     },
     parse: function (res, callback) {
       if (!res) {
@@ -967,7 +978,7 @@
       }
     },
     getProfileUrl: function () {
-      return "http://www.twitch.tv/" + this.get("channel").name + "/profile";
+      return "https://www.twitch.tv/" + this.get("to_login") + "/about";
     },
     openProfilePage: function () {
       utils.tabs.create({ url: this.getProfileUrl() });
@@ -981,7 +992,7 @@
 
   var FollowedChannel = TwitchItemModel.extend({
     openChannelPage: function () {
-      utils.tabs.create({ url: this.get("channel").url })
+      utils.tabs.create({ url: "https://twitch.tv/" + this.get("to_login") })
     }
   })
 
@@ -994,28 +1005,27 @@
       }.bind(this));
     },
     comparator: function (a) {
-      return a.get("channel").name;
+      return a.get("to_name");
     },
     getFollowedChannelsCount: function (cb) {
-      twitchApi.send("follows", { offset: 0, limit: 1 }, function (err, res) {
-        if (err || !res || !res._total) {
+      twitchApi.send("follows", { first: 1 }, function (err, res) {
+        if (err || !res || !res.total) {
           return cb(err || new Error("No Total channels"));
         }
-        return cb(null, parseInt(res._total));
+        return cb(null, parseInt(res.total));
       })
     },
     getFollowedChannels: function (page, cb) {
-      twitchApi.send("follows", { offset: page * 100, limit: 100 }, function (err, res) {
-        if (err || !res || !res.follows) {
+      let cursor = (page ? {first: 100, after: page} : {first: 100});
+      twitchApi.send("follows", cursor, function (err, res) {
+        if (err || !res || !res.data) {
           return cb(err || new Error("No Total channels"));
         }
-
-        res.follows.forEach(function (c) {
-          c._id = c.channel._id;
-          c.channel.logo = c.channel.logo || "http://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_50x50.png";
-          c.channel.logo = c.channel.logo.replace("300x300", "50x50");
+        res.data.forEach(function (c) {
+          c._id = c.to_id;
+          c.logo = "http://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_50x50.png";
         });
-        return cb(null, res.follows);
+        return cb(null, res.data, res.pagination.cursor);
       })
     },
     update: function () {
@@ -1029,25 +1039,26 @@
           self.updating = false;
           return self.trigger("error", "api");
         }
-        var fns = [];
-        var limit = 4;
+        let fns = [];
         var requestCount = Math.ceil(count / 100);
+        let ct = 0
 
-        for (var i = 0; i < requestCount; i++) {
-          fns.push(self.getFollowedChannels.bind(null, i));
+        getFC()
+
+        function getFC (c) {
+          self.getFollowedChannels(c, function (err, cb, cur) {
+            if (requestCount > ct) {
+              fns = fns.concat(cb)
+              ct++
+              getFC(cur)
+            } else {
+              self.updating = false;
+              fns = _.flatten(fns);
+              self.reset(fns, { silent: true });
+              self.trigger("update");
+            }
+          })
         }
-
-        async.parallelLimit(fns, limit, function (err, results) {
-          self.updating = false;
-          if (err) {
-            return self.trigger("error", "api");
-          } else {
-            results = _.flatten(results);
-            console.log("\nUpd success", results);
-            self.reset(results, { silent: true });
-            self.trigger("update");
-          }
-        })
       });
     }
   })
@@ -1078,7 +1089,7 @@
     getChannelNotification: function (cid, type) {
       var self = this;
 
-      var channel = _.findWhere(self.loadFromStorage(), { _id: cid });
+      var channel = _.findWhere(self.loadFromStorage(), { _id: parseInt(cid) });
       if (channel) {
         return channel.notificationOpts[type];
       } else {
@@ -1103,26 +1114,29 @@
       var channels = [];
 
       function getFollowedChannelsCount(cb) {
-        twitchApi.send("follows", { offset: 0, limit: 1 }, function (err, res) {
-          if (err || !res || !res._total) {
+        twitchApi.send("follows", {}, function (err, res) {
+          if (err || !res || !res.total) {
             return cb(err || new Error("No Total channels"));
           }
-          return cb(null, parseInt(res._total));
+          return cb(null, parseInt(res.total));
         })
       }
 
       function getFollowedChannels(count, cb) {
-        twitchApi.send("follows", { offset: count * 100, limit: 100 }, function (err, res) {
-          if (err || !res || !res.follows) {
+        twitchApi.send("follows", { first: 100 }, function (err, res) {
+          if (err || !res || !res.data) {
             return cb(err || new Error("No Total channels"));
           }
 
-          res.follows.forEach(function (c) {
-            c._id = c.channel._id;
-            c.channel.logo = c.channel.logo || "http://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_50x50.png";
-            c.channel.logo = c.channel.logo.replace("300x300", "50x50");
+          res.data.forEach(function (c) {
+            c._id = c.to_id;
+            c.channel = {
+              display_name: c.to_name,
+              logo: "http://static-cdn.jtvnw.net/jtv_user_pictures/xarth/404_user_50x50.png"
+            }
+            // c.logo = c.channel.logo.replace("300x300", "50x50");
           });
-          channels = channels.concat(res.follows);
+          channels = channels.concat(res.data);
 
           return cb(null);
         })
@@ -1158,8 +1172,8 @@
     },
 
     initialize: function () {
-      var channelName = this.get("channel").name;
-      var streamType = this.get("stream_type");
+      var channelName = this.get("user_name");
+      var streamType = this.get("type");
       var isVodcast = ['rerun', 'watch_party'].includes(streamType);
       this.set({
         vodcast: isVodcast,
@@ -1192,7 +1206,7 @@
     getStreamURL: function (type) {
       type = type || settings.get("openStreamIn").get("value");
       if (type == "html5") {
-        return "http://player.twitch.tv/?channel=" + this.get("channel").name + "&html5" + "&parent=twitch-now";
+        return "http://player.twitch.tv/?channel=" + this.get("user_login") + "&html5" + "&parent=twitch-now";
       }
       var links = {
         theatrelayout: "/ID?mode=theatre",
@@ -1200,7 +1214,7 @@
         popout: "/ID/popout"
       };
 
-      return this.baseUrl() + links[type].replace(/ID/, this.get("channel").name);
+      return this.baseUrl() + links[type].replace(/ID/, this.get("user_login"));
     },
 
     openMultitwitch: function () {
@@ -1216,11 +1230,11 @@
         if (tabs.length) {
           var tab = tabs[tabs.length - 1];
           var tabUrl = tab.url;
-          updatedTabUrl = tabUrl + "/" + self.get("channel").name;
+          updatedTabUrl = tabUrl + "/" + self.get("user_login");
           utils.tabs.update(tab.id, { url: updatedTabUrl });
         } else {
           //creare new tab with multitwitch
-          updatedTabUrl = url + "/" + self.get("channel").name;
+          updatedTabUrl = url + "/" + self.get("user_login");
           utils.tabs.create({ url: updatedTabUrl, active: false });
         }
       });
@@ -1249,7 +1263,7 @@
 
     openChat: function () {
       var openIn = settings.get("openChatIn").get("value");
-      var href = this.baseUrl() + "/popout/ID/chat?popout=".replace(/ID/, this.get("channel").name);
+      var href = this.baseUrl() + "/popout/ID/chat?popout=".replace(/ID/, this.get("user_login"));
 
       if (openIn == "newwindow") {
         utils.windows.create({ url: href, width: 400 });
@@ -1274,10 +1288,17 @@
     defaultQuery: function () {
       let language = settings.get("streamLanguage2").get("value");
       language = language == 'any' ? '' : language;
-      return {
-        language: language,
-        limit: 50,
-        offset: 0
+      if (language) {
+        return {
+          language: language,
+          first: 50,
+          offset: 0
+        }
+      } else {
+        return {
+          first: 50,
+          offset: 0
+        }
       }
     },
 
@@ -1312,16 +1333,16 @@
       if (!res) {
         return callback(new Error("api"));
       }
-      res.streams = Array.isArray(res.streams) ? res.streams : [];
+      res.data = Array.isArray(res.data) ? res.data : [];
       if (settings.get("hideVodcasts").get("value")) {
-        res.streams = res.streams.filter(function (v) {
-          if (['rerun', 'watch_party'].includes(v.stream_type)) {
+        res.data = res.data.filter(function (v) {
+          if (['rerun', 'watch_party'].includes(v.type)) {
             return false;
           }
           return true;
         })
       }
-      return callback(null, res.streams);
+      return callback(null, res.data);
     }
   });
 
@@ -1344,7 +1365,6 @@
       StreamCollection.prototype.initialize.call(this);
     },
     parse: function (res, callback) {
-      console.log(res.hosts);
       if (!res || !res.hosts) {
         return callback(new Error("api"));
       }
@@ -1411,7 +1431,11 @@
         self.notify();
       })
 
-      twitchApi.on("authorize", function () {
+      // twitchApi.on("authorize", function () {
+      //   self.update();
+      // })
+
+      twitchApi.on("userid", function () {
         self.update();
       })
 
@@ -1425,7 +1449,7 @@
     getNewStreams: function () {
       var ids = this.addedStreams;
       return this.filter(function (stream) {
-        return ~ids.indexOf(stream.get("channel")._id);
+        return ~ids.indexOf(stream.get("id"));
       });
     },
 
@@ -1440,12 +1464,12 @@
         //notify about all streams if error happens
         var desktopNotifications = self.getNewStreams()
           .filter(function (stream) {
-            return notifications.getChannelNotification(stream.get("channel")._id, "desktop")
+            return notifications.getChannelNotification(stream.get("user_id"), "desktop")
           })
 
         var soundNotifications = self.getNewStreams()
           .filter(function (stream) {
-            return notifications.getChannelNotification(stream.get("channel")._id, "sound")
+            return notifications.getChannelNotification(stream.get("user_id"), "sound")
           })
 
         if (desktopNotifications.length && settings.get("showDesktopNotification").get("value")) {
@@ -1463,16 +1487,16 @@
 
     },
     beforeUpdate: function () {
-      this.idsBeforeUpdate = this.pluck("channel").map(function (v) {
-        return v._id;
+      this.idsBeforeUpdate = this.pluck("id").map(function (v) {
+        return v;
       });
     },
     send: function (query, callback) {
       twitchApi.send("followed", {}, callback);
     },
     afterUpdate: function () {
-      this.idsAfterUpdate = this.pluck("channel").map(function (v) {
-        return v._id;
+      this.idsAfterUpdate = this.pluck("id", function (v) {
+        return v;
       })
 
       this.addedStreams = _.difference(this.idsAfterUpdate, this.idsBeforeUpdate, this.notified);
@@ -1487,11 +1511,11 @@
     change: function (gameName) {
       var newGame = games.findByName(gameName) || followedgames.findByName(gameName);
       if (newGame) {
-        console.log("lastchange", this.lastChange);
+        console.log("lastchange", this.lastChange, newGame);
         if (!this.get("game") || newGame.get("game").name != this.get("game").name || (Date.now() - this.lastChange) > 5 * 1000 * 60) {
           this.set(newGame.toJSON());
           this.lastChange = Date.now();
-          bgApp.dispatcher.trigger("gameLobby:change", gameName);
+          bgApp.dispatcher.trigger("gameLobby:change", gameName, newGame.get("id"));
         }
       }
     }
@@ -1499,6 +1523,7 @@
 
   var GameStreams = StreamCollection.extend({
     game: null,
+    gameid: null,
     enableLanguage: true,
     langFilter: true,
     pagination: true,
@@ -1515,7 +1540,7 @@
       this.langFilter = true;
     },
     send: function (query, callback) {
-      query.game = this.game;
+      query.game_id = this.gameid;
       if (!this.langFilter) {
         delete query.broadcaster_language;
       }
@@ -1525,8 +1550,9 @@
 
   var GameLobbyStreams = GameStreams.extend({
     initialize: function () {
-      bgApp.dispatcher.on("gameLobby:change", function (game) {
+      bgApp.dispatcher.on("gameLobby:change", function (game, gameid) {
         this.game = game;
+        this.gameid = gameid;
         this.update();
       }.bind(this));
       GameStreams.prototype.initialize.apply(this, arguments);
@@ -1535,8 +1561,9 @@
 
   var GameLobbyVideos = GameVideos.extend({
     initialize: function () {
-      bgApp.dispatcher.on("gameLobby:change", function (game) {
+      bgApp.dispatcher.on("gameLobby:change", function (game, gameid) {
         this.game = game;
+        this.gameid = gameid;
         this.update();
       }.bind(this));
       GameVideos.prototype.initialize.apply(this, arguments);
