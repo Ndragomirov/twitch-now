@@ -353,8 +353,8 @@
       opts: [
         { id: "viewer_count|1", name: "__MSG_m10__" },
         { id: "viewer_count|-1", name: "__MSG_m11__" },
-        { id: "name|1", name: "__MSG_m12__" },
-        { id: "name|-1", name: "__MSG_m13__" },
+        { id: "user_login|1", name: "__MSG_m12__" },
+        { id: "user_login|-1", name: "__MSG_m13__" },
         { id: "game_name|1", name: "__MSG_m82__" },
         { id: "started_at|-1", name: "__MSG_m14__" }
       ],
@@ -1005,7 +1005,7 @@
       }.bind(this));
     },
     comparator: function (a) {
-      return a.get("to_name");
+      return a.get("to_login");
     },
     getFollowedChannelsCount: function (cb) {
       twitchApi.send("follows", { first: 1 }, function (err, res) {
@@ -1067,7 +1067,7 @@
     model: ChannelNotification,
 
     comparator: function (a) {
-      return a.get("channel").name;
+      return a.get("to_login");
     },
 
     initialize: function () {
