@@ -174,6 +174,8 @@
                 if (s.display_name && typeof s.display_name == "string" && methodName == "searchStreams") {
                   s.user_name = s.display_name
                   s.user_login = s.broadcaster_login
+                } else if (methodName == "followed" && !s.user_name) {
+                  s.user_name = s.user_login
                 }
                 return s;
               })
