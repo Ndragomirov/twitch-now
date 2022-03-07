@@ -37,7 +37,7 @@
       headers : {
         "Accept"       : "application/vnd.twitchtv.v5+json",
         "Client-ID"    : this.clientId,
-        "Authorization": " OAuth2 " + this.token
+        "Authorization": " Bearer " + this.token
       }
     }
   }
@@ -91,11 +91,11 @@
         return cb(err);
       })
       .done(function (res){
-        if ( !res.token.user_name ) {
-          return cb(err);
-        }
-        _self.userId = res.token.user_id;
-        _self.userName = userName = res.token.user_name;
+        // Retrieve the user id + login
+        if ( !res.data[0] ) return cb(err);
+        _self.userId = res.data[0].id;
+        _self.userName = userName = res.data[0].login;
+        _self.trigger("userid");
         return cb(null, userName);
       });
   }
@@ -105,7 +105,7 @@
 
     var requestOpts = _self.methods[methodName]();
 
-    var getUserName = requestOpts.url.match(/:user/) ?
+    var getUserName = requestOpts.url.match(/users/) ?
       _self.getUserName :
       function (fn){
         return fn();
@@ -118,17 +118,12 @@
     getUserName.call(_self, function (err, userName) {
       cb = cb || $.noop;
       if ( err ) return cb(err);
-
-      console.log(requestOpts.url)
-      //rewrite basePath if full url provided by requestOpts
+      // Rewrite basePath if full url provided by requestOpts
       requestOpts.url = /^http/.exec(requestOpts.url) ? requestOpts.url : _self.basePath + requestOpts.url;
-      console.log(requestOpts.url)
+      // Make replacement if needed (it is of course)
       requestOpts.url = requestOpts.url.replace(/:user_name/, userName);
-      console.log(requestOpts.url)
       requestOpts.url = requestOpts.url.replace(/:user_id/, _self.userId);
-      console.log(requestOpts.url)
       requestOpts = $.extend(true, requestOpts, {data: opts}, _self.getRequestParams());
-      console.log(requestOpts.url)
 
       var url = new URL(requestOpts.url);
 
@@ -168,13 +163,18 @@
         res.json().then(function (data){
 
           if ( /^(streams|searchStreams|followed)$/.test(methodName) ) {
-            if ( data.streams && data.streams.length ) {
-              data.streams = data.streams.map(function (s){
-                if ( s.preview && typeof s.preview == "string" ) {
-                  var medium = s.preview;
-                  s.preview = {
-                    medium: medium
-                  }
+            if ( data.data && data.data.length ) {
+              data.data = data.data.map(function (s) {
+                console.log(s);
+                if ( s.thumbnail_url && typeof s.thumbnail_url == "string" ) {
+                  s.thumbnail_url = s.thumbnail_url.replace(/{width}/, 134)
+                  s.thumbnail_url = s.thumbnail_url.replace(/{height}/, 70)
+                }
+                if (s.display_name && typeof s.display_name == "string" && methodName == "searchStreams") {
+                  s.user_name = s.display_name
+                  s.user_login = s.broadcaster_login
+                } else if (methodName == "followed" && !s.user_name) {
+                  s.user_name = s.user_login
                 }
                 return s;
               })
@@ -203,28 +203,28 @@
   methods.user = function (){
     return {
       type: "GET",
-      url : "/user"
+      url : "/users"
     }
   }
 
   methods.gameVideos = function (){
     return {
       type: "GET",
-      url : "/videos/top"
+      url : "/videos"
     }
   }
 
   methods.channelVideos = function (){
     return {
       type: "GET",
-      url : "/channels/:channel/videos"
+      url : "/videos/:channel/videos"
     }
   }
 
   methods.searchGames = function (){
     return {
       type: "GET",
-      url : "/search/games",
+      url : "/search/categories",
       data: {
         limit: 50
       }
@@ -234,30 +234,21 @@
   methods.searchStreams = function (){
     return {
       type: "GET",
-      url : "/search/streams",
-      data: {
-        limit: 50
-      }
+      url : "/search/channels"
     }
   }
 
   methods.gamesTop = function (){
     return {
       type: "GET",
-      url : "/games/top",
-      data: {
-        limit: 40
-      }
+      url : "/games/top"
     }
   }
 
   methods.follows = function (){
     return {
       type: "GET",
-      url : "/users/:user_id/follows/channels",
-      data: {
-        limit: 100
-      }
+      url : "/users/follows?from_id=:user_id"
     }
   }
 
@@ -274,9 +265,9 @@
   methods.followedgames = function (){
     return {
       type: "GET",
-      url : "https://api.twitch.tv/helix/users/:user_id/follows/games",
+      url : "https://api.twitch.tv/helix/streams/followed?user_id=:user_id",
       data: {
-        limit: 100
+        first: 100
       }
     }
   }
@@ -312,21 +303,14 @@
   methods.followed = function (){
     return {
       type: "GET",
-      url : "/streams/followed",
-      data: {
-        limit: 100,
-        stream_type	: "all"
-      }
+      url : "/streams/followed?user_id=:user_id"
     }
   }
 
   methods.streams = function (){
     return {
       type: "GET",
-      url : "/streams",
-      data: {
-        limit: 50
-      }
+      url : "/streams"
     }
   }
 
