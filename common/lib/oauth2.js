@@ -218,7 +218,7 @@
 
       this.getAccessAndRefreshTokens(code, function (err, data) {
         if (!err) {
-          console.log("\n\nRecieve access token = ", data.access_token);
+          console.log("\n\nReceive access token = ", data.access_token);
           self.setAccessToken(data.access_token);
           callback();
         } else {
@@ -257,6 +257,7 @@
   }
 
   Adapter.prototype.setAccessToken = function (token) {
+    console.log("Set token : " + token);
     this.set({ accessToken: token });
   }
 
@@ -269,8 +270,8 @@
     return this.hasAccessToken() ? this.get().accessToken : "";
   }
 
-  Adapter.prototype.clearAccessToken = function () {
-    console.log("clear access token");
+  Adapter.prototype.clearAccessToken = function (token) {
+    console.log("Clear access token : " + token);
     var data = this.get();
     delete data.accessToken;
     this.set(data);

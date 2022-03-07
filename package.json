@@ -4,7 +4,8 @@
   "description": "",
   "dependencies": {
     "semver": "^7.3.2",
-    "through2": "^2.0.5"
+    "through2": "^2.0.5",
+    "web-ext": "^6.7.0"
   },
   "devDependencies": {
     "del": "^2.1.0",
@@ -25,7 +26,10 @@
     "run-sequence": "^1.1.4"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:all": "gulp firefox && gulp chrome && gulp opera",
+    "build:firefox": "gulp firefox",
+    "firefox": "web-ext run --source-dir ./build/firefox",
+    "firefox:debug": "npm run firefox --browser-console"
   },
   "repository": {
     "type": "git",

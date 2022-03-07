@@ -4,12 +4,12 @@
 
     var constants = {
         twitchApi: {
-            api: "https://api.twitch.tv/kraken/oauth2/authorize",
+            api: "https://id.twitch.tv/oauth2/authorize",
             response_type: 'token',
-            client_id: 'nfsk9onrddch0sz4mfxjwykalhra6sr',
-            client_secret: 'imouwsfvza6d4yt2on4eem1bkjxtwa9',
-            scope: 'user_follows_edit user_read',
-            redirect_uri: 'http://ndragomirov.github.io/twitch-firefox.html'
+            client_id: 'nhrhocc8g5gfm8w98oi9ozuuo4ser2',
+            client_secret: '2ovjqj5of99gpmkdjyiyyz6mgvdo79',
+            scope: 'openid user:read:follows user:read:email',
+            redirect_uri: 'https://ndragomirov.github.io/twitch-firefox.html'
         }
     };
 
