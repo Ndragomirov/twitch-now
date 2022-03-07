@@ -21,6 +21,16 @@ To build a version case of browser firefox, chrome or opera :
 $ npm run build:<browser>
 ```
 
+To package every versions of the extension :
+```
+$ npm run package:all
+```
+
+To package a version case of browser firefox, chrome or opera :
+```
+$ npm run package:<browser>
+```
+
 ## Translation guide
 
 This guide will help you to get prepared for translation. Let's start!
