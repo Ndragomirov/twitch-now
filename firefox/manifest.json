@@ -38,7 +38,8 @@
   },
   "minimum_chrome_version": "1.1.142",
   "icons": {
-    "16": "common/icons/32_1.png",
+    "16": "common/icons/16_1.png",
+    "32": "common/icons/32_1.png",
     "48": "common/icons/48_1.png",
     "128": "common/icons/128_1.png"
   },
