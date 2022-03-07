@@ -5,11 +5,11 @@
 
   var TwitchApi = root.TwitchApi = function (clientId){
     if ( !clientId ) throw new Error("clientId is required");
-    this.basePath = "https://api.twitch.tv/kraken";
+    this.basePath = "https://api.twitch.tv/helix";
     this.userName = "";
     this.userId = "";
     this.clientId = clientId;
-    this.timeout = 10 * 1000;
+    this.timeout = 10000;
     this.token = "";
     _.extend(this, Backbone.Events);
     this.listen();
@@ -26,7 +26,7 @@
 
   TwitchApi.prototype.revoke = function (){
     if ( this.token && this.token.length > 0 ) {
-      twitchOauth.clearAccessToken();
+      twitchOauth.clearAccessToken(this.token);
     }
   }
 
@@ -37,7 +37,7 @@
       headers : {
         "Accept"       : "application/vnd.twitchtv.v5+json",
         "Client-ID"    : this.clientId,
-        "Authorization": " OAuth " + this.token
+        "Authorization": " OAuth2 " + this.token
       }
     }
   }
@@ -78,7 +78,7 @@
         err: "cant get current username"
       }
       , req = {
-        url: _self.basePath + "/"
+        url: _self.basePath + "/users"
       }
       ;
     if ( userName ) return cb(null, userName);
@@ -115,15 +115,20 @@
       return opts[match] || ":" + match;
     });
 
-    getUserName.call(_self, function (err, userName){
+    getUserName.call(_self, function (err, userName) {
       cb = cb || $.noop;
       if ( err ) return cb(err);
 
+      console.log(requestOpts.url)
       //rewrite basePath if full url provided by requestOpts
       requestOpts.url = /^http/.exec(requestOpts.url) ? requestOpts.url : _self.basePath + requestOpts.url;
+      console.log(requestOpts.url)
       requestOpts.url = requestOpts.url.replace(/:user_name/, userName);
+      console.log(requestOpts.url)
       requestOpts.url = requestOpts.url.replace(/:user_id/, _self.userId);
+      console.log(requestOpts.url)
       requestOpts = $.extend(true, requestOpts, {data: opts}, _self.getRequestParams());
+      console.log(requestOpts.url)
 
       var url = new URL(requestOpts.url);
 
@@ -269,7 +274,7 @@
   methods.followedgames = function (){
     return {
       type: "GET",
-      url : "https://api.twitch.tv/kraken/users/:user_id/follows/games",
+      url : "https://api.twitch.tv/helix/users/:user_id/follows/games",
       data: {
         limit: 100
       }

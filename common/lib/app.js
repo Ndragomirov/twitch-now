@@ -87,7 +87,7 @@
       let sec = 0;
       for (let i in streamsToShow) {
         let num = i;
-        let notificationId = _.uniqueId("TwitchNow.Notification.");
+        let notificationId = _.uniqueId("TwitchCompanion.Notification.");
         let iconUrl;
         try {
           iconUrl = await bgApp.downloadImageAsBlob(streamsToShow[num].get("channel").logo, "image/png");
@@ -115,7 +115,7 @@
 
       if (streamsOther.length) {
         try {
-          let notificationId = _.uniqueId("TwitchNow.Notification.");
+          let notificationId = _.uniqueId("TwitchCompanion.Notification.");
           var opt2 = {
             type: "basic",
             title: "Twitch Now",
