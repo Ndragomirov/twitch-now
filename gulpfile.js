@@ -158,7 +158,7 @@ gulp.task('compress:chrome', function () {
   var v = JSON.parse(fs.readFileSync("package.json")).version;
 
   return gulp.src('build/chrome/**')
-    .pipe(zip('twitch-now-chrome-' + v + '.zip'))
+    .pipe(zip('twitch-companion-chrome-' + v + '.zip'))
     .pipe(gulp.dest('dist/'));
 })
 
@@ -166,7 +166,7 @@ gulp.task('compress:opera', function () {
   var v = JSON.parse(fs.readFileSync("package.json")).version;
 
   return gulp.src('build/opera/**')
-    .pipe(zip('twitch-now-opera-' + v + '.zip'))
+    .pipe(zip('twitch-companion-opera-' + v + '.zip'))
     .pipe(gulp.dest('dist/'));
 })
 
@@ -174,7 +174,7 @@ gulp.task('compress:firefox', function () {
   var v = JSON.parse(fs.readFileSync("package.json")).version;
 
   return gulp.src('build/firefox/**')
-    .pipe(zip('twitch-now-firefox-' + v + '.zip'))
+    .pipe(zip('twitch-companion-firefox-' + v + '.zip'))
     .pipe(gulp.dest('dist/'));
 })
 
@@ -193,7 +193,7 @@ gulp.task('handlebars', function () {
 gulp.task('contributors', function (cb) {
   request({
     method: "GET",
-    url: "https://api.github.com/repos/ndragomirov/twitch-now/contributors",
+    url: "https://api.github.com/repos/ndragomirov/twitch-companion/contributors",
     headers: {
       "User-Agent": "whatever"
     }
