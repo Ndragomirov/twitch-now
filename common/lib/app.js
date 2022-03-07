@@ -1192,7 +1192,7 @@
     getStreamURL: function (type) {
       type = type || settings.get("openStreamIn").get("value");
       if (type == "html5") {
-        return "http://player.twitch.tv/?channel=" + this.get("channel").name + "&html5" + "&parent=twitch-now";
+        return "http://player.twitch.tv/?channel=" + this.get("channel").name + "&html5" + "&parent=twitch-companion";
       }
       var links = {
         theatrelayout: "/ID?mode=theatre",

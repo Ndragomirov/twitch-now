@@ -1,8 +1,8 @@
 # Twitch Now
 
-* Chrome version: https://chrome.google.com/webstore/detail/twitch-now/nlmbdmpjmlijibeockamioakdpmhjnpk
-* Firefox version: https://addons.mozilla.org/firefox/addon/twitch-now/
-* Opera version: https://addons.opera.com/extensions/details/twitch-now/
+* Chrome version: https://chrome.google.com/webstore/detail/twitch-companion/nlmbdmpjmlijibeockamioakdpmhjnpk
+* Firefox version: https://addons.mozilla.org/firefox/addon/twitch-companion/
+* Opera version: https://addons.opera.com/extensions/details/twitch-companion/
 
 ## Requirements
 
