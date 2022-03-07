@@ -1,7 +1,7 @@
 {
   "name": "twitch-companion",
-  "version": "1.1.216",
-  "description": "",
+  "version": "2.0.0",
+  "description": "Manage and access your favorite streams from your browser !",
   "dependencies": {
     "semver": "^7.3.2",
     "through2": "^2.0.5",
@@ -28,17 +28,22 @@
   "scripts": {
     "build:all": "gulp firefox && gulp chrome && gulp opera",
     "build:firefox": "gulp firefox",
-    "firefox": "web-ext run --source-dir ./build/firefox",
-    "firefox:debug": "npm run firefox --browser-console"
+    "build:chrome": "gulp chrome",
+    "build:opera": "gulp opera",
+    "package:all": "npm run package:firefox && npm run package:chrome && npm run package:opera ",
+    "package:firefox": "npm run build:firefox && gulp compress:firefox",
+    "package:chrome": "npm run build:chrome && gulp compress:chrome",
+    "package:opera": "npm run build:opera && gulp compress:opera",
+    "dev:firefox": "web-ext run --source-dir ./build/firefox"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ndragomirov/twitch-companion"
+    "url": "https://github.com/LPauzies/twitch-companion"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "lucas.pauzies@hotmail.fr",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Ndragomirov/twitch-companion/issues"
+    "url": "https://github.com/LPauzies/twitch-companion/issues"
   },
-  "homepage": "https://github.com/Ndragomirov/twitch-companion"
+  "homepage": "https://github.com/LPauzies/twitch-companion"
 }

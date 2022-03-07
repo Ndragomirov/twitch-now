@@ -1,13 +1,8 @@
-# Twitch Now
-
-* Chrome version: https://chrome.google.com/webstore/detail/twitch-companion/nlmbdmpjmlijibeockamioakdpmhjnpk
-* Firefox version: https://addons.mozilla.org/firefox/addon/twitch-companion/
-* Opera version: https://addons.opera.com/extensions/details/twitch-companion/
+# Twitch Companion
 
 ## Requirements
 
-* Node.js
-* Gulp
+* Node v16+
 
 ## How to build
 
@@ -16,24 +11,14 @@ Before all, you need to install dependencies:
 $ npm install
 ```
 
-To build Chrome version:
+To build every versions of the extension :
 ```
-$ gulp chrome
-```
-
-To build Firefox version:
-```
-$ gulp firefox
+$ npm run build:all
 ```
 
-To run Firefox version:
+To build a version case of browser firefox, chrome or opera :
 ```
-$ run firefox, goto about:debugging, then load build/firefox/manifest.json
-```
-
-To build Opera version:
-```
-$ gulp opera
+$ npm run build:<browser>
 ```
 
 ## Translation guide
