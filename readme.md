@@ -2,7 +2,8 @@
 
 ## Requirements
 
-* Node v16+
+* [Node v16.14+](https://nodejs.org/en/)
+* [Gulp](https://gulpjs.com/docs/en/getting-started/quick-start/)
 
 ## How to build
 

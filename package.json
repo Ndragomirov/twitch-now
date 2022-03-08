@@ -1,7 +1,7 @@
 {
   "name": "twitch-companion",
   "version": "2.0.0",
-  "description": "Manage and access your favorite streams from your browser !",
+  "description": "A way to easily interact with Twitch platform !",
   "dependencies": {
     "semver": "^7.3.2",
     "through2": "^2.0.5",
@@ -41,7 +41,7 @@
     "url": "https://github.com/LPauzies/twitch-companion"
   },
   "author": "lucas.pauzies@hotmail.fr",
-  "license": "MIT",
+  "license": "GPL3",
   "bugs": {
     "url": "https://github.com/LPauzies/twitch-companion/issues"
   },
