@@ -5,7 +5,7 @@
 
   var TwitchApi = root.TwitchApi = function (clientId){
     if ( !clientId ) throw new Error("clientId is required");
-    this.basePath = "https://api.twitch.tv/kraken";
+    this.basePath = "https://api.twitch.tv/helix";
     this.userName = "";
     this.userId = "";
     this.clientId = clientId;
@@ -37,7 +37,7 @@
       headers : {
         "Accept"       : "application/vnd.twitchtv.v5+json",
         "Client-ID"    : this.clientId,
-        "Authorization": " OAuth " + this.token
+        "Authorization": " Bearer " + this.token
       }
     }
   }
@@ -78,9 +78,10 @@
         err: "cant get current username"
       }
       , req = {
-        url: _self.basePath + "/"
+        url: _self.basePath + "/users"
       }
       ;
+    console.log('userName: ' + userName)
     if ( userName ) return cb(null, userName);
 
     $.ajax($.extend(true, req, _self.getRequestParams()))
@@ -91,11 +92,13 @@
         return cb(err);
       })
       .done(function (res){
-        if ( !res.token.user_name ) {
+        if ( !res.data[0].display_name ) {
           return cb(err);
         }
-        _self.userId = res.token.user_id;
-        _self.userName = userName = res.token.user_name;
+        
+        _self.userId = res.data[0].id;
+        _self.userName = userName = res.data[0].display_name;
+        _self.trigger("userid");
         return cb(null, userName);
       });
   }
@@ -105,7 +108,7 @@
 
     var requestOpts = _self.methods[methodName]();
 
-    var getUserName = requestOpts.url.match(/:user/) ?
+    var getUserName = requestOpts.url.match(/users/) ?
       _self.getUserName :
       function (fn){
         return fn();
@@ -155,7 +158,6 @@
       var _r = new Request(url, _ropts);
 
       fetch(_r).then(function (res){
-        console.log(res.body);
         if ( res.status == 204 ) {
           _self.trigger("done:" + methodName);
           return cb(null, res);
@@ -163,13 +165,17 @@
         res.json().then(function (data){
 
           if ( /^(streams|searchStreams|followed)$/.test(methodName) ) {
-            if ( data.streams && data.streams.length ) {
-              data.streams = data.streams.map(function (s){
-                if ( s.preview && typeof s.preview == "string" ) {
-                  var medium = s.preview;
-                  s.preview = {
-                    medium: medium
-                  }
+            if ( data.data && data.data.length ) {
+              data.data = data.data.map(function (s) {
+                if ( s.thumbnail_url && typeof s.thumbnail_url == "string" ) {
+                  s.thumbnail_url = s.thumbnail_url.replace(/{width}/, 134)
+                  s.thumbnail_url = s.thumbnail_url.replace(/{height}/, 70)
+                }
+                if (s.display_name && typeof s.display_name == "string" && methodName == "searchStreams") {
+                  s.user_name = s.display_name
+                  s.user_login = s.broadcaster_login
+                } else if (methodName == "followed" && !s.user_name) {
+                  s.user_name = s.user_login
                 }
                 return s;
               })
@@ -198,28 +204,28 @@
   methods.user = function (){
     return {
       type: "GET",
-      url : "/user"
+      url : "/users"
     }
   }
 
   methods.gameVideos = function (){
     return {
       type: "GET",
-      url : "/videos/top"
+      url : "/videos"
     }
   }
 
   methods.channelVideos = function (){
     return {
       type: "GET",
-      url : "/channels/:channel/videos"
+      url : "/videos/:channel/videos"
     }
   }
 
   methods.searchGames = function (){
     return {
       type: "GET",
-      url : "/search/games",
+      url : "/search/categories",
       data: {
         limit: 50
       }
@@ -229,30 +235,21 @@
   methods.searchStreams = function (){
     return {
       type: "GET",
-      url : "/search/streams",
-      data: {
-        limit: 50
-      }
+      url : "/search/channels"
     }
   }
 
   methods.gamesTop = function (){
     return {
       type: "GET",
-      url : "/games/top",
-      data: {
-        limit: 40
-      }
+      url : "/games/top"
     }
   }
 
   methods.follows = function (){
     return {
       type: "GET",
-      url : "/users/:user_id/follows/channels",
-      data: {
-        limit: 100
-      }
+      url : "/users/follows?from_id=:user_id"
     }
   }
 
@@ -269,7 +266,7 @@
   methods.followedgames = function (){
     return {
       type: "GET",
-      url : "https://api.twitch.tv/kraken/users/:user_id/follows/games",
+      url : "https://api.twitch.tv/helix/users/:user_id/follows/games",
       data: {
         limit: 100
       }
@@ -307,21 +304,14 @@
   methods.followed = function (){
     return {
       type: "GET",
-      url : "/streams/followed",
-      data: {
-        limit: 100,
-        stream_type	: "all"
-      }
+      url : "/streams/followed?user_id=:user_id"
     }
   }
 
   methods.streams = function (){
     return {
       type: "GET",
-      url : "/streams",
-      data: {
-        limit: 50
-      }
+      url : "/streams"
     }
   }
 

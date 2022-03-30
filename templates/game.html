@@ -1,9 +1,9 @@
-<div class="stream game-list-item js-filterable" data-route="browse/{{h-enc game.name}}/streams">
+<div class="stream game-list-item js-filterable" data-route="browse/{{h-enc name}}/streams">
     <div class="item-image-container game-preview">
-        <img alt="" class="lazy" src="{{game.box.medium}}" />
+        <img alt="" class="lazy" src="{{box_art_url}}" />
     </div>
-    <span title="{{game.name}}" class="stream-info stream-title">
-        {{game.name}}
+    <span title="{{name}}" class="stream-info stream-title">
+        {{name}}
     </span>
     {{#if viewers}}
     <span class="stream-info">

@@ -4,12 +4,12 @@
 
   var constants = {
     twitchApi: {
-      api          : "https://api.twitch.tv/kraken/oauth2/authorize",
+      api          : "https://id.twitch.tv/oauth2/authorize",
       response_type: 'token',
-      client_id    : 'ktea279xbjlnqmbg1j5htw3zbdssxel',
+      client_id    : 'wan7tdfzghu0uiisb8xoa1f4rgzsz6',
       client_secret: 'da30i8e60ippr4nd6penj65s5ildauj',
-      scope        : 'user_follows_edit user_read',
-      redirect_uri : 'http://ndragomirov.github.io/twitch-opera.html'
+      scope        : 'user:read:follows',
+      redirect_uri : 'https://ndragomirov.github.io/twitch-opera.html'
     }
   };
 

@@ -62,10 +62,12 @@
 
     injectTo = this.redirect;
     _browser.tabs.onUpdated.addListener(function (tabId, changeInfo) {
-      if (changeInfo.url && changeInfo.url.indexOf(injectTo) != -1) {
-        console.log("\nExecuting scripts");
-        _browser.tabs.executeScript(tabId, { code: injectScript });
-      }
+      _browser.tabs.get(tabId, (tab) => {
+        if (tab.url && tab.url.indexOf(injectTo) != -1) {
+          console.log("\nExecuting scripts");
+          _browser.tabs.executeScript(tabId, { code: injectScript });
+        }
+      });
     })
 
     _browser.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
