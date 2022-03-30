@@ -6,10 +6,10 @@
         twitchApi: {
             api: "https://id.twitch.tv/oauth2/authorize",
             response_type: 'token',
-            client_id: 'nfsk9onrddch0sz4mfxjwykalhra6sr',
+            client_id: 'wan7tdfzghu0uiisb8xoa1f4rgzsz6',
             client_secret: 'imouwsfvza6d4yt2on4eem1bkjxtwa9',
             scope: 'user:read:follows',
-            redirect_uri: 'http://ndragomirov.github.io/twitch-firefox.html'
+            redirect_uri: 'https://ndragomirov.github.io/twitch-firefox.html'
         }
     };
 
